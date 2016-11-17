@@ -1,0 +1,13 @@
+extends ../base-file-header
+
+block content
+  form(action="/users/register" method="post")
+    label(for="tb-username") Username
+    input(type="text" id="tb-username" name="username")
+    br
+
+    label(for="tb-password") Password
+    input(type="password" id="tb-password" name="password")
+    br
+
+    input(type="submit" value="Submit")
