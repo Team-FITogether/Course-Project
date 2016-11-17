@@ -36,9 +36,26 @@ function registerUser(req, res) {
     })
 }
 
+function addRole(req, res) {
+  let body = req.body;
+  let query = { username: body.username };
+  User.findOneAndUpdate(query, {
+    $push: {
+      'roles': body.role
+    }
+  }, (err, response) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
+  })
+}
+
 module.exports = {
   loadRegisterPage,
   loadLoginPage,
 
   registerUser,
+  addRole
 };

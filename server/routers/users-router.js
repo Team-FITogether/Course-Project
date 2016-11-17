@@ -11,4 +11,5 @@ module.exports = (app, userValidator) => {
     successRedirect: '/',
     failureRedirect: '/login',
   }));
+  app.post('/users/set-role', controllers.user.addRole);
 }
