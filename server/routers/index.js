@@ -1,7 +1,10 @@
 const fs = require('fs');
 const path = require('path');
+const controllers = require('../controllers');
 
 module.exports = (app, config, userValidator) => {
+  app.get('/', controllers.home.loadHomePage);
+
   const routersFolderPath = path.join(config.rootPath, 'server/routers');
 
   fs.readdir(routersFolderPath, function (err, files) {

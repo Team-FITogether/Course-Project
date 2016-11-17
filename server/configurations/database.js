@@ -4,4 +4,5 @@ mongoose.Promise = global.Promise;
 
 module.exports = config => {
   mongoose.connect(config.db);
+  require('../models/user').addAdminUser();
 };

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const encryption = require('../utils/encryption');
 
 const userSchema = mongoose.Schema({
-  username: String,
+  username: { type: String, unique: true },
   firstname: String,
   lastname: String,
   passHash: String,
@@ -22,4 +22,26 @@ userSchema.methods = {
 };
 
 const User = mongoose.model('user', userSchema);
-module.exports = User;
+
+function addAdminUser() {
+  User.find({ username: 'admin' })
+    .then(user => {
+      if (!user.length) {
+        let salt = encryption.getSalt();
+        let passHash = encryption.getPassHash(salt, 'admin');
+        let adminUser = new User({
+          username: 'admin',
+          salt,
+          passHash,
+          roles: ['admin']
+        });
+
+        adminUser.save();
+      }
+    })
+    .catch(console.log);
+}
+
+module.exports = {
+  addAdminUser
+};
