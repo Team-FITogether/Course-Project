@@ -3,6 +3,8 @@ const encryption = require('../utils/encryption');
 
 const userSchema = mongoose.Schema({
   username: String,
+  firstname: String,
+  lastname: String,
   passHash: String,
   salt: String,
   age: Number,
