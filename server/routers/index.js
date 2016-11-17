@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = (app, config) => {
+module.exports = (app, config, userValidator) => {
   const routersFolderPath = path.join(config.rootPath, 'server/routers');
 
   fs.readdir(routersFolderPath, function (err, files) {
@@ -11,6 +11,6 @@ module.exports = (app, config) => {
 
     files
       .filter(file => file.indexOf('-router') >= 0)
-      .forEach(file => require(`${__dirname}/${file}`)(app));
+      .forEach(file => require(`${__dirname}/${file}`)(app, userValidator));
   });
 };

@@ -1,8 +1,13 @@
 const User = require('../models/user');
 const encryption = require('../utils/encryption');
+const passport = require('passport');
 
 function loadRegisterPage(req, res) {
   res.render('user/register');
+}
+
+function loadLoginPage(req, res) {
+  res.render('user/login');
 }
 
 function registerUser(req, res) {
@@ -18,9 +23,9 @@ function registerUser(req, res) {
           .create({
             username: body.username,
             passHash,
-            salt
+            salt,
           })
-          .then(() => res.redirect('/login'))
+          .then(() => res.redirect('/users/login'))
           .catch(err => console.log(err));
       } else {
         res.status(409);
@@ -32,5 +37,7 @@ function registerUser(req, res) {
 
 module.exports = {
   loadRegisterPage,
-  registerUser
+  loadLoginPage,
+
+  registerUser,
 };
