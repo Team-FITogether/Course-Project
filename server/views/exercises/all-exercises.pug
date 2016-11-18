@@ -1,0 +1,8 @@
+extends ../base-file-header
+block content
+  ul
+  each val in exercises
+   li
+     span #{val.name}
+     br
+     span #{val.url}
