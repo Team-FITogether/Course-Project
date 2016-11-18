@@ -225,7 +225,7 @@ module.exports = {
         "quote-props": "off",
         "quotes": [
             "error",
-            "single"
+            "double"
         ],
         "radix": "error",
         "require-jsdoc": "off",
