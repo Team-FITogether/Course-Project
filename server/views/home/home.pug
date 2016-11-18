@@ -5,14 +5,38 @@ block content
       a(href="/users/register") Регистрация 
     li
       a(href="/users/login") Вход 
-    li
-      a(href="/trainings") Тренировки
-    li
-      a(href="/foods") Храни
-    li
-      a(href="/health") Здраве
-    li
-      a(href="/food-additives") Хранителни добавки
+    li Тренировки
+      ul
+        li 
+          a(href="#") TO DO : Tedi
+        li
+          a(href="#") TO DO : Tedi
+        li
+          a(href="/articles?genre=exercises-article") Статии за тренировки
+    li Храни
+      ul
+        li 
+          a(href="#") TO DO: Petya
+        li
+          a(href="#") TO DO: Petya
+        li
+          a(href="/articles?genre=food-article") Статии за хранене
+    li Здраве
+      ul
+        li 
+          a(href="/articles?genre=healthy-day-article") Здравословен ден
+        li
+          a(href="/articles?genre=body-article") Статии за тялото
+        li
+          a(href="/articles?genre=injuries-article") Травми и контузии
+    li Хранителни добавки
+      ul
+        li 
+          a(href="/articles?genre=herbs-article") Билки
+        li
+          a(href="/articles?genre=suplements-article") Добавки
+        li
+          a(href="/articles?genre=vitamins-and-minerals-article") Витамини и минерали
 
   if isAdmin
     form(action="/users/set-role" method="post")
