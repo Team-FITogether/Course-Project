@@ -15,7 +15,14 @@ function loadSingleArticlePage(req, res) {
   Article
     .findOne({ mainHeader: title })
     .then(article => {
-        res.render('articles/single-article', { mainHeader: article.mainHeader, subHeader: article.subHeader, author: article.author, body: article.body })
+        res.render('articles/single-article', 
+        { 
+            mainHeader: article.mainHeader, 
+            subHeader: article.subHeader, 
+            imgSrc: article.imgSrc, 
+            author: article.author, 
+            body: article.body 
+        })
     })
 }
 
