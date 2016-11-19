@@ -3,6 +3,6 @@ block content
   ul
   each val in exercises
    li
-     span #{val.name}
+    a(href="explanations?title=" + val.name) #{val.name}
      br
      span #{val.url}
