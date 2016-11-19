@@ -13,6 +13,10 @@ function loadLoginPage(req, res) {
     res.render("user/login");
 }
 
+function loadAdminPannel(req, res) {
+    res.render("admin-area/admin-pannel");
+}
+
 function registerUser(req, res) {
     const body = req.body;
 
@@ -57,6 +61,7 @@ function addRole(req, res) {
 module.exports = {
     loadRegisterPage,
     loadLoginPage,
+    loadAdminPannel,
 
     registerUser,
     addRole

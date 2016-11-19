@@ -1,0 +1,8 @@
+﻿extends ../base-file-header
+block content
+  form(action="/users/set-role" method="post")
+            label(for="tb-username") Username
+            input(type="text" name="username")
+            label(for="tb-role") Role 
+            input(type="text" name="role")
+            input(type="submit" value="Set Role")  

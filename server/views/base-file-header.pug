@@ -1,57 +1,87 @@
-doctype
-html
-  head
-    title FiTogether
-  body
-    header
-      h2 FITogether logo
-      ul
-        li
-        a(href="/users/register") Регистрация 
-        li
-        a(href="/users/login") Вход 
-      ul
-        li Тренировки
-            ul
-              li 
-                a(href="#") TO DO : Tedi
+extends ./base-master
+block header
+    nav.navbar.navbar-fixed-top.navbar-color-on-scroll.navbar-success
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/')
+            | FITogether logo
+            .ripple-container
+        #navbar.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href="/logout") Logout 
+            li
+              a(href="/users/login") Вход
+            li
+              a(href="/users/register") Регистрация 
+            li.dropdown
+                      a.dropdown-toggle(href='#', data-toggle='dropdown')
+                        | Тренировки 
+                        b.caret
+                      ul.dropdown-menu
+                         li 
+                           a(href="#") TO DO : Tedi
+                         li
+                           a(href="/exercises?all") Всички упражнения
+                         li
+                           a(href="/articles?genre=exercises-article") Статии за тренировки
+            li.dropdown
+                      a.dropdown-toggle(href='#', data-toggle='dropdown')
+                        | Храни 
+                        b.caret
+                      ul.dropdown-menu
+                         li 
+                           a(href="/dietprograms") Хранителни режими
+                         li
+                           a(href="/recipes") Рецепти
+                         li
+                           a(href="#") Състав на храни
+                         li
+                           a(href="/articles?genre=food-article") Статии за храненеи
+            li.dropdown
+                      a.dropdown-toggle(href='#', data-toggle='dropdown')
+                        | Здраве 
+                        b.caret
+                      ul.dropdown-menu
+                         li 
+                           a(href="/articles?genre=healthy-day-article") Здравословен ден
+                         li
+                           a(href="/articles?genre=body-article") Статии за тялото
+                         li
+                           a(href="/articles?genre=injuries-article") Травми и контузии                         
+            li.dropdown
+                      a.dropdown-toggle(href='#', data-toggle='dropdown')
+                        | Хранителни добавки 
+                        b.caret
+                      ul.dropdown-menu
+                         li 
+                           a(href="/articles?genre=herbs-article") Билки
+                         li
+                           a(href="/articles?genre=suplements-article") Добавки
+                         li
+                           a(href="/articles?genre=vitamins-and-minerals-article") Витамини и минерали
+            if isAdmin
               li
-                a(href="/exercises?all") Всички упражнения
-              li
-                a(href="/articles?genre=exercises-article") Статии за тренировки
-            li Храни
-              ul
-                li 
-                  a(href="/dietprograms") Хранителни режими
-                li
-                  a(href="/recipes") Рецепти
-                li
-                  a(href="#") Състав на храни
-                li
-                  a(href="/articles?genre=food-article") Статии за хранене
-            li Здраве
-              ul
-                li 
-                  a(href="/articles?genre=healthy-day-article") Здравословен ден
-                li
-                  a(href="/articles?genre=body-article") Статии за тялото
-                li
-                  a(href="/articles?genre=injuries-article") Травми и контузии
-            li Хранителни добавки
-            ul
-              li 
-                a(href="/articles?genre=herbs-article") Билки
-              li
-                a(href="/articles?genre=suplements-article") Добавки
-              li
-                a(href="/articles?genre=vitamins-and-minerals-article") Витамини и минерали
+                a(href="/admin-pannel") Админ
 
-        if isAdmin
-            form(action="/users/set-role" method="post")
-            label(for="tb-username") Username
-            input(type="text" name="username")
-            label(for="tb-role") Role 
-            input(type="text" name="role")
-            input(type="submit" value="Set Role")  
-    main
-    block content
+    
+
+    div.wrapper      
+      div.header.header-filter(style="background-image: url('./../img/bg3.jpeg');")
+        div.container
+          div.row
+            div.col-md-8.col-md-offset-2
+              div.brand
+                h1 FITogether.
+                h3 Some very insperational quote.
+
+
+      div.main.main-raised
+        div.section.section-basic
+          div.container-fluid
+            block content
