@@ -10,7 +10,11 @@ let articleSchema = new Schema({
     imgSrc: { type: String },
     genre: { type: String, require: true },
     body: { type: String, require: true },
-    comments: []
+    comments: [{
+        content: String,
+        author: String,
+        postDate: Date
+    }]
 });
 
 const Article = mongoose.model("article", articleSchema, "articles");
