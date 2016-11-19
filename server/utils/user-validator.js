@@ -1,3 +1,5 @@
+/* globals next */
+
 "use strict";
 
 function isAdminUserMiddleware(req, res, next) {

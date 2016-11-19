@@ -1,20 +1,25 @@
 extends ../base-file-header
 block content
+  link(rel='stylesheet' href='./../css/articles/comments.css')
   h1 #{mainHeader}
   h3 #{subHeader}
   h5 by #{author}
   div !{body}
-    ul
-      if comments
-        each comment in comments
-          li
-            div
-              p #{comment.content}
-              p #{comment.postDate}
-              p #{comment.author.username}
+    div(class='card card-nav-tabs')
+      div(class='header header-info' id='comments-header') 
+        h3 Comments: #{comments.length}
+      div(class='content')
+        ul(class='comments-container section')
+          if comments
+            each comment in comments
+              li
+                div
+                  p(class="comment-content") #{comment.content}
+                  p(class="comment-date") #{comment.postDate}
+                  p(class="comment-author") #{comment.author}
  
     if isLoggedIn
       form(action='/articles/comments/add' method='post')
-        textarea(name='content')
+        textarea(name='content' class='form-control col-md-12' rows='3' placeholder='Comment')
         input(type='hidden' name='entityId' value=id)
-        input(type='submit' value='Comment')
+        input(type='submit' value='Comment' class='btn btn-info')
