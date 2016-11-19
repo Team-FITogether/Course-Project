@@ -13,12 +13,6 @@ block header
             .ripple-container
         #navbar.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right
-            li
-              a(href="/logout") Logout 
-            li
-              a(href="/users/login") Вход
-            li
-              a(href="/users/register") Регистрация 
             li.dropdown
                       a.dropdown-toggle(href='#', data-toggle='dropdown')
                         | Тренировки 
@@ -65,11 +59,26 @@ block header
                            a(href="/articles?genre=suplements-article") Добавки
                          li
                            a(href="/articles?genre=vitamins-and-minerals-article") Витамини и минерали
-            if isAdmin
-              li
-                a(href="/admin-pannel") Админ
-
-    
+            li.dropdown
+                      if isLoggedIn
+                        a.dropdown-toggle(href='#', data-toggle='dropdown') #{username}
+                          i.material-icons account_circle
+                          b.caret
+                        ul.dropdown-menu
+                          li
+                            a(href="/logout") Изход
+                          if isAdmin
+                            li
+                              a(href="/admin-pannel") Админ
+                      else
+                        a.dropdown-toggle(href='#', data-toggle='dropdown')
+                          i.material-icons account_circle
+                          b.caret
+                        ul.dropdown-menu
+                          li
+                            a(href="/users/login") Вход
+                          li
+                            a(href="/users/register") Регистрация    
 
     div.wrapper      
       div.header.header-filter(style="background-image: url('./../img/bg3.jpeg');")
