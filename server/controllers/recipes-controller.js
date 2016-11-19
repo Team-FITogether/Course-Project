@@ -7,7 +7,7 @@ function getAllRecipes(req, res) {
     Recipe
         .find()
         .then(recipes => {
-            res.render("recipes/all-recipes", { recipes });
+            res.render("food/all-recipes", { recipes });
         });
 }
 
