@@ -3,6 +3,4 @@ block content
   ul
   each val in recipes
    li
-     span #{val.title}
-     br
-     span #{val.url}
+     a(href="single-recipe?title=" + val.title) #{val.title}
