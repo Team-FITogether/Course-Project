@@ -17,6 +17,17 @@ function loadSingleArticlePage(req, res) {
     Article
         .findOne({ mainHeader: title })
         .then(article => {
+            let articleComments = article
+                .comments
+                .map(c => {
+                    return {
+                        content: c.content,
+                        postDate: c.postDate.toString().substring(0, 25),
+                        author: c.author
+                    };
+                });
+
+                console.log(articleComments);
             res.render("articles/single-article", {
                 mainHeader: article.mainHeader,
                 subHeader: article.subHeader,
@@ -25,7 +36,7 @@ function loadSingleArticlePage(req, res) {
                 body: article.body,
                 id: article._id,
                 isLoggedIn: !!req.user,
-                comments: article.comments
+                comments: articleComments
             });
         });
 }

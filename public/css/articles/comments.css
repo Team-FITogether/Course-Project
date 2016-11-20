@@ -1,0 +1,28 @@
+#comments-header {
+    height: 60px !important;
+}
+
+#comments-header h3 {
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+}
+
+.comments-container {
+    padding: 30px !important;
+    list-style-type: none;
+}
+
+.comment-content {
+    font-size: 20px;
+}
+
+.comment-author {
+    font-weight: bold;
+    text-align: right;
+}
+
+.comment-date {
+    font-size: 12px;
+    text-align: right;
+}
