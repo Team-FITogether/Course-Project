@@ -3,18 +3,16 @@
 const pug = require("pug");
 const config = require("../configurations");
 const path = require("path");
-const userValidator = require("../utils/user-validator");
+const viewBagUtil = require("./../utils/view-bag");
 
 function loadHomePage(req, res) {
     let pathToReadFrom = path.join(config.rootPath, "server/views/home/home.pug");
-    let username = req.user ? req.user.username : "";
-    let isLoggedIn = !!req.user;
-    let isAdmin = !req.user ? false : userValidator.isInRole(req.user, "admin");
     let compiledFile = pug.compileFile(pathToReadFrom);
-    let userId = !req.user ? null : req.user.id;
-    let html = compiledFile({ isAdmin, isLoggedIn, username, userId });
+    let viewBag = viewBagUtil.getViewBag(req);
+    let html = compiledFile({ viewBag });
 
     res.send(html);
 }
+
 
 module.exports = { loadHomePage };

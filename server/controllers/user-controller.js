@@ -1,20 +1,30 @@
 "use strict";
 
+const pug = require("pug");
+const path = require("path");
+const config = require("../configurations");
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const encryption = require("../utils/encryption");
 const fs = require("fs");
+const viewBagUtil = require("./../utils/view-bag");
 
 function loadRegisterPage(req, res) {
-    res.render("user/register");
+    let viewBag = viewBagUtil.getViewBag(req);
+    res.render("user/register", { viewBag });
 }
 
 function loadLoginPage(req, res) {
-    res.render("user/login");
+    let pathToReadFrom = path.join(config.rootPath, "server/views/user/login.pug");
+    let viewBag = viewBagUtil.getViewBag(req);
+    let compiledFile = pug.compileFile(pathToReadFrom);
+    let html = compiledFile({ viewBag });
+    res.send(html);
 }
 
 function loadAdminPannel(req, res) {
-    res.render("admin-area/admin-pannel");
+    let viewBag = viewBagUtil.getViewBag(req);
+    res.render("admin-area/admin-pannel", { viewBag });
 }
 
 function registerUser(req, res) {
@@ -68,9 +78,11 @@ function addRole(req, res) {
 }
 
 function loadProfilePage(req, res) {
+    let viewBag = viewBagUtil.getViewBag(req);
     res.render("user/profile", {
         avatarName: req.user.avatarName,
-        username: req.user.username
+        username: req.user.username,
+        viewBag
     });
 }
 
