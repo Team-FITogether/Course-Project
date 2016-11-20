@@ -1,6 +1,5 @@
 "use strict";
 
-const mongoose = require("mongoose");
 const Recipe = require("./../models/recipe.js");
 
 function getAllRecipes(req, res) {

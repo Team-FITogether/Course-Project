@@ -1,6 +1,5 @@
 "use strict";
 
-const mongoose = require("mongoose");
 const Article = require("./../models/article.js");
 
 function loadArticlesByGenrePage(req, res) {
@@ -27,7 +26,6 @@ function loadSingleArticlePage(req, res) {
                     };
                 });
 
-                console.log(articleComments);
             res.render("articles/single-article", {
                 mainHeader: article.mainHeader,
                 subHeader: article.subHeader,

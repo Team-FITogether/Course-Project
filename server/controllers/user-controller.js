@@ -3,7 +3,6 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const encryption = require("../utils/encryption");
-const fs = require("fs");
 
 function loadRegisterPage(req, res) {
     res.render("user/register");
@@ -58,7 +57,7 @@ function addRole(req, res) {
         $push: {
             "roles": body.role
         }
-    }, (err, response) => {
+    }, err => {
         if (err) {
             console.log(err);
         } else {
