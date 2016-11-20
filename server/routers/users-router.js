@@ -11,15 +11,9 @@ module.exports = (app, userValidator) => {
     app.get("/users/login", controllers.user.loadLoginPage);
     app.get("/users/profile/:userId", userValidator.isUserLoggedIn, controllers.user.loadProfilePage);
     app.get("/admin-pannel", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, controllers.user.loadAdminPannel)
-    app.get("/logout", userValidator.isUserLoggedIn, (req, res) => {
-        req.logout();
-        res.redirect("/");
-    });
+    app.get("/logout", userValidator.isUserLoggedIn, controllers.user.logoutUser);
 
     app.post("/users/register", upload.single("avatar"), controllers.user.registerUser);
-    app.post("/users/login", passport.authenticate("local", {
-        successRedirect: "/",
-        failureRedirect: "/login"
-    }));
+    app.post("/users/login", controllers.user.loginUser);
     app.post("/users/set-role", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, controllers.user.addRole);
 };

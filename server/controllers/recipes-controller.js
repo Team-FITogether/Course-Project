@@ -3,12 +3,21 @@
 const Recipe = require("./../models/recipe.js");
 const viewBagUtil = require("./../utils/view-bag");
 
+function sortRecipes(recipes) {
+    return recipes.sort((a, b) => {
+        let firstTitle = a.title.toUpperCase();
+        let secondTitle = b.title.toUpperCase();
+        return firstTitle < secondTitle ? -1 : firstTitle > secondTitle ? 1 : 0;
+    });
+}
+
 function getAllRecipes(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
 
     Recipe
         .find()
         .then(recipes => {
+            sortRecipes(recipes);
             res.render("food/all-recipes", { recipes, viewBag });
         });
 }

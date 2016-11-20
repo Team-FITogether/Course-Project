@@ -7,12 +7,14 @@ function getViewBag(req) {
     let isLoggedIn = !!req.user;
     let isAdmin = !req.user ? false : userValidator.isInRole(req.user, "admin");
     let userId = !req.user ? null : req.user.id;
+    let error = false;
 
     let globals = {
         username,
         isLoggedIn,
         isAdmin,
-        userId
+        userId,
+        error
     };
     return globals;
 }

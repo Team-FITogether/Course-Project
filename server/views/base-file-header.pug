@@ -83,7 +83,7 @@ block header
                                 li
                                     a(href="/users/register") Регистрация    
 
-    div.wrapper      
+    div.wrapper    
         div.header.header-filter(style="background-image: url('/img/material-kit-images/bg3.jpeg');")
             div.container
                 div.row
@@ -91,9 +91,19 @@ block header
                         div.brand
                             h1 FITogether.
                             h3 Some very insperational quote.
-
-
+        
         div.main.main-raised
             div.section.section-basic
                 div.container-fluid
-                    block content
+                if viewBag.error
+                  .alert.alert-danger
+                    .container-fluid
+                      .alert-icon
+                        i.material-icons error_outline
+                      button.close(type='button', data-dismiss='alert', aria-label='Close')
+                        span(aria-hidden='true')
+                          i.material-icons clear
+                      b Error:
+                      |  #{viewBag.error}
+
+                block content

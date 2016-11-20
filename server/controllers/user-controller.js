@@ -1,6 +1,7 @@
 "use strict";
 
 const pug = require("pug");
+const passport = require("passport");
 const path = require("path");
 const config = require("../configurations");
 const mongoose = require("mongoose");
@@ -55,10 +56,36 @@ function registerUser(req, res) {
                     });
             } else {
                 res.status(409);
-                res.send("User already exists.");
+                let viewBag = viewBagUtil.getViewBag(req);
+                viewBag.error = "User already exists";
+                res.render("user/register", { viewBag });
                 res.end();
             }
         });
+}
+
+function loginUser(req, res, next) {
+    passport.authenticate("local", (err, user, info) => {
+        if (err) {
+            return next(err); // 500 error
+        }
+        if (!user) {
+            let viewBag = viewBagUtil.getViewBag(req);
+            viewBag.error = info.message;
+            return res.render("user/login", { viewBag });
+        }
+        req.login(user, (err) => {
+            if (err) {
+                return next(err); // black magic
+            }
+            return res.redirect("/");
+        });
+    })(req, res, next);
+}
+
+function logoutUser(req, res) {
+    req.logout();
+    res.redirect("/");
 }
 
 function addRole(req, res) {
@@ -93,5 +120,7 @@ module.exports = {
     loadProfilePage,
 
     registerUser,
+    loginUser,
+    logoutUser,
     addRole
 };
