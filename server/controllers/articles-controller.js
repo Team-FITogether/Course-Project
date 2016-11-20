@@ -22,12 +22,34 @@ function loadSingleArticlePage(req, res) {
                 subHeader: article.subHeader,
                 imgSrc: article.imgSrc,
                 author: article.author,
-                body: article.body
+                body: article.body,
+                id: article._id,
+                isLoggedIn: !!req.user,
+                comments: article.comments
             });
         });
 }
 
+function addComment(req, res) {
+    let body = req.body;
+    let comment = {
+        content: body.content,
+        author: req.user.username,
+        postDate: Date.now()
+    };
+
+    Article
+        .findById(body.entityId)
+        .then(article => {
+            article.comments.push(comment);
+            article.save();
+            res.redirect("back");
+        })
+        .catch(err => res.status(500).send(err));
+}
+
 module.exports = {
     loadArticlesByGenrePage,
-    loadSingleArticlePage
+    loadSingleArticlePage,
+    addComment
 };
