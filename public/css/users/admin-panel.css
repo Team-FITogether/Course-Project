@@ -1,0 +1,10 @@
+#admin-panel-container {
+    width: 600px;
+    display: block;
+    margin: 0 auto;
+}
+
+#admin-panel-container h4 {
+    font-weight: bold;
+    text-align: center;
+}

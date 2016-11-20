@@ -67,11 +67,11 @@ block header
                             ul.dropdown-menu
                                 li
                                     a(href='/users/profile/' + userId) Профил
-                                li
-                                    a(href="/logout") Изход
                                 if isAdmin
                                     li
                                         a(href="/admin-pannel") Админ
+                                li
+                                    a(href="/logout") Изход
                         else
                             a.dropdown-toggle(href='#', data-toggle='dropdown')
                                 i.material-icons account_circle
