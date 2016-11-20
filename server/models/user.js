@@ -2,15 +2,17 @@
 
 const mongoose = require("mongoose");
 const encryption = require("../utils/encryption");
+const AvatarSchema = require("./avatar");
 
 const userSchema = mongoose.Schema({
-    username: { type: String, unique: true },
-    firstname: String,
-    lastname: String,
-    passHash: String,
-    salt: String,
-    age: Number,
-    roles: [String]
+    username: { type: String, unique: true, required: true },
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
+    passHash: { type: String, required: true },
+    salt: { type: String, required: true },
+    age: { type: Number },
+    roles: [String],
+    avatar: { type: AvatarSchema, required: true }
 });
 
 userSchema.methods = {
