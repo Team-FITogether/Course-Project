@@ -61,14 +61,14 @@ block header
                             li
                                 a(href="/articles?genre=vitamins-and-minerals-article") Витамини и минерали
                     li.dropdown
-                        if isLoggedIn
-                            a.dropdown-toggle(href="#", data-toggle="dropdown") #{username}
+                        if viewBag.isLoggedIn
+                            a.dropdown-toggle(href='#', data-toggle='dropdown') #{viewBag.username}
                                 i.material-icons account_circle
                                 b.caret
                             ul.dropdown-menu
                                 li
-                                    a(href="/users/profile/" + userId) Профил
-                                if isAdmin
+                                    a(href='/users/profile/' + viewBag.userId) Профил
+                                if viewBag.isAdmin
                                     li
                                         a(href="/admin-pannel") Админ
                                 li

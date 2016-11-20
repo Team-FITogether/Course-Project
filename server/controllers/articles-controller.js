@@ -1,17 +1,20 @@
 "use strict";
 
 const Article = require("./../models/article.js");
+const viewBagUtil = require("./../utils/view-bag");
 
 function loadArticlesByGenrePage(req, res) {
+    let viewBag = viewBagUtil.getViewBag(req);
     let genre = req.query.genre;
     Article
         .find({ genre })
         .then(articles => {
-            res.render("articles/all-articles", { articles });
+            res.render("articles/all-articles", { articles, viewBag });
         });
 }
 
 function loadSingleArticlePage(req, res) {
+    let viewBag = viewBagUtil.getViewBag(req);
     let title = req.query.title;
     Article
         .findOne({ mainHeader: title })
@@ -34,7 +37,8 @@ function loadSingleArticlePage(req, res) {
                 body: article.body,
                 id: article._id,
                 isLoggedIn: !!req.user,
-                comments: articleComments
+                comments: articleComments,
+                viewBag
             });
         });
 }
