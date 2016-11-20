@@ -1,8 +1,11 @@
 extends ../base-file-header
 block content
+    link(rel="stylesheet" href="/css/articles/all-articles.css")
     ul
     each val in articles
         li
-            a(href="single-article?title=" + val.mainHeader) #{val.mainHeader}
-            br
-            span #{val.subHeader}
+            div(class="navbar navbar-warning article-container" )
+                a(href="single-article?title=" + val.mainHeader class="article-link")
+                    span #{val.mainHeader}
+                    br
+                    span(class="subheader") #{val.subHeader}
