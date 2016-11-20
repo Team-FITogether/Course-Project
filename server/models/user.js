@@ -44,8 +44,4 @@ function addAdminUser() {
         .catch(console.log);
 }
 
-module.exports = {
-    UserSchema: userSchema,
-    User,
-    addAdminUser
-};
+module.exports = { addAdminUser };
