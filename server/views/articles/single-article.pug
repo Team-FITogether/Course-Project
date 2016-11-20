@@ -3,5 +3,18 @@ block content
   h1 #{mainHeader}
   h3 #{subHeader}
   h5 by #{author}
-  <!--img(src=imgSrc)-->
   div !{body}
+  ul
+    if comments
+      each comment in comments
+        li
+          div
+            p #{comment.content}
+            p #{comment.postDate}
+            p #{comment.author.username}
+
+  if isLoggedIn
+    form(action='/articles/comments/add' method='post')
+      textarea(name='content')
+      input(type='hidden' name='entityId' value=id)
+      input(type='submit' value='Comment')

@@ -1,6 +1,5 @@
 "use strict";
 
-const mongoose = require("mongoose");
 const Article = require("./../models/article.js");
 
 function loadArticlesByGenrePage(req, res) {
@@ -17,17 +16,41 @@ function loadSingleArticlePage(req, res) {
     Article
         .findOne({ mainHeader: title })
         .then(article => {
-            res.render("articles/single-article", {
+            let dataToRender = {
                 mainHeader: article.mainHeader,
                 subHeader: article.subHeader,
                 imgSrc: article.imgSrc,
                 author: article.author,
-                body: article.body
-            });
+                body: article.body,
+                id: article._id,
+                isLoggedIn: !!req.user,
+                comments: article.comments
+            };
+
+            res.render("articles/single-article", dataToRender);
         });
+}
+
+function addComment(req, res) {
+    let body = req.body;
+    let comment = {
+        content: body.content,
+        author: req.user.username,
+        postDate: Date.now()
+    };
+
+    Article
+        .findById(body.entityId)
+        .then(article => {
+            article.comments.push(comment);
+            article.save();
+            res.redirect("back");
+        })
+        .catch(err => res.status(500).send(err));
 }
 
 module.exports = {
     loadArticlesByGenrePage,
-    loadSingleArticlePage
+    loadSingleArticlePage,
+    addComment
 };
