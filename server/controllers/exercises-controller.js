@@ -1,6 +1,5 @@
 "use strict";
 
-// const mongoose = require("mongoose");
 const Exercise = require("./../models/exercise.js");
 const ExerciseExplanation = require("./../models/exercise-explanation");
 const viewBagUtil = require("./../utils/view-bag");

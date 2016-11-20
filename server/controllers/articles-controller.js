@@ -1,6 +1,5 @@
 "use strict";
 
-const mongoose = require("mongoose");
 const Article = require("./../models/article.js");
 const viewBagUtil = require("./../utils/view-bag");
 
@@ -30,7 +29,6 @@ function loadSingleArticlePage(req, res) {
                     };
                 });
 
-            console.log(articleComments);
             res.render("articles/single-article", {
                 mainHeader: article.mainHeader,
                 subHeader: article.subHeader,

@@ -68,7 +68,7 @@ function addRole(req, res) {
         $push: {
             "roles": body.role
         }
-    }, (err, response) => {
+    }, err => {
         if (err) {
             console.log(err);
         } else {

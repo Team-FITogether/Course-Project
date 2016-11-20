@@ -1,6 +1,5 @@
 "use strict";
 
-const mongoose = require("mongoose");
 const Recipe = require("./../models/recipe.js");
 const viewBagUtil = require("./../utils/view-bag");
 
