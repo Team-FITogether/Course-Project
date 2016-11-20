@@ -2,7 +2,6 @@
 
 const mongoose = require("mongoose");
 const encryption = require("../utils/encryption");
-const AvatarSchema = require("./avatar");
 
 const userSchema = mongoose.Schema({
     username: { type: String, unique: true, required: true },
@@ -12,7 +11,7 @@ const userSchema = mongoose.Schema({
     salt: { type: String, required: true },
     age: { type: Number },
     roles: [String],
-    avatar: { type: AvatarSchema, required: true }
+    avatarName: String
 });
 
 userSchema.methods = {

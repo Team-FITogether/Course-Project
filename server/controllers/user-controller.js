@@ -26,35 +26,23 @@ function registerUser(req, res) {
             if (!user) {
                 let salt = encryption.getSalt();
                 let passHash = encryption.getPassHash(salt, body.password);
+                let userData = {
+                    username: body.username,
+                    firstname: body.firstname,
+                    lastname: body.lastname,
+                    avatarName: req.file.filename,
+                    passHash,
+                    salt
+                };
 
-                let avatarPath = `${req.file.destination}/${req.file.filename}`;
-                fs.readFile(avatarPath, (err, data) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        let userData = {
-                            username: body.username,
-                            firstname: body.firstname,
-                            lastname: body.lastname,
-                            avatar: {
-                                content: data,
-                                mimetype: req.file.mimetype,
-                                name: req.file.filename
-                            },
-                            passHash,
-                            salt
-                        };
-
-                        let newUser = new User(userData);
-                        newUser
-                            .save()
-                            .then(() => res.redirect("/users/login"), () => {
-                                res.status(500);
-                                res.send('Registration failed');
-                                res.end();
-                            });
-                    }
-                });
+                let newUser = new User(userData);
+                newUser
+                    .save()
+                    .then(() => res.redirect("/users/login"), () => {
+                        res.status(500);
+                        res.send("Registration failed");
+                        res.end();
+                    });
             } else {
                 res.status(409);
                 res.send("User already exists.");
@@ -79,10 +67,18 @@ function addRole(req, res) {
     });
 }
 
+function loadProfilePage(req, res) {
+    res.render("user/profile", {
+        avatarName: req.user.avatarName,
+        username: req.user.username
+    });
+}
+
 module.exports = {
     loadRegisterPage,
     loadLoginPage,
     loadAdminPannel,
+    loadProfilePage,
 
     registerUser,
     addRole

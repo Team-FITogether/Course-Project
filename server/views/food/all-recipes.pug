@@ -1,6 +1,6 @@
 extends ../base-file-header
 block content
-  ul
-  each val in recipes
-   li
-     a(href="single-recipe?title=" + val.title) #{val.title}
+    ul
+    each val in recipes
+        li
+            a(href="single-recipe?title=" + val.title) #{val.title}

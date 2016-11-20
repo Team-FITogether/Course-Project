@@ -1,16 +1,16 @@
 extends ../base-file-header
 
 block content
-  link(rel="stylesheet" href="./../css/users/login.css")
-  div(class="login-form-container")
-    form(action="/users/login" method="post")
-      div
-        div(class="form-group label-floating is-empty")
-          label(for="tb-username" class="control-label") Username
-          input(type="text" id="tb-username" name="username" class="form-control")
-    
-        div(class="form-group label-floating is-empty")
-          label(for="tb-password" class="control-label") Password
-          input(type="password" id="tb-password" name="password" class="form-control")
-    
-          input(type="submit" value="Login" class="btn btn-info col-md-12")
+    link(rel="stylesheet" href="./../css/users/login.css")
+    div(class="login-form-container")
+        form(action="/users/login" method="post")
+            div
+                div(class="form-group label-floating is-empty")
+                    label(for="tb-username" class="control-label") Username
+                    input(type="text" id="tb-username" name="username" class="form-control")
+
+                div(class="form-group label-floating is-empty")
+                    label(for="tb-password" class="control-label") Password
+                    input(type="password" id="tb-password" name="password" class="form-control")
+
+                    input(type="submit" value="Login" class="btn btn-info col-md-12")

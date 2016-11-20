@@ -1,0 +1,9 @@
+extends ../base-file-header
+
+block content
+    link(rel="stylesheet" href="/css/users/profile.css")
+    div(class='card card-nav-tabs' id='profile-container')
+        div(class='header header-info' id="profile-header") 
+            h3 #{username}
+        div(class='content')
+            img(class="img-circle img-responsive" src="/img/user-images/" + avatarName id="avatar-image")

@@ -1,30 +1,30 @@
 extends ../base-file-header
 
 block content
-  link(rel="stylesheet" href="./../css/users/register.css")
-  div(class="register-form-container")
-    form(action="/users/register" method="post" enctype="multipart/form-data")
-      div
-        div(class="form-group label-floating is-empty")
-          label(for="tb-username" class="control-label") Username
-          input(type="text" id="tb-username" name="username" class="form-control")
-    
-        div(class="form-group label-floating is-empty")
-          label(for="tb-first-name" class="control-label") First Name
-          input(type="text" id="tb-first-name" name="firstname" class="form-control")
+    link(rel="stylesheet" href="./../css/users/register.css")
+    div(class="register-form-container")
+        form(action="/users/register" method="post" enctype="multipart/form-data")
+            div
+                div(class="form-group label-floating is-empty")
+                    label(for="tb-username" class="control-label") Username
+                    input(type="text" id="tb-username" name="username" class="form-control")
 
-        div(class="form-group label-floating is-empty")
-          label(for="tb-last-name" class="control-label") Last Name
-          input(type="text" id="tb-last-name" name="lastname" class="form-control")
+                div(class="form-group label-floating is-empty")
+                    label(for="tb-first-name" class="control-label") First Name
+                    input(type="text" id="tb-first-name" name="firstname" class="form-control")
 
-        div(class="form-group label-floating is-empty")
-          label(for="tb-password" class="control-label") Password
-          input(type="password" id="tb-paswword" name="password" class="form-control")
+                div(class="form-group label-floating is-empty")
+                    label(for="tb-last-name" class="control-label") Last Name
+                    input(type="text" id="tb-last-name" name="lastname" class="form-control")
 
-        div(class="form-group label-floating is-empty")
-          label(for="tb-confirm-password" class="control-label") Confirm Password
-          input(type="password" id="tb-confirm-paswword" name="confirmPassword" class="form-control")
+                div(class="form-group label-floating is-empty")
+                    label(for="tb-password" class="control-label") Password
+                    input(type="password" id="tb-paswword" name="password" class="form-control")
 
-        label(for='avatar-input') Avatar
-        input(type="file" id="avatar-input" name="avatar" class="form-control-file")
-        input(type="submit" value="Register" class="btn btn-success col-md-12")
+                div(class="form-group label-floating is-empty")
+                    label(for="tb-confirm-password" class="control-label") Confirm Password
+                    input(type="password" id="tb-confirm-paswword" name="confirmPassword" class="form-control")
+
+                label(for='avatar-input') Avatar
+                input(type="file" id="avatar-input" name="avatar" class="form-control-file")
+                input(type="submit" value="Register" class="btn btn-success col-md-12")

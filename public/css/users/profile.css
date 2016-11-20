@@ -1,0 +1,19 @@
+#avatar-image {
+    width: 100px;
+    height: 100px;
+}
+
+#profile-container {
+    width: 700px;
+    display: block;
+    margin: 0 auto;
+}
+
+#profile-header {
+    height: 100px;
+}
+
+#profile-header h3 {
+    font-weight: bold;
+    text-align: center;
+}

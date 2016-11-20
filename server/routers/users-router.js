@@ -1,18 +1,17 @@
 "use strict";
 
-const express = require("express");
 const controllers = require("../controllers");
 const passport = require("passport");
 const multer = require("multer");
 
 module.exports = (app, userValidator) => {
-    const upload = multer({dest: './server/tmp/user-images'});
+    const upload = multer({ dest: "./public/img/user-images" });
 
     app.get("/users/register", controllers.user.loadRegisterPage);
     app.get("/users/login", controllers.user.loadLoginPage);
+    app.get("/users/profile/:userId", userValidator.isUserLoggedIn, controllers.user.loadProfilePage);
     app.get("/admin-pannel", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, controllers.user.loadAdminPannel)
-
-    app.get("/logout", (req, res) => {
+    app.get("/logout", userValidator.isUserLoggedIn, (req, res) => {
         req.logout();
         res.redirect("/");
     });
@@ -22,5 +21,5 @@ module.exports = (app, userValidator) => {
         successRedirect: "/",
         failureRedirect: "/login"
     }));
-    app.post("/users/set-role", controllers.user.addRole);
+    app.post("/users/set-role", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, controllers.user.addRole);
 };
