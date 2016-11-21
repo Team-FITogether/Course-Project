@@ -10,7 +10,6 @@ function getAllExercises(req, res) {
         .find()
         .then(exercises => {
             res.render("exercises/all-exercises", { exercises, viewBag });
-            console.log(exercises);
         });
 }
 
@@ -21,14 +20,46 @@ function getSingleExercise(req, res) {
     ExerciseExplanation
         .findOne({ title })
         .then((explanation) => {
+            let excersiseComments = explanation
+                .comments
+                .map(c => {
+                    return {
+                        content: c.content,
+                        postDate: c.postDate.toString().substring(0, 25),
+                        author: c.author
+                    };
+                });
+
             res.render("exercises/exercise-explanation", {
                 title: explanation.title,
                 content: explanation.content,
                 category: explanation.category,
                 author: explanation.author,
+                comments: excersiseComments,
                 viewBag
             });
         });
 }
 
-module.exports = { getAllExercises, getSingleExercise };
+function addComment(req, res) {
+    let body = req.body;
+    let comment = {
+        content: body.content,
+        author: req.user.username,
+        postDate: Date.now()
+    };
+
+    console.log(comment);
+    console.log(body.entityId);
+
+    ExerciseExplanation
+        .findById(body.entityId)
+        .then(ex => {
+            ex.comments.push(comment);
+            ex.save();
+            res.redirect("back");
+        })
+        .catch(err => res.status(500).send(err));
+}
+
+module.exports = { getAllExercises, getSingleExercise, addComment };

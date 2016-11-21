@@ -1,16 +1,20 @@
-extends ../base-file-header
+extends ../sub-headers/sub-header-users
 
 block content
-    link(rel="stylesheet" href="./../css/users/login.css")
-    div(class="login-form-container")
-        form(action="/users/login" method="post")
-            div
-                div(class="form-group label-floating is-empty")
-                    label(for="tb-username" class="control-label") Username
-                    input(type="text" id="tb-username" name="username" class="form-control")
-
-                div(class="form-group label-floating is-empty")
-                    label(for="tb-password" class="control-label") Password
-                    input(type="password" id="tb-password" name="password" class="form-control")
-
-                    input(type="submit" value="Login" class="btn btn-info col-md-12")
+  .row
+    .col-md-4.col-md-offset-4
+      .card.card-signup
+        form.form(action="/users/login" method="post")
+          .header.header-success.text-center
+            h4 Sign In
+          .content
+            .input-group
+              span.input-group-addon
+                i.material-icons face
+              input.form-control(type="text" id="tb-username" placeholder="Usename" name="username" class="form-control")
+            .input-group
+              span.input-group-addon
+                i.material-icons lock_outline
+              input.form-control(type="password" id="tb-password" placeholder="Password" name="password" class="form-control")
+          .footer.text-center
+            input(type="submit" value="Login" class="btn btn-success")

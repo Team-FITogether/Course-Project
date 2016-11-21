@@ -1,0 +1,15 @@
+﻿extends ../base-file-header
+block sub
+    .section.section-full-screen.section-signup(style="background-image: url('/img/material-kit-images/bg3.jpeg'); background-size: cover; background-position: top center; ")
+      .container
+        if viewBag.error
+          .alert.alert-danger
+            .container-fluid
+              .alert-icon
+                i.material-icons error_outline
+              button.close(type='button', data-dismiss='alert', aria-label='Close')
+                span(aria-hidden='true')
+                  i.material-icons clear
+              b Error:
+              |  #{viewBag.error}
+        block content

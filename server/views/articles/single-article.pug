@@ -1,10 +1,11 @@
-extends ../base-file-header
+extends ../sub-headers/sub-header-default
 block content
   link(rel="stylesheet" href="/css/articles/comments.css")
-  h1 #{mainHeader}
-  h3 #{subHeader}
-  h5 by #{author}
-  div !{body}
+  div.container
+   h1 #{mainHeader}
+   h3 #{subHeader}
+   h5 by #{author}
+   div !{body}
     div(class="card card-nav-tabs")
       div(class="header header-info" id="comments-header") 
         h3 Comments: #{comments.length}
@@ -13,13 +14,14 @@ block content
           if comments
             each comment in comments
               li
-                div
-                  p(class="comment-content") #{comment.content}
-                  p(class="comment-date") #{comment.postDate}
-                  p(class="comment-author") #{comment.author}
+                blockquote
+                  p #{comment.content}
+                  small() #{comment.author} on #{comment.postDate}
  
     if isLoggedIn
-      form(action="/articles/comments/add" method="post")
-        textarea(name="content" class="form-control col-md-12" rows="3" placeholder="Comment")
-        input(type="hidden" name="entityId" value=id)
-        input(type="submit" value="Comment" class="btn btn-info")
+      div.section
+        form(action="/articles/comments/add" method="post")
+          div.container(style="margin-top: 50px")
+            textarea(name="content" class="form-control" rows="3" placeholder="Comment")
+            input(type="hidden" name="entityId" value=id)
+            input(type="submit" value="Comment" class="btn btn-info")

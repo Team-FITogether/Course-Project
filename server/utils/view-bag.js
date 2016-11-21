@@ -8,13 +8,15 @@ function getViewBag(req) {
     let isAdmin = !req.user ? false : userValidator.isInRole(req.user, "admin");
     let userId = !req.user ? null : req.user.id;
     let error = false;
+    let isOnHomePage = false;
 
     let globals = {
         username,
         isLoggedIn,
         isAdmin,
         userId,
-        error
+        error,
+        isOnHomePage
     };
     return globals;
 }

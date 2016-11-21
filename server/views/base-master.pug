@@ -13,6 +13,7 @@ html
         // CSS Files
         link(href="/css/libs/bootstrap.min.css", rel="stylesheet")
         link(href="/css/libs/material-kit.css", rel="stylesheet")
+        link(href="/css/common/common.css", rel="stylesheet")
 
         // Core JS Files
         script(src="/js/jquery.min.js", type="text/javascript")
@@ -26,7 +27,9 @@ html
         script(src="/js/material-kit.js", type="text/javascript")
 
         title FiTogether
-
-    body.landing-page
+    if viewBag.isOnHomePage
+      body.landing-page 
+    else
+      body
 
 block header
