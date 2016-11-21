@@ -1,0 +1,6 @@
+extends ../base-file-header
+block content
+    ul
+    each val in diets
+        li
+            a(href="/diets/single-diet?title=" + val.title) #{val.title}
