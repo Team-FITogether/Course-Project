@@ -22,6 +22,7 @@ function getSingleDiet(req, res) {
             res.render("food/single-diet", {
                 title: diet[0].title,
                 body: diet[0].body,
+                imgSrc: diet[0].imgSrc,
                 comments: diet[0].comments,
                 viewBag
             });
