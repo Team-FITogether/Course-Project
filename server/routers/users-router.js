@@ -1,7 +1,6 @@
 "use strict";
 
 const controllers = require("../controllers");
-const passport = require("passport");
 const multer = require("multer");
 
 module.exports = (app, userValidator) => {

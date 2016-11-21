@@ -9,13 +9,14 @@ module.exports = (app, config, userValidator) => {
 
     const routersFolderPath = path.join(config.rootPath, "server/routers");
 
-    fs.readdir(routersFolderPath, (err, files) => {
-        if (err) {
-            throw err;
-        }
+    const routersFileNames = fs.readdirSync(routersFolderPath);
+    routersFileNames
+        .filter(file => file.indexOf("-router") >= 0)
+        .forEach(file => require(`${__dirname}/${file}`)(app, userValidator));
 
-        files
-            .filter(file => file.indexOf("-router") >= 0)
-            .forEach(file => require(`${__dirname}/${file}`)(app, userValidator));
+    app.all("*", (req, res) => {
+        res.status(404);
+        res.render("default-not-found");
+        res.end();
     });
 };
