@@ -1,0 +1,6 @@
+extends ../base-file-header
+block content
+    ul
+        each user in users
+            li
+                a(href="/users/" + user._id) #{user.username}

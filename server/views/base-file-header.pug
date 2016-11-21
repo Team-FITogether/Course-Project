@@ -12,6 +12,13 @@ block header
                 a.navbar-brand(href="/")
                     | FITogether logo
                     .ripple-container
+                form(action="/search" method="get")
+                    input(type="text" name="searchValue" style="color:black;" placeholder="Search")
+                    select(name="entityName" style="color:black;")
+                        option(value="users" style="color:black;") Users
+                        option(value="articles" style="color:black;") Articles
+                        option(value="exercises" style="color:black;") Exercises
+                    input(type="submit" value="Search" style="color:black;")
             #navbar.collapse.navbar-collapse
                 ul.nav.navbar-nav.navbar-right
                     li.dropdown
@@ -31,13 +38,13 @@ block header
                             b.caret
                         ul.dropdown-menu
                             li 
-                                a(href="/dietprograms") Хранителни режими
+                                a(href="/diets?all") Хранителни режими
                             li
                                 a(href="/recipes?all") Рецепти
                             li
                                 a(href="#") Състав на храни
                             li
-                                a(href="/articles?genre=food-article") Статии за храненеи
+                                a(href="/articles?genre=food-article") Статии за хранене
                     li.dropdown
                         a.dropdown-toggle(href="#", data-toggle="dropdown")
                             | Здраве 

@@ -5,7 +5,9 @@ const controllers = {
     home: require("./home-controller"),
     articles: require("./articles-controller"),
     exercises: require("./exercises-controller"),
-    recipes: require("./recipes-controller")
+    recipes: require("./recipes-controller"),
+    searches: require("./searches-controller"),
+    diets: require("./diets-controller")
 };
 
 module.exports = controllers;
