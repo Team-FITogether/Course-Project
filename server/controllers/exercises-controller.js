@@ -10,7 +10,6 @@ function getAllExercises(req, res) {
         .find()
         .then(exercises => {
             res.render("exercises/all-exercises", { exercises, viewBag });
-            console.log(exercises);
         });
 }
 
