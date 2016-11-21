@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 
 let exerciseSchema = new Schema({
     name: { type: String, require: true },
-    imgSrc: { type: String }
+    imgSrc: { type: String },
+    bodyPart: { type: String, required: true }
 });
 
 const Exercise = mongoose.model("exercise", exerciseSchema, "exercises");

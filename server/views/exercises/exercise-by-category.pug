@@ -1,0 +1,9 @@
+extends ../sub-headers/sub-header-default
+block content
+  link(rel="stylesheet" href="/css/articles/all-articles.css")
+  ul
+    each val in exercises
+        li
+            a(href="/exercises/explanations?title=" + val.name) #{val.name}            
+            div.divider
+            

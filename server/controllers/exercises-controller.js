@@ -2,11 +2,26 @@
 
 const Exercise = require("./../models/exercise.js");
 const ExerciseExplanation = require("./../models/exercise-explanation");
+const ExerciseCategory = require("./../models/exercise-category");
 const viewBagUtil = require("./../utils/view-bag");
 
-function getAllExercises(req, res) {
+function getAllExercisesByCategory(req, res) {
+    console.log("here");
+
     let viewBag = viewBagUtil.getViewBag(req);
+    let category = req.query.category;
+
     Exercise
+        .find({ "bodyPart": category })
+        .then(exercises => {
+            res.render("exercises/exercise-by-category", { exercises, viewBag });
+        });
+}
+
+function getAllCategoriesOfExercise(req, res) {
+    let viewBag = viewBagUtil.getViewBag(req);
+
+    ExerciseCategory
         .find()
         .then(exercises => {
             res.render("exercises/all-exercises", { exercises, viewBag });
@@ -49,8 +64,8 @@ function addComment(req, res) {
         postDate: Date.now()
     };
 
-    console.log(comment);
-    console.log(body.entityId);
+    // console.log(comment);
+    // console.log(body.entityId);
 
     ExerciseExplanation
         .findById(body.entityId)
@@ -62,4 +77,4 @@ function addComment(req, res) {
         .catch(err => res.status(500).send(err));
 }
 
-module.exports = { getAllExercises, getSingleExercise, addComment };
+module.exports = { getAllExercisesByCategory, getSingleExercise, addComment, getAllCategoriesOfExercise };
