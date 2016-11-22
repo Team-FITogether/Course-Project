@@ -8,6 +8,7 @@ const controllers = {
     recipes: require("./recipes-controller"),
     searches: require("./searches-controller"),
     diets: require("./diets-controller"),
+    foods: require("./foods-controller"),
     trainers: require("./trainers-controller")
 };
 
