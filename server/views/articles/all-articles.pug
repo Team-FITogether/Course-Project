@@ -7,4 +7,12 @@ block content
               a(href="single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
               br
               small.article-subheader #{val.subHeader} 
+              if viewBag.isTrainer
+                form(method="post", action="/articles/edit")
+                  input(type="hidden" name="articleId" value=val._id)
+                  button.btn.btn-warning Edit
+              else if viewBag.isAdmin
+                form(method="post", action="/articles/edit")
+                  input(type="hidden" name="articleId" value=val._id)
+                  button.btn.btn-warning Edit
               div.divider

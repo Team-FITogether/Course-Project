@@ -6,7 +6,37 @@ const viewBagUtil = require("./../utils/view-bag");
 function loadCreateArticlePage(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
 
-    res.render("articles/create-article", { viewBag })
+    res.render("articles/create-article", { viewBag });
+}
+
+function loadEditArticlePage(req, res) {
+    let viewBag = viewBagUtil.getViewBag(req);
+    let _id = req.body.articleId;
+
+    Article.findOne({ _id }).then(ar => {
+        let article = ar;
+        res.render("articles/edit-article", { article, viewBag });
+    });
+}
+
+function saveEditArticle(req, res) {
+    let articleBody = req.body.articleBody;
+    let articleHeader = req.body.articleHeader;
+    let articleSubHeader = req.body.articleSubHeader;
+    let _id = req.body.articleId;
+
+    let update = { mainHeader: articleHeader, subHeader: articleSubHeader, body: articleBody };
+    let options = { new: true };
+
+    Article.findOneAndUpdate({ _id }, update, options,
+        (err, ar) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+
+
+    res.redirect("/");
 }
 
 function createArticle(req, res) {
@@ -24,13 +54,16 @@ function createArticle(req, res) {
         body: articleBody
     });
 
-    article.save((err, article) => {
+    article.save((err, ar) => {
         if (err) {
-            console.error(err)
+            console.error(err);
+            req.redirect("/");
         }
+
+        console.log(ar);
     });
 
-    res.redirect("back");
+    res.redirect("/");
 }
 
 function loadArticlesByGenrePage(req, res) {
@@ -96,5 +129,7 @@ module.exports = {
     createArticle,
     loadArticlesByGenrePage,
     loadSingleArticlePage,
-    addComment
+    addComment,
+    loadEditArticlePage,
+    saveEditArticle
 };
