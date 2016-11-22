@@ -3,6 +3,36 @@
 const Article = require("./../models/article.js");
 const viewBagUtil = require("./../utils/view-bag");
 
+function loadCreateArticlePage(req, res) {
+    let viewBag = viewBagUtil.getViewBag(req);
+
+    res.render("articles/create-article", { viewBag })
+}
+
+function createArticle(req, res) {
+    let articleBody = req.body.articleBody;
+    let articleHeader = req.body.articleHeader;
+    let articleSubHeader = req.body.articleSubHeader;
+    let articleGenre = "FITogether";
+
+    var article = new Article({
+        mainHeader: articleHeader,
+        subHeader: articleSubHeader,
+        author: req.user.username,
+        imgSrc: "",
+        genre: articleGenre,
+        body: articleBody
+    });
+
+    article.save((err, article) => {
+        if (err) {
+            console.error(err)
+        }
+    });
+
+    res.redirect("back");
+}
+
 function loadArticlesByGenrePage(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
     let genre = req.query.genre;
@@ -62,6 +92,8 @@ function addComment(req, res) {
 }
 
 module.exports = {
+    loadCreateArticlePage,
+    createArticle,
     loadArticlesByGenrePage,
     loadSingleArticlePage,
     addComment

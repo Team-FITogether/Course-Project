@@ -11,6 +11,7 @@ module.exports = (app, userValidator) => {
     app.get("/users/profile/:userId", userValidator.isUserLoggedIn, controllers.user.loadProfilePage);
     app.get("/admin-pannel", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, controllers.user.loadAdminPannel)
     app.get("/logout", userValidator.isUserLoggedIn, controllers.user.logoutUser);
+    
 
     app.post("/users/register", upload.single("avatar"), controllers.user.registerUser);
     app.post("/users/login", controllers.user.loginUser);

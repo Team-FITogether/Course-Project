@@ -9,6 +9,7 @@ const User = mongoose.model("user");
 const encryption = require("../utils/encryption");
 const fs = require("fs");
 const viewBagUtil = require("./../utils/view-bag");
+const Article = require("./../models/article");
 
 function loadRegisterPage(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
@@ -106,11 +107,16 @@ function addRole(req, res) {
 
 function loadProfilePage(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
-    res.render("user/profile", {
-        avatarName: req.user.avatarName,
-        username: req.user.username,
-        viewBag
-    });
+    let author = req.user.username;
+    Article.find({ author })
+        .then(articles => {
+            res.render("user/profile", {
+                avatarName: req.user.avatarName,
+                username: req.user.username,
+                viewBag,
+                articles
+            });
+        });
 }
 
 module.exports = {

@@ -8,6 +8,14 @@ function isAdminUserMiddleware(req, res, next) {
     }
 }
 
+function isTrainerUserMiddleware(req, res, next) {
+    if (!req.user || req.user.roles.indexOf("trainer") === -1 || req.user.roles.indexOf("admin") === -1) {
+        res.redirect("/users/login");
+    } else {
+        next();
+    }
+}
+
 function isInRole(user, role) {
     if (user.roles.indexOf(role.toLowerCase()) !== -1) {
         return true;
@@ -25,6 +33,7 @@ function isUserLoggedIn(req, res, next) {
 }
 
 module.exports = {
+    isTrainerUserMiddleware,
     isAdminUserMiddleware,
     isUserLoggedIn,
     isInRole

@@ -6,8 +6,6 @@ const ExerciseCategory = require("./../models/exercise-category");
 const viewBagUtil = require("./../utils/view-bag");
 
 function getAllExercisesByCategory(req, res) {
-    console.log("here");
-
     let viewBag = viewBagUtil.getViewBag(req);
     let category = req.query.category;
 
@@ -51,25 +49,25 @@ function getSingleExercise(req, res) {
                 category: explanation.category,
                 author: explanation.author,
                 comments: excersiseComments,
+                id: explanation._id,
                 viewBag
             });
         });
 }
 
 function addComment(req, res) {
+ 
     let body = req.body;
     let comment = {
         content: body.content,
         author: req.user.username,
         postDate: Date.now()
     };
-
-    // console.log(comment);
-    // console.log(body.entityId);
-
+    
     ExerciseExplanation
         .findById(body.entityId)
         .then(ex => {
+            console.log(ex);
             ex.comments.push(comment);
             ex.save();
             res.redirect("back");

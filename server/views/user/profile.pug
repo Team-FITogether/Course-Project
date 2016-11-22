@@ -2,8 +2,23 @@ extends ../sub-headers/sub-header-default
 
 block content
     link(rel="stylesheet" href="/css/users/profile.css")
-    div(class="card card-nav-tabs" id="profile-container")
-        div(class="header header-info" id="profile-header") 
-            h3 #{username}
-        div(class="content")
+
+    div(class="content row" id="profile-container")
+        div.col-md-6
+            if viewBag.isTrainer
+              h3.trainer-title #{username}
+            else 
+              h3 #{username}
+        
             img(class="img-circle img-responsive" src="/img/user-images/" + avatarName id="avatar-image")
+            if viewBag.isTrainer
+              a(href="/articles/create", title="create article").btn.btn-default Create Article 
+        div.col-md-6
+          if viewBag.isTrainer
+            h3 My articles
+            each val in articles
+              div.article-container
+                a(href="single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
+                br
+                small.article-subheader #{val.subHeader} 
+                div.divider
