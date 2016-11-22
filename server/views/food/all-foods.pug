@@ -1,0 +1,6 @@
+extends ../sub-headers/sub-header-default
+block content
+    ul
+    each val in foods
+        li
+            a(href="/foods/single-food?title=" + val.title) #{val.title}

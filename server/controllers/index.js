@@ -7,7 +7,8 @@ const controllers = {
     exercises: require("./exercises-controller"),
     recipes: require("./recipes-controller"),
     searches: require("./searches-controller"),
-    diets: require("./diets-controller")
+    diets: require("./diets-controller"),
+    foods: require("./foods-controller")
 };
 
 module.exports = controllers;
