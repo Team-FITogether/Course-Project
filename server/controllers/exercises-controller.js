@@ -9,8 +9,9 @@ function getAllExercises(req, res) {
     Exercise
         .find()
         .then(exercises => {
-            res.render("exercises/all-exercises", { exercises, viewBag });
-        });
+            return res.render("exercises/all-exercises", { exercises, viewBag });
+        })
+        .catch(console.log);
 }
 
 function getSingleExercise(req, res) {

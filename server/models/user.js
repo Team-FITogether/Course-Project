@@ -25,7 +25,6 @@ userSchema.methods = {
 };
 
 const User = mongoose.model("user", userSchema);
-
 function addAdminUser() {
     User.find({ username: "admin" })
         .then(user => {
