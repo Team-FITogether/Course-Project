@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 function findUsers(username, isLoggedIn, res) {
     mongoose
         .model("user")
-        .where({ username })
+        .where({ username: new RegExp(username, "i") })
         .select("_id username")
         .exec((err, data) => {
             if (err) {
