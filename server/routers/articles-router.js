@@ -8,8 +8,7 @@ module.exports = (app, userValidator) => {
     app.get("/articles/create", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, controllers.articles.loadCreateArticlePage);
 
     app.post("/articles/create/update", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, controllers.articles.saveEditArticle);
-
     app.post("/articles/edit", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, controllers.articles.loadEditArticlePage);
     app.post("/articles/create/save", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, controllers.articles.createArticle);
-    app.post("/articles/comments/add", controllers.articles.addComment);
+    app.post("/articles/comments/add", userValidator.isUserLoggedIn, controllers.articles.addComment);
 };
