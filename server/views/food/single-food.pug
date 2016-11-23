@@ -1,6 +1,19 @@
 extends ../sub-headers/sub-header-default
 block content
-    h1 #{title}
-    div !{body}
-    div !{comments}
-        div(class="card card-nav-tabs")
+	table
+	thead
+	tr: th
+		td Група храна Детайли
+		td Калории
+		td Белтъчини
+		td Въглехидрати
+		td Мазнини
+		br
+	tbody
+	each food in foods
+		td #{food.title} #{food.details}
+		td #{food.calories}
+		td #{food.proteins}
+		td #{food.carbs}
+		td #{food.fats}
+		br
