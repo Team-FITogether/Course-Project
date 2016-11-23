@@ -12,6 +12,7 @@ module.exports = (app, userValidator) => {
     app.get("/users/:id", controllers.user.loadFoundUserProfilePage);
     app.get("/admin-pannel", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, controllers.user.loadAdminPannel)
     app.get("/logout", userValidator.isUserLoggedIn, controllers.user.logoutUser);
+    app.get("/users/all", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, controllers.user.getAllUsers)
 
     app.post("/users/register", upload.single("avatar"), controllers.user.registerUser);
     app.post("/users/login", controllers.user.loginUser);

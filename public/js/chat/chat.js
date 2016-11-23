@@ -14,8 +14,10 @@ socket.on("connect", () => {
     $("form").on("submit", () => {
         let message = $("#tb-message").val();
         let data = {
+            sender: username,
             room: roomName,
-            message
+            message,
+            avatarSrc
         };
 
         socket.emit("chat message to room", data);
@@ -27,17 +29,29 @@ socket.on("connect", () => {
     let $avatar = $("<img />");
     let $message = $("<span />");
     let $allMessages = $("#messages");
-    $avatar.attr("src", avatarSrc);
+    let $messageContainer = $("<div />");
     $avatar.addClass("img img-responsive img-circle chat-avatar");
     $message.addClass("chat-message");
-    $li.append($avatar);
+    $messageContainer.append($avatar);
+    $messageContainer.addClass("message-container");
 
-    socket.on("chat message", message => {
+    socket.on("chat message", data => {
         let $currentLi = $li.clone(true);
         let $currentMessage = $message.clone();
+        let $currentAvatar = $avatar.clone();
+        let $currentMessageContainer = $messageContainer.clone();
 
-        $currentMessage.text(message);
-        $currentLi.append($currentMessage);
+        if (data.sender === username) {
+            $currentMessageContainer.addClass("right");
+        } else {
+            $currentMessageContainer.addClass("left");
+        }
+
+        $currentAvatar.attr("src", data.avatarSrc);
+        $currentMessageContainer.append($currentAvatar);
+        $currentMessage.text(data.message);
+        $currentMessageContainer.append($currentMessage);
+        $currentLi.append($currentMessageContainer);
         $allMessages.append($currentLi);
     });
 

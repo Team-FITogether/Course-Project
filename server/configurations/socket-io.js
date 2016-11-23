@@ -23,7 +23,7 @@ module.exports = io => {
         });
 
         socket.on("chat message to room", data => {
-            io.to(data.room).emit("chat message", data.message);
+            io.to(data.room).emit("chat message", data);
         });
     });
 };

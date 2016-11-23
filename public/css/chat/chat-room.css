@@ -6,6 +6,7 @@
 
 body {
     font: 13px Helvetica, Arial;
+    background-color: white;
 }
 
 #messages {
@@ -15,15 +16,10 @@ body {
 }
 
 #messages li {
-    width: 40%;
-    margin: 2% 0 0 5%;
-    padding: 15px 0 15px 15px;
+    width: 100%;
+    margin: 2% 0 0 0;
     overflow: auto;
     border-radius: 10px;
-}
-
-#messages li:nth-child(odd) {
-    background: #eee;
 }
 
 .chat-avatar {
@@ -53,10 +49,43 @@ body {
     height: 100px;
     width: 100%;
     display: inline-block;
-    background: white;
+    background: #26C6DA;
+    color: white;
+    padding: 10px 10px 0 10px;
+    border-radius: 10px 10px 0 0;
 }
 
 #message-form button {
     margin: 0;
     width: 100%;
+}
+
+form::-moz-placeholder,
+form::-webkit-input-placeholder,
+form::-ms-input-placeholder,
+form:-moz-placeholder {
+    color: white !important;
+}
+
+.left, .right {
+    color: white;
+}
+
+.left {
+    float: left;
+    background-color: #00E676;
+    border-radius: 0 10px 10px 0;
+}
+
+.right {
+    float: right;
+    background-color: #2196F3;
+    padding: 15px 0 15px 15px;
+    border-radius: 10px 0 0 10px;
+}
+
+.message-container {
+    padding: 15px 0 15px 15px;
+    width: 40%;
+    height: 80px;
 }

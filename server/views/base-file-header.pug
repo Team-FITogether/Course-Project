@@ -2,7 +2,7 @@ extends ./base-master
 block header
     link(rel="stylesheet" href="/css/common/common.css")
     nav.navbar.navbar-fixed-top.navbar-color-on-scroll.navbar-success
-        .container
+        .container-fluid
             .navbar-header
                 button.navbar-toggle(type="button", data-toggle="collapse", data-target="#navbar")
                     span.sr-only Toggle navigation
@@ -13,7 +13,7 @@ block header
                     | FITogether logo
                     .ripple-container
             #navbar.collapse.navbar-collapse
-                form(action="/search" method="get").navbar-form.navbar-right
+                form(action="/search" method="get").navbar-form.navbar-left
                     div.form-group
                       input(type="text" name="searchValue" placeholder="Search").form-control
                     div.input-group
@@ -23,7 +23,7 @@ block header
                           option(value="exercises" style="color:black;") Exercises
                     button(type="submit").btn.btn-white.btn-fab.btn-fab-mini.btn-just-icon.btn-search
                       i.material-icons search
-                ul.nav.navbar-nav
+                ul.nav.navbar-nav.navbar-right
                     li
                       a(href="/articles?genre=FITogether") Наши статии
                     li.dropdown

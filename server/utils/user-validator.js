@@ -9,10 +9,12 @@ function isAdminUserMiddleware(req, res, next) {
 }
 
 function isTrainerUserMiddleware(req, res, next) {
-    if (!req.user || req.user.roles.indexOf("trainer") === -1 || req.user.roles.indexOf("admin") === -1) {
-        res.redirect("/users/login");
-    } else {
+    let user = req.user;
+
+    if (isInRole(user, "admin") || isInRole(user, "trainer")) {
         next();
+    } else {
+        res.redirect("/users/login");
     }
 }
 

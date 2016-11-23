@@ -23,9 +23,19 @@ function loadLoginPage(req, res) {
     res.send(html);
 }
 
+function getAllUsers(req, res) {
+    User.where().select("username").exec((err, users) => {
+        res.json(JSON.stringify(users));
+    });
+}
+
 function loadAdminPannel(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
-    res.render("admin-area/admin-pannel", { viewBag });
+    User.where().select("username").exec((err, data) => {
+        var users = data.map((u) => { return u.username });
+        //console.log(users);
+        res.render("admin-area/admin-pannel", { viewBag, users });
+    });
 }
 
 function registerUser(req, res) {
@@ -89,19 +99,27 @@ function logoutUser(req, res) {
 }
 
 function addRole(req, res) {
+    let viewBag = viewBagUtil.getViewBag(req);
+
     let body = req.body;
     let query = { username: body.username };
-    User.findOneAndUpdate(query, {
-        $push: {
-            "roles": body.role
-        }
-    }, err => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.redirect("/");
-        }
-    });
+    User.findOneAndUpdate(query, { $push: { "roles": body.role } },
+        (err, us) => {
+            if (!us) {
+                viewBag.error = `No user named ${body.username} was found.`;
+                return res.render("admin-area/admin-pannel", { viewBag })
+            }
+
+            if (err) {
+                viewBag.error = err;
+                console.log(err, us)
+                res.render("admin-area/admin-pannel", { viewBag })
+            } else {
+                viewBag.successMessage = `Role ${body.role} was succesfully set to user ${us.username}.`
+                console.log("success")
+                res.render("admin-area/admin-pannel", { viewBag })
+            }
+        });
 }
 
 function loadProfilePage(req, res) {
@@ -137,6 +155,8 @@ module.exports = {
     loadAdminPannel,
     loadProfilePage,
     loadFoundUserProfilePage,
+
+    getAllUsers,
 
     registerUser,
     loginUser,
