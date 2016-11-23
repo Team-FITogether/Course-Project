@@ -16,7 +16,8 @@ socket.on("connect", () => {
         let data = {
             sender: username,
             room: roomName,
-            message
+            message,
+            avatarSrc
         };
 
         socket.emit("chat message to room", data);
@@ -29,7 +30,6 @@ socket.on("connect", () => {
     let $message = $("<span />");
     let $allMessages = $("#messages");
     let $messageContainer = $("<div />");
-    $avatar.attr("src", avatarSrc);
     $avatar.addClass("img img-responsive img-circle chat-avatar");
     $message.addClass("chat-message");
     $messageContainer.append($avatar);
@@ -38,6 +38,7 @@ socket.on("connect", () => {
     socket.on("chat message", data => {
         let $currentLi = $li.clone(true);
         let $currentMessage = $message.clone();
+        let $currentAvatar = $avatar.clone();
         let $currentMessageContainer = $messageContainer.clone();
 
         if (data.sender === username) {
@@ -46,6 +47,8 @@ socket.on("connect", () => {
             $currentMessageContainer.addClass("left");
         }
 
+        $currentAvatar.attr("src", data.avatarSrc);
+        $currentMessageContainer.append($currentAvatar);
         $currentMessage.text(data.message);
         $currentMessageContainer.append($currentMessage);
         $currentLi.append($currentMessageContainer);
