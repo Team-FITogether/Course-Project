@@ -1,6 +1,7 @@
 "use strict";
 
 const Food = require("./../models/food.js");
+const FoodDetails = require("./../models/food-details.js");
 const viewBagUtil = require("./../utils/view-bag");
 
 function getAllFoods(req, res) {
@@ -14,15 +15,16 @@ function getAllFoods(req, res) {
 }
 
 function getSingleFood(req, res) {
-    let title = req.query.title;
     let viewBag = viewBagUtil.getViewBag(req);
+    let title = req.query.title;
+    
+    FoodDetails
+        .find({ "category": title })
+        .then((foods) => {
 
-    Food.find({ title })
-        .then((food) => {
+
             res.render("food/single-food", {
-                title: food[0].title,
-                body: food[0].body,
-                comments: food[0].comments,
+                foods,
                 viewBag
             });
         });
@@ -30,5 +32,5 @@ function getSingleFood(req, res) {
 
 module.exports = {
     getAllFoods,
-    getSingleFood,
+    getSingleFood
 };

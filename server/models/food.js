@@ -1,14 +1,11 @@
-"use strict";
+"use strict"
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let foodSchema = new Schema({
-    title: { type: String, required: true },
-    body: { type: String, required: true },
-    comments: []
+    title: { type: String, required: true }
 });
 
-const Food = mongoose.model("food", foodSchema, "foodgroups");
-
+const Food = mongoose.model("food", foodSchema, "foods");
 module.exports = Food;
