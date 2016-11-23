@@ -1,0 +1,13 @@
+extends ../sub-headers/sub-header-default.pug
+block content
+    link(rel="stylesheet" href="/css/users/found-user-profile.css")
+    div(class="card card-nav-tabs" id="found-user-container")
+        div(class="header header-info")
+            h3 user.username
+        div(class="content")
+            img(class="img-circle img-responsive" src="/img/user-images/" + user.avatarName)
+            if viewBag.isLoggedIn
+                form(action="/chat/invitation" method="get")
+                    input(type="hidden" name="initiator" value=currentUser.username)
+                    input(type="hidden" name="receiver" value=user.username)
+                    input(type="submit" class="btn btn-info btn-round" value="Започни Чат")

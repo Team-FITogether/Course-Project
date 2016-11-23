@@ -6,6 +6,7 @@ const expressSession = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const chatInvitationSse = require("../utils/chat-invitation-sse");
 
 module.exports = (app, config) => {
     app.set("view engine", "pug");
@@ -21,4 +22,5 @@ module.exports = (app, config) => {
     }));
     app.use(passport.initialize());
     app.use(passport.session());
+    app.use(chatInvitationSse);
 };

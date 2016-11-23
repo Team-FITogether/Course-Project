@@ -1,0 +1,18 @@
+doctype
+html
+    head
+        link(rel="stylesheet" href="/css/libs/bootstrap.min.css")
+        link(rel="stylesheet" href="/css/libs/material-kit.css")
+        link(rel="stylesheet" href="/css/chat/chat-room.css")
+    body
+        input(type="hidden" username=user.username id="username-holder")
+        input(type="hidden" avatar-src=user.avatarSrc id="avatarSrc-holder")
+
+        ul(id="messages")
+        form(action="" id="message-form")
+            textarea(id="tb-message" class="form-control"  autocomplete="off" placeholder="Write something...")
+            button(class="btn btn-info") Send
+        
+        script(src="https://cdn.socket.io/socket.io-1.2.0.js")
+        script(src="http://code.jquery.com/jquery-1.11.1.js")
+        script(src="/js/chat/chat.js")
