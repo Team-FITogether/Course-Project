@@ -6,16 +6,16 @@
   "configurations": [
     {
       "name": "Launch Program",
-      "type": "node2",
+      "type": "node",
       "request": "launch",
       "program": "${workspaceRoot}/index.js",
       "cwd": "${workspaceRoot}"
     },
     {
       "name": "Attach to Process",
-      "type": "node2",
+      "type": "node",
       "request": "attach",
-      "port": 8080
+      "port": 9229
     }
   ]
 }

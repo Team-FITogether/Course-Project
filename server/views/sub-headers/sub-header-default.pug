@@ -15,4 +15,14 @@ block sub
                   i.material-icons clear
               b Error:
               |  #{viewBag.error}
+        if viewBag.successMessage
+          .alert.alert-success
+            .container-fluid
+              .alert-icon
+                i.material-icons check
+              button.close(type='button', data-dismiss='alert', aria-label='Close')
+                span(aria-hidden='true')
+                  i.material-icons clear
+              b Success:
+              |  #{viewBag.successMessage}
         block content

@@ -1,6 +1,9 @@
 ﻿extends ../sub-headers/sub-header-default
 block content
     link(rel="stylesheet" href="/css/users/admin-panel.css")
+    link(rel="stylesheet" href="/jquery-ui/jquery-ui.css")
+    script(src="/jquery-ui/jquery-ui.js")
+    script(src="/js/users-autocomplete.js")
     div(id="admin-panel-container")
         nav(class="navbar navbar-info")
             h4 Добавяне на роля на потребител
@@ -9,7 +12,7 @@ block content
                 span(class="input-group-addon")
                     i(class="material-icons") face
                 div(class="form-group is-empty")
-                    input(type="text" name="username" class="form-control" placeholder="Username")
+                    input(type="text" id="users" name="username" class="form-control" placeholder="Username")
                     span(class="material-input")
             
             div(class="radio")
