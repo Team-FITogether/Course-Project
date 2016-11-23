@@ -3,6 +3,8 @@
 const Article = require("./../models/article.js");
 const viewBagUtil = require("./../utils/view-bag");
 
+const data = require("./../data")({ Article });
+
 function loadCreateArticlePage(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
 
@@ -13,10 +15,10 @@ function loadEditArticlePage(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
     let _id = req.body.articleId;
 
-    Article.findOne({ _id }).then(ar => {
-        let article = ar;
-        res.render("articles/edit-article", { article, viewBag });
-    });
+    data.getArticleById(_id)
+        .then(article => {
+            res.render("articles/edit-article", { article, viewBag });
+        });
 }
 
 function saveEditArticle(req, res) {
@@ -28,15 +30,14 @@ function saveEditArticle(req, res) {
     let update = { mainHeader: articleHeader, subHeader: articleSubHeader, body: articleBody };
     let options = { new: true };
 
-    Article.findOneAndUpdate({ _id }, update, options,
-        (err, ar) => {
-            if (err) {
-                console.log(err);
-            }
+    data.updateArticle(_id, update, options)
+        .then(() => {
+            res.redirect("/");
+        })
+        .catch((err) => {
+            console.log(err);
+
         });
-
-
-    res.redirect("/");
 }
 
 function createArticle(req, res) {
@@ -45,32 +46,20 @@ function createArticle(req, res) {
     let articleSubHeader = req.body.articleSubHeader;
     let articleGenre = "FITogether";
 
-    var article = new Article({
-        mainHeader: articleHeader,
-        subHeader: articleSubHeader,
-        author: req.user.username,
-        imgSrc: "",
-        genre: articleGenre,
-        body: articleBody
-    });
-
-    article.save((err, ar) => {
-        if (err) {
-            console.error(err);
+    data.createArticle(articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, "")
+        .then(() => {
+            res.redirect("/");
+        })
+        .catch(() => {
             req.redirect("/");
-        }
-
-        console.log(ar);
-    });
-
-    res.redirect("/");
+        });
 }
 
 function loadArticlesByGenrePage(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
     let genre = req.query.genre;
-    Article
-        .find({ genre })
+
+    data.getArticlesByGenre(genre)
         .then(articles => {
             res.render("articles/all-articles", { articles, viewBag });
         });
@@ -79,8 +68,8 @@ function loadArticlesByGenrePage(req, res) {
 function loadSingleArticlePage(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
     let title = req.query.title;
-    Article
-        .findOne({ mainHeader: title })
+
+    data.getArticleByTitle(title)
         .then(article => {
             let articleComments = article
                 .comments
@@ -114,8 +103,7 @@ function addComment(req, res) {
         postDate: Date.now()
     };
 
-    Article
-        .findById(body.entityId)
+    data.getArticleById(body.entityId)
         .then(article => {
             article.comments.push(comment);
             article.save();
