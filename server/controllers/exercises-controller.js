@@ -5,12 +5,13 @@ const ExerciseExplanation = require("./../models/exercise-explanation");
 const ExerciseCategory = require("./../models/exercise-category");
 const viewBagUtil = require("./../utils/view-bag");
 
+const data = require("./../data")({ ExerciseCategory, ExerciseExplanation, Exercise });
+
 function getAllExercisesByCategory(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
     let category = req.query.category;
 
-    Exercise
-        .find({ "bodyPart": category })
+    data.getAllExercisesByCategory(category)
         .then(exercises => {
             res.render("exercises/exercise-by-category", { exercises, viewBag });
         });
@@ -19,8 +20,7 @@ function getAllExercisesByCategory(req, res) {
 function getAllCategoriesOfExercise(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
 
-    ExerciseCategory
-        .find()
+    data.getAllCategories()
         .then(exercises => {
             res.render("exercises/all-exercises", { exercises, viewBag });
         });
@@ -30,8 +30,7 @@ function getSingleExercise(req, res) {
     let title = req.query.title;
     let viewBag = viewBagUtil.getViewBag(req);
 
-    ExerciseExplanation
-        .findOne({ title })
+    data.getSingleExercise(title)
         .then((explanation) => {
             let excersiseComments = explanation
                 .comments
@@ -56,18 +55,16 @@ function getSingleExercise(req, res) {
 }
 
 function addComment(req, res) {
- 
+
     let body = req.body;
     let comment = {
         content: body.content,
         author: req.user.username,
         postDate: Date.now()
     };
-    
-    ExerciseExplanation
-        .findById(body.entityId)
+
+    data.getExerciseExplanationById(body.entityId)
         .then(ex => {
-            console.log(ex);
             ex.comments.push(comment);
             ex.save();
             res.redirect("back");
