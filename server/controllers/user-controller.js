@@ -7,7 +7,6 @@ const config = require("../configurations");
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const encryption = require("../utils/encryption");
-const fs = require("fs");
 const viewBagUtil = require("./../utils/view-bag");
 const Article = require("./../models/article");
 
@@ -85,7 +84,7 @@ function loginUser(req, res, next) {
             viewBag.error = info.message;
             return res.render("user/login", { viewBag });
         }
-        req.login(user, (err) => {
+        req.login(user, err => {
             if (err) {
                 return next(err); // black magic
             }
@@ -137,11 +136,25 @@ function loadProfilePage(req, res) {
         });
 }
 
+function loadFoundUserProfilePage(req, res) {
+    User
+        .findById(req.params.id)
+        .then(user => {
+            res.render("user/found-user-profile", {
+                user,
+                currentUser: req.user,
+                viewBag: viewBagUtil.getViewBag(req)
+            });
+        })
+        .catch(console.log);
+}
+
 module.exports = {
     loadRegisterPage,
     loadLoginPage,
     loadAdminPannel,
     loadProfilePage,
+    loadFoundUserProfilePage,
 
     getAllUsers,
 
