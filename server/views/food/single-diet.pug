@@ -1,6 +1,25 @@
 extends ../sub-headers/sub-header-default
 block content
+  link(rel="stylesheet" href="/css/articles/diet-details.css")
+  div.container
     h1 #{title}
     div !{body}
-    div !{comments}
-        div(class="card card-nav-tabs")
+    div(class="card card-nav-tabs")
+      div(class="header header-info" id="comments-header") 
+        h3 Comments: #{comments.length}
+      div(class="content")
+        ul(class="comments-container section")
+          if comments
+            each comment in comments
+              li
+                blockquote
+                  p #{comment.content}
+                  small() #{comment.author} on #{comment.postDate}
+ 
+    if viewBag.isLoggedIn
+      div.section
+        form(action="/excercises/comments/add" method="post")
+          div.container(style="margin-top: 50px")
+            textarea(name="content" class="form-control" rows="3" placeholder="Comment")
+            input(type="hidden" name="entityId" value=id)
+            input(type="submit" value="Comment" class="btn btn-info")

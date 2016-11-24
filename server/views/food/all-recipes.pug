@@ -1,6 +1,7 @@
 extends ../sub-headers/sub-header-default
 block content
-    ul
+    link(rel="stylesheet" href="/css/articles/all-articles.css")
     each val in recipes
-        li
+        div.article-container
             a(href="/recipes/single-recipe?title=" + val.title) #{val.title}
+            div.divider
