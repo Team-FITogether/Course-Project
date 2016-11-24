@@ -1,3 +1,7 @@
+.header-default {
+    min-height: 165px !important;
+}
+
 li {
     list-style-type: none;
 }

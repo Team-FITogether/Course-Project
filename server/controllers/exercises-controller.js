@@ -3,32 +3,42 @@
 const Exercise = require("./../models/exercise.js");
 const ExerciseExplanation = require("./../models/exercise-explanation");
 const ExerciseCategory = require("./../models/exercise-category");
-const viewBagUtil = require("./../utils/view-bag");
 
 const data = require("./../data")({ ExerciseCategory, ExerciseExplanation, Exercise });
 
 function getAllExercisesByCategory(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     let category = req.query.category;
 
     data.getAllExercisesByCategory(category)
         .then(exercises => {
-            res.render("exercises/exercise-by-category", { exercises, viewBag });
+            res.render("exercises/exercise-by-category", { user, exercises });
         });
 }
 
 function getAllCategoriesOfExercise(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
 
     data.getAllCategories()
         .then(exercises => {
-            res.render("exercises/all-exercises", { exercises, viewBag });
+            res.render("exercises/all-exercises", { user, exercises });
         });
 }
 
 function getSingleExercise(req, res) {
     let title = req.query.title;
-    let viewBag = viewBagUtil.getViewBag(req);
+
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
 
     data.getSingleExercise(title)
         .then((explanation) => {
@@ -49,7 +59,7 @@ function getSingleExercise(req, res) {
                 author: explanation.author,
                 comments: excersiseComments,
                 id: explanation._id,
-                viewBag
+                user
             });
         });
 }

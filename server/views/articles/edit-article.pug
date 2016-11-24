@@ -1,43 +1,21 @@
-extends ../sub-headers/sub-header-default
+extends ../base-master
 block content
   
   script(src="../tinymce/tinymce.min.js")
   script(src="../tinymce/jquery.tinymce.min.js")
+  script(src="/js/tinymce-config.js")
 
-  script.
-    tinyMCE.baseURL = "/tinymce";
-
-    $(document).ready(function() {
-    tinymce.init({
-    selector: "textarea#tinymce",
-    theme: "modern",    
-    height: 300,
-    plugins: [
-    "advlist autolink link lists charmap print preview hr anchor pagebreak spellchecker",
-    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking",
-    "save contextmenu directionality emoticons template paste textcolor"
-    ],
-    content_css: "../css/libs/bootstrap.min.css",
-    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify bullist numlist forecolor | outdent indent | l      ink | save ",
-    style_formats: [
-    {title: 'Bold text', inline: 'b'},
-    {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
-    {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
-    {title: 'Example 1', inline: 'span', classes: 'example1'},
-    {title: 'Example 2', inline: 'span', classes: 'example2'},
-    {title: 'Table styles'},
-    {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
-    ]
-    });
-    });
-
-  form(method="post" action="/articles/create/update")
-    div.row.container
-      div.col-md-4
-        div.form-group 
-          input(type="text", name="articleHeader", placeholder="Header", value="" + article.mainHeader).form-control
-          input(type="hidden", name="articleId", value="" + article._id).form-control
-      div.col-md-4
-        div.form-group
-          input(type="text", name="articleSubHeader", placeholder="Subheader", value="" +  article.subHeader).form-control
-    textarea(name="articleBody")#tinymce !{article.body}
+  div.header.header-default
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+        form(method="post" action="/articles/create/update")
+          div.row.container
+            div.col-md-4
+              div.form-group 
+                input(type="text", name="articleHeader", placeholder="Header", value="" + article.mainHeader).form-control
+                input(type="hidden", name="articleId", value="" + article._id).form-control
+            div.col-md-4
+              div.form-group
+                input(type="text", name="articleSubHeader", placeholder="Subheader", value="" +  article.subHeader).form-control
+          textarea(name="articleBody")#tinymce !{article.body}

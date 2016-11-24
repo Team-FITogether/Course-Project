@@ -2,20 +2,26 @@
 
 const Food = require("./../models/food.js");
 const FoodDetails = require("./../models/food-details.js");
-const viewBagUtil = require("./../utils/view-bag");
 
 function getAllFoods(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
 
     Food
         .find()
         .then(foods => {
-            res.render("food/all-foods", { foods, viewBag });
+            res.render("food/all-foods", { foods, user });
         });
 }
 
 function getSingleFood(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     let title = req.query.title;
     
     FoodDetails
@@ -24,8 +30,8 @@ function getSingleFood(req, res) {
 
 
             res.render("food/single-food", {
-                foods,
-                viewBag
+                user,
+                foods
             });
         });
 }

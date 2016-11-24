@@ -1,7 +1,6 @@
 "use strict";
 
 const Recipe = require("./../models/recipe.js");
-const viewBagUtil = require("./../utils/view-bag");
 
 function sortRecipes(recipes) {
     return recipes.sort((a, b) => {
@@ -12,19 +11,26 @@ function sortRecipes(recipes) {
 }
 
 function getAllRecipes(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
 
     Recipe
         .find()
         .then(recipes => {
             sortRecipes(recipes);
-            res.render("food/all-recipes", { recipes, viewBag });
+            res.render("food/all-recipes", { user, recipes });
         });
 }
 
 function getSingleRecipe(req, res) {
     let title = req.query.title;
-    let viewBag = viewBagUtil.getViewBag(req);
+
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
 
     Recipe.find({ title })
         .then((recipe) => {
@@ -33,7 +39,7 @@ function getSingleRecipe(req, res) {
                 body: recipe[0].body,
                 imgSrc: recipe[0].imgSrc,
                 comments: recipe[0].comments,
-                viewBag
+                user
             });
         });
 

@@ -31,8 +31,6 @@ module.exports = function(models) {
             });
         },
         getArticleByTitle(title) {
-            console.log(title);
-
             return new Promise((resolve, reject) => {
                 Article
                     .findOne({ mainHeader: title }, (err, article) => {

@@ -1,3 +1,5 @@
+include ./mixins/base-file-header
+
 doctype
 html
     head
@@ -19,18 +21,13 @@ html
         script(src="/js/jquery.min.js", type="text/javascript")
         script(src="/js/bootstrap.min.js", type="text/javascript")
         script(src="/js/material.min.js")
-        // Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/
         script(src="/js/nouislider.min.js", type="text/javascript")
-        // Plugin for the Datepicker, full documentation here: http://www.eyecon.ro/bootstrap-datepicker/
         script(src="/js/bootstrap-datepicker.js", type="text/javascript")
-        // Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc
         script(src="/js/material-kit.js", type="text/javascript")
         script(src="/js/chat/chat-stream.js")
 
         title FITogether
-    if viewBag.isOnHomePage
-      body.landing-page 
-    else
-      body
-
-block header
+        body
+          div.wrapper
+            +header(user)
+            block content

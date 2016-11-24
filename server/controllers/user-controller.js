@@ -7,20 +7,14 @@ const config = require("../configurations");
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const encryption = require("../utils/encryption");
-const viewBagUtil = require("./../utils/view-bag");
 const Article = require("./../models/article");
 
 function loadRegisterPage(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
-    res.render("user/register", { viewBag });
+    res.render("user/register");
 }
 
 function loadLoginPage(req, res) {
-    let pathToReadFrom = path.join(config.rootPath, "server/views/user/login.pug");
-    let viewBag = viewBagUtil.getViewBag(req);
-    let compiledFile = pug.compileFile(pathToReadFrom);
-    let html = compiledFile({ viewBag });
-    res.send(html);
+    res.render("user/login");
 }
 
 function getAllUsers(req, res) {
@@ -30,21 +24,29 @@ function getAllUsers(req, res) {
 }
 
 function loadAdminPannel(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     User.where().select("username").exec((err, data) => {
         var users = data.map((u) => { return u.username });
-        //console.log(users);
-        res.render("admin-area/admin-pannel", { viewBag, users });
+        res.render("admin-area/admin-pannel", { user, users });
     });
 }
 
 function registerUser(req, res) {
     const body = req.body;
 
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     User
         .findOne({ username: body.username })
-        .then(user => {
-            if (!user) {
+        .then(foundUser => {
+            if (!foundUser) {
                 let salt = encryption.getSalt();
                 let passHash = encryption.getPassHash(salt, body.password);
                 let userData = {
@@ -66,25 +68,29 @@ function registerUser(req, res) {
                     });
             } else {
                 res.status(409);
-                let viewBag = viewBagUtil.getViewBag(req);
-                viewBag.error = "User already exists";
-                res.render("user/register", { viewBag });
+                //TODO error when user registration failed preferably with AJAX
+                res.render("user/register", { user });
                 res.end();
             }
         });
 }
 
 function loginUser(req, res, next) {
-    passport.authenticate("local", (err, user, info) => {
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
+    passport.authenticate("local", (err, userModel, info) => {
         if (err) {
             return next(err); // 500 error
         }
-        if (!user) {
-            let viewBag = viewBagUtil.getViewBag(req);
+        if (!userModel) {
+            // TODO error handling when no user preferably with AJAX
             viewBag.error = info.message;
-            return res.render("user/login", { viewBag });
+            return res.render("user/login", { user });
         }
-        req.login(user, err => {
+        req.login(userModel, err => {
             if (err) {
                 return next(err); // black magic
             }
@@ -99,51 +105,65 @@ function logoutUser(req, res) {
 }
 
 function addRole(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
 
     let body = req.body;
     let query = { username: body.username };
     User.findOneAndUpdate(query, { $push: { "roles": body.role } },
         (err, us) => {
             if (!us) {
-                viewBag.error = `No user named ${body.username} was found.`;
-                return res.render("admin-area/admin-pannel", { viewBag })
+                //TODO error handlig preferably with AJAX
+                //viewBag.error = `No user named ${body.username} was found.`;
+                return res.render("admin-area/admin-pannel", { user });
             }
 
             if (err) {
-                viewBag.error = err;
-                console.log(err, us)
-                res.render("admin-area/admin-pannel", { viewBag })
+                //TODO error handlig preferably with AJAX
+                //viewBag.error = err;
+                console.log(err, us);
+                res.render("admin-area/admin-pannel", { user });
             } else {
-                viewBag.successMessage = `Role ${body.role} was succesfully set to user ${us.username}.`
-                console.log("success")
-                res.render("admin-area/admin-pannel", { viewBag })
+                //TODO error handlig preferably with AJAX
+                //viewBag.successMessage = `Role ${body.role} was succesfully set to user ${us.username}.`;
+                console.log("success");
+                res.render("admin-area/admin-pannel", { user });
             }
         });
 }
 
 function loadProfilePage(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+        user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
+    }
+
     let author = req.user.username;
     Article.find({ author })
         .then(articles => {
             res.render("user/profile", {
-                avatarName: req.user.avatarName,
-                username: req.user.username,
-                viewBag,
+                user,
                 articles
             });
         });
 }
 
 function loadFoundUserProfilePage(req, res) {
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     User
-        .findById(req.params.id)
-        .then(user => {
+        .findById(req.query.id)
+        .then(foundUser => {
+            console.log(req.query.id);
             res.render("user/found-user-profile", {
-                user,
-                currentUser: req.user,
-                viewBag: viewBagUtil.getViewBag(req)
+                foundUser,
+                user
             });
         })
         .catch(console.log);

@@ -11,7 +11,9 @@ function isAdminUserMiddleware(req, res, next) {
 function isTrainerUserMiddleware(req, res, next) {
     let user = req.user;
 
-    if (isInRole(user, "admin") || isInRole(user, "trainer")) {
+    if (!user) {
+        res.redirect("/users/login");
+    } else if (isInRole(user, "admin") || isInRole(user, "trainer")) {
         next();
     } else {
         res.redirect("/users/login");

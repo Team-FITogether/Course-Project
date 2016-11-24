@@ -1,25 +1,32 @@
 const mongoose = require("mongoose");
 
-function findUsers(username, isLoggedIn, res) {
+function findUsers(username, isLoggedIn, req, res) {
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     mongoose
         .model("user")
         .where({ username: new RegExp(username, "i") })
         .select("_id username")
-        .exec((err, data) => {
+        .exec((err, users) => {
             if (err) {
                 console.log(err);
             } else {
                 res.render("searches/found-users.pug", {
-                    users: data,
-                    viewBag: {
-                        isLoggedIn
-                    }
+                    users,
+                    user
                 });
             }
         });
 }
 
-function findExercises(exerciseName, isLoggedIn, res) {
+function findExercises(exerciseName, isLoggedIn, req, res) {
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
 
     mongoose
         .model("exercise")
@@ -46,9 +53,9 @@ function findEntities(req, res) {
     console.log(entityName);
 
     if (entityName === "users") {
-        findUsers(query.searchValue, isLoggedIn, res);
+        findUsers(query.searchValue, isLoggedIn, req, res);
     } else if (entityName === "exercises") {
-        findExercises(query.searchValue, isLoggedIn, res);
+        findExercises(query.searchValue, isLoggedIn, req, res);
     }
 }
 

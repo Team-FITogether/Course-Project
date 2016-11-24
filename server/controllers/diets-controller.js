@@ -1,21 +1,27 @@
 "use strict";
 
 const Diet = require("./../models/diet.js");
-const viewBagUtil = require("./../utils/view-bag");
 
 function getAllDiets(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
 
     Diet
         .find()
         .then(diets => {
-            res.render("food/all-diets", { diets, viewBag });
+            res.render("food/all-diets", { user, diets });
         });
 }
 
 function getSingleDiet(req, res) {
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     let title = req.query.title;
-    let viewBag = viewBagUtil.getViewBag(req);
 
     Diet.find({ title })
         .then((diet) => {
@@ -24,7 +30,7 @@ function getSingleDiet(req, res) {
                 body: diet[0].body,
                 imgSrc: diet[0].imgSrc,
                 comments: diet[0].comments,
-                viewBag
+                user
             });
         });
 

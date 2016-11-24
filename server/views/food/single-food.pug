@@ -1,19 +1,23 @@
-extends ../sub-headers/sub-header-default
+extends ../base-master
+
 block content
-	table
-	thead
-	tr: th
-		td Група храна Детайли
-		td Калории
-		td Белтъчини
-		td Въглехидрати
-		td Мазнини
-		br
-	tbody
-	each food in foods
-		td #{food.title} #{food.details}
-		td #{food.calories}
-		td #{food.proteins}
-		td #{food.carbs}
-		td #{food.fats}
-		br
+  div.header.header-default
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+      table.table.table-hover
+        thead
+          tr 
+            th Група храна Детайли
+            th Калории
+            th Белтъчини
+            th Въглехидрати
+            th Мазнини
+        tbody
+        each food in foods
+          tr
+            td #{food.title} #{food.details}
+            td #{food.calories}
+            td #{food.proteins}
+            td #{food.carbs}
+            td #{food.fats}

@@ -1,24 +1,27 @@
-extends ../sub-headers/sub-header-default
+extends ../base-master
 
 block content
-    link(rel="stylesheet" href="/css/users/profile.css")
-
-    div(class="content row" id="profile-container")
-        div.col-md-6
-            if viewBag.isTrainer
-              h3.trainer-title #{username}
-            else 
-              h3 #{username}
-        
-            img(class="img-circle img-responsive" src="/img/user-images/" + avatarName id="avatar-image")
-            if viewBag.isTrainer
-              a(href="/articles/create", title="create article").btn.btn-default Create Article 
-        div.col-md-6
-          if viewBag.isTrainer
-            h3 My articles
-            each val in articles
-              div.article-container
-                a(href="/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
-                br
-                small.article-subheader #{val.subHeader} 
-                div.divider
+  link(rel="stylesheet" href="/css/users/profile.css") 
+  div.header.header-default
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+        div(class="content row" id="profile-container")
+            div.col-md-6
+                if user.isTrainer
+                  h3.trainer-title #{user.username}
+                else 
+                  h3 #{user.username}
+            
+                img(class="img-circle img-responsive" src="/img/user-images/" + user.avatarName id="avatar-image")
+                if user.isTrainer
+                  a(href="/articles/create", title="create article").btn.btn-default Create Article 
+            div.col-md-6
+              if user.isTrainer
+                h3 My articles
+                each val in articles
+                  div.article-container
+                    a(href="/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
+                    br
+                    small.article-subheader #{val.subHeader} 
+                    div.divider

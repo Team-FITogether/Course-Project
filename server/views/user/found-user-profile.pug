@@ -1,13 +1,19 @@
-extends ../sub-headers/sub-header-default.pug
+extends ../base-master
+
 block content
-    link(rel="stylesheet" href="/css/users/found-user-profile.css")
-    div(class="card card-nav-tabs" id="found-user-container")
-        div(class="header header-info")
-            h3 user.username
-        div(class="content")
-            img(class="img-circle img-responsive" src="/img/user-images/" + user.avatarName)
-            if viewBag.isLoggedIn
-                form(action="/chat/invitation" method="get")
-                    input(type="hidden" name="initiator" value=currentUser.username)
-                    input(type="hidden" name="receiver" value=user.username)
-                    input(type="submit" class="btn btn-info btn-round" value="Започни Чат")
+  link(rel="stylesheet" href="/css/users/found-user-profile.css")
+  div.header.header-default
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+        div(class="card card-nav-tabs" id="found-user-container")
+            div(class="header header-info")
+                h3 #{foundUser.username}
+            div(class="content")
+                img(class="img-circle img-responsive" src="/img/user-images/" + foundUser.avatarName)
+                if user
+                    form(action="/chat/invitation" method="get")
+                      input(type="hidden" name="initiator" value=foundUser.username)
+                      input(type="hidden" name="receiver" value=user.username)
+                      input(type="submit" class="btn btn-info btn-round" value="Започни Чат")
+        

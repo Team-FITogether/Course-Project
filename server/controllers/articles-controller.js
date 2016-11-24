@@ -1,72 +1,51 @@
 "use strict";
 
 const Article = require("./../models/article.js");
-const viewBagUtil = require("./../utils/view-bag");
-
 const data = require("./../data")({ Article });
 
 function loadCreateArticlePage(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
 
-    res.render("articles/create-article", { viewBag });
+    res.render("articles/create-article", { user });
 }
 
 function loadEditArticlePage(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     let _id = req.body.articleId;
 
     data.getArticleById(_id)
         .then(article => {
-            res.render("articles/edit-article", { article, viewBag });
-        });
-}
-
-function saveEditArticle(req, res) {
-    let articleBody = req.body.articleBody;
-    let articleHeader = req.body.articleHeader;
-    let articleSubHeader = req.body.articleSubHeader;
-    let _id = req.body.articleId;
-
-    let update = { mainHeader: articleHeader, subHeader: articleSubHeader, body: articleBody };
-    let options = { new: true };
-
-    data.updateArticle(_id, update, options)
-        .then(() => {
-            res.redirect("/");
-        })
-        .catch((err) => {
-            console.log(err);
-
-        });
-}
-
-function createArticle(req, res) {
-    let articleBody = req.body.articleBody;
-    let articleHeader = req.body.articleHeader;
-    let articleSubHeader = req.body.articleSubHeader;
-    let articleGenre = "FITogether";
-
-    data.createArticle(articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, "")
-        .then(() => {
-            res.redirect("/");
-        })
-        .catch(() => {
-            req.redirect("/");
+            res.render("articles/edit-article", { user, article });
         });
 }
 
 function loadArticlesByGenrePage(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     let genre = req.query.genre;
 
     data.getArticlesByGenre(genre)
         .then(articles => {
-            res.render("articles/all-articles", { articles, viewBag });
+            res.render("articles/all-articles", { user, articles });
         });
 }
 
 function loadSingleArticlePage(req, res) {
-    let viewBag = viewBagUtil.getViewBag(req);
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
     let title = req.query.title;
 
     data.getArticleByTitle(title)
@@ -90,8 +69,41 @@ function loadSingleArticlePage(req, res) {
                 id: article._id,
                 isLoggedIn: !!req.user,
                 comments: articleComments,
-                viewBag
+                user
             });
+        });
+}
+
+function saveEditArticle(req, res) {
+    let articleBody = req.body.articleBody;
+    let articleHeader = req.body.articleHeader;
+    let articleSubHeader = req.body.articleSubHeader;
+    let _id = req.body.articleId;
+
+    let update = { mainHeader: articleHeader, subHeader: articleSubHeader, body: articleBody };
+    let options = { new: true };
+
+    data.updateArticle(_id, update, options)
+        .then(() => {
+            res.redirect("/");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function createArticle(req, res) {
+    let articleBody = req.body.articleBody;
+    let articleHeader = req.body.articleHeader;
+    let articleSubHeader = req.body.articleSubHeader;
+    let articleGenre = "FITogether";
+
+    data.createArticle(articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, "")
+        .then(() => {
+            res.redirect("/");
+        })
+        .catch(() => {
+            req.redirect("/");
         });
 }
 
@@ -114,10 +126,12 @@ function addComment(req, res) {
 
 module.exports = {
     loadCreateArticlePage,
-    createArticle,
+    loadEditArticlePage,
+
     loadArticlesByGenrePage,
     loadSingleArticlePage,
-    addComment,
-    loadEditArticlePage,
-    saveEditArticle
+
+    createArticle,
+    saveEditArticle,
+    addComment
 };

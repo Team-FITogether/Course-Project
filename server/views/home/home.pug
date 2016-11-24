@@ -1,4 +1,11 @@
-extends ../sub-headers/sub-header-home
+extends ../base-master
+include ../mixins/sub-header-home
+
+  script(src="/js/landing-page.js")
+
 block content
-   h1 THIS IS HOMEPAGE #{viewBag.isOnHomePage}
-    
+  +homeSubheaderMixin
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+      h1 #{model.content}
