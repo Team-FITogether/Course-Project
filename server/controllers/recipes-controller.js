@@ -3,6 +3,8 @@
 const Recipe = require("./../models/recipe.js");
 const viewBagUtil = require("./../utils/view-bag");
 
+const data = require("./../data")({ Recipe })
+
 function sortRecipes(recipes) {
     return recipes.sort((a, b) => {
         let firstTitle = a.title.toUpperCase();
@@ -14,8 +16,7 @@ function sortRecipes(recipes) {
 function getAllRecipes(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
 
-    Recipe
-        .find()
+    data.getAllRecipes()
         .then(recipes => {
             sortRecipes(recipes);
             res.render("food/all-recipes", { recipes, viewBag });
@@ -25,8 +26,8 @@ function getAllRecipes(req, res) {
 function getSingleRecipe(req, res) {
     let title = req.query.title;
     let viewBag = viewBagUtil.getViewBag(req);
-
-    Recipe.find({ title })
+    console.log(title);
+    data.getSingleRecipe(title)
         .then((recipe) => {
             res.render("food/single-recipe", {
                 title: recipe[0].title,

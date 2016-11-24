@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 let dietSchema = new Schema({
     title: { type: String, required: true },
-    body: {type: String, required: true },
+    body: { type: String, required: true },
     comments: []
 });
 

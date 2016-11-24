@@ -3,11 +3,12 @@
 const Diet = require("./../models/diet.js");
 const viewBagUtil = require("./../utils/view-bag");
 
+const data = require("./../data")({ Diet });
+
 function getAllDiets(req, res) {
     let viewBag = viewBagUtil.getViewBag(req);
 
-    Diet
-        .find()
+    data.getAllDiets()
         .then(diets => {
             res.render("food/all-diets", { diets, viewBag });
         });
@@ -16,14 +17,13 @@ function getAllDiets(req, res) {
 function getSingleDiet(req, res) {
     let title = req.query.title;
     let viewBag = viewBagUtil.getViewBag(req);
-
-    Diet.find({ title })
-        .then((diet) => {
+    data.getSingleDiet(title)
+        .then((diet) => { 
             res.render("food/single-diet", {
-                title: diet[0].title,
-                body: diet[0].body,
-                imgSrc: diet[0].imgSrc,
-                comments: diet[0].comments,
+                title: diet.title,
+                body: diet.body,
+                imgSrc: diet.imgSrc,
+                comments: diet.comments,
                 viewBag
             });
         });
