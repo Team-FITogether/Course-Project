@@ -27,6 +27,11 @@ li {
     color: rebeccapurple;
 }
 
+.btn-edit{
+    float: right !important;
+    top: -55px;
+}
+
 /* ==========  Select Field Variables ========== */
 /* ==========  Select Field ========== */
 /* Style Select Field */

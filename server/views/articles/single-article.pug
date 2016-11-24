@@ -3,6 +3,14 @@ block content
   link(rel="stylesheet" href="/css/articles/comments.css")
   div.container
    h1 #{mainHeader}
+   if viewBag.isTrainer
+    form(method="post", action="/articles/edit")
+      input(type="hidden" name="articleId" value=id)
+      button.btn.btn-warning.btn-edit Edit
+   else if viewBag.isAdmin
+    form(method="post", action="/articles/edit")
+      input(type="hidden" name="articleId" value=id)
+      button.btn.btn-warning.btn-edit Edit
    h3 #{subHeader}
    h5 by #{author}
    div !{body}
