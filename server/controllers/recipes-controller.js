@@ -2,6 +2,8 @@
 
 const Recipe = require("./../models/recipe.js");
 
+const data = require("./../data")({ Recipe })
+
 function sortRecipes(recipes) {
     return recipes.sort((a, b) => {
         let firstTitle = a.title.toUpperCase();
@@ -16,8 +18,7 @@ function getAllRecipes(req, res) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
 
-    Recipe
-        .find()
+    data.getAllRecipes()
         .then(recipes => {
             sortRecipes(recipes);
             res.render("food/all-recipes", { user, recipes });
@@ -31,8 +32,7 @@ function getSingleRecipe(req, res) {
     if (req.user) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
-
-    Recipe.find({ title })
+    data.getSingleRecipe(title)
         .then((recipe) => {
             res.render("food/single-recipe", {
                 title: recipe[0].title,
@@ -42,7 +42,6 @@ function getSingleRecipe(req, res) {
                 user
             });
         });
-
 }
 
 module.exports = { getAllRecipes, getSingleRecipe };
