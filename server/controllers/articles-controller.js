@@ -67,7 +67,6 @@ function loadSingleArticlePage(req, res) {
                 author: article.author,
                 body: article.body,
                 id: article._id,
-                isLoggedIn: !!req.user,
                 comments: articleComments,
                 user
             });

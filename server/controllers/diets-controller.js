@@ -22,19 +22,52 @@ function getSingleDiet(req, res) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
 
+
     let title = req.query.title;
-    let viewBag = viewBagUtil.getViewBag(req);
     data.getSingleDiet(title)
         .then((diet) => { 
+            let dietComments = diet
+                .comments
+                .map(c => {
+                    return {
+                        content: c.content,
+                        postDate: c.postDate.toString().substring(0, 25),
+                        author: c.author
+                    };
+                });
+
             res.render("food/single-diet", {
+                id: diet._id,
                 title: diet.title,
                 body: diet.body,
                 imgSrc: diet.imgSrc,
-                comments: diet.comments,
-                viewBag
+                comments: dietComments,
+                user
             });
         });
 
 }
 
-module.exports = { getAllDiets, getSingleDiet };
+function addComment(req, res) {
+    let body = req.body;
+    let comment = {
+        content: body.content,
+        author: req.user.username,
+        postDate: Date.now()
+    };
+
+    data.getDietById(body.entityId)
+        .then(diet => {
+            diet.comments.push(comment);
+            diet.save();
+            res.redirect("back");
+        })
+        .catch(err => res.status(500).send(err));
+}
+
+
+module.exports = {
+    getAllDiets,
+    getSingleDiet,
+    addComment
+};

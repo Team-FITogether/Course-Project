@@ -7,7 +7,11 @@ let recipeSchema = new Schema({
     title: { type: String, required: true },
     body: {type: String, required: true },
     imgSrc: { type: String },
-    comments: []
+    comments: [{
+        content: String,
+        author: String,
+        postDate: Date
+    }]
 });
 
 const Recipe = mongoose.model("recipe", recipeSchema, "recipes");

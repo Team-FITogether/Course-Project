@@ -28,6 +28,18 @@ module.exports = function(models) {
                         return resolve(diet);
                     });
             });
+        },
+        getDietById(id) {
+            return new Promise((resolve, reject) => {
+                Diet
+                    .findOne({ "_id": id }, (err, diet) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(diet);
+                });
+            });
         }
     }
 }

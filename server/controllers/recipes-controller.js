@@ -35,6 +35,7 @@ function getSingleRecipe(req, res) {
     data.getSingleRecipe(title)
         .then((recipe) => {
             res.render("food/single-recipe", {
+                id: recipe[0]._id,
                 title: recipe[0].title,
                 body: recipe[0].body,
                 imgSrc: recipe[0].imgSrc,
@@ -44,4 +45,25 @@ function getSingleRecipe(req, res) {
         });
 }
 
-module.exports = { getAllRecipes, getSingleRecipe };
+function addComment(req, res) {
+    let body = req.body;
+    let comment = {
+        content: body.content,
+        author: req.user.username,
+        postDate: Date.now()
+    };
+
+    data.getRecipeById(body.entityId)
+        .then(recipe => {
+            recipe.comments.push(comment);
+            recipe.save();
+            res.redirect("back");
+        })
+        .catch(err => res.status(500).send(err));
+}
+
+module.exports = {
+    getAllRecipes,
+    getSingleRecipe,
+    addComment
+};

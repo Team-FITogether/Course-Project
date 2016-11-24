@@ -1,7 +1,7 @@
 /* globals require module Promise*/
 "use strict";
 
-module.exports = function(models) {
+module.exports = function (models) {
     let Recipe = models.Recipe;
 
     return {
@@ -28,6 +28,19 @@ module.exports = function(models) {
                         return resolve(recipe);
                     });
             });
+        },
+        getRecipeById(id) {
+            return new Promise((resolve, reject) => {
+                Recipe
+                    .findOne({ "_id": id }, (err, recipe) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(recipe);
+                    });
+            });
         }
+
     }
 }

@@ -5,4 +5,6 @@ const controllers = require("../controllers");
 module.exports = (app) => {
     app.get("/diets", controllers.diets.getAllDiets);
     app.get("/diets/single-diet", controllers.diets.getSingleDiet);
+
+    app.post("/diets/comments/add", controllers.diets.addComment);
 };

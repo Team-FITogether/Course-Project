@@ -21,9 +21,9 @@ block content
                      p #{comment.content}
                      small() #{comment.author} on #{comment.postDate}
        
-       if viewBag.isLoggedInx
+       if user
          div.section
-           form(action="/excercises/comments/add" method="post")
+           form(action="/recipes/comments/add" method="post")
              div.container(style="margin-top: 50px")
                textarea(name="content" class="form-control" rows="3" placeholder="Comment")
                input(type="hidden" name="entityId" value=id)

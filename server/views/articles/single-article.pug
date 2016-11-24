@@ -32,7 +32,7 @@ block content
                         p #{comment.content}
                         small() #{comment.author} on #{comment.postDate}
        
-          if isLoggedIn
+          if user
             div.section
               form(action="/articles/comments/add" method="post")
                 div.container(style="margin-top: 50px")
