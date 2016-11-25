@@ -1,11 +1,11 @@
 extends ../base-master
 
 block content
-  div.header.header-default
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-      ul
-          each user in users
-              li
-                  a(href="/user?id=" + user._id) #{user.username}
+    div.header.header-default
+    div.main.main-raised
+        div.section.section-basic
+            div.container-fluid
+            ul
+                each user in users
+                    li
+                        a(href="/user?id=" + user._id) #{user.username}

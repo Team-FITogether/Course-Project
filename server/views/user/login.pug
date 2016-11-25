@@ -1,22 +1,22 @@
 extends ../base-master
 
 block content
-  .section.section-full-screen.section-signup(style="background-image: url('/img/material-kit-images/bg3.jpeg'); background-size: cover; background-position: top center; ")
-    .container
-      .row
-        .col-md-4.col-md-offset-4
-          .card.card-signup
-            form.form(action="/users/login" method="post")
-              .header.header-success.text-center
-                h4 Sign In
-              .content
-                .input-group
-                  span.input-group-addon
-                    i.material-icons face
-                  input.form-control(type="text" id="tb-username" placeholder="Usename" name="username" class="form-control")
-                .input-group
-                  span.input-group-addon
-                    i.material-icons lock_outline
-                  input.form-control(type="password" id="tb-password" placeholder="Password" name="password" class="form-control")
-              .footer.text-center
-                input(type="submit" value="Login" class="btn btn-success")
+    .section.section-full-screen.section-signup(style="background-image: url('/img/common/fitness-woman-4.jpg'); background-size: cover; background-position: top center; ")
+        .container
+            .row
+                .col-md-4.col-md-offset-4
+                    .card.card-signup
+                        form.form(action="/users/login" method="post")
+                            .header.header-success.text-center
+                                h4 Sign In
+                            .content
+                                .input-group
+                                    span.input-group-addon
+                                        i.material-icons face
+                                    input.form-control(type="text" id="tb-username" placeholder="Usename" name="username" class="form-control")
+                                .input-group
+                                    span.input-group-addon
+                                        i.material-icons lock_outline
+                                    input.form-control(type="password" id="tb-password" placeholder="Password" name="password" class="form-control")
+                            .footer.text-center
+                                input(type="submit" value="Login" class="btn btn-success")

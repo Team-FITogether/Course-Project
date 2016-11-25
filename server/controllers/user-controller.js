@@ -1,9 +1,6 @@
 "use strict";
 
-const pug = require("pug");
 const passport = require("passport");
-const path = require("path");
-const config = require("../configurations");
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const encryption = require("../utils/encryption");
@@ -18,9 +15,12 @@ function loadLoginPage(req, res) {
 }
 
 function getAllUsers(req, res) {
-    User.where().select("username").exec((err, users) => {
-        res.json(JSON.stringify(users));
-    });
+    User
+        .where()
+        .select("username")
+        .exec((err, users) => {
+            res.json(JSON.stringify(users));
+        });
 }
 
 function loadAdminPannel(req, res) {
@@ -29,10 +29,13 @@ function loadAdminPannel(req, res) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
 
-    User.where().select("username").exec((err, data) => {
-        var users = data.map((u) => { return u.username });
-        res.render("admin-area/admin-pannel", { user, users });
-    });
+    User
+        .where()
+        .select("username")
+        .exec((err, data) => {
+            let users = data.map(u => u.username);
+            res.render("admin-area/admin-pannel", { user, users });
+        });
 }
 
 function registerUser(req, res) {
@@ -68,7 +71,7 @@ function registerUser(req, res) {
                     });
             } else {
                 res.status(409);
-                //TODO error when user registration failed preferably with AJAX
+                // TODO error when user registration failed preferably with AJAX
                 res.render("user/register", { user });
                 res.end();
             }
@@ -112,7 +115,12 @@ function addRole(req, res) {
 
     let body = req.body;
     let query = { username: body.username };
-    User.findOneAndUpdate(query, { $push: { "roles": body.role } },
+    User
+        .findOneAndUpdate(query, {
+            $push: {
+                "roles": body.role
+            }
+        },
         (err, us) => {
             if (!us) {
                 //TODO error handlig preferably with AJAX

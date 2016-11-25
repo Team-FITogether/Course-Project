@@ -1,24 +1,26 @@
 extends ../base-master
 
 block content
-  link(rel="stylesheet" href="/css/articles/recipe-detail.css")
-  div.header.header-default
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-      table.table.table-hover
-        thead
-          tr 
-            th Група храна Детайли
-            th Калории
-            th Белтъчини
-            th Въглехидрати
-            th Мазнини
-        tbody
-        each food in foods
-          tr
-            td #{food.title} #{food.details}
-            td #{food.calories}
-            td #{food.proteins}
-            td #{food.carbs}
-            td #{food.fats}
+    link(rel="stylesheet" href="/css/articles/recipe-detail.css")
+    div.header.header-default
+    div.main.main-raised
+        div.section.section-basic
+            div.container-fluid
+            table.table.table-hover
+                thead
+                    tr 
+                        th Група храна 
+                        th Детайли
+                        th Калории
+                        th Белтъчини
+                        th Въглехидрати
+                        th Мазнини
+                tbody
+                each food in foods
+                    tr
+                        td #{food.title} 
+                        td #{food.details}
+                        td #{food.calories}
+                        td #{food.proteins}
+                        td #{food.carbs}
+                        td #{food.fats}

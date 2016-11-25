@@ -1,36 +1,36 @@
 ﻿extends ../base-master
 
 block content
-  link(rel="stylesheet" href="/css/users/admin-panel.css")
-  link(rel="stylesheet" href="/jquery-ui/jquery-ui.css")
-  script(src="/jquery-ui/jquery-ui.js")
-  script(src="/js/users-autocomplete.js")
+    link(rel="stylesheet" href="/css/users/admin-panel.css")
+    link(rel="stylesheet" href="/jquery-ui/jquery-ui.css")
+    script(src="/jquery-ui/jquery-ui.js")
+    script(src="/js/users-autocomplete.js")
 
-  div.header.header-default
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-        div(id="admin-panel-container")
-            nav(class="navbar navbar-info")
-                h4 Добавяне на роля на потребител
-            form(action="/users/set-role" method="post")
-                div(class="input-group")
-                    span(class="input-group-addon")
-                        i(class="material-icons") face
-                    div(class="form-group is-empty")
-                        input(type="text" id="users" name="username" class="form-control" placeholder="Username")
-                        span(class="material-input")
-                
-                div(class="radio")
-                    label Треньор
-                        input(type="radio" name="role" value="trainer")
-                        span(class="circle")
-                        span(class="check")
-    
-                div(class="radio")
-                    label Администратор
-                        input(type="radio" name="role" value="admin")
-                        span(class="circle")
-                        span(class="check")
-            
-                input(type="submit" value="Добави Роля" class="btn btn-success btn-sm")  
+    div.header.header-default
+    div.main.main-raised
+        div.section.section-basic
+            div.container-fluid
+                div(id="admin-panel-container")
+                    nav(class="navbar navbar-info")
+                        h4 Добавяне на роля на потребител
+                    form(action="/users/set-role" method="post")
+                        div(class="input-group")
+                            span(class="input-group-addon")
+                                i(class="material-icons") face
+                            div(class="form-group is-empty")
+                                input(type="text" id="users" name="username" class="form-control" placeholder="Username")
+                                span(class="material-input")
+
+                        div(class="radio")
+                            label Треньор
+                                input(type="radio" name="role" value="trainer")
+                                span(class="circle")
+                                span(class="check")
+
+                        div(class="radio")
+                            label Администратор
+                                input(type="radio" name="role" value="admin")
+                                span(class="circle")
+                                span(class="check")
+
+                        input(type="submit" value="Добави Роля" class="btn btn-success btn-sm")  

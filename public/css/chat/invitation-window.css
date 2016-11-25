@@ -1,0 +1,22 @@
+#main-invitation-window {
+    position: fixed;
+    top: 15%;
+    z-index: 1000;
+    padding: 0 2% 0 2%;
+}
+
+#invitation-window {
+    width: 400px;
+    overflow: auto;
+    z-index: 1000;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0 10px 0 10px;
+}
+
+#invitation-window a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    margin: 10px;
+}

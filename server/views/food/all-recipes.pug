@@ -1,11 +1,14 @@
 extends ../base-master
 
 block content
-  div.header.header-default
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-        ul
-        each val in recipes
-            li
-                a(href="/recipes/single-recipe?title=" + val.title) #{val.title}
+    link(rel="stylesheet" href="/css/articles/all-articles.css")
+
+    div.header.header-default
+    div.main.main-raised
+        div.section.section-basic
+            div.container-fluid
+                ul
+                each val in recipes
+                    li
+                        a(href="/recipes/single-recipe?title=" + val.title) #{val.title}
+                            div.divider

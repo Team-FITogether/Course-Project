@@ -1,13 +1,13 @@
 extends ../base-master
 
 block content
-  link(rel="stylesheet" href="/css/articles/all-articles.css")
+    link(rel="stylesheet" href="/css/articles/all-articles.css")
 
-  div.header.header-default
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-        each val in exercises
-            div.article-container
-             a(href="/exercises/single-exercise?category=" + val.name).article-link #{val.name}
-              div.divider
+    div.header.header-default
+    div.main.main-raised
+        div.section.section-basic
+            div.container-fluid
+                each val in exercises
+                    div.article-container
+                        a(href="/exercises/single-exercise?category=" + val.name).article-link #{val.name}
+                            div.divider
