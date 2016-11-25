@@ -1,6 +1,8 @@
 extends ../base-master
 
 block content
+    link(rel="stylesheet" href="/css/articles/all-articles.css")
+
     div.header.header-default
     div.main.main-raised
         div.section.section-basic
@@ -9,3 +11,4 @@ block content
                 each val in foods
                     li
                         a(href="/foods/single-food?title=" + val.title) #{val.title}
+                            div.divider

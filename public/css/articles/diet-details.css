@@ -23,6 +23,6 @@ li {
     list-style-type: disc;
 }
 
-.dropdown li {
+.dropdown li, .section li {
     list-style-type: none;
 }
