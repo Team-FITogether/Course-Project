@@ -2,6 +2,33 @@
     min-height: 165px !important;
 }
 
+.material-icons.like-icon {
+    color: white;
+    font-size: 12px;
+    margin: auto;
+    vertical-align: text-top;
+}
+.dislike-button, 
+.like-button {
+    text-decoration: none;
+    color: red
+}
+    .dislike-button:hover,
+    .like-button:hover {
+        color: red;
+        text-decoration: none;
+    }
+
+    .dislike-button:hover,
+    .like-button:focus {
+        color: red;
+        text-decoration: none;
+    }
+
+.like-value {
+    color: white;
+}
+
 li {
     list-style-type: none;
 }
@@ -27,11 +54,11 @@ li {
     color: #4caf50 !important;
 }
 
-.trainer-title{
+.trainer-title {
     color: rebeccapurple;
 }
 
-.btn-edit{
+.btn-edit {
     float: right !important;
     top: -55px;
 }
@@ -49,7 +76,7 @@ select {
     border: none;
 }
 
-/* Remove focus */
+    /* Remove focus */
     select:focus {
         outline: none;
     }

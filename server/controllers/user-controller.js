@@ -87,7 +87,7 @@ function loginUser(req, res, next) {
         }
         if (!userModel) {
             // TODO error handling when no user preferably with AJAX
-            viewBag.error = info.message;
+            //viewBag.error = info.message;
             return res.render("user/login", { user });
         }
         req.login(userModel, err => {

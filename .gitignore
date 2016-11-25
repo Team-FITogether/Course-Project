@@ -199,3 +199,5 @@ FakesAssemblies/
 *.sln
 *.md
 public/img/user-images/
+.vscode/
+typings/
