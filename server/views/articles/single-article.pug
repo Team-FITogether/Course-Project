@@ -1,41 +1,41 @@
 extends ../base-master
 
 block content
-  link(rel="stylesheet" href="/css/articles/comments.css")
+    link(rel="stylesheet" href="/css/articles/comments.css")
 
-  div.header.header-default
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-         h1 #{mainHeader}
-         if user
-           if user.isTrainer
-            form(method="post", action="/articles/edit")
-              input(type="hidden" name="articleId" value=id)
-              button.btn.btn-warning.btn-edit Edit
-           else if user.isAdmin
-            form(method="post", action="/articles/edit")
-              input(type="hidden" name="articleId" value=id)
-              button.btn.btn-warning.btn-edit Edit
-         h3 #{subHeader}
-         h5 by #{author}
-         div !{body}
-          div(class="card card-nav-tabs")
-            div(class="header header-info" id="comments-header") 
-              h3 Comments: #{comments.length}
-            div(class="content")
-              ul(class="comments-container section")
-                if comments
-                  each comment in comments
-                    li
-                      blockquote
-                        p #{comment.content}
-                        small() #{comment.author} on #{comment.postDate}
-       
-          if user
-            div.section
-              form(action="/articles/comments/add" method="post")
-                div.container(style="margin-top: 50px")
-                  textarea(name="content" class="form-control" rows="3" placeholder="Comment")
-                  input(type="hidden" name="entityId" value=id)
-                  input(type="submit" value="Comment" class="btn btn-info")
+    div.header.header-default
+    div.main.main-raised
+        div.section.section-basic
+            div.container-fluid
+                h1 #{mainHeader}
+                if user
+                    if user.isTrainer
+                        form(method="post", action="/articles/edit")
+                            input(type="hidden" name="articleId" value=id)
+                            button.btn.btn-warning.btn-edit Edit
+                    else if user.isAdmin
+                        form(method="post", action="/articles/edit")
+                            input(type="hidden" name="articleId" value=id)
+                            button.btn.btn-warning.btn-edit Edit
+                h3 #{subHeader}
+                h5 by #{author}
+                div !{body}
+                    div(class="card card-nav-tabs")
+                        div(class="header header-info" id="comments-header") 
+                            h3 Comments: #{comments.length}
+                        div(class="content")
+                            ul(class="comments-container section")
+                                if comments
+                                    each comment in comments
+                                        li
+                                            blockquote
+                                                p #{comment.content}
+                                                small() #{comment.author} on #{comment.postDate}
+
+                    if user
+                        div.section
+                            form(action="/articles/comments/add" method="post")
+                                div.container(style="margin-top: 50px")
+                                    textarea(name="content" class="form-control" rows="3" placeholder="Comment")
+                                    input(type="hidden" name="entityId" value=id)
+                                    input(type="submit" value="Comment" class="btn btn-info")

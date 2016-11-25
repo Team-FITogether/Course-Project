@@ -1,11 +1,11 @@
 extends ../base-master
 include ../mixins/sub-header-home
 
-  script(src="/js/landing-page.js")
+    script(src="/js/landing-page.js")
 
 block content
-  +homeSubheaderMixin
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-      h1 #{model.content}
+    +homeSubheaderMixin
+    div.main.main-raised
+        div.section.section-basic
+            div.container-fluid
+            h1 #{model.content}

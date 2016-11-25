@@ -1,28 +1,28 @@
 extends ../base-master
 
 block content
-  link(rel="stylesheet" href="/css/users/found-user-profile.css")
-  div.header.header-default
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-        div(class="card card-nav-tabs" id="found-user-container")
-            div(class="header header-info")
-                h3 #{foundUser.username}
-            div(class="content")
-                img(class="img-circle img-responsive" src="/img/user-images/" + foundUser.avatarName)
-                if user
-                    if isOffline
-                      .alert.alert-danger
-                        .container-fluid
-                          .alert-icon
-                            i.material-icons error_outline
-                          button.close(type='button', data-dismiss='alert', aria-label='Close')
-                            span(aria-hidden='true')
-                              i.material-icons clear
-                          b Потребителя не е на линия.
+    link(rel="stylesheet" href="/css/users/found-user-profile.css")
+    div.header.header-default
+    div.main.main-raised
+        div.section.section-basic
+            div.container-fluid
+                div(class="card card-nav-tabs" id="found-user-container")
+                    div(class="header header-info")
+                        h3 #{foundUser.username}
+                    div(class="content")
+                        img(class="img-circle img-responsive" src="/img/user-images/" + foundUser.avatarName)
+                        if user
+                            if isOffline
+                                .alert.alert-danger
+                                    .container-fluid
+                                        .alert-icon
+                                            i.material-icons error_outline
+                                        button.close(type='button', data-dismiss='alert', aria-label='Close')
+                                            span(aria-hidden='true')
+                                                i.material-icons clear
+                                        b Потребителя не е на линия.
 
-                    form(action="/chat/invitation" method="get")
-                      input(type="hidden" name="initiator" value=user.username)
-                      input(type="hidden" name="receiver" value=foundUser.username)
-                      input(type="submit" class="btn btn-info btn-round" value="Започни Чат")
+                            form(action="/chat/invitation" method="get")
+                                input(type="hidden" name="initiator" value=user.username)
+                                input(type="hidden" name="receiver" value=foundUser.username)
+                                input(type="submit" class="btn btn-info btn-round" value="Започни Чат")

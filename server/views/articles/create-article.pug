@@ -1,20 +1,20 @@
 extends ../base-master
 block content
-  
-  script(src="../tinymce/tinymce.min.js")
-  script(src="../tinymce/jquery.tinymce.min.js")
-  script(src="/js/tinymce-config.js")
 
-  div.header.header-default
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-        form(method="post" action="/articles/create/save")
-          div.row.container
-            div.col-md-4
-              div.form-group  
-                input(type="text", name="articleHeader", placeholder="Header").form-control
-            div.col-md-4
-              div.form-group
-                input(type="text", name="articleSubHeader", placeholder="Subheader").form-control
-          textarea(name="articleBody")#tinymce
+    script(src="../tinymce/tinymce.min.js")
+    script(src="../tinymce/jquery.tinymce.min.js")
+    script(src="/js/tinymce-config.js")
+
+    div.header.header-default
+    div.main.main-raised
+        div.section.section-basic
+            div.container-fluid
+                form(method="post" action="/articles/create/save")
+                    div.row.container
+                        div.col-md-4
+                            div.form-group  
+                                input(type="text", name="articleHeader", placeholder="Header").form-control
+                        div.col-md-4
+                            div.form-group
+                                input(type="text", name="articleSubHeader", placeholder="Subheader").form-control
+                    textarea(name="articleBody")#tinymce
