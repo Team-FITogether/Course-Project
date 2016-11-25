@@ -5,12 +5,7 @@ let pathName = window.location.pathname;
 let lastIndexOfForwardSlash = pathName.lastIndexOf("/");
 let roomName = pathName.substr(lastIndexOfForwardSlash + 1);
 
-socket.on("connect", () => {
-    socket.emit("room", roomName);
-
-    const username = $("#username-holder").attr("username");
-    const avatarSrc = $("#avatarSrc-holder").attr("avatar-src");
-
+function attachSubmitFormEvent(username, avatarSrc) {
     $("form").on("submit", () => {
         let message = $("#tb-message").val();
         let data = {
@@ -24,17 +19,9 @@ socket.on("connect", () => {
         $("#tb-message").val("");
         return false;
     });
+}
 
-    let $li = $("<li />");
-    let $avatar = $("<img />");
-    let $message = $("<span />");
-    let $allMessages = $("#messages");
-    let $messageContainer = $("<div />");
-    $avatar.addClass("img img-responsive img-circle chat-avatar");
-    $message.addClass("chat-message");
-    $messageContainer.append($avatar);
-    $messageContainer.addClass("message-container");
-
+function attachChatMessageEvent($li, $message, $messageContainer, $avatar, username, $allMessages) {
     socket.on("chat message", data => {
         let $currentLi = $li.clone(true);
         let $currentMessage = $message.clone();
@@ -54,10 +41,34 @@ socket.on("connect", () => {
         $currentLi.append($currentMessageContainer);
         $allMessages.append($currentLi);
     });
+}
 
+function attachFullRoomEvent() {
     socket.on("full room", () => {
         $("body")
             .empty()
             .text("ROOM IS FULL");
     });
+}
+
+socket.on("connect", () => {
+    socket.emit("room", roomName);
+
+    const username = $("#username-holder").attr("username");
+    const avatarSrc = $("#avatarSrc-holder").attr("avatar-src");
+
+    attachSubmitFormEvent(username, avatarSrc);
+
+    let $li = $("<li />");
+    let $avatar = $("<img />");
+    let $message = $("<span />");
+    let $allMessages = $("#messages");
+    let $messageContainer = $("<div />");
+    $avatar.addClass("img img-responsive img-circle chat-avatar");
+    $message.addClass("chat-message");
+    $messageContainer.append($avatar);
+    $messageContainer.addClass("message-container");
+
+    attachChatMessageEvent($li, $message, $messageContainer, $avatar, username, $allMessages)
+    attachFullRoomEvent();
 });
