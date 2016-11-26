@@ -5,7 +5,6 @@ const Chat = require("../models/chat");
 function getUsersCountInRoom(io, roomName) {
     let namespace = "/";
     let room = io.nsps[namespace].adapter.rooms[roomName];
-
     if (!room) {
         return null;
     }
@@ -46,6 +45,7 @@ module.exports = io => {
                 }, err => {
                     if (err) console.log(err);
                 });
+
             io.to(data.room).emit("chat message", data);
         });
     });

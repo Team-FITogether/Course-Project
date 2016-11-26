@@ -1,6 +1,6 @@
 /* globals io window $ */
 
-(function() {
+(function () {
     "use strict";
 
     let socket = io.connect();
@@ -8,20 +8,12 @@
     let lastIndexOfForwardSlash = pathName.lastIndexOf("/");
     let roomName = pathName.substr(lastIndexOfForwardSlash + 1);
 
-    let $li = $("<li />");
-    let $avatar = $("<img />");
-    let $message = $("<span />");
-    let $allMessages = $("#messages");
-    let $messageContainer = $("<div />");
-
-    $avatar.addClass("chat-avatar");
-    $message.addClass("chat-message");
-    $messageContainer.addClass("message-container");
-    $allMessages.attr("id", "all-messages-container");
+    let $form = $("form");
+    let $messageBox = $("#tb-message");
 
     function attachSubmitFormEvent(username, avatarSrc) {
-        $("form").on("submit", () => {
-            let message = $("#tb-message").val();
+        $form.on("submit", () => {
+            let message = $messageBox.val();
             let data = {
                 sender: username,
                 room: roomName,
@@ -30,10 +22,20 @@
             };
 
             socket.emit("chat message to room", data);
-            $("#tb-message").val("");
+            $messageBox.val("");
             return false;
         });
     }
+
+    let $li = $("<li />");
+    let $avatar = $("<img />");
+    let $message = $("<span />");
+    let $allMessages = $("#messages");
+    let $messageContainer = $("<div />");
+    $avatar.addClass("chat-avatar");
+    $message.addClass("chat-message");
+    $messageContainer.addClass("message-container");
+    $allMessages.attr("id", "all-messages-container");
 
     function attachChatMessageEvent(username) {
         socket.on("chat message", data => {
@@ -65,18 +67,16 @@
         });
     }
 
-    let isScrolled = false;
-
     function updateScroll() {
-        let allMessages = $("#all-messages-container")[0];
-        if (!isScrolled) {
-            allMessages.scrollTop = allMessages.scrollHeight;
-        }
+        setInterval(() => {
+            $allMessages[0].scrollTop = $allMessages[0].scrollHeight;
+        }, 1000);
     }
 
     function renderMessages(username) {
         $allMessages.hide().empty();
         socket.on("render messages", messages => {
+            let $messagesToAppend = [];
             for (let message of messages) {
                 let $currentLi = $li.clone();
                 let $currentMessage = $message.clone();
@@ -94,22 +94,27 @@
                 $currentMessageContainer.append($currentAvatar);
                 $currentMessageContainer.append($currentMessage);
                 $currentLi.append($currentMessageContainer);
-                $allMessages.append($currentLi);
+                $messagesToAppend.push($currentLi);
             }
 
+            $allMessages.append($messagesToAppend);
             $allMessages.show();
         });
     }
 
+    let $usernameHolder = $("#username-holder");
+    let $avatarSrcHolder = $("#avatarSrc-holder");
+
     socket.on("connect", () => {
         socket.emit("room", roomName);
 
-        const username = $("#username-holder").attr("username");
-        const avatarSrc = $("#avatarSrc-holder").attr("avatar-src");
+        const username = $usernameHolder.attr("username");
+        const avatarSrc = $avatarSrcHolder.attr("avatar-src");
 
         renderMessages(username);
         attachSubmitFormEvent(username, avatarSrc);
         attachChatMessageEvent(username);
         attachFullRoomEvent();
+        updateScroll();
     });
 } ());

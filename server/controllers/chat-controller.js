@@ -37,10 +37,10 @@ function handleInvitation(req, res) {
         let user = req.user;
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
         User
-            .find({ username: req.query.receiver })
-            .then(foundUsers => {
+            .findOne({ username: req.query.receiver })
+            .then(foundUser => {
                 res.render("user/found-user-profile", {
-                    foundUser: foundUsers[0],
+                    foundUser,
                     user,
                     isOffline: true
                 });

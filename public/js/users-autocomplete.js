@@ -1,10 +1,11 @@
-$(document).ready(function () {
+/* globals $ document */
+"use strict";
+
+$(document).ready(() => {
     $.get("/users/all",
         (body) => {
-            var parsed = JSON.parse(body);
-            var users = parsed.map((u) => { return u.username });
-            $("#users").autocomplete({
-                source: users
-            });
+            let parsed = JSON.parse(body);
+            let users = parsed.map((u) => u.username);
+            $("#users").autocomplete({ source: users });
         });
 });
