@@ -21,6 +21,8 @@ mixin header(user)
                             option(value="users" style="color:black;") Users
                             option(value="articles" style="color:black;") Articles
                             option(value="exercises" style="color:black;") Exercises
+                            option(value="foods" style="color:black;") Foods
+                            option(value="recipes" style="color:black;") Recipes
                     button(type="submit").btn.btn-white.btn-fab.btn-fab-mini.btn-just-icon.btn-search
                         i.material-icons search
                 ul.nav.navbar-nav.navbar-right
@@ -43,11 +45,11 @@ mixin header(user)
                             b.caret
                         ul.dropdown-menu
                             li 
+                                a(href="/foods?all") Състав на храни
+                            li
                                 a(href="/diets?all") Хранителни режими
                             li
                                 a(href="/recipes?all") Рецепти
-                            li
-                                a(href="/foods?all") Състав на храни
                             li
                                 a(href="/articles?genre=food-article") Статии за хранене
                     li.dropdown
