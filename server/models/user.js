@@ -9,8 +9,10 @@ const userSchema = mongoose.Schema({
     lastname: { type: String, required: true },
     passHash: { type: String, required: true },
     salt: { type: String, required: true },
-    facebookId: { type: String, required: true },
-    facebookToken: { type: String, required: true },
+    facebookId: { type: String },
+    facebookToken: { type: String },
+    googleId: { type: String },
+    googleToken: { type: String },
     age: { type: Number },
     roles: [String],
     avatarName: String

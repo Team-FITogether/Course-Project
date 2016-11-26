@@ -15,4 +15,6 @@ module.exports = (app, userValidator) => {
 
     app.get("/auth/facebook", controllers.auth.loginUserFacebook);
     app.get("/auth/facebook/callback", controllers.auth.loginUserFacebook);
+    app.get("/auth/google", controllers.auth.loginUserGoogle);
+    app.get("/auth/google/callback", controllers.auth.loginUserGoogle);
 };

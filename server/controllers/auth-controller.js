@@ -93,6 +93,30 @@ function loginUserFacebook(req, res, next) {
     })(req, res, next);
 }
 
+function loginUserGoogle(req, res, next) {
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
+    passport.authenticate("google", { scope: ['profile', 'email'] }, (err, userModel) => {
+        if (err) {
+            return next(err);
+        }
+        if (!userModel) {
+            return res.render("user/login", { user });
+        }
+
+        req.login(userModel, error => {
+            if (error) {
+                return next(error);
+            }
+
+            res.redirect("/users/profile");
+        });
+    })(req, res, next);
+}
+
 function logoutUser(req, res) {
     req.logout();
     res.redirect("/");
@@ -110,6 +134,7 @@ module.exports = {
     registerUser,
     loginUser,
     loginUserFacebook,
+    loginUserGoogle,
     logoutUser,
 
     loadRegisterPage,

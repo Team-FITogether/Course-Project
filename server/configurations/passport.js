@@ -3,6 +3,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
+const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const mongoose = require("mongoose");
 const configAuth = require("./auth");
 const User = mongoose.model("user");
@@ -40,11 +41,44 @@ module.exports = () => {
                     let newUser = new User({
                         username: profile.displayName,
                         firstname: profile.name.givenName || profile.displayName,
-                        lastname: profile.name.familyName|| profile.displayName,
+                        lastname: profile.name.familyName || profile.displayName,
                         passHash: profile.displayName,
                         salt: profile.id,
                         facebookId: profile.id,
                         facebookToken: token
+                    });
+
+                    newUser.save((err) => {
+                        if (err) {
+                            return done(err);
+                        }
+                        return done(null, newUser);
+                    });
+                }
+            });
+        });
+    }));
+
+    passport.use(new GoogleStrategy({
+        clientID: configAuth.googleAuth.clientID,
+        clientSecret: configAuth.googleAuth.clientSecret,
+        callbackURL: configAuth.googleAuth.callbackURL
+    }, (token, refreshToken, profile, done) => {
+        process.nextTick(() => {
+            User.findOne({ googleId: profile.id }, (err, user) => {
+                if (err) {
+                    return done(err);
+                } else if (user) {
+                    return done(null, user);
+                } else {
+                    let newUser = new User({
+                        username: profile.displayName,
+                        firstname: profile.name.givenName || profile.displayName,
+                        lastname: profile.name.familyName || profile.displayName,
+                        passHash: profile.displayName,
+                        salt: profile.id,
+                        googleId: profile.id,
+                        googleToken: token
                     });
 
                     newUser.save((err) => {
