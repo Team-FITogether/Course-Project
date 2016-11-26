@@ -20,6 +20,7 @@ body {
     margin: 2% 0 0 0;
     overflow: auto;
     border-radius: 10px;
+    height: 100px;
 }
 
 .chat-avatar {
@@ -60,15 +61,13 @@ body {
     width: 100%;
 }
 
-form::-moz-placeholder,
-form::-webkit-input-placeholder,
-form::-ms-input-placeholder,
-form:-moz-placeholder {
+form::-moz-placeholder, form::-webkit-input-placeholder, form::-ms-input-placeholder, form:-moz-placeholder {
     color: white !important;
 }
 
 .left, .right {
     color: white;
+    display: block;
 }
 
 .left {
@@ -88,4 +87,15 @@ form:-moz-placeholder {
     padding: 15px 0 15px 15px;
     width: 40%;
     height: 80px;
+}
+
+#all-messages-container li {
+    height: 100px !important;
+    overflow: auto;
+    list-style-type: none;
+}
+
+#all-messages-container {
+    height: 500px;
+    overflow-y: scroll;
 }
