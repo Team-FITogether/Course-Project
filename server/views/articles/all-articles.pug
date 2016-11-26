@@ -1,24 +1,38 @@
 extends ../base-master
 
 block content
-    link(rel="stylesheet" href="/css/articles/all-articles.css")
+  link(rel="stylesheet" href="/css/articles/all-articles.css")
+  script(src="/js/likes.js")
 
-    div.header.header-default
-    div.main.main-raised
-        div.section.section-basic
-            div.container-fluid
-                each val in articles
-                    div.article-container
-                        a(href="single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
-                        br
-                        small.article-subheader #{val.subHeader}
-                        if user 
-                            if user.isTrainer
-                                form(method="post", action="/articles/edit")
-                                    input(type="hidden" name="articleId" value=val._id)
-                                    button.btn.btn-warning.btn-edit Edit
-                            else if user.isAdmin
-                                form(method="post", action="/articles/edit")
-                                    input(type="hidden" name="articleId" value=val._id)
-                                    button.btn.btn-warning.btn-edit Edit
-                            div.divider
+  div.header.header-default
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+        each val in articles
+              div.article-container
+                a(href="single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
+                br
+                small.article-subheader #{val.subHeader}
+                if user
+                  div(data-id=val._id)
+                    span.label.label-success
+                      i.material-icons.like-icon thumb_up &nbsp
+                      span.like-value #{val.likes}
+                    a.btn.btn-success.btn-sm.like-button Like
+                    
+                else
+                  div(data-id=val._id)
+                      span.label.label-success
+                        i.material-icons.like-icon thumb_up &nbsp
+                        span.like-value #{val.likes}
+                  
+                if user 
+                  if user.isTrainer
+                    form(method="post", action="/articles/edit")
+                      input(type="hidden" name="articleId" value=val._id)
+                      button.btn.btn-warning.btn-edit Edit
+                  else if user.isAdmin
+                    form(method="post", action="/articles/edit")
+                      input(type="hidden" name="articleId" value=val._id)
+                      button.btn.btn-warning.btn-edit Edit
+                  div.divider

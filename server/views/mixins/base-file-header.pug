@@ -74,7 +74,8 @@ mixin header(user)
                                 a(href="/articles?genre=vitamins-and-minerals-article") Витамини и минерали
                     li.dropdown
                         if user
-                            a.dropdown-toggle(href='#', data-toggle='dropdown') #{user.username}
+                            a.dropdown-toggle(href='#', data-toggle='dropdown') 
+                                span#username #{user.username}
                                 i.material-icons account_circle
                                 b.caret
                             ul.dropdown-menu

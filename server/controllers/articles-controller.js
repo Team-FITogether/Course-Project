@@ -123,6 +123,61 @@ function addComment(req, res) {
         .catch(err => res.status(500).send(err));
 }
 
+function toggleLikeOnArticle(req, res) {
+    let articleId = req.body.targetId;
+
+    data.getArticleById(articleId)
+        .then(article => {
+            for (let i = 0; i < article.usersLiked.length; i++) {
+                if (article.usersLiked[i].user === req.user.username) {
+                    return i;
+                }
+            }
+            return -1;
+        })
+        .then(index => {
+            console.log(index);
+            if (index !== -1) {
+                let update = { $inc: { likes: -1 } };
+
+                data.updateArticle(articleId, update, null)
+                    .then((article) => {
+
+                        article.usersLiked.splice(index, 1);
+                        article.save();
+                        return article;
+                    })
+                    .then((article) => {
+                        res.json((JSON.stringify(article.likes - 1)));
+                    });
+            } else {
+                let update = { $inc: { likes: 1 } };
+
+                data.updateArticle(articleId, update, null)
+                    .then((article) => {
+                        let user = { user: req.user.username }
+
+                        article.usersLiked.push(user);
+                        article.save();
+                        return article;
+                    })
+                    .then((article) => {
+                        res.json((JSON.stringify(article.likes + 1)));
+                    });
+            }
+        });
+}
+
+function returnArticlesAsJson(req, res) {
+    let genre = req.body.genre;
+    console.log(req.body)
+    console.log(req.body.genre)
+    data.getArticlesByGenre(genre)
+        .then(articles => {
+            res.json(JSON.stringify(articles));
+        });
+}
+
 module.exports = {
     loadCreateArticlePage,
     loadEditArticlePage,
@@ -132,5 +187,7 @@ module.exports = {
 
     createArticle,
     saveEditArticle,
-    addComment
+    addComment,
+    toggleLikeOnArticle,
+    returnArticlesAsJson
 };
