@@ -1,7 +1,7 @@
 "use strict";
 
-const remoteDbUsername = "";
-const remoteDbPassword = "";
+const remoteDbUsername = "fitogetheruser";
+const remoteDbPassword = "telerikacademy";
 
 const path = require("path");
 
