@@ -9,7 +9,8 @@ const controllers = {
     searches: require("./searches-controller"),
     diets: require("./diets-controller"),
     foods: require("./foods-controller"),
-    chat: require("./chat-controller")
+    chat: require("./chat-controller"),
+    auth: require("./auth-controller")
 };
 
 module.exports = controllers;

@@ -84,13 +84,13 @@ mixin header(user)
                                     li
                                         a(href="/admin-pannel") Админ
                                 li
-                                    a(href="/logout") Изход
+                                    a(href="/auth/logout") Изход
                         else
                             a.dropdown-toggle(href="#", data-toggle="dropdown")
                                 i.material-icons account_circle
                                 b.caret
                             ul.dropdown-menu
                                 li
-                                    a(href="/users/login") Вход
+                                    a(href="/auth/login") Вход
                                 li
-                                    a(href="/users/register") Регистрация
+                                    a(href="/auth/register") Регистрация

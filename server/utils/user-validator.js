@@ -8,23 +8,23 @@ function isAdminUserMiddleware(req, res, next) {
     }
 }
 
+function isInRole(user, role) {
+    if (user.roles.indexOf(role.toLowerCase()) !== -1) {
+        return true;
+    }
+
+    return false;
+}
+
 function isTrainerUserMiddleware(req, res, next) {
     let user = req.user;
 
     if (!user) {
-        res.redirect("/users/login");
+        res.redirect("/auth/login");
     } else if (isInRole(user, "admin") || isInRole(user, "trainer")) {
         next();
     } else {
-        res.redirect("/users/login");
-    }
-}
-
-function isInRole(user, role) {
-    if (user.roles.indexOf(role.toLowerCase()) !== -1) {
-        return true;
-    } else {
-        return false;
+        res.redirect("/auth/login");
     }
 }
 
@@ -32,7 +32,7 @@ function isUserLoggedIn(req, res, next) {
     if (req.user) {
         next();
     } else {
-        res.redirect("/users/login");
+        res.redirect("/auth/login");
     }
 }
 

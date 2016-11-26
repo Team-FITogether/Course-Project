@@ -8,8 +8,8 @@ module.exports = (app, config, userValidator) => {
     app.get("/", controllers.home.loadHomePage);
 
     const routersFolderPath = path.join(config.rootPath, "server/routers");
-
     const routersFileNames = fs.readdirSync(routersFolderPath);
+
     routersFileNames
         .filter(file => file.indexOf("-router") >= 0)
         .forEach(file => require(`${__dirname}/${file}`)(app, userValidator));

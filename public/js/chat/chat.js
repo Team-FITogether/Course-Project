@@ -1,6 +1,6 @@
 /* globals io window $ */
 
-(function() {
+(function () {
     "use strict";
 
     let socket = io.connect();
@@ -65,13 +65,10 @@
         });
     }
 
-    let isScrolled = false;
-
     function updateScroll() {
-        let allMessages = $("#all-messages-container")[0];
-        if (!isScrolled) {
-            allMessages.scrollTop = allMessages.scrollHeight;
-        }
+        setInterval(() => {
+            $allMessages[0].scrollTop = $allMessages[0].scrollHeight;
+        }, 1000);
     }
 
     function renderMessages(username) {
@@ -111,5 +108,6 @@
         attachSubmitFormEvent(username, avatarSrc);
         attachChatMessageEvent(username);
         attachFullRoomEvent();
+        updateScroll();
     });
 } ());

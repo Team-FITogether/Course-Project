@@ -1,4 +1,6 @@
-﻿tinyMCE.baseURL = "/tinymce";
+﻿/* globals tinyMCE  document tinymce */
+
+tinyMCE.baseURL = "/tinymce";
 
 $(document).ready(function () {
     tinymce.init({
