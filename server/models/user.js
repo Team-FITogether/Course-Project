@@ -9,6 +9,8 @@ const userSchema = mongoose.Schema({
     lastname: { type: String, required: true },
     passHash: { type: String, required: true },
     salt: { type: String, required: true },
+    facebookId: { type: String, required: true },
+    facebookToken: { type: String, required: true },
     age: { type: Number },
     roles: [String],
     avatarName: String
@@ -25,6 +27,7 @@ userSchema.methods = {
 };
 
 const User = mongoose.model("user", userSchema);
+
 function addAdminUser() {
     User.find({ username: "admin" })
         .then(user => {

@@ -12,4 +12,7 @@ module.exports = (app, userValidator) => {
 
     app.post("/auth/register", avatarUploader.single("avatar"), controllers.auth.registerUser);
     app.post("/auth/login", controllers.auth.loginUser);
+
+    app.get("/auth/facebook", controllers.auth.loginUserFacebook);
+    app.get("/auth/facebook/callback", controllers.auth.loginUserFacebook);
 };
