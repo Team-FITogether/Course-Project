@@ -43,6 +43,18 @@ module.exports = function(models) {
                     });
             });
         },
+        getAllExercises() {
+            return new Promise((resolve, reject) => {
+                Exercise
+                    .find({}, (err, exercises) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(exercises);
+                    });
+            });
+        },
         getExerciseExplanationById(id) {
             return new Promise((resolve, reject) => {
                 ExerciseExplanation

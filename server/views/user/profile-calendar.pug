@@ -1,4 +1,34 @@
 extends ./profile
 
 block content
-    h1 I am calendar for #{ calendar.calendarUser }
+    h3 Календарът на #{ calendar.calendarUser }
+    div
+        each val in calendar.workouts
+            span val.date
+    div
+        form(method="post" action="/users/profile/my-calendar")
+            div.form-group 
+                div.col-md-3
+                    input(type="text", name="date", placeholder="Избери дата").form-control
+                div.col-md-2
+                    select(name="exersiceOne" placeholder="Първо упражнение").form-control
+                        option(value="") Избери упражнение 1
+                        for val in exercises
+                            option(value="" + val.name) #{val.name}
+                div.col-md-2
+                    select(name="exersiceTwo" placeholder="Второ упражнение").form-control
+                        option(value="") Избери упражнение 2
+                        for val in exercises
+                            option(value="" + val.name) #{val.name}
+                div.col-md-2
+                    select(name="exersiceThree" placeholder="Трето упражнение").form-control
+                        option(value="") Избери упражнение 3
+                        for val in exercises
+                            option(value="" + val.name) #{val.name}
+                div.col-md-2
+                    select(name="exersiceFour" placeholder="Четвърто упражнение").form-control
+                        option(value="") Избери упражнение 4
+                        for val in exercises
+                            option(value="" + val.name) #{val.name}
+                input(type="submit" value="Добави тренировка" class="btn btn-success")   
+

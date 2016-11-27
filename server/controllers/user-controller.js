@@ -3,8 +3,12 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const Article = require("./../models/article");
+
 const Calendar = require("./../models/calendar");
 const CalendarData = require("./../data")({ Calendar });
+
+const Exercise = require("../models/exercise");
+const ExerciseData = require("./../data")({ Exercise });
 
 function getAllUsers(req, res) {
     User
@@ -105,29 +109,40 @@ function loadFoundUserProfilePage(req, res) {
 
 function loadUserCallendar(req, res){
     let user = req.user;
+    let exercises;
+
     if (req.user) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
         user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
     }
 
-    CalendarData.getCalendarByUser(user.username)
-    .then(calendar => {
-        if(!calendar){
-            CalendarData.createCalendar(user.username)
-                .then(newCalendar => {
-                    calendar = newCalendar;
-                    res.render("user/profile-calendar", {
+    ExerciseData
+        .getAllExercises()
+        .then(allExercises => {
+            exercises = allExercises;
+            return Promise.resolve();
+        })
+        .then(() =>{
+            return CalendarData.getCalendarByUser(user.username)
+        })
+        .then(calendar => {
+            if(!calendar){
+                CalendarData.createCalendar(user.username)
+                    .then(newCalendar => {
+                        calendar = newCalendar;
+                        res.render("user/profile-calendar", {
+                        user,
+                        calendar,
+                        exercises
+                    });
+                })
+            } else {
+                res.render("user/profile-calendar", {
                     user,
-                    calendar
+                    calendar,
+                    exercises
                 });
-            })
-        } else {
-            res.render("user/profile-calendar", {
-                user,
-                calendar
-            });
-        }
-        
+            }
     })
     
 }
@@ -149,12 +164,21 @@ function loadUserArticles(req, res){
         });
 }
 
+function AddWorkout(req, res){
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+        user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
+    }
+
+}
 module.exports = {
     loadAdminPannel,
     loadProfilePage,
     loadFoundUserProfilePage,
     loadUserCallendar,
     loadUserArticles,
+    AddWorkout,
     getAllUsers,
     addRole
 };
