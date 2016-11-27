@@ -17,4 +17,16 @@ block content
                         div.col-md-4
                             div.form-group
                                 input(type="text", name="articleSubHeader", placeholder="Subheader").form-control
+                        div.col-md-4
+                            div.form-group
+                                select(name="articleGenre" placeholder="Genre").form-control
+                                    option(value="") Избери
+                                    option(value="healthy-day-article").form-control Здравослове ден
+                                    option(value="injuries-article") Травми и Контузии
+                                    option(value="body-article") За Тялото
+                                    option(value="vitamins-and-minerals-article") Витамини и минерали
+                                    option(value="suplements-article") Хранителни добавки
+                                    option(value="herbs-article") Билки
+                                    option(value="food-article") Хранене
+                                    option(value="exercises-article") Упражнения
                     textarea(name="articleBody")#tinymce

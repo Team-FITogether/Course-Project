@@ -5,10 +5,10 @@
     color: #000;
 }
 
-    .article-link:hover {
-        text-decoration: none;
-        color: #4caf50;
-    }
+.article-link:hover {
+    text-decoration: none;
+    color: #4caf50;
+}
 
 .article-container {
     padding: 10px 0 0 20px;

@@ -102,7 +102,7 @@ function createArticle(req, res) {
     let articleBody = req.body.articleBody;
     let articleHeader = req.body.articleHeader;
     let articleSubHeader = req.body.articleSubHeader;
-    let articleGenre = "FITogether";
+    let articleGenre = req.body.articleGenre;
 
     data.createArticle(articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, "")
         .then(() => {
@@ -177,8 +177,6 @@ function toggleLikeOnArticle(req, res) {
 
 function returnArticlesAsJson(req, res) {
     let genre = req.body.genre;
-    console.log(req.body)
-    console.log(req.body.genre)
     data.getArticlesByGenre(genre)
         .then(articles => {
             res.json(JSON.stringify(articles));
