@@ -53,15 +53,16 @@ function findFoods(foodName, isLoggedIn, req, res) {
     }
 
     mongoose
-        .model("fooddetails")
+        .model("foodDetails")
         .where({ title: new RegExp(foodName, "i") })
         .select("_id title")
         .exec((err, data) => {
             if (err) {
                 console.log(err);
             } else {
+                console.log(data);
                 res.render("searches/found-foods.pug", {
-                    fooddetails: data,
+                    foods: data,
                     viewBag: {
                         isLoggedIn
                     }
