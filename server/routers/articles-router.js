@@ -4,7 +4,7 @@ const controllers = require("../controllers");
 
 module.exports = (app, userValidator) => {
     app.get("/articles", controllers.articles.loadArticlesByGenrePage);
-    app.get("/single-article", controllers.articles.loadSingleArticlePage);
+    app.get("/articles/single-article", controllers.articles.loadSingleArticlePage);
     app.get("/articles/create", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, controllers.articles.loadCreateArticlePage);
 
     app.post("/articles/create/update", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, controllers.articles.saveEditArticle);
