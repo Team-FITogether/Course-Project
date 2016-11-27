@@ -44,9 +44,9 @@ module.exports = function (models) {
                 });
             });
         },
-        updateCalendar(id, update, options) {
+        updateCalendar(username, update, options) {
             return new Promise((resolve, reject) => {
-                Calendar.findOneAndUpdate({ "_id": id }, update, options,
+                Calendar.findOneAndUpdate({ "calendarUser": username }, update, options,
                     (err, calendar) => {
                         if (err) {
                             return reject(err);

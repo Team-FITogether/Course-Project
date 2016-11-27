@@ -5,7 +5,12 @@ const Schema = mongoose.Schema;
 
 let calendarSchema = new Schema({
     calendarUser: { type: String, require: true },
-    workouts: [{}]   
+    workouts: [{
+        date: {
+            type: Date
+        },
+        exercises: []
+    }]   
 });
 
 const Calendar = mongoose.model("calendar", calendarSchema);

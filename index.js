@@ -4,6 +4,7 @@ const express = require("express");
 const config = require("./server/configurations");
 const userValidator = require("./server/utils/user-validator");
 const app = express();
+app.locals.moment = require('moment');
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 

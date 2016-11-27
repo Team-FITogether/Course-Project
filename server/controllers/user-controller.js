@@ -166,11 +166,28 @@ function loadUserArticles(req, res){
 
 function AddWorkout(req, res){
     let user = req.user;
+    let body = req.body;
+
     if (req.user) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
         user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
     }
+    let exercises = [];
 
+    exercises.push(body.exerciseOne);
+    exercises.push(body.exerciseTwo);
+    exercises.push(body.exerciseThree);
+    exercises.push(body.exerciseFour);
+
+    let newWorkout = {
+        date: new Date(body.date),
+        exercises: exercises
+    }
+
+    CalendarData.updateCalendar(user.username, { $push: { "workouts": newWorkout } }, true)
+        .then(calendar => {
+            return res.redirect("/users/profile")
+        })
 }
 module.exports = {
     loadAdminPannel,
