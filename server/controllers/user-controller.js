@@ -82,16 +82,31 @@ function loadFoundUserProfilePage(req, res) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
 
-    User
-        .findById(req.query.id)
-        .then(foundUser => {
-            console.log(req.query.id);
-            res.render("user/found-user-profile", {
-                foundUser,
-                user
-            });
-        })
-        .catch(console.log);
+
+    if (req.query.username) {
+
+        User
+            .findOne({ username: req.query.username })
+            .then(foundUser => {
+                res.render("user/found-user-profile", {
+                    foundUser,
+                    user
+                });
+            })
+            .catch(console.log);
+    }
+    else if (req.query.id) {
+
+        User
+            .findOne({ _id: req.query.id })
+            .then(foundUser => {
+                res.render("user/found-user-profile", {
+                    foundUser,
+                    user
+                });
+            })
+            .catch(console.log);
+    }
 }
 
 module.exports = {

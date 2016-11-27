@@ -10,7 +10,8 @@ let articleSchema = new Schema({
     imgSrc: { type: String },
     genre: { type: String, require: true },
     body: { type: String, require: true },
-    likes: { type: Number },
+    likes: { type: Number, default: 0},
+    deletedOn: { type: Date, default: null },
     usersLiked: [{
         user: String
     }],
@@ -23,11 +24,11 @@ let articleSchema = new Schema({
 
 const Article = mongoose.model("article", articleSchema, "articles");
 
-Article.update({}, { likes: 0, usersLiked: [] }, { multi: true }, (err, affected) => {
-    if (err) {
-        console.log(err);
-    }
-    console.log(affected);
-});
+//  Article.update({}, { likes: 0 }, { multi: true }, (err, affected) => {
+//      if (err) {
+//          console.log(err);
+//      }
+//      console.log(affected);
+//  });
 
 module.exports = Article;

@@ -10,9 +10,10 @@ block content
       div.container-fluid
         each val in articles
               div.article-container
-                a(href="single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
+                a(href="single-article?title=" + val.mainHeader).article-link #{val.mainHeader} 
                 br
                 small.article-subheader #{val.subHeader}
+
                 if user
                   div(data-id=val._id)
                     span.label.label-success
@@ -32,7 +33,32 @@ block content
                       input(type="hidden" name="articleId" value=val._id)
                       button.btn.btn-warning.btn-edit Edit
                   else if user.isAdmin
-                    form(method="post", action="/articles/edit")
-                      input(type="hidden" name="articleId" value=val._id)
-                      button.btn.btn-warning.btn-edit Edit
+                    div.editorial-menu 
+                      form(method="post", action="/articles/edit")
+                        input(type="hidden" name="articleId" value=val._id)
+                        button.btn.btn-warning.btn-edit Edit      
+                      if  val.deletedOn
+                          form(method="post", action="/articles/restore")
+                            input(type="hidden" name="articleId" value=val._id)
+                            button.btn.btn-success.btn-edit Restore    
+                            span.label.label-danger Flagged as deleted - on #{val.deletedOn}
+                      else 
+                        a.btn.btn-danger.btn-delete(data-toggle='modal', data-target= "#modal-"+ val._id)
+                            | Delete
+                     
+                    div(id="modal-" + val._id).modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+                      .modal-dialog                       
+                        .modal-content
+                          .modal-header
+                            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                            h4.modal-title Deletion conformation
+                          .modal-body
+                            | Are you sure you want to delete article #{val.mainHeader} with id #{val._id}?
+                          .modal-footer
+                            form(method="post", action="/articles/delete")
+                              input(type="hidden" name="articleId" value=val._id)             
+                              a.btn.btn-default.btn-simple(type='button', data-dismiss='modal') Cancel
+                              button.btn.btn-danger Delete                    
+
+
                   div.divider

@@ -28,11 +28,18 @@ function loadEditArticlePage(req, res) {
 
 function loadArticlesByGenrePage(req, res) {
     let user = req.user;
+    let genre = req.query.genre;
+
     if (req.user) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
 
-    let genre = req.query.genre;
+        if (user.isAdmin) {
+            return data.getArticlesByGenreAdminUser(genre)
+                .then(articles => {
+                    res.render("articles/all-articles", { user, articles });
+                });
+        }
+    }
 
     data.getArticlesByGenre(genre)
         .then(articles => {
@@ -99,10 +106,10 @@ function createArticle(req, res) {
 
     data.createArticle(articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, "")
         .then(() => {
-            res.redirect("/");
+            res.redirect(`/articles?genre=${articleGenre}`);
         })
-        .catch(() => {
-            req.redirect("/");
+        .catch((err) => {
+            console.log(err)
         });
 }
 
@@ -178,6 +185,34 @@ function returnArticlesAsJson(req, res) {
         });
 }
 
+function deleteArticle(req, res) {
+    let _id = req.body.articleId;
+    let update = { deletedOn: Date.now() };
+    let options = { new: true };
+
+    data.updateArticle(_id, update, options)
+        .then(() => {
+            res.redirect("back");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function restoreArticle(req, res) {
+    let _id = req.body.articleId;
+    let update = { deletedOn: null };
+    let options = { new: true };
+
+    data.updateArticle(_id, update, options)
+        .then(() => {
+            res.redirect("back");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 module.exports = {
     loadCreateArticlePage,
     loadEditArticlePage,
@@ -189,5 +224,7 @@ module.exports = {
     saveEditArticle,
     addComment,
     toggleLikeOnArticle,
-    returnArticlesAsJson
+    returnArticlesAsJson,
+    deleteArticle,
+    restoreArticle
 };

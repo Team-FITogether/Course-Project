@@ -9,6 +9,12 @@ block content
                         form.form(action="/auth/login" method="post")
                             .header.header-success.text-center
                                 h4 Sign In
+                                .social-line
+                                  a.btn.btn-simple.btn-just-icon(href="/auth/facebook")
+                                    i.fa.fa-facebook-square
+                                    .ripple-container
+                                  a.btn.btn-simple.btn-just-icon(href="/auth/google")
+                                    i.fa.fa-google-plus
                             .content
                                 .input-group
                                     span.input-group-addon
@@ -20,7 +26,3 @@ block content
                                     input.form-control(type="password" id="tb-password" placeholder="Password" name="password" class="form-control")
                             .footer.text-center
                                 input(type="submit" value="Login" class="btn btn-success")
-                            .footer.text-center
-                                a(href="/auth/facebook" class="btn") Login with Facebook
-                            .footer.text-center
-                                a(href="/auth/google" class="btn") Login with Google

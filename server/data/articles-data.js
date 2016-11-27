@@ -1,7 +1,7 @@
 /* globals require module Promise*/
 "use strict";
 
-module.exports = function(models) {
+module.exports = function (models) {
     let Article = models.Article;
     // let ExerciseExplanation = models.ExerciseExplanation;
     // let Exercise = models.Exercise;
@@ -21,13 +21,29 @@ module.exports = function(models) {
         getArticlesByGenre(genre) {
             return new Promise((resolve, reject) => {
                 Article
-                    .find({ genre }, (err, article) => {
+                    .find({ genre })
+                    .where("deletedOn").equals(null)
+                    .exec((err, article) => {
                         if (err) {
                             return reject(err);
                         }
 
                         return resolve(article);
-                    });
+                    })
+            });
+        },
+        getArticlesByGenreAdminUser(genre) {
+            // returns all Articles INCLUDING deleted ones
+            return new Promise((resolve, reject) => {
+                Article
+                    .find({ genre })
+                    .exec((err, article) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(article);
+                    })
             });
         },
         getArticleByTitle(title) {
