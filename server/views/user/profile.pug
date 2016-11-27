@@ -21,7 +21,7 @@ block content
                             h3 My articles
                             each val in articles
                                 div.article-container
-                                    a(href="/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
+                                    a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
                                     br
                                     small.article-subheader #{val.subHeader} 
                                     div.divider
