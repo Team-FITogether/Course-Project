@@ -24,10 +24,29 @@ function getSingleFood(req, res) {
     }
 
     let title = req.query.title;
+    let details = req.query.details;
 
-    data.getSingleFood(title)
-        .then((foods) => {
+    data.getSingleFood(title, details)
+        .then((food) => {
             res.render("food/single-food", {
+                user,
+                food
+            });
+        });
+}
+
+function getFoodByCategory(req, res) {
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
+    let categoryTitle = req.query.title;
+
+    data.getFoodByCategory(categoryTitle)
+        .then((foods) => {
+            console.log(foods);
+            res.render("food/single-food-category", {
                 user,
                 foods
             });
@@ -36,5 +55,6 @@ function getSingleFood(req, res) {
 
 module.exports = {
     getAllFoods,
-    getSingleFood
+    getSingleFood,
+    getFoodByCategory
 };

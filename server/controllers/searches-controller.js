@@ -55,7 +55,7 @@ function findFoods(foodName, isLoggedIn, req, res) {
     mongoose
         .model("foodDetails")
         .where({ title: new RegExp(foodName, "i") })
-        .select("_id title")
+        .select("_id title details")
         .exec((err, data) => {
             if (err) {
                 console.log(err);

@@ -18,14 +18,25 @@ module.exports = function(models) {
                     });
             });
         },
-        getSingleFood(title) {
+        getSingleFood(title, details) {
             return new Promise((resolve, reject) => {
                 FoodDetails
-                    .find({ "category": title }, (err, food) => {
+                    .findOne({ "title": title, "details": details }, (err, food) => {
                         if (err) {
                             return reject(err);
                         }
-
+                        console.log(food);
+                        return resolve(food);
+                    });
+            });
+        },
+        getFoodByCategory(category) {
+            return new Promise((resolve, reject) => {
+                FoodDetails
+                    .find({ "category": category }, (err, food) => {
+                        if (err) {
+                            return reject(err);
+                        }
                         return resolve(food);
                     });
             });

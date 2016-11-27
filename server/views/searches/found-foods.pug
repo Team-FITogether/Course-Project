@@ -9,5 +9,5 @@ block content
             ul
                 each val in foods
                     li
-                        a(href="/foods/single-food?title=" + val.title) #{val.title}
+                        a(href="/foods/single-food?title=" + val.title + "&details=" + val.details) #{val.title} #{val.details}
                         div.divider
