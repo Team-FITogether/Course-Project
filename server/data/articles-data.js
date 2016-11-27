@@ -3,9 +3,6 @@
 
 module.exports = function (models) {
     let Article = models.Article;
-    // let ExerciseExplanation = models.ExerciseExplanation;
-    // let Exercise = models.Exercise;
-
     return {
         getArticleById(id) {
             return new Promise((resolve, reject) => {
@@ -91,17 +88,5 @@ module.exports = function (models) {
                     });
             });
         }
-        // getSingleExercise(title) {
-        //     return new Promise((resolve, reject) => {
-        //         ExerciseExplanation
-        //             .findOne({ title }, (err, explanation) => {
-        //                 if (err) {
-        //                     return reject(err);
-        //                 }
-
-        //                 return resolve(explanation);
-        //             });
-        //     });
-        // }
     };
 };

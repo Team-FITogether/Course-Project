@@ -14,14 +14,14 @@ block content
                             h3 #{user.username}
 
                         img(class="img-circle img-responsive" src="/img/user-images/" + user.avatarName id="avatar-image")
-                        if user.isTrainer
-                            a(href="/articles/create", title="create article").btn.btn-default Create Article 
                     div.col-md-6
-                        if user.isTrainer
-                            h3 My articles
-                            each val in articles
-                                div.article-container
-                                    a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
-                                    br
-                                    small.article-subheader #{val.subHeader} 
-                                    div.divider
+                        ul
+                            li
+                                h3 
+                                    a(href="/users/profile/my-calendar") Моят Календар
+                            li 
+                                if user.isTrainer
+                                    h3 
+                                        a(href="/users/profile/my-articles") Моите Статии
+                block content
+                        

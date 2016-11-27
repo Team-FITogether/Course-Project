@@ -3,6 +3,8 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const Article = require("./../models/article");
+const Calendar = require("./../models/calendar");
+const CalendarData = require("./../data")({ Calendar });
 
 function getAllUsers(req, res) {
     User
@@ -66,14 +68,9 @@ function loadProfilePage(req, res) {
         user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
     }
 
-    let author = req.user.username;
-    Article.find({ author })
-        .then(articles => {
-            res.render("user/profile", {
-                user,
-                articles
+    res.render("user/profile", {
+                user
             });
-        });
 }
 
 function loadFoundUserProfilePage(req, res) {
@@ -82,9 +79,7 @@ function loadFoundUserProfilePage(req, res) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
 
-
     if (req.query.username) {
-
         User
             .findOne({ username: req.query.username })
             .then(foundUser => {
@@ -96,7 +91,6 @@ function loadFoundUserProfilePage(req, res) {
             .catch(console.log);
     }
     else if (req.query.id) {
-
         User
             .findOne({ _id: req.query.id })
             .then(foundUser => {
@@ -109,10 +103,58 @@ function loadFoundUserProfilePage(req, res) {
     }
 }
 
+function loadUserCallendar(req, res){
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+        user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
+    }
+
+    CalendarData.getCalendarByUser(user.username)
+    .then(calendar => {
+        if(!calendar){
+            CalendarData.createCalendar(user.username)
+                .then(newCalendar => {
+                    calendar = newCalendar;
+                    res.render("user/profile-calendar", {
+                    user,
+                    calendar
+                });
+            })
+        } else {
+            res.render("user/profile-calendar", {
+                user,
+                calendar
+            });
+        }
+        
+    })
+    
+}
+
+function loadUserArticles(req, res){
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+        user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
+    }
+
+    let author = req.user.username;
+    Article.find({ author })
+        .then(articles => {
+            res.render("user/profile-articles", {
+                user,
+                articles
+            });
+        });
+}
+
 module.exports = {
     loadAdminPannel,
     loadProfilePage,
     loadFoundUserProfilePage,
+    loadUserCallendar,
+    loadUserArticles,
     getAllUsers,
     addRole
 };

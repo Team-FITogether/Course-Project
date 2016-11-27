@@ -1,0 +1,11 @@
+extends ./profile
+
+block content
+    each val in articles
+        div.article-container
+        a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
+        br
+        small.article-subheader #{val.subHeader}
+    if user.isTrainer
+        br
+        a(href="/articles/create", title="create article").btn.btn-default Create Article
