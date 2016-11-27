@@ -94,6 +94,30 @@ function findRecipes(recipeName, isLoggedIn, req, res) {
         });
 }
 
+function findArticles(articleName, isLoggedIn, req, res) {
+    let user = req.user;
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+    }
+
+    mongoose
+        .model("article")
+        .where({ mainHeader: new RegExp(articleName, "i") })
+        .select("_id mainHeader")
+        .exec((err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("searches/found-articles.pug", {
+                    articles: data,
+                    viewBag: {
+                        isLoggedIn
+                    }
+                });
+            }
+        });
+}
+
 function findEntities(req, res) {
     let query = req.query;
     let entityName = query.entityName;
@@ -107,6 +131,8 @@ function findEntities(req, res) {
         findFoods(query.searchValue, isLoggedIn, req, res);
     } else if (entityName === "recipes") {
         findRecipes(query.searchValue, isLoggedIn, req, res);
+    } else if (entityName === "articles") {
+        findArticles(query.searchValue, isLoggedIn, req, res);
     }
 }
 
