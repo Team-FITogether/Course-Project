@@ -16,7 +16,7 @@ module.exports = (app, config, userValidator) => {
 
     app.all("*", (req, res) => {
         res.status(404);
-        res.render("default-not-found");
+        res.render("error-pages/404-not-found");
         res.end();
     });
 };

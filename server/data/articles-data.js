@@ -1,7 +1,7 @@
 /* globals require module Promise*/
 "use strict";
 
-module.exports = function(models) {
+module.exports = function (models) {
     let Article = models.Article;
     return {
         getArticleById(id) {
@@ -46,19 +46,36 @@ module.exports = function(models) {
                         });
                 })]);
         },
-        getArticlesByGenreAdminUser(genre) {
+        getArticlesByGenreAdminUser(genre, page, pageSize) {
             // returns all Articles INCLUDING deleted ones
-            return new Promise((resolve, reject) => {
-                Article
-                    .find({ genre })
-                    .exec((err, article) => {
-                        if (err) {
-                            return reject(err);
-                        }
+            let skip = (page - 1) * pageSize;
+            let limit = pageSize;
 
-                        return resolve(article);
-                    })
-            });
+            return Promise.all([
+                new Promise((resolve, reject) => {
+                    Article
+                        .find({ genre })
+                        .skip(skip)
+                        .limit(limit)
+                        .exec((err, articles) => {
+                            if (err) {
+                                return reject(err);
+                            }
+
+                            return resolve(articles);
+                        })
+                }),
+                new Promise((resolve, reject) => {
+                    Article
+                        .count({ genre })
+                        .exec((err, count) => {
+                            if (err) {
+                                return reject(err);
+                            }
+
+                            return resolve(count);
+                        });
+                })]);
         },
         getArticleByTitle(title) {
             return new Promise((resolve, reject) => {

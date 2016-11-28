@@ -37,23 +37,26 @@ function loadArticlesByGenrePage(req, res) {
 
         if (user.isAdmin) {
             return data.getArticlesByGenreAdminUser(genre, page, pageSize)
-                .then(articles => {
-                    let articlesCount = articles.length;
-                    let pages = Math.ceil(articlesCount / pageSize);
+                .then(result => {
+                    let articles = result[0];
+                    let count = result[1];
+                    let pages = Math.ceil(count / pageSize);
 
                     res.render("articles/all-articles", { user, articles, page, pages, genre });
                 });
         }
     }
 
-
-
     data.getArticlesByGenre(genre, page, pageSize)
         .then(result => {
             let articles = result[0];
             let count = result[1];
-            console.log(articles, count)
-            let pages = Math.ceil(count / pageSize);
+            let pages = count / pageSize;
+
+            if (page > pages) {
+               res.render("error-pages/404-not-found");
+               return res.status(404);
+            }
 
             res.render("articles/all-articles", { user, articles, page, pages, genre });
         });
@@ -92,7 +95,7 @@ function loadSingleArticlePage(req, res) {
         });
 }
 
-function saveEditArticle(req, res) {
+function saveEditedArticle(req, res) {
     let articleBody = req.body.articleBody;
     let articleHeader = req.body.articleHeader;
     let articleSubHeader = req.body.articleSubHeader;
@@ -231,7 +234,7 @@ module.exports = {
     loadSingleArticlePage,
 
     createArticle,
-    saveEditArticle,
+    saveEditedArticle,
     addComment,
     toggleLikeOnArticle,
     returnArticlesAsJson,

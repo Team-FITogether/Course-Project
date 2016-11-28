@@ -1,5 +1,5 @@
 extends ../base-master
-include ../mixins/pagination
+include ../mixins/articles-pagination
 
 block content
   link(rel="stylesheet" href="/css/articles/all-articles.css")
@@ -65,4 +65,4 @@ block content
               div.divider
         
         
-        +pagination(page, pages, genre)
+        +articlesPagination(page, pages, genre)
