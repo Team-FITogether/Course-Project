@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
     googleToken: { type: String },
     age: { type: Number },
     roles: [String],
-    avatarName: String
+    avatarName: { type: String, default: 'default.jpg' }
 });
 
 userSchema.methods = {

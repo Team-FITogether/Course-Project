@@ -186,7 +186,7 @@ function AddWorkout(req, res){
 
     CalendarData.updateCalendar(user.username, { $push: { "workouts": newWorkout } }, true)
         .then(calendar => {
-            return res.redirect("/users/profile")
+            return res.redirect("/users/profile/my-calendar");
         })
 }
 module.exports = {
