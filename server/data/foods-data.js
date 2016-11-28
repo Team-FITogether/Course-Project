@@ -40,6 +40,20 @@ module.exports = function(models) {
                         return resolve(food);
                     });
             });
+        },
+        findFoodByQueryWithSelectIdAndTitle(query) {
+            return new Promise((resolve, reject) => {
+                Food
+                    .find(query)
+                    .select("_id title")
+                    .exec((err, foods) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(foods);
+                    });
+            });
         }
     }
 }

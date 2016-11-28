@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const Article = require("./../models/article");
 const Exercise = require("./../models/exercise");
-const data = require("./../data")({ Exercise, User, Article });
+const Food = require("./../models/food");
+const Recipe = require("./../models/recipe");
+const data = require("./../data")({ User, Exercise, Food, Recipe, Article });
 const constants = require("./../utils/constants");
 
 function findUsers(username, isLoggedIn, req, res) {
@@ -11,8 +13,8 @@ function findUsers(username, isLoggedIn, req, res) {
     if (req.user) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
-    let query = { username: new RegExp(username, "i") };
 
+    let query = { username: new RegExp(username, "i") };
     data.findUserByQueryWithSelectIdAndName(query)
         .then(users => {
             res.render("searches/found-users.pug", {
@@ -31,7 +33,6 @@ function findExercises(exerciseName, isLoggedIn, req, res) {
     }
 
     let query = { name: new RegExp(exerciseName, "i") };
-
     data.findExerciseByQueryWithSelectIdAndName(query)
         .then(exercises => {
             res.render("searches/found-exercises.pug", {
@@ -45,52 +46,43 @@ function findExercises(exerciseName, isLoggedIn, req, res) {
         });
 }
 
-function findFoods(foodName, isLoggedIn, req, res) {
+function findFoods(foodTitle, isLoggedIn, req, res) {
     let user = req.user;
     if (req.user) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
 
-    mongoose
-        .model("foodDetails")
-        .where({ title: new RegExp(foodName, "i") })
-        .select("_id title details")
-        .exec((err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(data);
-                res.render("searches/found-foods.pug", {
-                    foods: data,
-                    viewBag: {
-                        isLoggedIn
-                    }
-                });
-            }
+    let query = { title: new RegExp(foodTitle, "i") };
+    data.findFoodByQueryWithSelectIdAndTitle(query)
+        .then(foods => {
+            res.render("searches/found-foods.pug", {
+                foods,
+                viewBag: {
+                    isLoggedIn
+                }
+            });
+        }, err => {
+            console.log(err);
         });
 }
 
-function findRecipes(recipeName, isLoggedIn, req, res) {
+function findRecipes(recipeTitle, isLoggedIn, req, res) {
     let user = req.user;
     if (req.user) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
 
-    mongoose
-        .model("recipe")
-        .where({ title: new RegExp(recipeName, "i") })
-        .select("_id title")
-        .exec((err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.render("searches/found-recipes.pug", {
-                    recipes: data,
-                    viewBag: {
-                        isLoggedIn
-                    }
-                });
-            }
+    let query = { title: new RegExp(recipeTitle, "i") };
+    data.findRecipeByQueryWithSelectIdAndTitle(query)
+        .then(recipes => {
+            res.render("searches/found-recipes.pug", {
+                recipes,
+                viewBag: {
+                    isLoggedIn
+                }
+            });
+        }, err => {
+            console.log(err);
         });
 }
 

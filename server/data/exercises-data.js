@@ -69,7 +69,8 @@ module.exports = function(models) {
         },
         findExerciseByQueryWithSelectIdAndName(query) {
             return new Promise((resolve, reject) => {
-                Exercise.find(query)
+                Exercise
+                    .find(query)
                     .select("_id name")
                     .exec((err, exercises) => {
                         if (err) {
