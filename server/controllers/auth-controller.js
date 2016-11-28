@@ -23,7 +23,7 @@ function registerUser(req, res) {
                     username: body.username,
                     firstname: body.firstname,
                     lastname: body.lastname,
-                    avatarName: req.file.filename,
+                    avatarName: req.file ? req.file.filename : null,
                     passHash,
                     salt
                 };
