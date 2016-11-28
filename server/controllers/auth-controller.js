@@ -5,6 +5,9 @@ const User = mongoose.model("user");
 const encryption = require("../utils/encryption");
 const passport = require("passport");
 
+const data = require("./../data")({ User });
+
+
 function registerUser(req, res) {
     const body = req.body;
 
@@ -13,8 +16,10 @@ function registerUser(req, res) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
     }
 
-    User
-        .findOne({ username: body.username })
+    let username = body.username;
+    // User
+    //     .findOne({ username: body.username })
+    data.getUserByUsername(username)
         .then(foundUser => {
             if (!foundUser) {
                 let salt = encryption.getSalt();
@@ -28,8 +33,7 @@ function registerUser(req, res) {
                     salt
                 };
 
-                User
-                    .create(newUserData)
+                data.createUser(newUserData)
                     .then(() => res.redirect("/auth/login"))
                     .catch(() => {
                         res.status(500);

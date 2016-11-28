@@ -14,7 +14,7 @@ module.exports = function(models) {
                         if (err) {
                             return reject(err);
                         }
-                        
+
                         return resolve(categories);
                     });
             });
@@ -59,6 +59,19 @@ module.exports = function(models) {
             return new Promise((resolve, reject) => {
                 ExerciseExplanation
                     .findById(id, (err, exercises) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(exercises);
+                    });
+            });
+        },
+        findExerciseByQueryWithSelectIdAndName(query) {
+            return new Promise((resolve, reject) => {
+                Exercise.find(query)
+                    .select("_id name")
+                    .exec((err, exercises) => {
                         if (err) {
                             return reject(err);
                         }
