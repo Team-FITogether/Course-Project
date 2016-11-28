@@ -2,6 +2,11 @@
     min-height: 165px !important;
 }
 
+.navbar-black {
+        background-color: #000;
+    color: #fff;
+}
+
 .material-icons.like-icon {
     color: white;
     font-size: 12px;
@@ -9,8 +14,8 @@
     vertical-align: text-top;
 }
 .dislike-button, 
-.like-button {
-    text-decoration: none;
+.like-button {   
+     text-transform: none;
     color: red
 }
     .dislike-button:hover,

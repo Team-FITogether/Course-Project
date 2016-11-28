@@ -1,4 +1,5 @@
 extends ../base-master
+include ../mixins/pagination
 
 block content
   link(rel="stylesheet" href="/css/articles/all-articles.css")
@@ -9,56 +10,59 @@ block content
     div.section.section-basic
       div.container-fluid
         each val in articles
-              div.article-container
-                a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
-                br
-                small.article-subheader #{val.subHeader}
+          div.article-container
+            a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
+            br
+            small.article-subheader #{val.subHeader}
 
-                if user
-                  div(data-id=val._id)
-                    span.label.label-success
-                      i.material-icons.like-icon thumb_up &nbsp
-                      span.like-value #{val.likes}
-                    a.btn.btn-success.btn-sm.like-button Like
-                    
-                else
-                  div(data-id=val._id)
-                      span.label.label-success
-                        i.material-icons.like-icon thumb_up &nbsp
-                        span.like-value #{val.likes}
-                  
-                if user 
-                  if user.isTrainer
-                    form(method="post", action="/articles/edit")
+            if user
+              div(data-id=val._id)
+                span.label.label-success
+                  i.material-icons.like-icon thumb_up &nbsp
+                  span.like-value #{val.likes}
+                a.btn.btn-success.btn-sm.like-button Харесва ми
+
+            else
+              div(data-id=val._id)
+                span.label.label-success
+                  i.material-icons.like-icon thumb_up &nbsp
+                  span.like-value #{val.likes}
+
+            if user 
+              if user.isTrainer
+                form(method="post", action="/articles/edit")
+                  input(type="hidden" name="articleId" value=val._id)
+                  button.btn.btn-warning.btn-edit Редактирай
+              else if user.isAdmin
+                div.editorial-menu 
+                  form(method="post", action="/articles/edit")
+                    input(type="hidden" name="articleId" value=val._id)
+                    button.btn.btn-warning.btn-edit Редактирай      
+                  if  val.deletedOn
+                    form(method="post", action="/articles/restore")
                       input(type="hidden" name="articleId" value=val._id)
-                      button.btn.btn-warning.btn-edit Edit
-                  else if user.isAdmin
-                    div.editorial-menu 
-                      form(method="post", action="/articles/edit")
-                        input(type="hidden" name="articleId" value=val._id)
-                        button.btn.btn-warning.btn-edit Edit      
-                      if  val.deletedOn
-                          form(method="post", action="/articles/restore")
-                            input(type="hidden" name="articleId" value=val._id)
-                            button.btn.btn-success.btn-edit Restore    
-                            span.label.label-danger Flagged as deleted - on #{val.deletedOn}
-                      else 
-                        a.btn.btn-danger.btn-delete(data-toggle='modal', data-target= "#modal-"+ val._id)
-                            | Delete
-                     
-                    div(id="modal-" + val._id).modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-                      .modal-dialog                       
-                        .modal-content
-                          .modal-header
-                            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-                            h4.modal-title Deletion conformation
-                          .modal-body
-                            | Are you sure you want to delete article #{val.mainHeader} with id #{val._id}?
-                          .modal-footer
-                            form(method="post", action="/articles/delete")
-                              input(type="hidden" name="articleId" value=val._id)             
-                              a.btn.btn-default.btn-simple(type='button', data-dismiss='modal') Cancel
-                              button.btn.btn-danger Delete                    
+                      button.btn.btn-success.btn-edit Възстанови    
+                      span.label.label-danger Маркирано като изтрито - на дата:  #{val.deletedOn}
+                  else 
+                    a.btn.btn-danger.btn-delete(data-toggle='modal', data-target= "#modal-"+ val._id)
+                      | Изтрий
+
+                div(id="modal-" + val._id).modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+                  .modal-dialog                       
+                    .modal-content
+                      .modal-header
+                        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                        h4.modal-title Потвърждение за изтриване.
+                      .modal-body
+                        | Сигурен ли сте искате да изтриете предмет #{val.mainHeader} с  #{val._id}?
+                      .modal-footer
+                        form(method="post", action="/articles/delete")
+                          input(type="hidden" name="articleId" value=val._id)             
+                          a.btn.btn-default.btn-simple(type='button', data-dismiss='modal') Откажи
+                          button.btn.btn-danger Изтрий                    
 
 
-                  div.divider
+              div.divider
+        
+        
+        +pagination(page, pages, genre)

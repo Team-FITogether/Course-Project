@@ -29,21 +29,33 @@ function loadEditArticlePage(req, res) {
 function loadArticlesByGenrePage(req, res) {
     let user = req.user;
     let genre = req.query.genre;
+    let page = Number(req.query.page || 1);
+    let pageSize = 5;
 
     if (req.user) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
 
         if (user.isAdmin) {
-            return data.getArticlesByGenreAdminUser(genre)
+            return data.getArticlesByGenreAdminUser(genre, page, pageSize)
                 .then(articles => {
-                    res.render("articles/all-articles", { user, articles });
+                    let articlesCount = articles.length;
+                    let pages = Math.ceil(articlesCount / pageSize);
+
+                    res.render("articles/all-articles", { user, articles, page, pages, genre });
                 });
         }
     }
 
-    data.getArticlesByGenre(genre)
-        .then(articles => {
-            res.render("articles/all-articles", { user, articles });
+
+
+    data.getArticlesByGenre(genre, page, pageSize)
+        .then(result => {
+            let articles = result[0];
+            let count = result[1];
+            console.log(articles, count)
+            let pages = Math.ceil(count / pageSize);
+
+            res.render("articles/all-articles", { user, articles, page, pages, genre });
         });
 }
 

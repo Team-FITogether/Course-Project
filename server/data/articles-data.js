@@ -15,19 +15,36 @@ module.exports = function (models) {
                 });
             });
         },
-        getArticlesByGenre(genre) {
-            return new Promise((resolve, reject) => {
-                Article
-                    .find({ genre })
-                    .where("deletedOn").equals(null)
-                    .exec((err, article) => {
-                        if (err) {
-                            return reject(err);
-                        }
+        getArticlesByGenre(genre, page, pageSize) {
+            let skip = (page - 1) * pageSize;
+            let limit = pageSize;
 
-                        return resolve(article);
-                    })
-            });
+            return Promise.all([
+                new Promise((resolve, reject) => {
+                    Article
+                        .find({ genre })
+                        .where("deletedOn").equals(null)
+                        .skip(skip)
+                        .limit(limit)
+                        .exec((err, articles) => {
+                            if (err) {
+                                return reject(err);
+                            }
+
+                            return resolve(articles);
+                        })
+                }),
+                new Promise((resolve, reject) => {
+                    Article
+                        .count({ genre })
+                        .exec((err, count) => {
+                            if (err) {
+                                return reject(err);
+                            }
+
+                            return resolve(count);
+                        });
+                })]);
         },
         getArticlesByGenreAdminUser(genre) {
             // returns all Articles INCLUDING deleted ones

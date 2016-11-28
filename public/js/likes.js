@@ -1,5 +1,8 @@
 ﻿$(document).ready(() => {
-    let genre = getParameterByName("genre", window.location.href);
+    const likeInBulgarian = "Харесва ми";
+    const unlikeInBulgarian = "Не ми харесва";
+
+    let genre = _getParameterByName("genre", window.location.href);
     let username = $("#username").text();
 
     $.post("/api/articles", { genre }, (success) => {
@@ -10,10 +13,12 @@
 
             for (let j = 0; j < currentArticle.usersLiked.length; j++) {
                 if (currentArticle.usersLiked[j].user === username) {
+                    
                     let element = $(`div [data-id="${currentArticle._id}"]`);
-                    let button = element.find("a").removeClass();
+                    let button = element.find("a");
+                    button.removeClass();
                     button.addClass("btn btn-sm btn-primary like-button");
-                    button.text("Unlike");
+                    button.text(unlikeInBulgarian);
                 }
             }
         }
@@ -28,19 +33,19 @@
                 $target.parent().find(".like-value").text(success);
                 let button = $target.parent().find("a");
 
-                if (button.text() === "Like") {
+                if (button.text() === likeInBulgarian) {
                     button.removeClass();
                     button.addClass("btn btn-sm btn-primary like-button");
-                    button.text("Unlike");
+                    button.text(unlikeInBulgarian);
                 } else {
                     button.removeClass();
                     button.addClass("btn btn-sm btn-success like-button");
-                    button.text("Like");
+                    button.text(likeInBulgarian);
                 }
             });
         });
 
-    function getParameterByName(name, url) {
+    function _getParameterByName(name, url) {
         if (!url) {
             url = window.location.href;
         }
