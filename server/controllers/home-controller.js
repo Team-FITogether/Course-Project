@@ -9,7 +9,7 @@ function loadHomePage(req, res) {
 
     let model = {
         content: "Some content"
-    }
+    };
     res.render("home/home", { user, model });
 }
 

@@ -52,18 +52,31 @@ module.exports = function(models) {
                     return resolve(foundUser);
                 });
             });
+        },
+        createUser(user) {
+            return new Promise((resolve, reject) => {
+                User
+                    .create(user, (err, createdUser) => {
+                        if (err) {
+                            return reject(err);
+                        }
 
-            // User.findOneAndUpdate(query, updateObject, (err, us) => {
-            //     .find()
-            //         .select("username")
-            //         .exec((err, users) => {
-            //             if (err) {
-            //                 return reject(err);
-            //             }
+                        return resolve(createdUser);
+                    });
+            });
+        },
+        findUserByQueryWithSelectIdAndName(query) {
+            return new Promise((resolve, reject) => {
+                User.find(query)
+                    .select("_id username")
+                    .exec((err, users) => {
+                        if (err) {
+                            return reject(err);
+                        }
 
-            //             return resolve(users);
-            //         });
-            // });
+                        return resolve(users);
+                    });
+            });
         }
     };
 };

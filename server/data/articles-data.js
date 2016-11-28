@@ -44,7 +44,8 @@ module.exports = function (models) {
 
                             return resolve(count);
                         });
-                })]);
+                })
+            ]);
         },
         getArticlesByGenreAdminUser(genre, page, pageSize) {
             // returns all Articles INCLUDING deleted ones
@@ -131,6 +132,19 @@ module.exports = function (models) {
                         }
 
                         return resolve(article);
+                    });
+            });
+        },
+        findArticleByQueryWithSelectIdAndHeader(query) {
+            return new Promise((resolve, reject) => {
+                Article.find(query)
+                    .select("_id mainHeader")
+                    .exec((err, articles) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(articles);
                     });
             });
         }
