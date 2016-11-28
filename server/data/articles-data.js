@@ -1,7 +1,7 @@
 /* globals require module Promise*/
 "use strict";
 
-module.exports = function (models) {
+module.exports = function(models) {
     let Article = models.Article;
     return {
         getArticleById(id) {
@@ -47,6 +47,18 @@ module.exports = function (models) {
             return new Promise((resolve, reject) => {
                 Article
                     .findOne({ mainHeader: title }, (err, article) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(article);
+                    });
+            });
+        },
+        getArticlesByAuthor(author) {
+            return new Promise((resolve, reject) => {
+                Article
+                    .find({ author }, (err, article) => {
                         if (err) {
                             return reject(err);
                         }
