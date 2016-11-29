@@ -89,10 +89,10 @@ function renderFoundUserById(id, req, res) {
 
 module.exports = userValidator => {
     return {
-        loadAdminPannel(req, res) {
+        loadAdminPanel(req, res) {
             setIsAdminUser(req, userValidator);
             userData.getUsernamesOfUsers()
-                .then(users => res.render("admin-area/admin-pannel", { user: req.user, mappedUsers: users }));
+                .then(users => res.render("admin-area/admin-panel", { user: req.user, mappedUsers: users }));
         },
         loadProfilePage(req, res) {
             setIsAdminUser(req, userValidator);
@@ -137,10 +137,19 @@ module.exports = userValidator => {
             userData.findUserAndUpdate(query, updateObject)
                 .then((foundUser) => {
                     // Handle the case where there isn't found user
-                    res.render("admin-area/admin-pannel", { user: req.user });
+                    res.render("admin-area/admin-panel", { user: req.user });
                 }, error => {
                     // Handle error
-                    res.render("admin-area/admin-pannel", { user: req.user });
+                    res.render("admin-area/admin-panel", { user: req.user });
+                });
+        },
+        addNewExerciseCategory(req, res) {
+            let category = req.body.category;
+
+            exerciseData.addNewCategory(category)
+                .then((createdCategory) => {
+                    console.log(`Created ${createdCategory}`);
+                    res.render("admin-area/admin-panel");
                 });
         }
     };

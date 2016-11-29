@@ -73,5 +73,20 @@ module.exports = {
                     return resolve(exercises);
                 });
         });
+    },
+    addNewCategory(name) {
+        return new Promise((resolve, reject) => {
+            let category = new ExerciseCategory({
+                name
+            });
+
+            category.save((err, createdCategory) => {
+                if (err) {
+                    return reject(err);
+                }
+
+                return resolve(createdCategory);
+            });
+        });
     }
 };
