@@ -21,7 +21,16 @@
 
     }
 
+    function fixDatepicker(){
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            minDate: 0
+        });
+    }
+
     attachShowWorkouts();
     attachShowArticles();
     attachShowFoods();
+    fixDatepicker();
+
 }());

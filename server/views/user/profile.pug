@@ -33,7 +33,7 @@ block content
                             div.form-group.workout-selector 
                                 div.datepicker-holder
                                     label Избери дата:
-                                    input(name="date" id="workout-datepicker" class="datepicker form-control" type="text" value="11/20/2016")
+                                    input(name="date" id="workout-datepicker" class="datepicker form-control" type="text" value=moment().format("DD/MM/YYYY"))
                                 div
                                     select(name="exerciseOne" id="exercise-1" placeholder="Първо упражнение").form-control
                                         option(value="") Избери упражнение 1
