@@ -152,9 +152,9 @@ function AddWorkoutToUser(req, res) {
     exercises.push(body.exerciseThree);
     exercises.push(body.exerciseFour);
 
-    var numbers = body.date.match(/\d+/g);
+    // var numbers = body.date.match(/\d+/g);
 
-    var date = new Date(numbers[2], numbers[1] - 1, numbers[0]);
+    var date = body.date;
 
     let newWorkout = {
         date: date,
@@ -163,7 +163,7 @@ function AddWorkoutToUser(req, res) {
 
     data.updateCalendar(user.username, { $push: { "workouts": newWorkout } }, true)
         .then(calendar => {
-            return res.redirect("back");
+            return res.sendStatus(200);
         });
 }
 
