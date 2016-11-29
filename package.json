@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "postinstall": "./node_modules/.bin/bower install",
     "test": "node node_modules/mocha/bin/mocha ./tests"
   },
   "repository": {
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/Team-FITogether/Course-Project#readme",
   "dependencies": {
     "body-parser": "1.15.2",
+    "bower": "^1.8.0",
     "cookie-parser": "1.4.3",
     "express": "4.14.0",
     "express-session": "1.14.2",

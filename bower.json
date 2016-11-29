@@ -1,0 +1,21 @@
+{
+  "name": "fitogether",
+  "description": "course project for telerik academy, web applications with node.js course",
+  "main": "index.js",
+  "authors": [
+    "Sparx92 <stefankoserkov@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Team-FITogether/Course-Project",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "toastr": "^2.1.3"
+  }
+}

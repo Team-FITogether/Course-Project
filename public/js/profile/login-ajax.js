@@ -7,10 +7,19 @@ $("#btn-login").on("click", (ev) => {
         username, password
     }
 
-
     app.requester.post("/auth/login", data)
         .then(response => {
-            $("body").html(response)
+            let parsedResponce = JSON.parse(response);
+            
+            if (parsedResponce.success) {
+                app.notificator.showNotification(parsedResponce.success, "success")
+                setTimeout(() => { window.location.href = "/" }, 1500)
+            } else if (parsedResponce.error) {
+                app.notificator.showNotification(parsedResponce.error, "error")
+            }
+        })
+        .catch(err => {
+            console.log(err)
         });
 })
 
