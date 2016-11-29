@@ -29,32 +29,31 @@ block content
                 div.section.workouts-holder
                     h3 Календарът на #{ calendar.calendarUser }
                     div.col-lg-6
-                        form(method="post" action="/users/profile/my-workout")
-                            div.form-group.workout-selector 
-                                div.datepicker-holder
-                                    label Избери дата:
-                                    input(name="date" id="workout-datepicker" class="datepicker form-control" type="text" value=moment().format("DD/MM/YYYY"))
-                                div
-                                    select(name="exerciseOne" id="exercise-1" placeholder="Първо упражнение").form-control
-                                        option(value="") Избери упражнение 1
-                                        for val in exercises
-                                            option(value="" + val.name) #{val.name}
-                                div
-                                    select(name="exerciseTwo" id="exercise-2" placeholder="Второ упражнение").form-control
-                                        option(value="") Избери упражнение 2
-                                        for val in exercises
-                                            option(value="" + val.name) #{val.name}
-                                div
-                                    select(name="exerciseThree" id="exercise-3" placeholder="Трето упражнение").form-control
-                                        option(value="") Избери упражнение 3
-                                        for val in exercises
-                                            option(value="" + val.name) #{val.name}
-                                div
-                                    select(name="exerciseFour" id="exercise-4" placeholder="Четвърто упражнение").form-control
-                                        option(value="") Избери упражнение 4
-                                        for val in exercises
-                                            option(value="" + val.name) #{val.name}
-                                input(type="submit" id="add-workout-button" value="Добави тренировка" class="btn btn-success")
+                        div.form-group.workout-selector 
+                            div.datepicker-holder
+                                label Избери дата:
+                                input(name="date" id="workout-datepicker" class="datepicker form-control" type="text" value=moment().format("DD/MM/YYYY"))
+                            div.form-group
+                                select(name="exerciseOne" id="exercise-1" placeholder="Първо упражнение").form-control
+                                    option(value="") Избери упражнение 1
+                                    for val in exercises
+                                        option(value="" + val.name) #{val.name}
+                            div.form-group
+                                select(name="exerciseTwo" id="exercise-2" placeholder="Второ упражнение").form-control
+                                    option(value="") Избери упражнение 2
+                                    for val in exercises
+                                        option(value="" + val.name) #{val.name}
+                            div.form-group
+                                select(name="exerciseThree" id="exercise-3" placeholder="Трето упражнение").form-control
+                                    option(value="") Избери упражнение 3
+                                    for val in exercises
+                                        option(value="" + val.name) #{val.name}
+                            div.form-group
+                                select(name="exerciseFour" id="exercise-4" placeholder="Четвърто упражнение").form-control
+                                    option(value="") Избери упражнение 4
+                                    for val in exercises
+                                        option(value="" + val.name) #{val.name}
+                            a(id="add-workout-button" class="btn btn-success") Добави Тренировка
                     div.col-lg-6.workout-list-holder
                         each val in calendar.workouts
                             if moment() <= val.date
@@ -76,3 +75,6 @@ block content
                             br
                             a(href="/articles/create", title="create article").btn.btn-success Създай Статия                      
                         
+    script(src="/js/profile/profile-manager.js")
+    script(src="/js/profile/profile-ajax.js")
+    script(src="/js/utils/requester.js")
