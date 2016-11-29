@@ -1,26 +1,78 @@
 extends ../base-master
 
 block content
-    link(rel="stylesheet" href="/css/users/profile.css") 
+    link(rel="stylesheet" href="/css/users/profile.css")
+    link(rel="stylesheet" href="/css/articles/all-articles.css")
+
     div.header.header-default
     div.main.main-raised
         div.section.section-basic
             div.container-fluid
                 div(class="content row" id="profile-container")
-                    div.col-md-6
+                    div.pull-left
                         if user.isTrainer
                             h3.trainer-title #{user.username}
                         else 
                             h3 #{user.username}
                         img(class="img-circle img-responsive" src="/img/user-images/" + user.avatarName id="avatar-image")
-                    div.col-md-6
-                        ul
+                    div(class="collapse navbar-collapse pull-left" id="bs-example-navbar-collapse-1")
+                        ul(class="nav navbar-nav")
                             li
-                                h3 
-                                    a(href="/users/profile/my-calendar") Моят Календар
-                            li 
+                                a(id="my-workouts").profile-link Тренировъчен Режим
+                            li
+                                a(id="my-menu").profile-link Хранителен Режим
+                            li
+                                a(id="my-friends").profile-link Приятели
+                            li
                                 if user.isTrainer
-                                    h3 
-                                        a(href="/users/profile/my-articles") Моите Статии
-                block content
+                                    a(id="my-articles").profile-link Моите Статии
+                div.section.workouts-holder
+                    h3 Календарът на #{ calendar.calendarUser }
+                    div.col-lg-6
+                        form(method="post" action="/users/profile/my-calendar")
+                            div.form-group.workout-selector 
+                                div.datepicker-holder
+                                    label Избери дата:
+                                    input(name="date" id="workout-datepicker" class="datepicker form-control" type="text" value="11/20/2016")
+                                div
+                                    select(name="exerciseOne" id="exercise-1" placeholder="Първо упражнение").form-control
+                                        option(value="") Избери упражнение 1
+                                        for val in exercises
+                                            option(value="" + val.name) #{val.name}
+                                div
+                                    select(name="exerciseTwo" id="exercise-2" placeholder="Второ упражнение").form-control
+                                        option(value="") Избери упражнение 2
+                                        for val in exercises
+                                            option(value="" + val.name) #{val.name}
+                                div
+                                    select(name="exerciseThree" id="exercise-3" placeholder="Трето упражнение").form-control
+                                        option(value="") Избери упражнение 3
+                                        for val in exercises
+                                            option(value="" + val.name) #{val.name}
+                                div
+                                    select(name="exerciseFour" id="exercise-4" placeholder="Четвърто упражнение").form-control
+                                        option(value="") Избери упражнение 4
+                                        for val in exercises
+                                            option(value="" + val.name) #{val.name}
+                                input(type="submit" id="add-workout-button" value="Добави тренировка" class="btn btn-success")
+                    div.col-lg-6.workout-list-holder
+                        each val in calendar.workouts
+                            if moment() <= val.date
+                                div.calendar-section.single-workout-holder
+                                    div.calendar-date
+                                        span #{moment(val.date).format('DD/MM/YYYY')}
+                                    each exercise in val.exercises
+                                        span #{exercise}
+                                        br
+                                    br
+                div.section.articles-holder
+                    h3 Статии от #{ calendar.calendarUser }
+                        each val in articles
+                            div.article-container
+                                a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
+                                br
+                                small.article-subheader #{val.subHeader}
+                        if user.isTrainer
+                            br
+                            a(href="/articles/create", title="create article").btn.btn-success Създай Статия                      
                         

@@ -1,13 +1,10 @@
 "use strict";
 
-const mongoose = require("mongoose");
-const User = mongoose.model("user");
+const User = require("./../models/user");
 const Article = require("./../models/article");
-
 const Calendar = require("./../models/calendar");
-// const CalendarData = require("./../data")({ Calendar });
-
 const Exercise = require("../models/exercise");
+
 const data = require("./../data")({ Exercise, User, Calendar, Article });
 
 function getAllUsers(req, res) {
@@ -64,14 +61,47 @@ function addRole(req, res) {
 
 function loadProfilePage(req, res) {
     let user = req.user;
+    let calendar;
+    let articles;
+    let exercises;
+    
     if (req.user) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
         user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
     }
 
-    res.render("user/profile", {
-        user
-    });
+    data.getAllExercises()
+        .then(resultExercises => {
+                exercises = resultExercises;
+                return data.getArticlesByAuthor(user.username)
+        })
+        .then(resultAricles => {
+            articles = resultAricles;
+            return data.getCalendarByUser(user.username)
+        })
+        .then(resultCalendar => {
+            if (!resultCalendar) {
+                data.createCalendar(user.username)
+                    .then(newCalendar => {
+                        calendar = newCalendar;
+                        res.render("user/profile", {
+                            user,
+                            calendar,
+                            exercises,
+                            articles
+                        });
+                    });
+            } else {
+                calendar = resultCalendar;
+                res.render("user/profile", {
+                    user,
+                    calendar,
+                    exercises,
+                    articles
+                });
+            }
+        })
+        .catch(console.log);
 }
 
 function loadFoundUserProfilePage(req, res) {
@@ -104,62 +134,6 @@ function loadFoundUserProfilePage(req, res) {
     }
 }
 
-function loadUserCallendar(req, res) {
-    let user = req.user;
-    let exercises;
-
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-        user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
-    }
-
-    data.getAllExercises()
-        .then(allExercises => {
-            exercises = allExercises;
-            return Promise.resolve();
-        })
-        .then(() => {
-            return data.getCalendarByUser(user.username);
-        })
-        .then(calendar => {
-            if (!calendar) {
-                data.createCalendar(user.username)
-                    .then(newCalendar => {
-                        calendar = newCalendar;
-                        res.render("user/profile-calendar", {
-                            user,
-                            calendar,
-                            exercises
-                        });
-                    });
-            } else {
-                res.render("user/profile-calendar", {
-                    user,
-                    calendar,
-                    exercises
-                });
-            }
-        });
-}
-
-function loadUserArticles(req, res) {
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-        user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
-    }
-
-    let author = req.user.username;
-
-    data.getArticlesByAuthor(author)
-        .then(articles => {
-            res.render("user/profile-articles", {
-                user,
-                articles
-            });
-        });
-}
-
 function AddWorkout(req, res) {
     let user = req.user;
     let body = req.body;
@@ -182,9 +156,8 @@ function AddWorkout(req, res) {
 
     data.updateCalendar(user.username, { $push: { "workouts": newWorkout } }, true)
         .then(calendar => {
-            return res.redirect("/users/profile");
+            return res.redirect("back");
         });
-    return res.redirect("/users/profile/my-calendar");
 }
 
 
@@ -192,8 +165,6 @@ module.exports = {
     loadAdminPannel,
     loadProfilePage,
     loadFoundUserProfilePage,
-    loadUserCallendar,
-    loadUserArticles,
     AddWorkout,
     getAllUsers,
     addRole
