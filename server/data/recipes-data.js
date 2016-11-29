@@ -1,7 +1,7 @@
 /* globals require module Promise*/
 "use strict";
 
-module.exports = function (models) {
+module.exports = function(models) {
     let Recipe = models.Recipe;
 
     return {
@@ -40,7 +40,20 @@ module.exports = function (models) {
                         return resolve(recipe);
                     });
             });
-        }
+        },
+        findRecipeByQueryWithSelectIdAndTitle(query) {
+            return new Promise((resolve, reject) => {
+                Recipe
+                    .find(query)
+                    .select("_id title")
+                    .exec((err, recipes) => {
+                        if (err) {
+                            return reject(err);
+                        }
 
+                        return resolve(recipes);
+                    });
+            });
+        }
     }
 }
