@@ -2,11 +2,12 @@
 
 module.exports = function(models) {
     let User = models.User;
+
     return {
         getUserById(id) {
             return new Promise((resolve, reject) => {
                 User
-                    .findOne({ _id: id }, (err, user) => {
+                    .findOne({ "_id": id }, (err, user) => {
                         if (err) {
                             return reject(err);
                         }

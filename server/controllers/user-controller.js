@@ -1,6 +1,6 @@
 "use strict";
 
-const User = require("./../models/user");
+const User = require("./../models/user").User;
 const Article = require("./../models/article");
 const Calendar = require("./../models/calendar");
 const Exercise = require("../models/exercise");

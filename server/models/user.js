@@ -49,4 +49,4 @@ function addAdminUser() {
         .catch(console.log);
 }
 
-module.exports = { addAdminUser };
+module.exports = { User, addAdminUser };
