@@ -121,6 +121,8 @@ function findEntities(req, res) {
         findRecipes(query.searchValue, isLoggedIn, req, res);
     } else if (entityName === constants.articles) {
         findArticles(query.searchValue, isLoggedIn, req, res);
+    } else {
+        res.render("error-pages/404-not-found");
     }
 }
 

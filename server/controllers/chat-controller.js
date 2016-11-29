@@ -6,6 +6,8 @@ const User = mongoose.model("user");
 
 let connections = new Map();
 
+const data = require("./../data")({ User });
+
 function getRoomName(firstUsername, secondUsername) {
     let name = [firstUsername, secondUsername]
         .sort((a, b) => {
@@ -31,13 +33,13 @@ function handleInvitation(req, res) {
     let receiver = connections.get(receiverUsername);
     let roomName = getRoomName(req.user.username, receiverUsername);
     let chatRoomUrl = `/chat-room/${roomName}`;
-    let data = JSON.stringify({ chatRoomUrl, senderUsername: req.user.username });
+    let jsonData = JSON.stringify({ chatRoomUrl, senderUsername: req.user.username });
 
     if (!receiver) {
         let user = req.user;
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-        User
-            .findOne({ username: req.query.receiver })
+
+        data.getUserByUsername(req.query.receiver)
             .then(foundUser => {
                 res.render("user/found-user-profile", {
                     foundUser,
@@ -47,7 +49,7 @@ function handleInvitation(req, res) {
             })
             .catch(console.log);
     } else {
-        receiver.sseSend(data);
+        receiver.sseSend(jsonData);
         res.redirect(chatRoomUrl);
     }
 }
