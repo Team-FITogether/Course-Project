@@ -2,19 +2,23 @@
 
 const controllers = require("../controllers");
 const multer = require("multer");
+const passport = require("passport");
+const encryption = require("../utils/encryption");
 
 const avatarUploader = multer({ dest: "./public/img/user-images" });
 
 module.exports = (app, userValidator) => {
-    app.get("/auth/register", controllers.auth.loadRegisterPage);
-    app.get("/auth/login", controllers.auth.loadLoginPage);
-    app.get("/auth/logout", userValidator.isUserLoggedIn, controllers.auth.logoutUser);
+    const authController = controllers.auth(userValidator, passport, encryption);
 
-    app.post("/auth/register", avatarUploader.single("avatar"), controllers.auth.registerUser);
-    app.post("/auth/login", controllers.auth.loginUser);
+    app.get("/auth/register", authController.loadRegisterPage);
+    app.get("/auth/login", authController.loadLoginPage);
+    app.get("/auth/logout", userValidator.isUserLoggedIn, authController.logoutUser);
 
-    app.get("/auth/facebook", controllers.auth.loginUserFacebook);
-    app.get("/auth/facebook/callback", controllers.auth.loginUserFacebook);
-    app.get("/auth/google", controllers.auth.loginUserGoogle);
-    app.get("/auth/google/callback", controllers.auth.loginUserGoogle);
+    app.get("/auth/facebook", authController.loginUserFacebook);
+    app.get("/auth/facebook/callback", authController.loginUserFacebook);
+    app.get("/auth/google", authController.loginUserGoogle);
+    app.get("/auth/google/callback", authController.loginUserGoogle);
+
+    app.post("/auth/register", avatarUploader.single("avatar"), authController.registerUser);
+    app.post("/auth/login", authController.loginUser);
 };

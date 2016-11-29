@@ -2,145 +2,136 @@
 
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
-const encryption = require("../utils/encryption");
-const passport = require("passport");
-
 const data = require("./../data")({ User });
 
+const ADMIN = "admin";
 
-function registerUser(req, res) {
-    const body = req.body;
-
-    let user = req.user;
+function setIsAdminUser(req, userValidator) {
     if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+        req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
     }
+}
 
-    let username = body.username;
-    // User
-    //     .findOne({ username: body.username })
-    data.getUserByUsername(username)
-        .then(foundUser => {
-            if (!foundUser) {
-                let salt = encryption.getSalt();
-                let passHash = encryption.getPassHash(salt, body.password);
-                let newUserData = {
-                    username: body.username,
-                    firstname: body.firstname,
-                    lastname: body.lastname,
-                    avatarName: req.file ? req.file.filename : null,
-                    passHash,
-                    salt
-                };
+function createUserInDatabase(req, res, encryptionProvider) {
+    let salt = encryptionProvider.getSalt();
+    let passHash = encryptionProvider.getPassHash(salt, req.body.password);
+    let newUserData = {
+        username: req.body.username,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        avatarName: req.file ? req.file.filename : null,
+        passHash,
+        salt
+    };
 
-                data.createUser(newUserData)
-                    .then(() => res.redirect("/auth/login"))
-                    .catch(() => {
-                        res.status(500);
-                        res.send("Registration failed");
+    data.createUser(newUserData)
+        .then(() => res.redirect("/auth/login"))
+        .catch(() => {
+            res.status(500);
+            res.send("Registration failed");
+            res.end();
+        });
+}
+
+function localAuthentication(req, res) {
+    return (err, userModel) => {
+        if (err) {
+            console.log(err);
+        } else {
+            if (!userModel) {
+                return res.render("user/login", { user: req.user });
+            }
+
+            req.login(userModel, error => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    return res.redirect("/");
+                }
+            });
+        }
+    };
+}
+
+function facebookAuthentication(req, res, next) {
+    return (err, userModel) => {
+        if (err) {
+            return next(err);
+        }
+
+        if (!userModel) {
+            return res.render("user/login", { user: req.user });
+        }
+
+        req.login(userModel, error => {
+            if (error) {
+                return next(error);
+            }
+
+            res.redirect("/users/profile");
+        });
+    };
+}
+
+function googleAuthentication(req, res, next) {
+    return (err, userModel) => {
+        if (err) {
+            return next(err);
+        }
+
+        if (!userModel) {
+            return res.render("user/login", { user: req.user });
+        }
+
+        req.login(userModel, error => {
+            if (error) {
+                return next(error);
+            }
+
+            res.redirect("/users/profile");
+        });
+    }
+}
+
+module.exports = (userValidator, authenticationProvider, encryptionProvider) => {
+    return {
+        registerUser(req, res) {
+            if (req.user) {
+                req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
+            }
+
+            data.getUserByUsername(req.body.username)
+                .then(foundUser => {
+                    if (!foundUser) {
+                        createUserInDatabase(req, res, encryptionProvider);
+                    } else {
+                        res.status(409);
+                        res.render("user/register", { user: req.user });
                         res.end();
-                    });
-            } else {
-                res.status(409);
-                // TODO error when user registration failed preferably with AJAX
-                res.render("user/register", { user });
-                res.end();
-            }
-        });
-}
-
-function loginUser(req, res, next) {
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
-
-    passport.authenticate("local", (err, userModel) => {
-        if (err) {
-            return next(err); // 500 error
+                    }
+                });
+        },
+        loginUser(req, res, next) {
+            setIsAdminUser(req, userValidator);
+            authenticationProvider.authenticate("local", localAuthentication(req, res))(req, res, next);
+        },
+        loginUserFacebook(req, res, next) {
+            setIsAdminUser(req, userValidator);
+            authenticationProvider.authenticate("facebook", facebookAuthentication(req, res, next))(req, res, next);
+        },
+        loginUserGoogle(req, res, next) {
+            setIsAdminUser(req, userValidator);
+            authenticationProvider.authenticate("google", { scope: ["profile", "email"] }, googleAuthentication(req, res, next))(req, res, next);
+        },
+        logoutUser(req, res) {
+            req.logout();
+            res.redirect("/");
+        },
+        loadRegisterPage(req, res) {
+            res.render("user/register");
+        },
+        loadLoginPage(req, res) {
+            res.render("user/login");
         }
-        if (!userModel) {
-            // TODO error handling when no user preferably with AJAX
-            // viewBag.error = info.message;
-            return res.render("user/login", { user });
-        }
-        req.login(userModel, error => {
-            if (error) {
-                return next(error);
-            }
-            return res.redirect("/");
-        });
-    })(req, res, next);
-}
-
-function loginUserFacebook(req, res, next) {
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
-
-    passport.authenticate("facebook", (err, userModel) => {
-        if (err) {
-            return next(err);
-        }
-        if (!userModel) {
-            return res.render("user/login", { user });
-        }
-
-        req.login(userModel, error => {
-            if (error) {
-                return next(error);
-            }
-
-            res.redirect("/users/profile");
-        });
-    })(req, res, next);
-}
-
-function loginUserGoogle(req, res, next) {
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
-
-    passport.authenticate("google", { scope: ['profile', 'email'] }, (err, userModel) => {
-        if (err) {
-            return next(err);
-        }
-        if (!userModel) {
-            return res.render("user/login", { user });
-        }
-
-        req.login(userModel, error => {
-            if (error) {
-                return next(error);
-            }
-
-            res.redirect("/users/profile");
-        });
-    })(req, res, next);
-}
-
-function logoutUser(req, res) {
-    req.logout();
-    res.redirect("/");
-}
-
-function loadRegisterPage(req, res) {
-    res.render("user/register");
-}
-
-function loadLoginPage(req, res) {
-    res.render("user/login");
-}
-
-module.exports = {
-    registerUser,
-    loginUser,
-    loginUserFacebook,
-    loginUserGoogle,
-    logoutUser,
-
-    loadRegisterPage,
-    loadLoginPage
+    };
 };
