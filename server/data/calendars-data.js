@@ -32,7 +32,8 @@ module.exports = function (models) {
             return new Promise((resolve, reject) => {
                 let calendar = new Calendar({
                     calendarUser: calendarUser,
-                    workouts: []
+                    workouts: [],
+                    menus: []
                 });
 
                 calendar.save((err, createdCalendar) => {

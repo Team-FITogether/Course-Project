@@ -93,6 +93,8 @@ function loadProfilePage(req, res) {
                     });
             } else {
                 calendar = resultCalendar;
+                calendar.workouts.sort(function(a,b) {return (a.date > b.date) ? 1 : ((b.date > a.date) ? -1 : 0);});
+                
                 res.render("user/profile", {
                     user,
                     calendar,
@@ -134,7 +136,7 @@ function loadFoundUserProfilePage(req, res) {
     }
 }
 
-function AddWorkout(req, res) {
+function AddWorkoutToUser(req, res) {
     let user = req.user;
     let body = req.body;
 
@@ -142,6 +144,7 @@ function AddWorkout(req, res) {
         user.isAdmin = req.user.roles.indexOf("admin") !== -1;
         user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
     }
+
     let exercises = [];
 
     exercises.push(body.exerciseOne);
@@ -149,8 +152,12 @@ function AddWorkout(req, res) {
     exercises.push(body.exerciseThree);
     exercises.push(body.exerciseFour);
 
+    var numbers = body.date.match(/\d+/g);
+
+    var date = new Date(numbers[2], numbers[1] - 1, numbers[0]);
+
     let newWorkout = {
-        date: new Date(body.date),
+        date: date,
         exercises
     };
 
@@ -160,12 +167,25 @@ function AddWorkout(req, res) {
         });
 }
 
+function AddMenuToUser(req, res) {
+    let user = req.user;
+    let body = req.body;
+
+    if (req.user) {
+        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+        user.isTrainer = req.user.roles.indexOf("trainer") !== -1;
+    }
+
+    
+}
+
 
 module.exports = {
     loadAdminPannel,
     loadProfilePage,
     loadFoundUserProfilePage,
-    AddWorkout,
+    AddWorkoutToUser,
+    AddMenuToUser,
     getAllUsers,
     addRole
 };

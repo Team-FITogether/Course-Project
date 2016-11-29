@@ -9,5 +9,6 @@ module.exports = (app, userValidator) => {
     app.get("/users/all", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, controllers.user.getAllUsers);
 
     app.post("/users/set-role", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, controllers.user.addRole);
-    app.post("/users/profile/my-calendar", userValidator.isUserLoggedIn, controllers.user.AddWorkout);
+    app.post("/users/profile/my-workout", userValidator.isUserLoggedIn, controllers.user.AddWorkoutToUser);
+    app.post("/users/profile/my-menu", userValidator.isUserLoggedIn, controllers.user.AddMenuToUser);
 };

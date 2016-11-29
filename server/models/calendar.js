@@ -10,7 +10,13 @@ let calendarSchema = new Schema({
             type: Date
         },
         exercises: []
-    }]   
+    }],
+    menus: [{
+        date: {
+            type: Date
+        },
+        meals: []
+    }],   
 });
 
 const Calendar = mongoose.model("calendar", calendarSchema);
