@@ -9,7 +9,7 @@ function isAdminUserMiddleware(req, res, next) {
 }
 
 function isInRole(user, role) {
-    if (user.roles.indexOf(role.toLowerCase()) !== -1) {
+    if (user.roles.includes(role)) {
         return true;
     }
 
