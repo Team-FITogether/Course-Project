@@ -21,6 +21,27 @@ var app = app || {};
         return promise;
     }
 
+    function makeRequestWithFile(method, url, data) {
+        let promise = new Promise((resolve, reject) => {
+            $.ajax({
+                async: true,
+                url: url,
+                type: "POST",
+                data: data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success(response) {
+                    resolve(response);
+                },
+                error(error) {
+                    reject(error);
+                }
+            });
+        });
+        return promise;
+    }
+
     class Requester {
         get(url) {
             return makeRequest('GET', url);
@@ -29,7 +50,9 @@ var app = app || {};
         post(url, data) {
             return makeRequest('POST', url, data);
         }
-
+        postWithFile(url, data) {
+            return makeRequestWithFile('POST', url, data);
+        }
         put(url, data) {
             return makeRequest('PUT', url, data);
         }

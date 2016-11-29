@@ -13,6 +13,7 @@ function setIsAdminUser(req, userValidator) {
 }
 
 function createUserInDatabase(req, res, encryptionProvider) {
+
     let salt = encryptionProvider.getSalt();
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
     let newUserData = {
@@ -25,10 +26,10 @@ function createUserInDatabase(req, res, encryptionProvider) {
     };
 
     data.createUser(newUserData)
-        .then(() => res.redirect("/auth/login"))
+        .then(() => res.json(`{"success":"Успешна регистрация!"}`))
         .catch(() => {
+            res.json(`{"error":"Регистрацията се провали."}`);            
             res.status(500);
-            res.send("Registration failed");
             res.end();
         });
 }
@@ -98,6 +99,7 @@ function googleAuthentication(req, res, next) {
 module.exports = (userValidator, authenticationProvider, encryptionProvider) => {
     return {
         registerUser(req, res) {
+            console.log("register body: ", req.body)
             if (req.user) {
                 req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
             }
@@ -107,13 +109,14 @@ module.exports = (userValidator, authenticationProvider, encryptionProvider) => 
                     if (!foundUser) {
                         createUserInDatabase(req, res, encryptionProvider);
                     } else {
+                        res.json(`{"error":"Потребителя вече съществува"}`)                        
                         res.status(409);
-                        res.render("user/register", { user: req.user });
                         res.end();
                     }
                 });
         },
         loginUser(req, res, next) {
+            console.log("login body: ", req.body)
             setIsAdminUser(req, userValidator);
             authenticationProvider.authenticate("local", localAuthentication(req, res))(req, res, next);
         },
