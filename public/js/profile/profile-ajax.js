@@ -1,63 +1,71 @@
+/* globals $ */
+"use strict";
+
 var app = app || {};
 
-(function(){
-    $("#add-workout-button").on("click", function(ev){
-        let dateString = $("#workout-datepicker").val();
-        let dateArr = dateString.split("/");
-        let day = dateArr[0];
-        let month = dateArr[1] - 1;
-        let year = dateArr[2];
+$("#add-workout-button").on("click", () => {
+    let dateString = $("#workout-datepicker").val();
+    let dateArr = dateString.split("/");
+    let day = dateArr[0];
+    let month = dateArr[1] - 1;
+    let year = dateArr[2];
 
-        let date = new Date(year, month, day);
+    let date = new Date(year, month, day);
 
-        month++;
-        let dateFormat = "" + day + "/" + month + "/" + year;
+    let parsedMonth = month + 1;
+    month = parsedMonth;
 
-        let exerciseOne = $("#exercise-1").val();
-        let exerciseTwo = $("#exercise-2").val();
-        let exerciseThree = $("#exercise-3").val();
-        let exerciseFour = $("#exercise-4").val();
+    let dateFormat = day + "/" + parsedMonth + "/" + year;
 
-        let exercises = [];
-        exercises.push(exerciseOne);
-        exercises.push(exerciseTwo);
-        exercises.push(exerciseThree);
-        exercises.push(exerciseFour);
+    let exerciseOne = $("#exercise-1").val();
+    let exerciseTwo = $("#exercise-2").val();
+    let exerciseThree = $("#exercise-3").val();
+    let exerciseFour = $("#exercise-4").val();
 
-        if (date >= Date.now()) {
-            let $divSection = $("<div>").addClass("calendar-section");
-            let $divDate = $("<div>").addClass("calendar-date");
-            let $spanDate = $("<span>").html(dateFormat);
-            let $spanExerciseOne = $("<span>").html(exerciseOne);
-            let $spanExerciseTwo = $("<span>").html(exerciseTwo);
-            let $spanExerciseThree = $("<span>").html(exerciseThree);
-            let $spanExerciseFour = $("<span>").html(exerciseFour);
+    let exercises = [];
+    exercises.push(exerciseOne);
+    exercises.push(exerciseTwo);
+    exercises.push(exerciseThree);
+    exercises.push(exerciseFour);
 
-            $divDate.append($spanDate);
+    if (date >= Date.now()) {
+        let $divSection = $("<div>").addClass("calendar-section");
+        let $divDate = $("<div>").addClass("calendar-date");
+        let $spanDate = $("<span>").html(dateFormat);
+        let $spanExerciseOne = $("<span>").html(exerciseOne);
+        let $spanExerciseTwo = $("<span>").html(exerciseTwo);
+        let $spanExerciseThree = $("<span>").html(exerciseThree);
+        let $spanExerciseFour = $("<span>").html(exerciseFour);
 
-            $divSection.append($divDate);
-            $divSection.append($spanExerciseOne);
-            $divSection.append("<br>");
-            $divSection.append($spanExerciseTwo);
-            $divSection.append("<br>");
-            $divSection.append($spanExerciseThree);
-            $divSection.append("<br>");
-            $divSection.append($spanExerciseFour);
+        $divDate.append($spanDate);
 
-            $(".workout-list-holder").append($divSection);
+        $divSection.append($divDate);
+        $divSection.append($spanExerciseOne);
+        $divSection.append("<br>");
+        $divSection.append($spanExerciseTwo);
+        $divSection.append("<br>");
+        $divSection.append($spanExerciseThree);
+        $divSection.append("<br>");
+        $divSection.append($spanExerciseFour);
 
-            let data = {
-                date,
-                exerciseOne,
-                exerciseTwo,
-                exerciseThree,
-                exerciseFour
-            }
+        $(".workout-list-holder").append($divSection);
 
-            app.requester.post("/users/profile/my-workout", data)
-                .then(response => {
-                    return response.sendStatus(200);
-                });
-        }
-    });
-}());
+        let data = {
+            date,
+            exerciseOne,
+            exerciseTwo,
+            exerciseThree,
+            exerciseFour
+        };
+
+        app.requester.post("/users/profile/my-workout", data)
+            .then(res => {
+                console.log(res);
+                app.notificator.showNotification("Упражнението е добавено успешно към вашия график!", "success");
+            });
+    } else {
+        app.notificator.showNotification("Изберете валидна дата!", "error");
+    }
+});
+
+

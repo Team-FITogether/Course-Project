@@ -116,6 +116,7 @@ module.exports = userValidator => {
 
             let exercises = [req.body.exerciseOne, req.body.exerciseTwo, req.body.exerciseThree, req.body.exerciseFour];
             let date = req.body.date;
+
             let newWorkout = { date, exercises };
 
             calendarData.updateCalendar(req.user.username, { $push: { "workouts": newWorkout } }, true)
