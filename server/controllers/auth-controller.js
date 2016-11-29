@@ -36,17 +36,19 @@ function createUserInDatabase(req, res, encryptionProvider) {
 function localAuthentication(req, res) {
     return (err, userModel) => {
         if (err) {
-            console.log(err);
+            return (err);
         } else {
             if (!userModel) {
-                return res.render("user/login", { user: req.user });
+                return res.json(`{"error": "Невалидни, потеребителско име или парола."}`);
             }
 
             req.login(userModel, error => {
                 if (error) {
                     console.log(error);
+                    return res.json(`{"error": "Невалидни, потеребителско име или парола."}`);
+
                 } else {
-                    return res.redirect("/");
+                    return res.json(`{"success": "Успешен вход, здравейте ${userModel.username}!"}`);
                 }
             });
         }
