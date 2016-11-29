@@ -22,15 +22,22 @@
     }
 
     function fixDatepicker(){
-        $('.datepicker').datepicker({
+        $(".datepicker").datepicker({
             format: "dd/mm/yyyy",
             minDate: 0
         });
     }
 
+    function preventDefaultEventOnSubmint(){
+        $("#my-workout-form").on("submit", function(e){
+            e.preventDefault();
+        });
+    }
+    
     attachShowWorkouts();
     attachShowArticles();
     attachShowFoods();
     fixDatepicker();
+    preventDefaultEventOnSubmint();
 
 }());
