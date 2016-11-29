@@ -25,7 +25,7 @@ module.exports = function(models) {
                         if (err) {
                             return reject(err);
                         }
-                        console.log(food);
+
                         return resolve(food);
                     });
             });
@@ -37,15 +37,16 @@ module.exports = function(models) {
                         if (err) {
                             return reject(err);
                         }
+                        
                         return resolve(food);
                     });
             });
         },
         findFoodByQueryWithSelectIdAndTitle(query) {
             return new Promise((resolve, reject) => {
-                Food
+                FoodDetails
                     .find(query)
-                    .select("_id title")
+                    .select("_id title details")
                     .exec((err, foods) => {
                         if (err) {
                             return reject(err);

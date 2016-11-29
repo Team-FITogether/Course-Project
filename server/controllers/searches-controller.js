@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const User = mongoose.model("user");
 const Article = require("./../models/article");
 const Exercise = require("./../models/exercise");
-const Food = require("./../models/food");
+const FoodDetails = require("./../models/food-details");
 const Recipe = require("./../models/recipe");
-const data = require("./../data")({ User, Exercise, Food, Recipe, Article });
+const data = require("./../data")({ User, Exercise, FoodDetails, Recipe, Article });
 const constants = require("./../utils/constants");
 
 function findUsers(username, isLoggedIn, req, res) {
