@@ -10,7 +10,7 @@ mixin header(user)
                     span.icon-bar
                     span.icon-bar
                 a.navbar-brand(href="/")
-                    | FITogether logo
+                    | FITogether
                     .ripple-container
             #navbar.collapse.navbar-collapse
                 form(action="/search" method="get").navbar-form.navbar-left
@@ -32,7 +32,7 @@ mixin header(user)
                             b.caret
                         ul.dropdown-menu
                             li 
-                                a(href="#") TO DO : Tedi
+                                a(href="/articles?genre=fitness-programs") Фитнес програми
                             li
                                 a(href="/exercises?all") Всички упражнения
                             li
