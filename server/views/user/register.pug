@@ -8,34 +8,34 @@ block content
                     .card.card-signup
                         form.form(action="/auth/register" method="post" enctype="multipart/form-data")
                             .header.header-success.text-center
-                                h4 Sign Up
+                                h4 Регистрация
                             .content.row
                                 .col-md-6
                                     .input-group
                                         span.input-group-addon
                                             i.material-icons face
-                                        input.form-control(type="text" id="tb-username" placeholder="Username" name="username" class="form-control")
+                                        input.form-control(type="text" id="tb-username" placeholder="Потребителско име" name="username" class="form-control")
                                     .input-group
                                         span.input-group-addon
                                             i.material-icons face
-                                        input.form-control(type="text" id="tb-first-name" placeholder="First name" name="firstname" class="form-control")
+                                        input.form-control(type="text" id="tb-first-name" placeholder="Име" name="firstname" class="form-control")
                                     .input-group
                                         span.input-group-addon
                                             i.material-icons face
-                                        input.form-control(type="text" id="tb-last-name" placeholder="Last name" name="lastname" class="form-control")
+                                        input.form-control(type="text" id="tb-last-name" placeholder="Фамилия" name="lastname" class="form-control")
                                 .col-md-6
                                     .input-group
                                         span.input-group-addon
                                             i.material-icons lock_outline
-                                        input.form-control(type="password" id="tb-paswword" placeholder="Password" name="password" class="form-control")
+                                        input.form-control(type="password" id="tb-paswword" placeholder="Парола" name="password" class="form-control")
                                     .input-group
                                         span.input-group-addon
                                             i.material-icons lock_outline
-                                        input.form-control(type="password" id="tb-confirm-paswword" placeholder="Confirm password" name="confirmPassword" class="form-control")
+                                        input.form-control(type="password" id="tb-confirm-paswword" placeholder="Потвърди парола" name="confirmPassword" class="form-control")
                                     .input-group
                                         span.input-group-addon
                                             i.material-icons attach_file
                                         input.form-control(type="file" id="avatar-input" name="avatar")
-                                        label(for="avatar-input") Avatar
+                                        label(for="avatar-input") Профилна снимка
                             .footer.text-center
-                                input(type="submit" value="Register" class="btn btn-success")
+                                input(type="submit" value="Регистрирай се" class="btn btn-success")

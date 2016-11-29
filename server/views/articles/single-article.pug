@@ -12,18 +12,18 @@ block content
                     if user.isTrainer
                         form(method="post", action="/articles/edit")
                             input(type="hidden" name="articleId" value=id)
-                            button.btn.btn-warning.btn-edit Edit
+                            button.btn.btn-warning.btn-edit Редактирай
                     else if user.isAdmin
                         form(method="post", action="/articles/edit")
                             input(type="hidden" name="articleId" value=id)
-                            button.btn.btn-warning.btn-edit Edit
+                            button.btn.btn-warning.btn-edit Редактирай
                 h3 #{subHeader}
                 h5 by 
                   a(href="/users?username=" + author) #{author}
                 div !{body}
                     div(class="card card-nav-tabs")
                         div(class="header header-info" id="comments-header") 
-                            h3 Comments: #{comments.length}
+                            h3 Коментари: #{comments.length}
                         div(class="content")
                             ul(class="comments-container section")
                                 if comments
@@ -39,4 +39,4 @@ block content
                                 div.container(style="margin-top: 50px")
                                     textarea(name="content" class="form-control" rows="3" placeholder="Comment")
                                     input(type="hidden" name="entityId" value=id)
-                                    input(type="submit" value="Comment" class="btn btn-info")
+                                    input(type="submit" value="Коментирай" class="btn btn-info")

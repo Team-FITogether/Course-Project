@@ -39,7 +39,7 @@ module.exports = () => {
                     return done(null, user);
                 } else {
                     let newUser = new User({
-                        username: profile.displayName,
+                        username: profile.displayName + configAuth.facebookAuth.usernameSuffix,
                         firstname: profile.name.givenName || profile.displayName,
                         lastname: profile.name.familyName || profile.displayName,
                         passHash: profile.displayName,
@@ -72,7 +72,7 @@ module.exports = () => {
                     return done(null, user);
                 } else {
                     let newUser = new User({
-                        username: profile.displayName,
+                        username: profile.displayName + configAuth.googleAuth.usernameSuffix,
                         firstname: profile.name.givenName || profile.displayName,
                         lastname: profile.name.familyName || profile.displayName,
                         passHash: profile.displayName,

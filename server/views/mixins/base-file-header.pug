@@ -15,12 +15,12 @@ mixin header(user)
             #navbar.collapse.navbar-collapse
                 form(action="/search" method="get").navbar-form.navbar-left
                     div.form-group
-                        input(type="text" name="searchValue" placeholder="Search").form-control
+                        input(type="text" name="searchValue" placeholder="Търси").form-control
                     div.input-group
                         select(name="entityName")
                             option(value="users" style="color:black;") Потребители
                             option(value="articles" style="color:black;") Статии
-                            option(value="exercises" style="color:black;") Упражнения
+                            option(value="exercises" style="color:black;") Тренировки
                             option(value="foods" style="color:black;") Храни
                             option(value="recipes" style="color:black;") Рецепти
                     button(type="submit").btn.btn-white.btn-fab.btn-fab-mini.btn-just-icon.btn-search
