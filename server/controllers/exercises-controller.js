@@ -2,80 +2,83 @@
 
 const data = require("./../data/exercises-data");
 
-function getAllExercisesByCategory(req, res) {
-    let user = req.user;
+const ADMIN = "admin";
+
+function setIsAdminUser(req, userValidator) {
     if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
+        req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
     }
-
-    let category = req.query.category;
-
-    data.getAllExercisesByCategory(category)
-        .then(exercises => {
-            res.render("exercises/exercise-by-category", { user, exercises });
-        });
 }
 
-function getAllCategoriesOfExercise(req, res) {
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
-
-    data.getAllCategories()
-        .then(exercises => {
-            res.render("exercises/all-exercises", { user, exercises });
+function getExerciseComments(explanation) {
+    let excersiseComments = explanation
+        .comments
+        .map(c => {
+            return {
+                content: c.content,
+                postDate: c.postDate.toString().substring(0, 25),
+                author: c.author
+            };
         });
+
+    return excersiseComments;
 }
 
-function getSingleExercise(req, res) {
-    let title = req.query.title;
+function renderExerciseExplanation(explanation, excersiseComments, req, res) {
+    res.render("exercises/exercise-explanation", {
+        title: explanation.title,
+        content: explanation.content,
+        category: explanation.category,
+        author: explanation.author,
+        comments: excersiseComments,
+        id: explanation._id,
+        user: req.user
+    });
+}
 
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
+module.exports = userValidator => {
+    return {
+        getAllExercisesByCategory(req, res) {
+            setIsAdminUser(req, userValidator);
+            let category = req.query.category;
 
-    data.getSingleExercise(title)
-        .then((explanation) => {
-            let excersiseComments = explanation
-                .comments
-                .map(c => {
-                    return {
-                        content: c.content,
-                        postDate: c.postDate.toString().substring(0, 25),
-                        author: c.author
-                    };
+            data.getAllExercisesByCategory(category)
+                .then(exercises => {
+                    res.render("exercises/exercise-by-category", { user: req.user, exercises });
                 });
+        },
+        getSingleExercise(req, res) {
+            let title = req.query.title;
+            setIsAdminUser(req, userValidator);
 
-            res.render("exercises/exercise-explanation", {
-                title: explanation.title,
-                content: explanation.content,
-                category: explanation.category,
-                author: explanation.author,
-                comments: excersiseComments,
-                id: explanation._id,
-                user
-            });
-        });
-}
+            data.getSingleExercise(title)
+                .then((explanation) => {
+                    let excersiseComments = getExerciseComments(explanation);
+                    renderExerciseExplanation(explanation, excersiseComments, req, res);
+                });
+        },
+        addComment(req, res) {
+            let body = req.body;
+            let comment = {
+                content: body.content,
+                author: req.user.username,
+                postDate: Date.now()
+            };
 
-function addComment(req, res) {
-
-    let body = req.body;
-    let comment = {
-        content: body.content,
-        author: req.user.username,
-        postDate: Date.now()
+            data.getExerciseExplanationById(body.entityId)
+                .then(ex => {
+                    ex.comments.push(comment);
+                    ex.save();
+                    res.redirect("back");
+                })
+                .catch(err => res.status(500).send(err));
+        },
+        getAllCategoriesOfExercise(req, res) {
+            setIsAdminUser(req, userValidator);
+            data.getAllCategories()
+                .then(exercises => {
+                    res.render("exercises/all-exercises", { user: req.user, exercises });
+                });
+        }
     };
-
-    data.getExerciseExplanationById(body.entityId)
-        .then(ex => {
-            ex.comments.push(comment);
-            ex.save();
-            res.redirect("back");
-        })
-        .catch(err => res.status(500).send(err));
-}
-
-module.exports = { getAllExercisesByCategory, getSingleExercise, addComment, getAllCategoriesOfExercise };
+};

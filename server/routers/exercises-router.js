@@ -2,10 +2,12 @@
 
 const controllers = require("../controllers");
 
-module.exports = (app) => {
-    app.get("/exercises", controllers.exercises.getAllCategoriesOfExercise);
-    app.get("/exercises/explanations", controllers.exercises.getSingleExercise);
-    app.get("/exercises/single-exercise", controllers.exercises.getAllExercisesByCategory);
+module.exports = (app, userValidator) => {
+    const exercisesController = controllers.exercises(userValidator);
 
-    app.post("/excercises/comments/add", controllers.exercises.addComment);
+    app.get("/exercises", exercisesController.getAllCategoriesOfExercise);
+    app.get("/exercises/explanations", exercisesController.getSingleExercise);
+    app.get("/exercises/single-exercise", exercisesController.getAllExercisesByCategory);
+
+    app.post("/excercises/comments/add", exercisesController.addComment);
 };
