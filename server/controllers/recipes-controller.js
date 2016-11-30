@@ -17,6 +17,20 @@ function loadAllRecipes(user, req, res, page, pageSize) {
                 return res.status(404);
             }
 
+            // Check if current user has liked the article, if true - set bool
+            // so view can render an unlike button
+            if (user) {
+                for (let i = 0; i < recipes.length; i += 1) {
+                    for (let j = 0; j < recipes[i].usersLiked.length; j += 1) {
+                        if (recipes[i].usersLiked[j].user === user.username) {
+                            recipes[i].currentUserHasLiked = true;
+                        } else {
+                            recipes[i].currentUserHasLiked = false;
+                        }
+                    }
+                }
+            }
+
             res.render(ALL_RECIPES_VIEW, { user, recipes, page, pages });
         });
 }
