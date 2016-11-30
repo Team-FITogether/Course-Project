@@ -2,14 +2,13 @@
 
 const data = require("./../data/articles-data");
 
-const ADMIN = "admin";
 const CREATE_ARTICLE_VIEW = "articles/create-article";
 const EDIT_ARTICLE_VIEW = "articles/edit-article";
 const ALL_ARTICLES_VIEW = "articles/all-articles";
 const SINGLE_ARTICLE_VIEW = "articles/single-article";
 
-function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator) {
-    user.isAdmin = userValidator.isInRole(req.user, ADMIN);
+function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common) {
+    common.setIsAdminUser(req, userValidator);
     if (user.isAdmin) {
         return data.getArticlesByGenreAdminUser(genre, page, pageSize)
             .then(result => {
@@ -54,7 +53,6 @@ function getArticleCommentsMapped(article) {
 
 function dislikeArticle(articleId, index, res) {
     let update = { $inc: { likes: -1 } };
-
     data.updateArticle(articleId, update, null)
         .then((article) => {
             article.usersLiked.splice(index, 1);
@@ -66,7 +64,6 @@ function dislikeArticle(articleId, index, res) {
 
 function likeArticle(articleId, req, res) {
     let update = { $inc: { likes: 1 } };
-
     data.updateArticle(articleId, update, null)
         .then((article) => {
             let user = { user: req.user.username };
@@ -92,25 +89,17 @@ function getSingleArticleObject(article, articleComments, user) {
     };
 }
 
-module.exports = userValidator => {
+module.exports = (userValidator, common) => {
     return {
         loadCreateArticlePage(req, res) {
-            let user = req.user;
-            if (req.user) {
-                user.isAdmin = userValidator.isInRole(req.user, ADMIN);
-            }
-
-            res.render(CREATE_ARTICLE_VIEW, { user });
+            common.setIsAdminUser(req, userValidator);
+            res.render(CREATE_ARTICLE_VIEW, { user: req.user });
         },
         loadEditArticlePage(req, res) {
-            let user = req.user;
-            if (req.user) {
-                user.isAdmin = userValidator.isInRole(req.user, ADMIN);
-            }
-
+            common.setIsAdminUser(req, userValidator);
             let _id = req.body.articleId;
             data.getArticleById(_id)
-                .then(article => res.render(EDIT_ARTICLE_VIEW, { user, article }));
+                .then(article => res.render(EDIT_ARTICLE_VIEW, { user: req.user, article }));
         },
         loadArticlesByGenrePage(req, res) {
             let user = req.user;
@@ -119,22 +108,18 @@ module.exports = userValidator => {
             let pageSize = 5;
 
             if (req.user) {
-                return loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator);
+                return loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common);
             }
 
             return loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize);
         },
         loadSingleArticlePage(req, res) {
-            let user = req.user;
-            if (req.user) {
-                user.isAdmin = userValidator.isInRole(req.user, ADMIN);
-            }
-
+            common.setIsAdminUser(req, userValidator);
             let title = req.query.title;
             data.getArticleByTitle(title)
                 .then(article => {
                     let articleComments = getArticleCommentsMapped(article);
-                    res.render(SINGLE_ARTICLE_VIEW, getSingleArticleObject(article, articleComments, user));
+                    res.render(SINGLE_ARTICLE_VIEW, getSingleArticleObject(article, articleComments, req.user));
                 });
         },
         createArticle(req, res) {

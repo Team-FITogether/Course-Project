@@ -1,15 +1,12 @@
 "use strict";
 
-function loadHomePage(req, res) {
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
+module.exports = (userValidator, common) => {
+    return {
+        loadHomePage(req, res) {
+            common.setIsAdminUser(req, userValidator);
 
-    let model = {
-        content: "Some content"
+            let model = { content: "Some content" };
+            res.render("home/home", { user: req.user, model });
+        }
     };
-    res.render("home/home", { user, model });
-}
-
-module.exports = { loadHomePage };
+};

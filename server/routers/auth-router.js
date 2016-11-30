@@ -7,8 +7,8 @@ const encryption = require("../utils/encryption");
 
 const avatarUploader = multer({ dest: "./public/img/user-images" });
 
-module.exports = (app, userValidator) => {
-    const authController = controllers.auth(userValidator, passport, encryption);
+module.exports = (app, userValidator, common) => {
+    const authController = controllers.auth(userValidator, passport, encryption, common);
 
     app.get("/auth/register", authController.loadRegisterPage);
     app.get("/auth/login", authController.loadLoginPage);

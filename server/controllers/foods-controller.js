@@ -2,56 +2,26 @@
 
 const data = require("./../data/foods-data");
 
-function getAllFoods(req, res) {
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
+module.exports = (userValidator, common) => {
+    return {
+        getAllFoods(req, res) {
+            common.setIsAdminUser(req, userValidator);
+            data.getAllFoods().then(foods => res.render("food/all-foods", { foods, user: req.user }));
+        },
+        getSingleFood(req, res) {
+            common.setIsAdminUser(req, userValidator);
+            let title = req.query.title;
+            let details = req.query.details;
 
-    data.getAllFoods()
-        .then(foods => {
-            res.render("food/all-foods", { foods, user });
-        });
-}
+            data.getSingleFood(title, details)
+                .then((food) => res.render("food/single-food", { user: req.user, food }));
+        },
+        getFoodByCategory(req, res) {
+            common.setIsAdminUser(req, userValidator);
+            let categoryTitle = req.query.title;
 
-function getSingleFood(req, res) {
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
-
-    let title = req.query.title;
-    let details = req.query.details;
-
-    data.getSingleFood(title, details)
-        .then((food) => {
-            res.render("food/single-food", {
-                user,
-                food
-            });
-        });
-}
-
-function getFoodByCategory(req, res) {
-    let user = req.user;
-    if (req.user) {
-        user.isAdmin = req.user.roles.indexOf("admin") !== -1;
-    }
-
-    let categoryTitle = req.query.title;
-
-    data.getFoodByCategory(categoryTitle)
-        .then((foods) => {
-            console.log(foods);
-            res.render("food/single-food-category", {
-                user,
-                foods
-            });
-        });
-}
-
-module.exports = {
-    getAllFoods,
-    getSingleFood,
-    getFoodByCategory
+            data.getFoodByCategory(categoryTitle)
+                .then((foods) => res.render("food/single-food-category", { user: req.user, foods }));
+        }
+    };
 };

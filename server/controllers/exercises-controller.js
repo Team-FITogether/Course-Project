@@ -2,14 +2,6 @@
 
 const data = require("./../data/exercises-data");
 
-const ADMIN = "admin";
-
-function setIsAdminUser(req, userValidator) {
-    if (req.user) {
-        req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
-    }
-}
-
 function getExerciseComments(explanation) {
     let excersiseComments = explanation
         .comments
@@ -36,10 +28,10 @@ function renderExerciseExplanation(explanation, excersiseComments, req, res) {
     });
 }
 
-module.exports = userValidator => {
+module.exports = (userValidator, common) => {
     return {
         getAllExercisesByCategory(req, res) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             let category = req.query.category;
 
             data.getAllExercisesByCategory(category)
@@ -49,7 +41,7 @@ module.exports = userValidator => {
         },
         getSingleExercise(req, res) {
             let title = req.query.title;
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
 
             data.getSingleExercise(title)
                 .then((explanation) => {
@@ -74,7 +66,7 @@ module.exports = userValidator => {
                 .catch(err => res.status(500).send(err));
         },
         getAllCategoriesOfExercise(req, res) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             data.getAllCategories()
                 .then(exercises => {
                     res.render("exercises/all-exercises", { user: req.user, exercises });

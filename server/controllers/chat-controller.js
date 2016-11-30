@@ -3,8 +3,6 @@
 const encryption = require("../utils/encryption");
 const data = require("./../data/user-data");
 
-const ADMIN = "admin";
-
 let connections = new Map();
 
 function getRoomName(firstUsername, secondUsername) {
@@ -19,14 +17,8 @@ function getRoomName(firstUsername, secondUsername) {
     return hashedName;
 }
 
-function setIsAdminUser(req, userValidator) {
-    if (req.user) {
-        req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
-    }
-}
-
-function renderUserOffline(req, res, userValidator) {
-    setIsAdminUser(req, userValidator);
+function renderUserOffline(req, res, userValidator, common) {
+    common.setIsAdminUser(req, userValidator);
     data.getUserByUsername(req.query.receiver)
         .then(foundUser => {
             res.render("user/found-user-profile", {
@@ -38,7 +30,7 @@ function renderUserOffline(req, res, userValidator) {
         .catch(console.log);
 }
 
-module.exports = userValidator => {
+module.exports = (userValidator, common) => {
     return {
         stream(req, res) {
             res.sseSetup();
@@ -53,7 +45,7 @@ module.exports = userValidator => {
             let jsonData = JSON.stringify({ chatRoomUrl, senderUsername: req.user.username });
 
             if (!receiver) {
-                renderUserOffline(req, res, userValidator);
+                renderUserOffline(req, res, userValidator, common);
             } else {
                 receiver.sseSend(jsonData);
                 res.redirect(chatRoomUrl);

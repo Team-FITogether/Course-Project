@@ -2,8 +2,8 @@
 
 const controllers = require("../controllers");
 
-module.exports = (app, userValidator) => {
-    const articlesController = controllers.articles(userValidator);
+module.exports = (app, userValidator, common) => {
+    const articlesController = controllers.articles(userValidator, common);
 
     app.get("/articles", articlesController.loadArticlesByGenrePage);
     app.get("/articles/single-article", articlesController.loadSingleArticlePage);

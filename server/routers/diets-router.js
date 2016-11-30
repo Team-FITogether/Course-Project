@@ -2,8 +2,8 @@
 
 const controllers = require("../controllers");
 
-module.exports = (app, userValidator) => {
-    const dietsController = controllers.diets(userValidator);
+module.exports = (app, userValidator, common) => {
+    const dietsController = controllers.diets(userValidator, common);
 
     app.get("/diets", dietsController.getAllDiets);
     app.get("/diets/single-diet", dietsController.getSingleDiet);

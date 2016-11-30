@@ -2,8 +2,8 @@
 
 const controllers = require("../controllers");
 
-module.exports = (app, userValidator) => {
-    const chatController = controllers.chat(userValidator);
+module.exports = (app, userValidator, common) => {
+    const chatController = controllers.chat(userValidator, common);
 
     app.get("/stream", chatController.stream);
     app.get("/chat/invitation", chatController.handleInvitation);

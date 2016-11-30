@@ -2,14 +2,6 @@
 
 const data = require("./../data/diets-data");
 
-const ADMIN = "admin";
-
-function setIsAdminUser(req, userValidator) {
-    if (req.user) {
-        req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
-    }
-}
-
 function getDietComments(diet) {
     let dietComments = diet
         .comments
@@ -35,14 +27,14 @@ function renderDiet(diet, dietComments, req, res) {
     });
 }
 
-module.exports = userValidator => {
+module.exports = (userValidator, common) => {
     return {
         getAllDiets(req, res) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             data.getAllDiets().then(diets => res.render("food/all-diets", { user: req.user, diets }));
         },
         getSingleDiet(req, res) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             let title = req.query.title;
             data.getSingleDiet(title)
                 .then((diet) => {

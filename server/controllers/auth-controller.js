@@ -2,14 +2,6 @@
 
 const data = require("./../data/user-data");
 
-const ADMIN = "admin";
-
-function setIsAdminUser(req, userValidator) {
-    if (req.user) {
-        req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
-    }
-}
-
 function createUserInDatabase(req, res, encryptionProvider) {
     let salt = encryptionProvider.getSalt();
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
@@ -90,10 +82,10 @@ function googleAuthentication(req, res, next) {
     };
 }
 
-module.exports = (userValidator, authenticationProvider, encryptionProvider) => {
+module.exports = (userValidator, authenticationProvider, encryptionProvider, common) => {
     return {
         registerUser(req, res) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             data.getUserByUsername(req.body.username)
                 .then(foundUser => {
                     if (!foundUser) {
@@ -106,15 +98,15 @@ module.exports = (userValidator, authenticationProvider, encryptionProvider) => 
                 });
         },
         loginUser(req, res, next) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             authenticationProvider.authenticate("local", localAuthentication(req, res))(req, res, next);
         },
         loginUserFacebook(req, res, next) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             authenticationProvider.authenticate("facebook", facebookAuthentication(req, res, next))(req, res, next);
         },
         loginUserGoogle(req, res, next) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             authenticationProvider.authenticate("google", { scope: ["profile", "email"] }, googleAuthentication(req, res, next))(req, res, next);
         },
         logoutUser(req, res) {

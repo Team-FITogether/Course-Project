@@ -2,8 +2,10 @@
 
 const controllers = require("../controllers");
 
-module.exports = (app) => {
-    app.get("/foods", controllers.foods.getAllFoods);
-    app.get("/foods/single-food", controllers.foods.getSingleFood);
-    app.get("/foods/single-food-category", controllers.foods.getFoodByCategory);
+module.exports = (app, userValidator, common) => {
+    const foodsController = controllers.foods(userValidator, common);
+
+    app.get("/foods", foodsController.getAllFoods);
+    app.get("/foods/single-food", foodsController.getSingleFood);
+    app.get("/foods/single-food-category", foodsController.getFoodByCategory);
 };
