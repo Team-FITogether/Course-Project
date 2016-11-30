@@ -2,54 +2,56 @@
 
 const data = require("./../data/diets-data");
 
-function getDietComments(diet) {
-    let dietComments = diet
-        .comments
-        .map(c => {
-            return {
-                content: c.content,
-                postDate: c.postDate.toString().substring(0, 25),
-                author: c.author
-            };
+const ALL_DIETS_VIEW = "food/all-diets";
+const SINGLE_DIET_VIEW = "food/single-diet";
+
+function loadAllDiets(req, res, page, pageSize) {
+    data.getAllDiets(page, pageSize)
+        .then(result => {
+            let diets = result[0];
+            let count = result[1];
+            let pages = count / pageSize;
+
+            if (page > pages) {
+                res.render("error-pages/404-not-found");
+                return res.status(404);
+            }
+
+            res.render(ALL_DIETS_VIEW, { diets, page, pages });
         });
-
-    return dietComments;
-}
-
-function renderDiet(diet, dietComments, req, res) {
-    res.render("food/single-diet", {
-        id: diet._id,
-        title: diet.title,
-        body: diet.body,
-        imgSrc: diet.imgSrc,
-        comments: dietComments,
-        user: req.user
-    });
 }
 
 module.exports = (userValidator, common) => {
     return {
         getAllDiets(req, res) {
-            common.setIsAdminUser(req, userValidator);
-            data.getAllDiets().then(diets => res.render("food/all-diets", { user: req.user, diets }));
+            let page = Number(req.query.page || 1);
+            let pageSize = 10;
+
+            return loadAllDiets(req, res, page, pageSize);
         },
         getSingleDiet(req, res) {
-            common.setIsAdminUser(req, userValidator);
             let title = req.query.title;
             data.getSingleDiet(title)
                 .then((diet) => {
-                    let dietComments = getDietComments();
-                    renderDiet(diet, dietComments, req, res);
+                    res.render(SINGLE_DIET_VIEW, {
+                        id: diet._id,
+                        title: diet.title,
+                        body: diet.body,
+                        imgSrc: diet.imgSrc,
+                        comments: diet.comments,
+                        user: req.user
+                    });
                 });
         },
         addComment(req, res) {
+            let body = req.body;
             let comment = {
                 content: req.body.content,
                 author: req.user.username,
                 postDate: Date.now()
             };
 
-            data.getDietById(req.body.entityId)
+            data.getDietById(body.entityId)
                 .then(diet => {
                     diet.comments.push(comment);
                     diet.save();

@@ -1,0 +1,11 @@
+mixin dietsPagination(currentPage, pages)
+    div.divider
+    div.text-center
+        ul.pagination.pagination-success
+            -for(let i = 1; i <= pages; i+=1 )
+                if currentPage === i
+                    li.active
+                        a(href="/diets?"  + "page=" + i)= i
+                else
+                    li
+                        a(href="/diets?" + "page=" + i)= i
