@@ -2,9 +2,11 @@
 
 const controllers = require("../controllers");
 
-module.exports = (app) => {
-    app.get("/diets", controllers.diets.getAllDiets);
-    app.get("/diets/single-diet", controllers.diets.getSingleDiet);
+module.exports = (app, userValidator) => {
+    const dietsController = controllers.diets(userValidator);
 
-    app.post("/diets/comments/add", controllers.diets.addComment);
+    app.get("/diets", dietsController.getAllDiets);
+    app.get("/diets/single-diet", dietsController.getSingleDiet);
+
+    app.post("/diets/comments/add", dietsController.addComment);
 };
