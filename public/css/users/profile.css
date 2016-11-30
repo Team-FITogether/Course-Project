@@ -62,6 +62,10 @@
     display: none;
 }
 
+.foods-holder {
+    display: none;
+}
+
 .form-group {
     margin: 0px;
 }

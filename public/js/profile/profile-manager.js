@@ -1,8 +1,5 @@
 /* globals $ */
 "use strict";
-$(".articles-holder").hide();
-$(".workouts-holder").hide();
-$(".foods-holder").hide();
 
 $("#my-articles").on("click", () => {
     $(".articles-holder").show();
