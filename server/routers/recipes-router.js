@@ -9,4 +9,5 @@ module.exports = (app, userValidator, common) => {
     app.get("/recipes/single-recipe", recipesController.getSingleRecipe);
 
     app.post("/recipes/comments/add", recipesController.addComment);
+    app.post("/api/recipes/like", userValidator.isUserLoggedIn, recipesController.toggleLikeOnRecipe);
 };

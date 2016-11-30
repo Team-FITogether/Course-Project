@@ -4,20 +4,39 @@
 const Recipe = require("../models/recipe");
 
 module.exports = {
-    getAllRecipes() {
-        return new Promise((resolve, reject) => {
-            Recipe.find((err, recipes) => {
-                if (err) {
-                    return reject(err);
-                }
+    getAllRecipes(page, pageSize) {
+        let skip = (page - 1) * pageSize;
+        let limit = pageSize;
 
-                return resolve(recipes);
-            });
-        });
+        return Promise.all([
+            new Promise((resolve, reject) => {
+                Recipe.find({})
+                    .skip(skip)
+                    .limit(limit)
+                    .exec((err, recipes) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(recipes);
+                    });
+            }),
+            new Promise((resolve, reject) => {
+                Recipe.count()
+                    .exec((err, count) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(count);
+                    });
+            })
+        ]);
+
     },
-    getSingleRecipe(title) {
+    getRecipeById(id) {
         return new Promise((resolve, reject) => {
-            Recipe.find({ title }, (err, recipe) => {
+            Recipe.findOne({ "_id": id }, (err, recipe) => {
                 if (err) {
                     return reject(err);
                 }
@@ -26,9 +45,9 @@ module.exports = {
             });
         });
     },
-    getRecipeById(id) {
+    getSingleRecipe(title) {
         return new Promise((resolve, reject) => {
-            Recipe.findOne({ "_id": id }, (err, recipe) => {
+            Recipe.find({ title }, (err, recipe) => {
                 if (err) {
                     return reject(err);
                 }
@@ -47,6 +66,18 @@ module.exports = {
                     }
 
                     return resolve(recipes);
+                });
+        });
+    },
+    updateRecipe(id, update, options) {
+        return new Promise((resolve, reject) => {
+            Recipe.findOneAndUpdate({ "_id": id }, update, options,
+                (err, recipe) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(recipe);
                 });
         });
     }

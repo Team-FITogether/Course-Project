@@ -192,7 +192,7 @@ block content
                                 a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
                                 br
                                 small.article-subheader #{val.subHeader}
-                        if user.isTrainer
+                        if user.isTrainer || user.isAdmin
                             br
                             a(href="/articles/create", title="create article").btn.btn-success Създай Статия                      
                         
