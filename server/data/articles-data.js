@@ -23,7 +23,8 @@ module.exports = function (models) {
                 new Promise((resolve, reject) => {
                     Article
                         .find({ genre })
-                        .where("deletedOn").equals(null)
+                        .where("deletedOn")
+                        .equals(null)
                         .skip(skip)
                         .limit(limit)
                         .exec((err, articles) => {
