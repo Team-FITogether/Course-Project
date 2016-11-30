@@ -2,8 +2,8 @@
 
 const controllers = require("../controllers");
 
-module.exports = (app, userValidator) => {
-    const userController = controllers.user(userValidator);
+module.exports = (app, userValidator, common) => {
+    const userController = controllers.user(userValidator, common);
 
     app.get("/users/profile", userValidator.isUserLoggedIn, userController.loadProfilePage);
     app.get("/users?", userController.loadFoundUserProfilePage);

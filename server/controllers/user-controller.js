@@ -5,21 +5,6 @@ const exerciseData = require("./../data/exercises-data");
 const calendarData = require("./../data/calendars-data");
 const articlesData = require("./../data/articles-data");
 
-const ADMIN = "admin";
-const TRAINER = "trainer";
-
-function setIsAdminUser(req, userValidator) {
-    if (req.user) {
-        req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
-    }
-}
-
-function setIsTrainerUser(req, userValidator) {
-    if (req.user) {
-        req.user.isTrainer = userValidator.isInRole(req.user, TRAINER);
-    }
-}
-
 function renderNewCalendar(req, res, exercises, articles) {
     calendarData.createCalendar(req.user.username)
         .then(newCalendar => {
@@ -87,22 +72,22 @@ function renderFoundUserById(id, req, res) {
         .catch(console.log);
 }
 
-module.exports = userValidator => {
+module.exports = (userValidator, common) => {
     return {
         loadAdminPanel(req, res) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             userData.getUsernamesOfUsers()
                 .then(users => res.render("admin-area/admin-panel", { user: req.user, mappedUsers: users }));
         },
         loadProfilePage(req, res) {
-            setIsAdminUser(req, userValidator);
-            setIsTrainerUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
+            common.setIsTrainerUser(req, userValidator);
             renderProfilePage(req, res);
         },
         loadFoundUserProfilePage(req, res) {
             let username = req.query.username;
             let id = req.query.id;
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
 
             if (username) {
                 renderFoundUserByUsername(username, req, res);
@@ -111,8 +96,8 @@ module.exports = userValidator => {
             }
         },
         addWorkoutToUser(req, res) {
-            setIsAdminUser(req, userValidator);
-            setIsTrainerUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
+            common.setIsTrainerUser(req, userValidator);
 
             let exercises = [req.body.exerciseOne, req.body.exerciseTwo, req.body.exerciseThree, req.body.exerciseFour];
             let date = req.body.date;
@@ -123,14 +108,14 @@ module.exports = userValidator => {
                 .then(() => res.sendStatus(200));
         },
         addMenuToUser(req, res) {
-            setIsAdminUser(req, userValidator);
-            setIsTrainerUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
+            common.setIsTrainerUser(req, userValidator);
         },
         getAllUsers(req, res) {
             userData.getUsernamesOfUsers().then(users => res.json(JSON.stringify(users)));
         },
         addRole(req, res) {
-            setIsAdminUser(req, userValidator);
+            common.setIsAdminUser(req, userValidator);
             let query = { username: req.body.username };
             let updateObject = { $push: { "roles": req.body.role } };
 
