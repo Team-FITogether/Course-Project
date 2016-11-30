@@ -16,6 +16,17 @@ module.exports = {
             });
         });
     },
+    getAllFoodDetails() {
+        return new Promise((resolve, reject) => {
+            FoodDetails.find((err, foods) => {
+                if (err) {
+                    return reject(err);
+                }
+
+                return resolve(foods);
+            });
+        });
+    },
     getSingleFood(title, details) {
         return new Promise((resolve, reject) => {
             FoodDetails.findOne({ title, details }, (err, food) => {

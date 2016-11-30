@@ -18,9 +18,11 @@
     font-weight: bold;
     text-align: center;
 }
+
 .content {
     margin-right: 0px;
 }
+
 .section {
     padding: 20px;
 }
@@ -40,10 +42,6 @@
     padding: 0px 5px;
 }
 
-.datepicker-holder {
-    margin-bottom: 20px;
-}
-
 .profile-link {
     text-decoration: none;
     font-size: 16px;
@@ -55,6 +53,7 @@
 .profile-link:hover {
     text-decoration: none;
 }
+
 .workouts-holder {
     display: none;
 }
@@ -62,6 +61,19 @@
 .articles-holder {
     display: none;
 }
+
 .form-group {
+    margin: 0px;
+}
+
+.meal-form {
+    width: 425px;
+    display: inline-block;
+    margin: 0px;
+}
+
+.quantity-form {
+    width: 130px;
+    display: inline-block;
     margin: 0px;
 }

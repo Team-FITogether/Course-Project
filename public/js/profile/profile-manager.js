@@ -1,14 +1,25 @@
 /* globals $ */
 "use strict";
+$(".articles-holder").hide();
+$(".workouts-holder").hide();
+$(".foods-holder").hide();
 
 $("#my-articles").on("click", () => {
     $(".articles-holder").show();
     $(".workouts-holder").hide();
+    $(".foods-holder").hide();
 });
 
 $("#my-workouts").on("click", () => {
-    $(".articles-holder").hide();
     $(".workouts-holder").show();
+    $(".foods-holder").hide();
+    $(".articles-holder").hide();
+});
+
+$("#my-foods").on("click", () => {
+    $(".foods-holder").show();
+    $(".articles-holder").hide();
+    $(".workouts-holder").hide();
 });
 
 $(".datepicker").datepicker({

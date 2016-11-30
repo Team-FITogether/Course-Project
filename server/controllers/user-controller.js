@@ -4,32 +4,36 @@ const userData = require("./../data/user-data");
 const exerciseData = require("./../data/exercises-data");
 const calendarData = require("./../data/calendars-data");
 const articlesData = require("./../data/articles-data");
+const foodsData = require("./../data/foods-data");
 
-function renderNewCalendar(req, res, exercises, articles) {
+function renderNewCalendar(req, res, exercises, articles, foods) {
     calendarData.createCalendar(req.user.username)
         .then(newCalendar => {
             res.render("user/profile", {
                 user: req.user,
                 calendar: newCalendar,
                 exercises,
-                articles
+                articles,
+                foods
             });
         });
 }
 
-function renderExistingCalendar(resultCalendar, exercises, articles, req, res) {
+function renderExistingCalendar(resultCalendar, exercises, articles, foods, req, res) {
     resultCalendar.workouts.sort((a, b) => a.date > b.date ? 1 : b.date > a.date ? -1 : 0);
     res.render("user/profile", {
         user: req.user,
         calendar: resultCalendar,
         exercises,
-        articles
+        articles,
+        foods
     });
 }
 
 function renderProfilePage(req, res) {
     let exercises;
     let articles;
+    let foods;
 
     exerciseData.getAllExercises()
         .then(resultExercises => {
@@ -38,18 +42,21 @@ function renderProfilePage(req, res) {
         })
         .then(resultAricles => {
             articles = resultAricles;
+            return foodsData.getAllFoodDetails();
+        })
+        .then(resultFoods => {
+            foods = resultFoods;
             return calendarData.getCalendarByUser(req.user.username);
         })
         .then(resultCalendar => {
             if (!resultCalendar) {
-                renderNewCalendar(req, res, exercises, articles);
+                renderNewCalendar(req, res, exercises, articles, foods);
             } else {
-                renderExistingCalendar(resultCalendar, exercises, articles, req, res);
+                renderExistingCalendar(resultCalendar, exercises, articles, foods, req, res);
             }
         })
         .catch(console.log);
 }
-
 function renderFoundUserByUsername(username, res, req) {
     userData.getUserByUsername(username)
         .then(foundUser => {
