@@ -11,7 +11,6 @@ function setIsAdminUser(req, userValidator) {
 }
 
 function createUserInDatabase(req, res, encryptionProvider) {
-
     let salt = encryptionProvider.getSalt();
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
     let newUserData = {
@@ -24,9 +23,9 @@ function createUserInDatabase(req, res, encryptionProvider) {
     };
 
     data.createUser(newUserData)
-        .then(() => res.json(`{"success":"Успешна регистрация!"}`))
+        .then(() => res.json("{\"success\":\"Успешна регистрация!\"}"))
         .catch(() => {
-            res.json(`{"error":"Регистрацията се провали."}`);            
+            res.json("{\"error\":\"Регистрацията се провали.\"}");
             res.status(500);
             res.end();
         });
@@ -35,23 +34,32 @@ function createUserInDatabase(req, res, encryptionProvider) {
 function localAuthentication(req, res) {
     return (err, userModel) => {
         if (err) {
-            return (err);
-        } else {
-            if (!userModel) {
-                return res.json(`{"error": "Невалидни, потеребителско име или парола."}`);
+            return err;
+        }
+
+        if (!userModel) {
+            return res.json("{\"error\": \"Невалидни, потеребителско име или парола.\"}");
+        }
+
+        req.login(userModel, error => {
+            if (error) {
+                console.log(error);
+                return res.json("{\"error\": \"Невалидни, потеребителско име или парола.\"}");
             }
 
-            req.login(userModel, error => {
-                if (error) {
-                    console.log(error);
-                    return res.json(`{"error": "Невалидни, потеребителско име или парола."}`);
-
-                } else {
-                    return res.json(`{"success": "Успешен вход, здравейте ${userModel.username}!"}`);
-                }
-            });
-        }
+            return res.json(`{"success": "Успешен вход, здравейте ${userModel.username}!"}`);
+        });
     };
+}
+
+function loginUser(req, res, next, userModel) {
+    req.login(userModel, error => {
+        if (error) {
+            return next(error);
+        }
+
+        res.redirect("/users/profile");
+    });
 }
 
 function facebookAuthentication(req, res, next) {
@@ -64,13 +72,7 @@ function facebookAuthentication(req, res, next) {
             return res.render("user/login", { user: req.user });
         }
 
-        req.login(userModel, error => {
-            if (error) {
-                return next(error);
-            }
-
-            res.redirect("/users/profile");
-        });
+        loginUser(req, res, next, userModel);
     };
 }
 
@@ -84,37 +86,26 @@ function googleAuthentication(req, res, next) {
             return res.render("user/login", { user: req.user });
         }
 
-        req.login(userModel, error => {
-            if (error) {
-                return next(error);
-            }
-
-            res.redirect("/users/profile");
-        });
-    }
+        loginUser(req, res, next, userModel);
+    };
 }
 
 module.exports = (userValidator, authenticationProvider, encryptionProvider) => {
     return {
         registerUser(req, res) {
-            console.log("register body: ", req.body)
-            if (req.user) {
-                req.user.isAdmin = userValidator.isInRole(req.user, ADMIN);
-            }
-
+            setIsAdminUser(req, userValidator);
             data.getUserByUsername(req.body.username)
                 .then(foundUser => {
                     if (!foundUser) {
                         createUserInDatabase(req, res, encryptionProvider);
                     } else {
-                        res.json(`{"error":"Потребителя вече съществува"}`)                        
+                        res.json("{\"error\":\"Потребителя вече съществува\"}")
                         res.status(409);
                         res.end();
                     }
                 });
         },
         loginUser(req, res, next) {
-            console.log("login body: ", req.body)
             setIsAdminUser(req, userValidator);
             authenticationProvider.authenticate("local", localAuthentication(req, res))(req, res, next);
         },

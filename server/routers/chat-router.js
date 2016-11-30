@@ -2,8 +2,10 @@
 
 const controllers = require("../controllers");
 
-module.exports = app => {
-    app.get("/stream", controllers.chat.stream);
-    app.get("/chat/invitation", controllers.chat.handleInvitation);
-    app.get("/chat-room/:id", controllers.chat.loadChatRoom);
+module.exports = (app, userValidator) => {
+    const chatController = controllers.chat(userValidator);
+
+    app.get("/stream", chatController.stream);
+    app.get("/chat/invitation", chatController.handleInvitation);
+    app.get("/chat-room/:id", chatController.loadChatRoom);
 };
