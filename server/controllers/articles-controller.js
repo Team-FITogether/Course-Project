@@ -6,6 +6,7 @@ const CREATE_ARTICLE_VIEW = "articles/create-article";
 const EDIT_ARTICLE_VIEW = "articles/edit-article";
 const ALL_ARTICLES_VIEW = "articles/all-articles";
 const SINGLE_ARTICLE_VIEW = "articles/single-article";
+const ADMIN_ROLE = "admin";
 
 function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common) {
     common.setIsAdminUser(req, userValidator);
@@ -14,7 +15,26 @@ function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, user
             .then(result => {
                 let articles = result[0];
                 let count = result[1];
-                let pages = Math.ceil(count / pageSize);
+                let pages = count / pageSize;
+
+                if (page > pages) {
+                    res.render("error-pages/404-not-found");
+                    return res.status(404);
+                }
+
+                // Check if current user has liked the article, if true - set bool
+                // so view can render an unlike button
+                if (user) {
+                    for (let i = 0; i < articles.length; i += 1) {
+                        for (let j = 0; j < articles[i].usersLiked.length; j += 1) {
+                            if (articles[i].usersLiked[j].user === user.username) {
+                                articles[i].currentUserHasLiked = true;
+                            } else {
+                                articles[i].currentUserHasLiked = false;
+                            }
+                        }
+                    }
+                }
 
                 res.render(ALL_ARTICLES_VIEW, { user, articles, page, pages, genre });
             });
@@ -31,6 +51,20 @@ function loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize)
             if (page > pages) {
                 res.render("error-pages/404-not-found");
                 return res.status(404);
+            }
+
+            // Check if current user has liked the article, if true - set bool
+            // so view can render an unlike button
+            if (user) {
+                for (let i = 0; i < articles.length; i += 1) {
+                    for (let j = 0; j < articles[i].usersLiked.length; j += 1) {
+                        if (articles[i].usersLiked[j].user === user.username) {
+                            articles[i].currentUserHasLiked = true;
+                        } else {
+                            articles[i].currentUserHasLiked = false;
+                        }
+                    }
+                }
             }
 
             res.render(ALL_ARTICLES_VIEW, { user, articles, page, pages, genre });
@@ -107,7 +141,7 @@ module.exports = (userValidator, common) => {
             let page = Number(req.query.page || 1);
             let pageSize = 5;
 
-            if (req.user) {
+            if (userValidator.isInRole(req.user, ADMIN_ROLE)) {
                 return loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common);
             }
 
@@ -164,18 +198,21 @@ module.exports = (userValidator, common) => {
         toggleLikeOnArticle(req, res) {
             let articleId = req.body.targetId;
             data.getArticleById(articleId)
-                .then(article => article.usersLiked.some(x => x.user === req.user.username))
-                .then(isUserFound => {
-                    if (isUserFound) {
-                        dislikeArticle();
+                .then(article => {
+                    for (let i = 0; i < article.usersLiked.length; i += 1) {
+                        if (article.usersLiked[i].user === req.user.username) {
+                            return i;
+                        }
+                    }
+                    return -1;
+                })
+                .then(index => {
+                    if (index !== -1) {
+                        dislikeArticle(articleId, index, res);
                     } else {
                         likeArticle(articleId, req, res);
                     }
                 });
-        },
-        returnArticlesAsJson(req, res) {
-            data.getArticlesByGenre(req.body.genre)
-                .then(articles => res.json(JSON.stringify(articles)));
         },
         deleteArticle(req, res) {
             let _id = req.body.articleId;

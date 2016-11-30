@@ -16,11 +16,18 @@ block content
             small.article-subheader #{val.subHeader}
 
             if user
-              div(data-id=val._id)
-                span.label.label-success
-                  i.material-icons.like-icon thumb_up &nbsp
-                  span.like-value #{val.likes}
-                a.btn.btn-success.btn-sm.like-button Харесва ми
+              if val.currentUserHasLiked
+                div(data-id=val._id)
+                  span.label.label-success
+                    i.material-icons.like-icon thumb_up &nbsp
+                    span.like-value #{val.likes}
+                  a.btn.btn-primary.btn-sm.like-button Не ми харесва
+              else 
+                div(data-id=val._id)
+                  span.label.label-success
+                    i.material-icons.like-icon thumb_up &nbsp
+                    span.like-value #{val.likes}
+                  a.btn.btn-success.btn-sm.like-button Харесва ми
 
             else
               div(data-id=val._id)
@@ -63,6 +70,6 @@ block content
 
 
               div.divider
-        
-        
+
+
         +articlesPagination(page, pages, genre)
