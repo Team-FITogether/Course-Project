@@ -1,11 +1,11 @@
 "use strict";
 
-const data = require("./../data/diets-data");
+// const data = require("./../data/diets-data");
 
 const ALL_DIETS_VIEW = "food/all-diets";
 const SINGLE_DIET_VIEW = "food/single-diet";
 
-function loadAllDiets(req, res, page, pageSize) {
+function loadAllDiets(req, res, page, pageSize, data) {
     data.getAllDiets(page, pageSize)
         .then(result => {
             let diets = result[0];
@@ -21,13 +21,13 @@ function loadAllDiets(req, res, page, pageSize) {
         });
 }
 
-module.exports = (userValidator, common) => {
+module.exports = ({ data }) => {
     return {
         getAllDiets(req, res) {
             let page = Number(req.query.page || 1);
             let pageSize = 10;
 
-            return loadAllDiets(req, res, page, pageSize);
+            return loadAllDiets(req, res, page, pageSize, data);
         },
         getSingleDiet(req, res) {
             let title = req.query.title;

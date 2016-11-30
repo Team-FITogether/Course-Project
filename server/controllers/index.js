@@ -1,16 +1,20 @@
+/* globals module require __dirname */
 "use strict";
 
-const controllers = {
-    user: require("./user-controller"),
-    home: require("./home-controller"),
-    articles: require("./articles-controller"),
-    exercises: require("./exercises-controller"),
-    recipes: require("./recipes-controller"),
-    searches: require("./searches-controller"),
-    diets: require("./diets-controller"),
-    foods: require("./foods-controller"),
-    chat: require("./chat-controller"),
-    auth: require("./auth-controller")
-};
+const path = require("path");
+const fs = require("fs");
+const common = require("../utils/common");
 
-module.exports = controllers;
+module.exports = ({ app, config, userValidator, passport, encryption, data }) => {
+    let controllers = {};
+    fs.readdirSync(__dirname)
+        .filter(file => file.includes("-controller"))
+        .forEach(file => {
+            let controllerModule = require(path.join(__dirname, file))({ app, config, userValidator, passport, encryption, data, common });
+
+            let moduleName = file.substring(0, file.indexOf("-controller"));
+            controllers[moduleName] = controllerModule;
+        });
+
+    return controllers;
+};

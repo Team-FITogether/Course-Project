@@ -1,8 +1,8 @@
 "use strict";
 
-const data = require("./../data/user-data");
+// const data = require("./../data/user-data");
 
-function createUserInDatabase(req, res, encryptionProvider) {
+function createUserInDatabase(req, res, encryptionProvider, data) {
     let salt = encryptionProvider.getSalt();
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
     let newUserData = {
@@ -82,16 +82,16 @@ function googleAuthentication(req, res, next) {
     };
 }
 
-module.exports = (userValidator, authenticationProvider, encryptionProvider, common) => {
+module.exports = ({ userValidator, passport, encryptionProvider, common, data }) => {
     return {
         registerUser(req, res) {
             common.setIsAdminUser(req, userValidator);
             data.getUserByUsername(req.body.username)
                 .then(foundUser => {
                     if (!foundUser) {
-                        createUserInDatabase(req, res, encryptionProvider);
+                        createUserInDatabase(req, res, encryptionProvider, data);
                     } else {
-                        res.json("{\"error\":\"Потребителя вече съществува\"}")
+                        res.json("{\"error\":\"Потребителя вече съществува\"}");
                         res.status(409);
                         res.end();
                     }
@@ -99,15 +99,15 @@ module.exports = (userValidator, authenticationProvider, encryptionProvider, com
         },
         loginUser(req, res, next) {
             common.setIsAdminUser(req, userValidator);
-            authenticationProvider.authenticate("local", localAuthentication(req, res))(req, res, next);
+            passport.authenticate("local", localAuthentication(req, res))(req, res, next);
         },
         loginUserFacebook(req, res, next) {
             common.setIsAdminUser(req, userValidator);
-            authenticationProvider.authenticate("facebook", facebookAuthentication(req, res, next))(req, res, next);
+            passport.authenticate("facebook", facebookAuthentication(req, res, next))(req, res, next);
         },
         loginUserGoogle(req, res, next) {
             common.setIsAdminUser(req, userValidator);
-            authenticationProvider.authenticate("google", { scope: ["profile", "email"] }, googleAuthentication(req, res, next))(req, res, next);
+            passport.authenticate("google", { scope: ["profile", "email"] }, googleAuthentication(req, res, next))(req, res, next);
         },
         logoutUser(req, res) {
             req.logout();

@@ -1,9 +1,9 @@
 "use strict";
 
-const controllers = require("../controllers");
+// const controllers = require("../controllers");
 
-module.exports = (app, userValidator, common) => {
-    const userController = controllers.user(userValidator, common);
+module.exports = ({ app, userValidator, controllers }) => {
+    const userController = controllers.user;
 
     app.get("/users/profile", userValidator.isUserLoggedIn, userController.loadProfilePage);
     app.get("/users?", userController.loadFoundUserProfilePage);

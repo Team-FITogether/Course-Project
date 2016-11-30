@@ -1,6 +1,6 @@
 "use strict";
 
-const data = require("./../data/articles-data");
+// const data = require("./../data/articles-data");
 
 const CREATE_ARTICLE_VIEW = "articles/create-article";
 const EDIT_ARTICLE_VIEW = "articles/edit-article";
@@ -8,7 +8,7 @@ const ALL_ARTICLES_VIEW = "articles/all-articles";
 const SINGLE_ARTICLE_VIEW = "articles/single-article";
 const ADMIN_ROLE = "admin";
 
-function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common) {
+function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common, data) {
     common.setIsAdminUser(req, userValidator);
     if (user.isAdmin) {
         return data.getArticlesByGenreAdminUser(genre, page, pageSize)
@@ -41,7 +41,7 @@ function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, user
     }
 }
 
-function loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize) {
+function loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize, data) {
     data.getArticlesByGenre(genre, page, pageSize)
         .then(result => {
             let articles = result[0];
@@ -85,7 +85,7 @@ function getArticleCommentsMapped(article) {
     return articleComments;
 }
 
-function dislikeArticle(articleId, index, res) {
+function dislikeArticle(articleId, index, res, data) {
     let update = { $inc: { likes: -1 } };
     data.updateArticle(articleId, update, null)
         .then((article) => {
@@ -96,7 +96,7 @@ function dislikeArticle(articleId, index, res) {
         .then(article => res.json(JSON.stringify(article.likes - 1)));
 }
 
-function likeArticle(articleId, req, res) {
+function likeArticle(articleId, req, res, data) {
     let update = { $inc: { likes: 1 } };
     data.updateArticle(articleId, update, null)
         .then((article) => {
@@ -123,7 +123,7 @@ function getSingleArticleObject(article, articleComments, user) {
     };
 }
 
-module.exports = (userValidator, common) => {
+module.exports = ({ userValidator, common, data }) => {
     return {
         loadCreateArticlePage(req, res) {
             common.setIsAdminUser(req, userValidator);
@@ -142,10 +142,10 @@ module.exports = (userValidator, common) => {
             let pageSize = 5;
 
             if (userValidator.isInRole(req.user, ADMIN_ROLE)) {
-                return loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common);
+                return loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common, data);
             }
 
-            return loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize);
+            return loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize, data);
         },
         loadSingleArticlePage(req, res) {
             common.setIsAdminUser(req, userValidator);
@@ -208,9 +208,9 @@ module.exports = (userValidator, common) => {
                 })
                 .then(index => {
                     if (index !== -1) {
-                        dislikeArticle(articleId, index, res);
+                        dislikeArticle(articleId, index, res, data);
                     } else {
-                        likeArticle(articleId, req, res);
+                        likeArticle(articleId, req, res, data);
                     }
                 });
         },

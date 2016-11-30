@@ -1,8 +1,6 @@
 "use strict";
 
-const data = require("./../data/foods-data");
-
-module.exports = (userValidator, common) => {
+module.exports = ({ userValidator, common, data }) => {
     return {
         getAllFoods(req, res) {
             common.setIsAdminUser(req, userValidator);

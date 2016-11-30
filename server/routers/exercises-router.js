@@ -1,9 +1,9 @@
 "use strict";
 
-const controllers = require("../controllers");
+// const controllers = require("../controllers");
 
-module.exports = (app, userValidator, common) => {
-    const exercisesController = controllers.exercises(userValidator, common);
+module.exports = ({ app, controllers }) => {
+    const exercisesController = controllers.exercises;
 
     app.get("/exercises", exercisesController.getAllCategoriesOfExercise);
     app.get("/exercises/explanations", exercisesController.getSingleExercise);

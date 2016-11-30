@@ -1,7 +1,7 @@
-const controllers = require("../controllers");
+// const controllers = require("../controllers");
 
-module.exports = (app, userValidator, common) => {
-    const searchesController = controllers.searches(userValidator, common);
+module.exports = ({ app, controllers }) => {
+    const searchesController = controllers.searches;
 
     app.get("/search", searchesController.findEntities);
 };

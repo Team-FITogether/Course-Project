@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = (userValidator, common) => {
+module.exports = function({ userValidator, common }) {
     return {
         loadHomePage(req, res) {
             common.setIsAdminUser(req, userValidator);

@@ -1,9 +1,9 @@
 "use strict";
 
-const controllers = require("../controllers");
+// const controllers = require("../controllers");
 
-module.exports = (app, userValidator, common) => {
-    const recipesController = controllers.recipes(userValidator, common);
+module.exports = ({ app, userValidator, controllers }) => {
+    const recipesController = controllers.recipes;
 
     app.get("/recipes", recipesController.getAllRecipes);
     app.get("/recipes/single-recipe", recipesController.getSingleRecipe);

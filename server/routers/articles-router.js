@@ -1,9 +1,11 @@
 "use strict";
 
-const controllers = require("../controllers");
+// const controllers = require("../controllers");
 
-module.exports = (app, userValidator, common) => {
-    const articlesController = controllers.articles(userValidator, common);
+module.exports = ({ app, userValidator, controllers }) => {
+    const articlesController = controllers.articles;
+
+    console.log(userValidator);
 
     app.get("/articles", articlesController.loadArticlesByGenrePage);
     app.get("/articles/single-article", articlesController.loadSingleArticlePage);

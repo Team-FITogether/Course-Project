@@ -1,9 +1,9 @@
 "use strict";
 
-const controllers = require("../controllers");
+// const controllers = require("../controllers");
 
-module.exports = (app, userValidator, common) => {
-    const chatController = controllers.chat(userValidator, common);
+module.exports = ({ app, controllers }) => {
+    const chatController = controllers.chat;
 
     app.get("/stream", chatController.stream);
     app.get("/chat/invitation", chatController.handleInvitation);

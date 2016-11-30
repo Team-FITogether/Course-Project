@@ -1,6 +1,6 @@
 "use strict";
 
-const data = require("./../data/exercises-data");
+// const data = require("./../data/exercises-data");
 
 function getExerciseComments(explanation) {
     let excersiseComments = explanation
@@ -28,7 +28,7 @@ function renderExerciseExplanation(explanation, excersiseComments, req, res) {
     });
 }
 
-module.exports = (userValidator, common) => {
+module.exports = ({ userValidator, common, data }) => {
     return {
         getAllExercisesByCategory(req, res) {
             common.setIsAdminUser(req, userValidator);

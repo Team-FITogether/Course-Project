@@ -1,11 +1,9 @@
 "use strict";
 
-const data = require("./../data/recipes-data");
-
 const ALL_RECIPES_VIEW = "food/all-recipes";
 const SINGLE_RECIPE_VIEW = "food/single-recipe";
 
-function loadAllRecipes(user, req, res, page, pageSize) {
+function loadAllRecipes(user, req, res, page, pageSize, data) {
     data.getAllRecipes(page, pageSize)
         .then(result => {
             let recipes = result[0];
@@ -35,7 +33,7 @@ function loadAllRecipes(user, req, res, page, pageSize) {
         });
 }
 
-function likeRecipe(recipeId, req, res) {
+function likeRecipe(recipeId, req, res, data) {
     let update = { $inc: { likes: 1 } };
     data.updateRecipe(recipeId, update, null)
         .then((recipe) => {
@@ -49,7 +47,7 @@ function likeRecipe(recipeId, req, res) {
         });
 }
 
-function dislikeRecipe(recipeId, index, res) {
+function dislikeRecipe(recipeId, index, res, data) {
     let update = { $inc: { likes: -1 } };
     data.updateRecipe(recipeId, update, null)
         .then((recipe) => {
@@ -60,14 +58,16 @@ function dislikeRecipe(recipeId, index, res) {
         .then(recipe => res.json(JSON.stringify(recipe.likes - 1)));
 }
 
-module.exports = (userValidator, common) => {
+module.exports = ({ data }) => {
     return {
         getAllRecipes(req, res) {
             let user = req.user;
+            console.log("User in recipes: " + user);
+
             let page = Number(req.query.page || 1);
             let pageSize = 10;
 
-            return loadAllRecipes(user, req, res, page, pageSize);
+            return loadAllRecipes(user, req, res, page, pageSize, data);
         },
         getSingleRecipe(req, res) {
             let title = req.query.title;
@@ -112,9 +112,9 @@ module.exports = (userValidator, common) => {
                 })
                 .then(index => {
                     if (index !== -1) {
-                        dislikeRecipe(recipeId, index, res);
+                        dislikeRecipe(recipeId, index, res, data);
                     } else {
-                        likeRecipe(recipeId, req, res);
+                        likeRecipe(recipeId, req, res, data);
                     }
                 });
         }
