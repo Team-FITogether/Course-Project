@@ -1,11 +1,8 @@
-.header-default {
-    min-height: 165px !important;
-}
-
 .navbar-black {
-        background-color: #000;
+    background-color: #000;
     color: #fff;
 }
+
 
 .material-icons.like-icon {
     color: white;
@@ -13,22 +10,24 @@
     margin: auto;
     vertical-align: text-top;
 }
-.dislike-button, 
-.like-button {   
-     text-transform: none;
+
+.dislike-button,
+.like-button {
+    text-transform: none;
     color: red
 }
-    .dislike-button:hover,
-    .like-button:hover {
-        color: red;
-        text-decoration: none;
-    }
 
-    .dislike-button:hover,
-    .like-button:focus {
-        color: red;
-        text-decoration: none;
-    }
+.dislike-button:hover,
+.like-button:hover {
+    color: red;
+    text-decoration: none;
+}
+
+.dislike-button:hover,
+.like-button:focus {
+    color: red;
+    text-decoration: none;
+}
 
 .like-value {
     color: white;
@@ -42,7 +41,7 @@ li {
     display: block;
     height: 1px;
     background-color: #000000;
-    background-color: rgba(0,0,0,.12);
+    background-color: rgba(0, 0, 0, .12);
     margin-bottom: 10px;
     margin-top: 10px;
 }
@@ -63,39 +62,61 @@ li {
     color: rebeccapurple;
 }
 
+.header-default {
+    min-height: 165px !important;
+}
+
 .btn-edit {
     float: right !important;
     top: -55px;
 }
+
 .btn-delete {
     float: right !important;
     top: -55px;
 }
 
+.btn-auth {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+
+
 /* ==========  Select Field Variables ========== */
+
+
 /* ==========  Select Field ========== */
+
+
 /* Style Select Field */
+
 select {
     font-family: inherit;
     background-color: transparent;
     width: 100%;
     padding: 4px 0;
-    font-size: 16px;
+    font-size: 14px;
     color: #FFF;
     border: none;
 }
 
-    /* Remove focus */
-    select:focus {
-        outline: none;
-    }
+
+/* Remove focus */
+
+select:focus {
+    outline: none;
+}
+
 
 /* Hide label */
+
 .mdl-selectfield label {
     display: none;
 }
 
+
 /* Use custom arrow */
+
 .mdl-selectfield select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -103,25 +124,25 @@ select {
 }
 
 .mdl-selectfield {
-    font-family: 'Roboto','Helvetica','Arial',sans-serif;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
     position: relative;
 }
 
-    .mdl-selectfield:after {
-        position: absolute;
-        top: 0.75em;
-        right: 0.5em;
-        /* Styling the down arrow */
-        width: 0;
-        height: 0;
-        padding: 0;
-        content: '';
-        border-left: .25em solid transparent;
-        border-right: .25em solid transparent;
-        border-top: 0.375em solid rgba(0,0,0, 0.12);
-        pointer-events: none;
-    }
+.mdl-selectfield:after {
+    position: absolute;
+    top: 0.75em;
+    right: 0.5em;
+    /* Styling the down arrow */
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: .25em solid transparent;
+    border-right: .25em solid transparent;
+    border-top: 0.375em solid rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+}
 
-.modal-backdrop{
+.modal-backdrop {
     z-index: 1 !important;
 }

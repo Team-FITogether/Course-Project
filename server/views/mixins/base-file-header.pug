@@ -14,17 +14,19 @@ mixin header(user)
                     .ripple-container
             #navbar.collapse.navbar-collapse
                 form(action="/search" method="get").navbar-form.navbar-left
-                    div.form-group
-                        input(type="text" name="searchValue" placeholder="Търси").form-control
                     div.input-group
-                        select(name="entityName")
-                            option(value="users" style="color:black;") Потребители
-                            option(value="articles" style="color:black;") Статии
-                            option(value="exercises" style="color:black;") Тренировки
-                            option(value="foods" style="color:black;") Храни
-                            option(value="recipes" style="color:black;") Рецепти
-                    button(type="submit").btn.btn-white.btn-fab.btn-fab-mini.btn-just-icon.btn-search
-                        i.material-icons search
+                        div.input-group
+                            input(type="text" name="searchValue" placeholder="Търси").form-control
+                        div.input-group
+                            select(name="entityName")
+                                option(value="users" style="color:black;") Потребители
+                                option(value="articles" style="color:black;") Статии
+                                option(value="exercises" style="color:black;") Тренировки
+                                option(value="foods" style="color:black;") Храни
+                                option(value="recipes" style="color:black;") Рецепти
+                        div.input-group-btn
+                            button(type="submit").btn.btn-white.btn-fab.btn-fab-mini.btn-just-icon.btn-search
+                                i.material-icons search
                 ul.nav.navbar-nav.navbar-right
                     li.dropdown
                         a.dropdown-toggle(href="#", data-toggle="dropdown")
@@ -87,11 +89,7 @@ mixin header(user)
                                 li
                                     a(href="/auth/logout") Изход
                         else
-                            a.dropdown-toggle(href="#", data-toggle="dropdown")
-                                i.material-icons account_circle
-                                b.caret
-                            ul.dropdown-menu
-                                li
-                                    a(href="/auth/login") Вход
-                                li
-                                    a(href="/auth/register") Регистрация
+                            li
+                                a(href="/auth/login").btn.btn-auth.btn-success Вход
+                            li
+                                a(href="/auth/register" style="color:#4caf50;").btn.btn-auth.btn-white Регистрация
