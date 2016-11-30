@@ -1,14 +1,19 @@
 extends ../base-master
+include ../mixins/diets-pagination
 
 block content
     link(rel="stylesheet" href="/css/articles/all-articles.css")
+    script(src="/js/likes.js")
 
     div.header.header-default
     div.main.main-raised
         div.section.section-basic
             div.container-fluid
-                ul
                 each val in diets
-                    li
-                        a(href="/diets/single-diet?title=" + val.title) #{val.title}
-                            div.divider
+                    div.article-container
+                        a(href="/diets/single-diet?title=" + val.title).article-link #{val.title}
+                        br
+
+        div.divider
+
+    +dietsPagination(page, pages)

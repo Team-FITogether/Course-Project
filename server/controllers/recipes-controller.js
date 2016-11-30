@@ -5,10 +5,10 @@ const data = require("./../data/recipes-data");
 const ALL_RECIPES_VIEW = "food/all-recipes";
 const SINGLE_RECIPE_VIEW = "food/single-recipe";
 
-function loadAllRecipesForNormalUser(user, req, res, page, pageSize) {
+function loadAllRecipes(user, req, res, page, pageSize) {
     data.getAllRecipes(page, pageSize)
         .then(result => {
-            let recipes = result[0]
+            let recipes = result[0];
             let count = result[1];
             let pages = count / pageSize;
 
@@ -53,12 +53,10 @@ module.exports = (userValidator, common) => {
             let page = Number(req.query.page || 1);
             let pageSize = 10;
 
-            return loadAllRecipesForNormalUser(user, req, res, page, pageSize);
+            return loadAllRecipes(user, req, res, page, pageSize);
         },
         getSingleRecipe(req, res) {
             let title = req.query.title;
-
-            common.setIsAdminUser(req, userValidator);
             data.getSingleRecipe(title)
                 .then(recipe => {
                     res.render(SINGLE_RECIPE_VIEW, {
