@@ -19,9 +19,9 @@ function loadAllRecipes(user, req, res, page, pageSize) {
 
             res.render(ALL_RECIPES_VIEW, { user, recipes, page, pages });
         });
-};
+}
 
-function likeRecipe(recipeId, index, res) {
+function likeRecipe(recipeId, req, res) {
     let update = { $inc: { likes: 1 } };
     data.updateRecipe(recipeId, update, null)
         .then((recipe) => {
@@ -88,10 +88,17 @@ module.exports = (userValidator, common) => {
         toggleLikeOnRecipe(req, res) {
             let recipeId = req.body.targetId;
             data.getRecipeById(recipeId)
-                .then(recipe => recipe.usersLiked.some(x => x.user === req.user.username))
-                .then(isUserFound => {
-                    if (isUserFound) {
-                        dislikeRecipe();
+                .then(recipe => {
+                    for (let i = 0; i < recipe.usersLiked.length; i += 1) {
+                        if (recipe.usersLiked[i].user === req.user.username) {
+                            return i;
+                        }
+                    }
+                    return -1;
+                })
+                .then(index => {
+                    if (index !== -1) {
+                        dislikeRecipe(recipeId, index, res);
                     } else {
                         likeRecipe(recipeId, req, res);
                     }

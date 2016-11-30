@@ -2,7 +2,7 @@
 
 function isAdminUserMiddleware(req, res, next) {
     if (!req.user || req.user.roles.indexOf("admin") === -1) {
-        res.redirect("/users/login");
+        res.redirect("/auth/login");
     } else {
         next();
     }

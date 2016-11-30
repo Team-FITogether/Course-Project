@@ -1,18 +1,19 @@
-﻿/* globals $ document  */
-$(document).ready(() => {
+﻿/* globals $ document window  */
+$(document).ready(function () {
     const likeInBulgarian = "Харесва ми";
     const unlikeInBulgarian = "Не ми харесва";
 
     $(".like-button").on("click",
-        (ev) => {
-            let $target = $(ev.target);
-            let targetId = $target.parent().attr("data-id");
+        function (ev) {
+            var $target = $(ev.target);
+            var targetId = $target.parent().attr("data-id");
+            var itemNode = window.location.pathname.split("/")[1];
 
-            $.post("/api/articles/like", { targetId }, (success) => {
+            $.post("/api/"+ itemNode + "/like", { targetId }, function (success) {
                 $target.parent().find(".like-value")
                     .text(success);
 
-                let button = $target.parent().find("a");
+                var button = $target.parent().find("a");
 
                 if (button.text() === likeInBulgarian) {
                     button.removeClass();
