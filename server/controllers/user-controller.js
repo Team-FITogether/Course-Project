@@ -1,11 +1,9 @@
 "use strict";
 
-const User = require("./../models/user").User;
-const Article = require("./../models/article");
-const Calendar = require("./../models/calendar");
-const Exercise = require("../models/exercise");
-
-const data = require("./../data")({ Exercise, User, Calendar, Article });
+const userData = require("./../data/user-data");
+const exerciseData = require("./../data/exercises-data");
+const calendarData = require("./../data/calendars-data");
+const articlesData = require("./../data/articles-data");
 
 const ADMIN = "admin";
 const TRAINER = "trainer";
@@ -23,7 +21,7 @@ function setIsTrainerUser(req, userValidator) {
 }
 
 function renderNewCalendar(req, res, exercises, articles) {
-    data.createCalendar(req.user.username)
+    calendarData.createCalendar(req.user.username)
         .then(newCalendar => {
             res.render("user/profile", {
                 user: req.user,
@@ -48,14 +46,14 @@ function renderProfilePage(req, res) {
     let exercises;
     let articles;
 
-    data.getAllExercises()
+    exerciseData.getAllExercises()
         .then(resultExercises => {
             exercises = resultExercises;
-            return data.getArticlesByAuthor(req.user.username);
+            return articlesData.getArticlesByAuthor(req.user.username);
         })
         .then(resultAricles => {
             articles = resultAricles;
-            return data.getCalendarByUser(req.user.username);
+            return calendarData.getCalendarByUser(req.user.username);
         })
         .then(resultCalendar => {
             if (!resultCalendar) {
@@ -68,7 +66,7 @@ function renderProfilePage(req, res) {
 }
 
 function renderFoundUserByUsername(username, res, req) {
-    data.getUserByUsername(username)
+    userData.getUserByUsername(username)
         .then(foundUser => {
             res.render("user/found-user-profile", {
                 foundUser,
@@ -79,7 +77,7 @@ function renderFoundUserByUsername(username, res, req) {
 }
 
 function renderFoundUserById(id, req, res) {
-    data.getUserById(id)
+    userData.getUserById(id)
         .then(foundUser => {
             res.render("user/found-user-profile", {
                 foundUser,
@@ -93,7 +91,7 @@ module.exports = userValidator => {
     return {
         loadAdminPannel(req, res) {
             setIsAdminUser(req, userValidator);
-            data.getUsernamesOfUsers()
+            userData.getUsernamesOfUsers()
                 .then(users => res.render("admin-area/admin-pannel", { user: req.user, mappedUsers: users }));
         },
         loadProfilePage(req, res) {
@@ -120,7 +118,7 @@ module.exports = userValidator => {
             let date = req.body.date;
             let newWorkout = { date, exercises };
 
-            data.updateCalendar(req.user.username, { $push: { "workouts": newWorkout } }, true)
+            calendarData.updateCalendar(req.user.username, { $push: { "workouts": newWorkout } }, true)
                 .then(() => res.sendStatus(200));
         },
         addMenuToUser(req, res) {
@@ -128,14 +126,14 @@ module.exports = userValidator => {
             setIsTrainerUser(req, userValidator);
         },
         getAllUsers(req, res) {
-            data.getUsernamesOfUsers().then(users => res.json(JSON.stringify(users)));
+            userData.getUsernamesOfUsers().then(users => res.json(JSON.stringify(users)));
         },
         addRole(req, res) {
             setIsAdminUser(req, userValidator);
             let query = { username: req.body.username };
             let updateObject = { $push: { "roles": req.body.role } };
 
-            data.findUserAndUpdate(query, updateObject)
+            userData.findUserAndUpdate(query, updateObject)
                 .then((foundUser) => {
                     // Handle the case where there isn't found user
                     res.render("admin-area/admin-pannel", { user: req.user });

@@ -1,59 +1,53 @@
 /* globals require module Promise*/
 "use strict";
 
-module.exports = function(models) {
-    let Recipe = models.Recipe;
+const Recipe = require("../models/recipe");
 
-    return {
-        getAllRecipes() {
-            return new Promise((resolve, reject) => {
-                Recipe
-                    .find((err, recipes) => {
-                        if (err) {
-                            return reject(err);
-                        }
+module.exports = {
+    getAllRecipes() {
+        return new Promise((resolve, reject) => {
+            Recipe.find((err, recipes) => {
+                if (err) {
+                    return reject(err);
+                }
 
-                        return resolve(recipes);
-                    });
+                return resolve(recipes);
             });
-        },
-        getSingleRecipe(title) {
-            return new Promise((resolve, reject) => {
-                Recipe
-                    .find({ title }, (err, recipe) => {
-                        if (err) {
-                            return reject(err);
-                        }
+        });
+    },
+    getSingleRecipe(title) {
+        return new Promise((resolve, reject) => {
+            Recipe.find({ title }, (err, recipe) => {
+                if (err) {
+                    return reject(err);
+                }
 
-                        return resolve(recipe);
-                    });
+                return resolve(recipe);
             });
-        },
-        getRecipeById(id) {
-            return new Promise((resolve, reject) => {
-                Recipe
-                    .findOne({ "_id": id }, (err, recipe) => {
-                        if (err) {
-                            return reject(err);
-                        }
+        });
+    },
+    getRecipeById(id) {
+        return new Promise((resolve, reject) => {
+            Recipe.findOne({ "_id": id }, (err, recipe) => {
+                if (err) {
+                    return reject(err);
+                }
 
-                        return resolve(recipe);
-                    });
+                return resolve(recipe);
             });
-        },
-        findRecipeByQueryWithSelectIdAndTitle(query) {
-            return new Promise((resolve, reject) => {
-                Recipe
-                    .find(query)
-                    .select("_id title")
-                    .exec((err, recipes) => {
-                        if (err) {
-                            return reject(err);
-                        }
+        });
+    },
+    findRecipeByQueryWithSelectIdAndTitle(query) {
+        return new Promise((resolve, reject) => {
+            Recipe.find(query)
+                .select("_id title")
+                .exec((err, recipes) => {
+                    if (err) {
+                        return reject(err);
+                    }
 
-                        return resolve(recipes);
-                    });
-            });
-        }
+                    return resolve(recipes);
+                });
+        });
     }
-}
+};

@@ -1,10 +1,6 @@
 "use strict";
 
-const Exercise = require("./../models/exercise.js");
-const ExerciseExplanation = require("./../models/exercise-explanation");
-const ExerciseCategory = require("./../models/exercise-category");
-
-const data = require("./../data")({ ExerciseCategory, ExerciseExplanation, Exercise });
+const data = require("./../data/exercises-data");
 
 function getAllExercisesByCategory(req, res) {
     let user = req.user;

@@ -1,8 +1,6 @@
 "use strict";
 
-const Diet = require("./../models/diet.js");
-
-const data = require("./../data")({ Diet });
+const data = require("./../data/diets-data");
 
 function getAllDiets(req, res) {
     let user = req.user;

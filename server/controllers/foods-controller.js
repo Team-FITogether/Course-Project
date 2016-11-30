@@ -1,9 +1,6 @@
 "use strict";
 
-const Food = require("./../models/food.js");
-const FoodDetails = require("./../models/food-details.js");
-
-const data = require("./../data")({ Food, FoodDetails });
+const data = require("./../data/foods-data");
 
 function getAllFoods(req, res) {
     let user = req.user;

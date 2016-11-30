@@ -1,45 +1,40 @@
 /* globals require module Promise*/
 "use strict";
 
-module.exports = function(models) {
-    let Diet = models.Diet;
+const Diet = require("../models/diet");
 
-    return {
-        getAllDiets() {
-            return new Promise((resolve, reject) => {
-                Diet
-                    .find((err, diets) => {
-                        if (err) {
-                            return reject(err);
-                        }
+module.exports = {
+    getAllDiets() {
+        return new Promise((resolve, reject) => {
+            Diet.find((err, diets) => {
+                if (err) {
+                    return reject(err);
+                }
 
-                        return resolve(diets);
-                    });
+                return resolve(diets);
             });
-        },
-        getSingleDiet(title) {
-            return new Promise((resolve, reject) => {
-                Diet
-                    .findOne({ title }, (err, diet) => {
-                        if (err) {
-                            return reject(err);
-                        }
+        });
+    },
+    getSingleDiet(title) {
+        return new Promise((resolve, reject) => {
+            Diet.findOne({ title }, (err, diet) => {
+                if (err) {
+                    return reject(err);
+                }
 
-                        return resolve(diet);
-                    });
+                return resolve(diet);
             });
-        },
-        getDietById(id) {
-            return new Promise((resolve, reject) => {
-                Diet
-                    .findOne({ "_id": id }, (err, diet) => {
-                    if (err) {
-                        return reject(err);
-                    }
+        });
+    },
+    getDietById(id) {
+        return new Promise((resolve, reject) => {
+            Diet.findOne({ "_id": id }, (err, diet) => {
+                if (err) {
+                    return reject(err);
+                }
 
-                    return resolve(diet);
-                });
+                return resolve(diet);
             });
-        }
+        });
     }
-}
+};

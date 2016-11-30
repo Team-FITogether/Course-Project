@@ -1,7 +1,6 @@
 "use strict";
 
-const Recipe = require("./../models/recipe.js");
-const data = require("./../data")({ Recipe });
+const data = require("./../data/recipes-data");
 
 function sortRecipes(recipes) {
     return recipes.sort((a, b) => {

@@ -1,12 +1,9 @@
 "use strict";
 
 const encryption = require("../utils/encryption");
-const mongoose = require("mongoose");
-const User = mongoose.model("user");
+const data = require("./../data/user-data");
 
 let connections = new Map();
-
-const data = require("./../data")({ User });
 
 function getRoomName(firstUsername, secondUsername) {
     let name = [firstUsername, secondUsername]

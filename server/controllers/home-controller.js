@@ -1,6 +1,5 @@
 "use strict";
 
-
 function loadHomePage(req, res) {
     let user = req.user;
     if (req.user) {

@@ -1,8 +1,6 @@
 "use strict";
 
-const mongoose = require("mongoose");
-const User = mongoose.model("user");
-const data = require("./../data")({ User });
+const data = require("./../data/user-data");
 
 const ADMIN = "admin";
 

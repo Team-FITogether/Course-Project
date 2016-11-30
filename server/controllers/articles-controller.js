@@ -1,7 +1,6 @@
 "use strict";
 
-const Article = require("./../models/article.js");
-const data = require("./../data")({ Article });
+const data = require("./../data/articles-data");
 
 const ADMIN = "admin";
 const CREATE_ARTICLE_VIEW = "articles/create-article";

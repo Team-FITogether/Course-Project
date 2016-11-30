@@ -1,12 +1,12 @@
-const mongoose = require("mongoose");
+"use strict";
 
-const User = mongoose.model("user");
-const Article = require("./../models/article");
-const Exercise = require("./../models/exercise");
-const FoodDetails = require("./../models/food-details");
-const Recipe = require("./../models/recipe");
-const data = require("./../data")({ User, Exercise, FoodDetails, Recipe, Article });
 const constants = require("./../utils/constants");
+
+const userData = require("./../data/user-data");
+const exerciseData = require("./../data/exercises-data");
+const foodData = require("./../data/foods-data");
+const recipeData = require("./../data/recipes-data");
+const articleData = require("./../data/articles-data");
 
 function findUsers(username, isLoggedIn, req, res) {
     let user = req.user;
@@ -15,7 +15,7 @@ function findUsers(username, isLoggedIn, req, res) {
     }
 
     let query = { username: new RegExp(username, "i") };
-    data.findUserByQueryWithSelectIdAndName(query)
+    userData.findUserByQueryWithSelectIdAndName(query)
         .then(users => {
             res.render("searches/found-users.pug", {
                 users,
@@ -33,7 +33,7 @@ function findExercises(exerciseName, isLoggedIn, req, res) {
     }
 
     let query = { name: new RegExp(exerciseName, "i") };
-    data.findExerciseByQueryWithSelectIdAndName(query)
+    exerciseData.findExerciseByQueryWithSelectIdAndName(query)
         .then(exercises => {
             res.render("searches/found-exercises.pug", {
                 exercises,
@@ -53,7 +53,7 @@ function findFoods(foodTitle, isLoggedIn, req, res) {
     }
 
     let query = { title: new RegExp(foodTitle, "i") };
-    data.findFoodByQueryWithSelectIdAndTitle(query)
+    foodData.findFoodByQueryWithSelectIdAndTitle(query)
         .then(foods => {
             res.render("searches/found-foods.pug", {
                 foods,
@@ -73,7 +73,7 @@ function findRecipes(recipeTitle, isLoggedIn, req, res) {
     }
 
     let query = { title: new RegExp(recipeTitle, "i") };
-    data.findRecipeByQueryWithSelectIdAndTitle(query)
+    recipeData.findRecipeByQueryWithSelectIdAndTitle(query)
         .then(recipes => {
             res.render("searches/found-recipes.pug", {
                 recipes,
@@ -93,7 +93,7 @@ function findArticles(articleName, isLoggedIn, req, res) {
     }
 
     let query = { mainHeader: new RegExp(articleName, "i") };
-    data.findArticleByQueryWithSelectIdAndHeader(query)
+    articleData.findArticleByQueryWithSelectIdAndHeader(query)
         .then(articles => {
             res.render("searches/found-articles.pug", {
                 articles,
