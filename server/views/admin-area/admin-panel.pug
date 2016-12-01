@@ -5,13 +5,16 @@ block content
     link(rel="stylesheet" href="/jquery-ui/jquery-ui.css")
     script(src="/jquery-ui/jquery-ui.js")
     script(src="/js/users-autocomplete.js")
+    script(src="../tinymce/tinymce.min.js")
+    script(src="../tinymce/jquery.tinymce.min.js")
+    script(src="/js/tinymce-config.js")
 
     div.header.header-default
     div.main.main-raised
         div.section.section-basic
             div.container-fluid
                 div(id="admin-panel-container")
-                    nav(class="navbar navbar-info")
+                    nav(class="navbar create-model")
                         h4 Добавяне на роля на потребител
                     form(action="/users/set-role" method="post")
                         div(class="input-group")
@@ -38,7 +41,7 @@ block content
         div.section.section-basic
             div.container-fluid
                 div(id="admin-panel-container")
-                    nav(class="navbar navbar-info")
+                    nav(class="navbar create-model")
                         h4 Добавяне на нова категория за упражнения
                     form(action="/exercises/add-new" method="post")
                         div.input-group
@@ -50,7 +53,7 @@ block content
         div.section.section-basic
             div.container-fluid
                 div(id="admin-panel-container")
-                    nav(class="navbar navbar-info")
+                    nav(class="navbar create-model")
                         h4 Добавяне на нова категория храна
                     form(action="/foods/add-new" method="post")
                         div.input-group
@@ -58,3 +61,29 @@ block content
                                 i.fitness_center
                             input(type="text" class="form-control" name="category" placeholder="Тип на храната")
                         input(type="submit" value="Добави Категория" class="btn btn-success btn-sm")  
+
+        div.section.section-basic
+            div.container-fluid
+                div(id="admin-panel-container")
+                    nav(class="navbar create-model")
+                        h4 Добавяне на нова рецепта
+                    form(action="/recipes/add-new" method="post")
+                        div.input-group
+                            span.input-group-addon
+                                i.fitness_center
+                            input(type="text" class="form-control" name="title" placeholder="Име на рецептата")
+                            textarea(name="content")#tinymce
+                            input(type="submit" value="Добави рецепта" class="btn btn-success btn-sm")
+
+        div.section.section-basic
+            div.container-fluid
+                div(id="admin-panel-container")
+                    nav(class="navbar create-model")
+                        h4 Добавяне на нов хранителен режим 
+                    form(action="/diets/add-new" method="post")
+                        div.input-group
+                            span.input-group-addon
+                                i.fitness_center
+                            input(type="text" class="form-control" name="title" placeholder="Име на режима")
+                            textarea(name="content")#tinymce
+                            input(type="submit" value="Добави хранителен режим" class="btn btn-success btn-sm")

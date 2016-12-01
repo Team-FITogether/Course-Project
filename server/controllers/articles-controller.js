@@ -122,7 +122,7 @@ function getSingleArticleObject(article, articleComments, user) {
     };
 }
 
-module.exports = ({ userValidator, common, data }) => {
+module.exports = ({ userValidator, common, data, htmlEscaper }) => {
     return {
         loadCreateArticlePage(req, res) {
             common.setIsAdminUser(req, userValidator);
@@ -182,6 +182,8 @@ module.exports = ({ userValidator, common, data }) => {
         },
         addComment(req, res) {
             let body = req.body;
+            // let content = htmlEscaper.escapeTags(body.content);
+
             let commentToAdd = {
                 content: body.content,
                 author: req.user.username,

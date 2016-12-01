@@ -13,4 +13,6 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.post("/users/profile/my-menu", userValidator.isUserLoggedIn, userController.addMenuToUser);
     app.post("/exercises/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewExerciseCategory);
     app.post("/foods/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewFoodCategory);
+    app.post("/recipes/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewRecipe);
+    app.post("/diets/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewDiet);
 };

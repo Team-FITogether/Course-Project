@@ -1,5 +1,5 @@
 #admin-panel-container {
-    width: 600px;
+    width: 1000px;
     display: block;
     margin: 0 auto;
 }
@@ -7,4 +7,8 @@
 #admin-panel-container h4 {
     font-weight: bold;
     text-align: center;
+}
+
+.create-model {
+	background-color: #232E23;
 }
