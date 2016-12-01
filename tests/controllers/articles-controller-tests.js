@@ -372,3 +372,51 @@ describe("loadSingleArticlePage() tests", () => {
             });
     });
 });
+
+describe("createArticle() tests", () => {
+    let reqMock = {
+        body: {
+            articleBody: "",
+            articleHeader: "",
+            articleSubHeader: "",
+            articleGenre: ""
+        },
+        user: {
+            username: ""
+        }
+    };
+    let resMock = { redirect() { } };
+    let dataMock = {
+        createArticle() {
+            return new Promise(resolve => resolve({}));
+        }
+    };
+    let userValidatorMock = {};
+    let commonMock = {};
+
+    it("data.createArticle() should be called with articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, \"\"", () => {
+        let dataSpy = sinon.spy(dataMock, "createArticle");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let body = reqMock.body;
+
+        controller.createArticle(reqMock, resMock);
+        expect(dataSpy.calledWith(body.articleHeader,
+            body.articleSubHeader,
+            reqMock.user.username,
+            body.articleBody,
+            body.articleGenre,
+            ""));
+    });
+
+    it("res.redirect() should be called when everything is ok", done => {
+        let resSpy = sinon.spy(resMock, "redirect");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller
+            .createArticle(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.called).to.be.true;
+                done();
+            });
+    });
+});
