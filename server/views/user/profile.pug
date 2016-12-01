@@ -75,7 +75,7 @@ block content
                                 select(name="mealOne" id="meal-1" placeholder="Първо хранене").form-control.meal-form
                                     option(value="") Избери първо хранене
                                     for val in foods
-                                        option(value="" + val.title) #{val.title} #{val.details}
+                                        option(value="" + val.calories) #{val.title} #{val.details}
                                 select(name="quantityOne" id="quantity-1" placeholder="Количество").form-control.quantity-form
                                     option(value="") Избери грамаж
                                     option(value="100") 100
@@ -88,7 +88,7 @@ block content
                                 select(name="mealTwo" id="meal-2" placeholder="Второ хранене").form-control.meal-form
                                     option(value="") Избери второ хранене
                                     for val in foods
-                                        option(value="" + val.title) #{val.title} #{val.details}
+                                        option(value="" + val.calories) #{val.title} #{val.details}
                                 select(name="quantityTwo" id="quantity-2" placeholder="Количество").form-control.quantity-form
                                     option(value="") Избери грамаж
                                     option(value="100") 100
@@ -101,7 +101,7 @@ block content
                                 select(name="mealThree" id="meal-3" placeholder="Трето хранене").form-control.meal-form
                                     option(value="") Избери трето хранене
                                     for val in foods
-                                        option(value="" + val.title) #{val.title} #{val.details}
+                                        option(value="" + val.calories) #{val.title} #{val.details}
                                 select(name="quantityThree" id="quantity-3" placeholder="Количество").form-control.quantity-form
                                     option(value="") Избери грамаж
                                     option(value="100") 100
@@ -114,7 +114,7 @@ block content
                                 select(name="mealFour" id="meal-4" placeholder="Четвърто хранене").form-control.meal-form
                                     option(value="") Избери четвърто хранене
                                     for val in foods
-                                        option(value="" + val.title) #{val.title} #{val.details}
+                                        option(value="" + val.calories) #{val.title} #{val.details}
                                 select(name="quantityFour" id="quantity-4" placeholder="Количество").form-control.quantity-form
                                     option(value="") Избери грамаж
                                     option(value="100") 100
@@ -127,7 +127,7 @@ block content
                                 select(name="mealFive" id="meal-5" placeholder="Пето хранене").form-control.meal-form
                                     option(value="") Избери пето хранене
                                     for val in foods
-                                        option(value="" + val.title) #{val.title} #{val.details}
+                                        option(value="" + val.calories) #{val.title} #{val.details}
                                 select(name="quantityFive" id="quantity-5" placeholder="Количество").form-control.quantity-form
                                     option(value="") Избери грамаж
                                     option(value="100") 100
@@ -140,7 +140,7 @@ block content
                                 select(name="mealSix" id="meal-6" placeholder="Шесто хранене").form-control.meal-form
                                     option(value="") Избери шесто хранене
                                     for val in foods
-                                        option(value="" + val.title) #{val.title} #{val.details}
+                                        option(value="" + val.calories) #{val.title} #{val.details}
                                 select(name="quantitySix" id="quantity-6" placeholder="Количество").form-control.quantity-form
                                     option(value="") Избери грамаж
                                     option(value="100") 100
@@ -153,7 +153,7 @@ block content
                                 select(name="mealSeven" id="meal-7" placeholder="Седмо хранене").form-control.meal-form
                                     option(value="") Избери седмо хранене
                                     for val in foods
-                                        option(value="" + val.title) #{val.title} #{val.details}
+                                        option(value="" + val.calories) #{val.title} #{val.details}
                                 select(name="quantitySeven" id="quantity-7" placeholder="Количество").form-control.quantity-form
                                     option(value="") Избери грамаж
                                     option(value="100") 100
@@ -166,7 +166,7 @@ block content
                                 select(name="mealEight" id="meal-8" placeholder="Седмо хранене").form-control.meal-form
                                     option(value="") Избери осмо хранене
                                     for val in foods
-                                        option(value="" + val.title) #{val.title} #{val.details}
+                                        option(value="" + val.calories) #{val.title} #{val.details}
                                 select(name="quantityEight" id="quantity-8" placeholder="Количество").form-control.quantity-form
                                     option(value="") Избери грамаж
                                     option(value="100") 100
@@ -175,10 +175,10 @@ block content
                                     option(value="400") 400
                                     option(value="500") 500
                                     option(value="1000") 1000
-                            a(id="add-food-button" class="btn btn-success") Добави Хранене
-                    div.col-lg-6.foods-list-holder
+                            a(id="add-menu-button" class="btn btn-success") Добави Хранене
+                    div.col-lg-6.menus-list-holder
                         each val in calendar.menus
-                            div.calendar-section.single-food-holder
+                            div.calendar-section.single-menu-holder
                                 div.calendar-date
                                     span #{moment(val.date).format('DD/MM/YYYY')}
                                 each meal in val.meals
