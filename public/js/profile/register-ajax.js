@@ -20,7 +20,7 @@ var app = app || {};
 // })
 
 $("#btn-register").on("click", event => {
-    var pattern = new RegExp(/^[a-zA-Z0-9._]{3,20}$/, "g"),
+    var pattern = new RegExp(/^[a-zA-Z0-9\._]{3,20}$/, "g"),
         testUsername,
         testFirstName,
         testLastName,
@@ -30,7 +30,7 @@ $("#btn-register").on("click", event => {
         lastname = $("#tb-last-name").val(),
         password = $("#tb-password").val(),
         confirmPassword = $("tb-confirm-password").val();
-
+    
     testUsername = pattern.test(username);
     testFirstName = pattern.test(firstname);
     testLastName = pattern.test(lastname);

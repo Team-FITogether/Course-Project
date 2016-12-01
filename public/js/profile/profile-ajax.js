@@ -57,11 +57,10 @@ function generateMealInformation(val, quntity) {
     };
 }
 
-function appendMenuDiv(dateFormated, meals) {
+function appendMenuDiv(dateFormated, meals, totalCalories) {
     let $divSection = $("<div>").addClass("calendar-section");
     let $divDate = $("<div>").addClass("calendar-date");
     let $spanDate = $("<span>").html(dateFormated);
-    let totalCalories = 0;
 
     $divDate.append($spanDate);
     $divSection.append($divDate);
@@ -75,10 +74,12 @@ function appendMenuDiv(dateFormated, meals) {
         }
     }
 
-    let $spanTotalCalories = $("<span>").html(`Total calories for the day: ${totalCalories}`);
+    let $spanTotalCalories = $("<span>").html(`Общо калории за деня: ${totalCalories}`);
     $divSection.append($spanTotalCalories);
 
     $(".menus-list-holder").append($divSection);
+
+    totalCalories /= 1000;
 }
 
 $("#add-workout-button").on("click", () => {
@@ -132,11 +133,13 @@ $("#add-menu-button").on("click", () => {
     let meals = [mealOne, mealTwo, mealThree, mealFour, mealFive, mealSix, mealSeven, mealEight];
 
     if (date >= Date.now()) {
-        appendMenuDiv(dateFormated, meals);
+        let totalColories = 0;
+        appendMenuDiv(dateFormated, meals, totalColories);
 
         let data = {
             date,
-            meals
+            meals,
+            totalCalories
         };
         app.requester.post("/users/profile/my-menu", data)
             .then(res => {
