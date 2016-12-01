@@ -1,7 +1,8 @@
+/* globals $ */
 var app = app || {};
 
-(function () {
-    'use strict';
+(function() {
+    "use strict";
 
     function makeRequest(method, url, data) {
         let promise = new Promise((resolve, reject) => {
@@ -25,9 +26,9 @@ var app = app || {};
         let promise = new Promise((resolve, reject) => {
             $.ajax({
                 async: true,
-                url: url,
+                url,
                 type: "POST",
-                data: data,
+                data,
                 contentType: false,
                 cache: false,
                 processData: false,
@@ -44,23 +45,23 @@ var app = app || {};
 
     class Requester {
         get(url) {
-            return makeRequest('GET', url);
+            return makeRequest("GET", url);
         }
 
         post(url, data) {
-            return makeRequest('POST', url, data);
+            return makeRequest("POST", url, data);
         }
         postWithFile(url, data) {
-            return makeRequestWithFile('POST', url, data);
+            return makeRequestWithFile("POST", url, data);
         }
         put(url, data) {
-            return makeRequest('PUT', url, data);
+            return makeRequest("PUT", url, data);
         }
 
         delete(url) {
-            return makeRequest('DELETE', url);
+            return makeRequest("DELETE", url);
         }
     }
 
-    app.requester = new Requester()
-} ());
+    app.requester = new Requester();
+}());

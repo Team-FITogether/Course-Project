@@ -46,3 +46,15 @@ block content
                                 i.fitness_center
                             input(type="text" class="form-control" name="category" placeholder="Част на тяло")
                         input(type="submit" value="Добави Категория" class="btn btn-success btn-sm")  
+
+        div.section.section-basic
+            div.container-fluid
+                div(id="admin-panel-container")
+                    nav(class="navbar navbar-info")
+                        h4 Добавяне на нова категория храна
+                    form(action="/foods/add-new" method="post")
+                        div.input-group
+                            span.input-group-addon
+                                i.fitness_center
+                            input(type="text" class="form-control" name="category" placeholder="Тип на храната")
+                        input(type="submit" value="Добави Категория" class="btn btn-success btn-sm")  

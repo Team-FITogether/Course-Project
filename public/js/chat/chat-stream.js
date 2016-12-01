@@ -10,7 +10,7 @@
     }
 
     function getChatroomLink(chatRoomUrl) {
-        let $chatRoomLink = $("<a />");
+        var $chatRoomLink = $("<a />");
         $chatRoomLink.text("Приеми");
         $chatRoomLink.attr("href", chatRoomUrl);
         $chatRoomLink.attr("target", "_blank");
@@ -22,7 +22,7 @@
     }
 
     function getDeclineLink() {
-        let $declineLink = $("<a />");
+        var $declineLink = $("<a />");
         $declineLink.text("Откажи");
         $declineLink.attr("href", "#");
         $declineLink.on("click", function() {
@@ -33,14 +33,14 @@
     }
 
     function getHeading(senderUsername) {
-        let $heading = $("<h3 />");
-        $heading.text(`${senderUsername} ви изпрати покана за чат.`);
+        var $heading = $("<h3 />");
+        $heading.text(senderUsername + " ви изпрати покана за чат.");
 
         return $heading;
     }
 
     function getInvitationWindow($heading, $chatRoomLink, $declineLink) {
-        let $invitationWindow = $("<div />");
+        var $invitationWindow = $("<div />");
         $invitationWindow.attr("id", "invitation-window");
         $invitationWindow.addClass("alert alert-success");
         $invitationWindow.append($heading);
@@ -51,7 +51,7 @@
     }
 
     function getMainInvitationWindow() {
-        let $mainInvitationWindow = $("<div />");
+        var $mainInvitationWindow = $("<div />");
         $mainInvitationWindow.attr("id", "main-invitation-window");
         $mainInvitationWindow.addClass("row");
         $("body").append($mainInvitationWindow);
@@ -60,17 +60,17 @@
     }
 
     function attachMessageEvent(source) {
-        let $mainInvitationWindow = getMainInvitationWindow();
+        var $mainInvitationWindow = getMainInvitationWindow();
 
         source.addEventListener("message", event => {
-            let parsedData = JSON.parse(JSON.parse(event.data));
-            let chatRoomUrl = parsedData.chatRoomUrl;
+            var parsedData = JSON.parse(JSON.parse(event.data));
+            var chatRoomUrl = parsedData.chatRoomUrl;
 
             if (chatRoomUrl) {
-                let $heading = getHeading(parsedData.senderUsername);
-                let $chatRoomLink = getChatroomLink(chatRoomUrl);
-                let $declineLink = getDeclineLink();
-                let $invitationWindow = getInvitationWindow($heading, $chatRoomLink, $declineLink);
+                var $heading = getHeading(parsedData.senderUsername);
+                var $chatRoomLink = getChatroomLink(chatRoomUrl);
+                var $declineLink = getDeclineLink();
+                var $invitationWindow = getInvitationWindow($heading, $chatRoomLink, $declineLink);
                 $mainInvitationWindow.append($invitationWindow);
             }
         }, false);
@@ -94,7 +94,7 @@
 
     function setupSource() {
         if (window.EventSource) {
-            let source = new EventSource("/stream");
+            var source = new EventSource("/stream");
 
             attachMessageEvent(source);
             attachOpenEvent(source);
@@ -105,4 +105,4 @@
     }
 
     setupSource();
-} ());
+}());

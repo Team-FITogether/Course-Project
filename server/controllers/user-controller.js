@@ -122,7 +122,15 @@ module.exports = ({ userValidator, common, data }) => {
 
             data.addNewCategory(category)
                 .then((createdCategory) => {
-                    console.log(`Created ${createdCategory}`);
+                    //console.log(`Created ${createdCategory}`);
+                    res.render(ADMIN_PANEL_VIEW);
+                });
+        },
+        addNewFoodCategory(req, res) {
+            let category = req.body.category;
+
+            data.addNewFoodCategory(category)
+                .then((createdCategory) => {
                     res.render(ADMIN_PANEL_VIEW);
                 });
         }
