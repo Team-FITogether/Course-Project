@@ -35,13 +35,13 @@ function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, user
                     }
                 }
 
-                res.render(ALL_ARTICLES_VIEW, { user, articles, page, pages, genre });
+                return res.render(ALL_ARTICLES_VIEW, { user, articles, page, pages, genre });
             });
     }
 }
 
 function loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize, data) {
-    data.getArticlesByGenre(genre, page, pageSize)
+    return data.getArticlesByGenre(genre, page, pageSize)
         .then(result => {
             let articles = result[0];
             let count = result[1];
@@ -145,6 +145,7 @@ module.exports = ({ userValidator, common, data }) => {
                     return loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common, data);
                 }
             }
+
             return loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize, data);
         },
         loadSingleArticlePage(req, res) {
