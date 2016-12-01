@@ -52,6 +52,28 @@ function generateMealInformation(title, calories) {
     };
 }
 
+function appendMenuDiv(dateFormated, menu) {
+    let $divSection = $("<div>").addClass("calendar-section");
+    let $divDate = $("<div>").addClass("calendar-date");
+    let $spanDate = $("<span>").html(dateFormated);
+    let totalCalories = 0;
+
+    $divDate.append($spanDate);
+    $divSection.append($divDate);
+
+    for (let i = 0; i < menu.length; i += 1) {
+        let $spanMeal = $("<span>").html(`{meals[i].title} - {meals[i].calories}`);
+        totalCalories += +menu[i].calories;
+        $divSection.append($spanMeal);
+        $divSection.append("<br>");
+    }
+
+    let $spanTotalCalories = $("<span>").html(`Total calories for the day: {totalCalories}`);
+    $divSection.append($spanTotalCalories);
+
+    $(".foods-list-holder").append($divSection);
+}
+
 $("#add-workout-button").on("click", () => {
     let dateString = $("#workout-datepicker").val();
     let parsedDate = parseDate(dateString);
@@ -67,12 +89,7 @@ $("#add-workout-button").on("click", () => {
     let exercises = [exerciseOne, exerciseTwo, exerciseThree, exerciseFour];
 
     if (date >= Date.now()) {
-        let exercisesParams = {
-            exerciseOne,
-            exerciseTwo,
-            exerciseThree,
-            exerciseFour
-        };
+        let exercisesParams = { exerciseOne, exerciseTwo, exerciseThree, exerciseFour };
 
         appendWorkoutDiv(dateFormated, exercisesParams);
 
@@ -107,42 +124,19 @@ $("#add-menu-button").on("click", () => {
     let mealSeven = generateMealInformation($("#meal-7").val(), $("#meal-7").html());
     let mealEight = generateMealInformation($("#meal-8").val(), $("#meal-8").html());
 
-    let meals = [];
+    let menu = [mealOne, mealTwo, mealThree, mealFour, mealFive, mealSix, mealSeven, mealEight];
 
     if (date >= Date.now()) {
-        let $divSection = $("<div>").addClass("calendar-section");
-        let $divDate = $("<div>").addClass("calendar-date");
-        let $spanDate = $("<span>").html(dateFormat);
-        let $spanExerciseOne = $("<span>").html(exerciseOne);
-        let $spanExerciseTwo = $("<span>").html(exerciseTwo);
-        let $spanExerciseThree = $("<span>").html(exerciseThree);
-        let $spanExerciseFour = $("<span>").html(exerciseFour);
-
-        $divDate.append($spanDate);
-
-        $divSection.append($divDate);
-        $divSection.append($spanExerciseOne);
-        $divSection.append("<br>");
-        $divSection.append($spanExerciseTwo);
-        $divSection.append("<br>");
-        $divSection.append($spanExerciseThree);
-        $divSection.append("<br>");
-        $divSection.append($spanExerciseFour);
-
-        $(".workout-list-holder").append($divSection);
+        appendMenuDiv(dateFormated, menu);
 
         let data = {
             date,
-            exerciseOne,
-            exerciseTwo,
-            exerciseThree,
-            exerciseFour
+            menu
         };
-
-        app.requester.post("/users/profile/my-workout", data)
+        app.requester.post("/users/profile/my-menu", data)
             .then(res => {
                 console.log(res);
-                app.notificator.showNotification("Упражнението е добавено успешно към вашия график!", "success");
+                app.notificator.showNotification("Менюто е добавено успешно към вашия график!", "success");
             });
     } else {
         app.notificator.showNotification("Изберете валидна дата!", "error");

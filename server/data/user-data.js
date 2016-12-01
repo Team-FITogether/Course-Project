@@ -81,6 +81,13 @@ module.exports = function(models) {
                 user.save();
                 return resolve(user);
             });
+        },
+        updateMenusCalendar(user, menu) {
+            return new Promise(resolve => {
+                user.calendar.menus.push(menu);
+                user.save();
+                return resolve(user);
+            });
         }
     };
 };

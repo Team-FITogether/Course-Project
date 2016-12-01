@@ -92,10 +92,10 @@ module.exports = ({ userValidator, common, data }) => {
             common.setIsAdminUser(req, userValidator);
             common.setIsTrainerUser(req, userValidator);
 
-            let meals = [req.body.mealOne, req.body.mealTwo, req.body.mealThree, req.body.mealFour, req.body.mealFive, req.body.mealSix, req.body.mealSeven, req.body.mealEight];
+            let menu = req.body.menu;
             let date = req.body.date;
 
-            let newMenu = { date, meals };
+            let newMenu = { date, menu };
 
             data.updateMenusCalendar(req.user, newMenu)
                 .then(() => res.sendStatus(200));
