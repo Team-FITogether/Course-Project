@@ -1,7 +1,9 @@
+/* globals toastr */
+
 var app = app || {};
 
-(function () {
-    'use strict';
+(function() {
+    "use strict";
 
     class Notificator {
         showNotification(text, type) {
@@ -21,15 +23,15 @@ var app = app || {};
                 "hideEasing": "linear",
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
-            }
+            };
 
-            if (type === 'success') {
+            if (type === "success") {
                 toastr.success(text);
-            } else if (type === 'error') {
+            } else if (type === "error") {
                 toastr.error(text);
             }
         }
     }
 
     app.notificator = new Notificator();
-} ());
+}());

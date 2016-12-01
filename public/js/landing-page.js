@@ -1,4 +1,6 @@
 ﻿/* globals document $ */
-$(document).ready(function () {
+"use strict";
+
+$(document).ready(function() {
     $("body").addClass("landing-page");
 });

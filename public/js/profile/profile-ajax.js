@@ -4,41 +4,39 @@
 var app = app || {};
 
 $("#add-workout-button").on("click", () => {
-    let dateString = $("#workout-datepicker").val();
-    let dateArr = dateString.split("/");
-    let day = dateArr[0];
-    let month = dateArr[1] - 1;
-    let year = dateArr[2];
+    var dateString = $("#workout-datepicker").val(),
+        dateArr = dateString.split("/"),
+        day = dateArr[0],
+        month = dateArr[1] - 1,
+        year = dateArr[2],
+        date = new Date(year, month, day);
 
-    let date = new Date(year, month, day);
-
-    let parsedMonth = month + 1;
+    var parsedMonth = month + 1;
     month = parsedMonth;
 
-    let dateFormat = day + "/" + parsedMonth + "/" + year;
+    var dateFormat = day + "/" + parsedMonth + "/" + year;
 
-    let exerciseOne = $("#exercise-1").val();
-    let exerciseTwo = $("#exercise-2").val();
-    let exerciseThree = $("#exercise-3").val();
-    let exerciseFour = $("#exercise-4").val();
+    var exerciseOne = $("#exercise-1").val();
+    var exerciseTwo = $("#exercise-2").val();
+    var exerciseThree = $("#exercise-3").val();
+    var exerciseFour = $("#exercise-4").val();
 
-    let exercises = [];
+    var exercises = [];
     exercises.push(exerciseOne);
     exercises.push(exerciseTwo);
     exercises.push(exerciseThree);
     exercises.push(exerciseFour);
 
     if (date >= Date.now()) {
-        let $divSection = $("<div>").addClass("calendar-section");
-        let $divDate = $("<div>").addClass("calendar-date");
-        let $spanDate = $("<span>").html(dateFormat);
-        let $spanExerciseOne = $("<span>").html(exerciseOne);
-        let $spanExerciseTwo = $("<span>").html(exerciseTwo);
-        let $spanExerciseThree = $("<span>").html(exerciseThree);
-        let $spanExerciseFour = $("<span>").html(exerciseFour);
+        var $divSection = $("<div>").addClass("calendar-section"),
+            $divDate = $("<div>").addClass("calendar-date"),
+            $spanDate = $("<span>").html(dateFormat),
+            $spanExerciseOne = $("<span>").html(exerciseOne),
+            $spanExerciseTwo = $("<span>").html(exerciseTwo),
+            $spanExerciseThree = $("<span>").html(exerciseThree),
+            $spanExerciseFour = $("<span>").html(exerciseFour);
 
         $divDate.append($spanDate);
-
         $divSection.append($divDate);
         $divSection.append($spanExerciseOne);
         $divSection.append("<br>");
@@ -50,7 +48,7 @@ $("#add-workout-button").on("click", () => {
 
         $(".workout-list-holder").append($divSection);
 
-        let data = {
+        var data = {
             date,
             exerciseOne,
             exerciseTwo,
@@ -67,5 +65,3 @@ $("#add-workout-button").on("click", () => {
         app.notificator.showNotification("Изберете валидна дата!", "error");
     }
 });
-
-
