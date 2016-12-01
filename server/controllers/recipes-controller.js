@@ -2,6 +2,7 @@
 
 const ALL_RECIPES_VIEW = "food/all-recipes";
 const SINGLE_RECIPE_VIEW = "food/single-recipe";
+const PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
 
 function loadAllRecipes(user, req, res, page, pageSize, data) {
     data.getAllRecipes(page, pageSize)
@@ -11,12 +12,10 @@ function loadAllRecipes(user, req, res, page, pageSize, data) {
             let pages = count / pageSize;
 
             if (page > pages) {
-                res.render("error-pages/404-not-found");
+                res.render(PAGES_NOT_FOUND_VIEW);
                 return res.status(404);
             }
 
-            // Check if current user has liked the article, if true - set bool
-            // so view can render an unlike button
             if (user) {
                 for (let i = 0; i < recipes.length; i += 1) {
                     for (let j = 0; j < recipes[i].usersLiked.length; j += 1) {
@@ -62,8 +61,6 @@ module.exports = ({ data }) => {
     return {
         getAllRecipes(req, res) {
             let user = req.user;
-            console.log("User in recipes: " + user);
-
             let page = Number(req.query.page || 1);
             let pageSize = 10;
 

@@ -1,9 +1,13 @@
 "use strict";
 
+const USER_PROFILE_VIEW = "user/profile";
+const FOUND_USER_PROFILE_VIEW = "user/found-user-profile";
+const ADMIN_PANEL_VIEW = "admin-area/admin-panel";
+
 function renderNewCalendar(req, res, exercises, articles, foods, data) {
     data.createCalendar(req.user.username)
         .then(newCalendar => {
-            res.render("user/profile", {
+            res.render(USER_PROFILE_VIEW, {
                 user: req.user,
                 calendar: newCalendar,
                 exercises,
@@ -15,7 +19,7 @@ function renderNewCalendar(req, res, exercises, articles, foods, data) {
 
 function renderExistingCalendar(resultCalendar, exercises, articles, foods, req, res) {
     resultCalendar.workouts.sort((a, b) => a.date > b.date ? 1 : b.date > a.date ? -1 : 0);
-    res.render("user/profile", {
+    res.render(USER_PROFILE_VIEW, {
         user: req.user,
         calendar: resultCalendar,
         exercises,
@@ -55,7 +59,7 @@ function renderProfilePage(req, res, data) {
 function renderFoundUserByUsername(username, res, req, data) {
     data.getUserByUsername(username)
         .then(foundUser => {
-            res.render("user/found-user-profile", {
+            res.render(FOUND_USER_PROFILE_VIEW, {
                 foundUser,
                 user: req.user
             });
@@ -66,7 +70,7 @@ function renderFoundUserByUsername(username, res, req, data) {
 function renderFoundUserById(id, req, res, data) {
     data.getUserById(id)
         .then(foundUser => {
-            res.render("user/found-user-profile", {
+            res.render(FOUND_USER_PROFILE_VIEW, {
                 foundUser,
                 user: req.user
             });
@@ -79,7 +83,7 @@ module.exports = ({ userValidator, common, data }) => {
         loadAdminPanel(req, res) {
             common.setIsAdminUser(req, userValidator);
             data.getUsernamesOfUsers()
-                .then(users => res.render("admin-area/admin-panel", { user: req.user, mappedUsers: users }));
+                .then(users => res.render(ADMIN_PANEL_VIEW, { user: req.user, mappedUsers: users }));
         },
         loadProfilePage(req, res) {
             common.setIsAdminUser(req, userValidator);
@@ -124,10 +128,10 @@ module.exports = ({ userValidator, common, data }) => {
             data.findUserAndUpdate(query, updateObject)
                 .then((foundUser) => {
                     // Handle the case where there isn't found user
-                    res.render("admin-area/admin-panel", { user: req.user });
+                    res.render(ADMIN_PANEL_VIEW, { user: req.user });
                 }, error => {
                     // Handle error
-                    res.render("admin-area/admin-panel", { user: req.user });
+                    res.render(ADMIN_PANEL_VIEW, { user: req.user });
                 });
         },
         addNewExerciseCategory(req, res) {
@@ -136,7 +140,7 @@ module.exports = ({ userValidator, common, data }) => {
             data.addNewCategory(category)
                 .then((createdCategory) => {
                     console.log(`Created ${createdCategory}`);
-                    res.render("admin-area/admin-panel");
+                    res.render(ADMIN_PANEL_VIEW);
                 });
         }
     };

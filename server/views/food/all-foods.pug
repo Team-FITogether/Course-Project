@@ -1,4 +1,5 @@
 extends ../base-master
+include ../mixins/foods-pagination
 
 block content
     link(rel="stylesheet" href="/css/articles/all-articles.css")
@@ -7,8 +8,11 @@ block content
     div.main.main-raised
         div.section.section-basic
             div.container-fluid
-                ul
                 each val in foods
-                    li
-                        a(href="/foods/single-food-category?title=" + val.title) #{val.title}
-                            div.divider
+                    div.article-container
+                        a(href="/foods/single-food-category?title=" + val.title).article-link #{val.title}
+                        br
+
+        div.divider
+
+    +foodsPagination(page, pages)

@@ -4,6 +4,7 @@ const CREATE_ARTICLE_VIEW = "articles/create-article";
 const EDIT_ARTICLE_VIEW = "articles/edit-article";
 const ALL_ARTICLES_VIEW = "articles/all-articles";
 const SINGLE_ARTICLE_VIEW = "articles/single-article";
+const PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
 const ADMIN_ROLE = "admin";
 
 function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common, data) {
@@ -16,7 +17,7 @@ function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, user
                 let pages = count / pageSize;
 
                 if (page > pages) {
-                    res.render("error-pages/404-not-found");
+                    res.render(PAGES_NOT_FOUND_VIEW);
                     return res.status(404);
                 }
 
@@ -47,7 +48,7 @@ function loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize,
             let pages = count / pageSize;
 
             if (page > pages) {
-                res.render("error-pages/404-not-found");
+                res.render(PAGES_NOT_FOUND_VIEW);
                 return res.status(404);
             }
 

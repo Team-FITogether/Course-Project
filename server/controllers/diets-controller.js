@@ -2,6 +2,7 @@
 
 const ALL_DIETS_VIEW = "food/all-diets";
 const SINGLE_DIET_VIEW = "food/single-diet";
+const PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
 
 function loadAllDiets(req, res, page, pageSize, data) {
     data.getAllDiets(page, pageSize)
@@ -11,7 +12,7 @@ function loadAllDiets(req, res, page, pageSize, data) {
             let pages = count / pageSize;
 
             if (page > pages) {
-                res.render("error-pages/404-not-found");
+                res.render(PAGES_NOT_FOUND_VIEW);
                 return res.status(404);
             }
 

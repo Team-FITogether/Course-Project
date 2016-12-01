@@ -7,16 +7,35 @@
 module.exports = function(models) {
     let { Food, FoodDetails } = models;
     return {
-        getAllFoods() {
-            return new Promise((resolve, reject) => {
-                Food.find((err, foods) => {
-                    if (err) {
-                        return reject(err);
-                    }
+        getAllFoods(page, pageSize) {
+            let skip = (page - 1) * pageSize;
+            let limit = pageSize;
 
-                    return resolve(foods);
-                });
-            });
+            return Promise.all([
+                new Promise((resolve, reject) => {
+                    Food.find({})
+                        .skip(skip)
+                        .limit(limit)
+                        .exec((err, foods) => {
+                            if (err) {
+                                return reject(err);
+                            }
+
+                            return resolve(foods);
+                        });
+                }),
+                new Promise((resolve, reject) => {
+                    Food.count()
+                        .exec((err, count) => {
+                            if (err) {
+                                return reject(err);
+                            }
+
+                            return resolve(count);
+                        });
+                })
+            ]);
+
         },
         getAllFoodDetails() {
             return new Promise((resolve, reject) => {

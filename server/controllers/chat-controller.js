@@ -1,6 +1,8 @@
 "use strict";
 
 const encryption = require("../utils/encryption");
+const FOUND_USER_PROFILE_VIEW = "user/found-user-profile";
+const CHAT_ROOM_VIEW = "chat/chat-room";
 
 let connections = new Map();
 
@@ -20,7 +22,7 @@ function renderUserOffline(req, res, userValidator, common, data) {
     common.setIsAdminUser(req, userValidator);
     data.getUserByUsername(req.query.receiver)
         .then(foundUser => {
-            res.render("user/found-user-profile", {
+            res.render(FOUND_USER_PROFILE_VIEW, {
                 foundUser,
                 user: req.user,
                 isOffline: true
@@ -51,7 +53,7 @@ module.exports = ({ userValidator, common, data }) => {
             }
         },
         loadChatRoom(req, res) {
-            res.render("chat/chat-room", {
+            res.render(CHAT_ROOM_VIEW, {
                 user: {
                     username: req.user.username,
                     avatarSrc: `/img/user-images/${req.user.avatarName}`
