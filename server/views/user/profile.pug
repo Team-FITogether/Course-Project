@@ -182,8 +182,9 @@ block content
                                 div.calendar-date
                                     span #{moment(val.date).format('DD/MM/YYYY')}
                                 each meal in val.meals
-                                    span #{meal}
+                                    span #{meal.title} #{meal.details} - #{meal.calories} кал.
                                     br
+                                span Общо калории за деня: #{val.totalCalories}
                                 br
                 div.section.articles-holder
                     h3 Статии от #{ calendar.calendarUser }

@@ -40,7 +40,7 @@ function appendWorkoutDiv(dateFormated, exercises) {
     $(".workout-list-holder").append($divSection);
 }
 
-function generateMealInformation(val, quntity) {
+function generateMealInformation(val, quantity) {
     if (!val) {
         return {};
     }
@@ -49,11 +49,10 @@ function generateMealInformation(val, quntity) {
     let details = valArgs[1];
     let calories = valArgs[2];
 
-    console.log(details);
     return {
         title: `${title} ${details}`,
         calories,
-        quntity
+        quantity
     };
 }
 
@@ -67,8 +66,7 @@ function appendMenuDiv(dateFormated, meals, totalCalories) {
 
     for (let i = 0; i < meals.length; i += 1) {
         if (meals[i].title) {
-            let $spanMeal = $("<span>").html(`${meals[i].title} - ${meals[i].calories}`);
-            totalCalories += +meals[i].calories * meals[i].quntity;
+            let $spanMeal = $("<span>").html(`${meals[i].title} - ${meals[i].calories} кал.`);
             $divSection.append($spanMeal);
             $divSection.append("<br>");
         }
@@ -78,8 +76,6 @@ function appendMenuDiv(dateFormated, meals, totalCalories) {
     $divSection.append($spanTotalCalories);
 
     $(".menus-list-holder").append($divSection);
-
-    totalCalories /= 1000;
 }
 
 $("#add-workout-button").on("click", () => {
@@ -134,6 +130,12 @@ $("#add-menu-button").on("click", () => {
 
     if (date >= Date.now()) {
         let totalCalories = 0;
+        for(let i = 0; i < meals.length; i += 1){
+            if(meals[i].title){
+                totalCalories += +meals[i].calories * meals[i].quantity;
+            }
+        }
+        totalCalories /= 100;
         appendMenuDiv(dateFormated, meals, totalCalories);
 
         let data = {

@@ -29,13 +29,13 @@
 
 .calendar-section {
     margin: 10px;
-    border: 1px solid grey;
+    border: 1px solid green;
     border-radius: 5px;
     width: 400px;
 }
 
 .calendar-date {
-    background-color: lightgrey;
+    background-color: lightgreen;
 }
 
 .calendar-section span {
