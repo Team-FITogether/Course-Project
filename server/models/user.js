@@ -15,7 +15,13 @@ const userSchema = mongoose.Schema({
     googleToken: { type: String },
     age: { type: Number },
     roles: [String],
-    avatarName: { type: String, default: 'default.jpg' }
+    avatarName: { type: String, default: "default.jpg" },
+    calendar: {
+        workouts: [{
+        }],
+        menus: [{
+        }]
+    }
 });
 
 userSchema.methods = {
@@ -29,6 +35,17 @@ userSchema.methods = {
 };
 
 const User = mongoose.model("user", userSchema);
+
+let updateCalendar = {
+    workouts: [{
+        date: null,
+        exercises: []
+    }],
+    menus: [{
+        date: null,
+        meals: []
+    }]
+};
 
 function addAdminUser() {
     User.find({ username: "admin" })

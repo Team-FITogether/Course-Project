@@ -4,30 +4,6 @@ const USER_PROFILE_VIEW = "user/profile";
 const FOUND_USER_PROFILE_VIEW = "user/found-user-profile";
 const ADMIN_PANEL_VIEW = "admin-area/admin-panel";
 
-function renderNewCalendar(req, res, exercises, articles, foods, data) {
-    data.createCalendar(req.user.username)
-        .then(newCalendar => {
-            res.render(USER_PROFILE_VIEW, {
-                user: req.user,
-                calendar: newCalendar,
-                exercises,
-                articles,
-                foods
-            });
-        });
-}
-
-function renderExistingCalendar(resultCalendar, exercises, articles, foods, req, res) {
-    resultCalendar.workouts.sort((a, b) => a.date > b.date ? 1 : b.date > a.date ? -1 : 0);
-    res.render(USER_PROFILE_VIEW, {
-        user: req.user,
-        calendar: resultCalendar,
-        exercises,
-        articles,
-        foods
-    });
-}
-
 function renderProfilePage(req, res, data) {
     let exercises;
     let articles;
@@ -44,16 +20,15 @@ function renderProfilePage(req, res, data) {
         })
         .then(resultFoods => {
             foods = resultFoods;
-            return data.getCalendarByUser(req.user.username);
-        })
-        .then(resultCalendar => {
-            if (!resultCalendar) {
-                renderNewCalendar(req, res, exercises, articles, foods, data);
-            } else {
-                renderExistingCalendar(resultCalendar, exercises, articles, foods, req, res);
-            }
-        })
-        .catch(console.log);
+            req.user.calendar.workouts.sort((a, b) => a.date > b.date ? 1 : b.date > a.date ? -1 : 0);
+            res.render(USER_PROFILE_VIEW, {
+                user: req.user,
+                calendar: req.user.calendar,
+                exercises,
+                articles,
+                foods
+            });
+        });
 }
 
 function renderFoundUserByUsername(username, res, req, data) {
@@ -110,7 +85,7 @@ module.exports = ({ userValidator, common, data }) => {
 
             let newWorkout = { date, exercises };
 
-            data.updateCalendar(req.user.username, { $push: { "workouts": newWorkout } }, true)
+            data.updateWorkoutsCalendar(req.user, newWorkout)
                 .then(() => res.sendStatus(200));
         },
         addMenuToUser(req, res) {

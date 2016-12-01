@@ -8,7 +8,6 @@ module.exports = () => {
     let data = {};
     const Recipe = require("../models/recipe");
     const Article = require("../models/article");
-    const Calendar = require("../models/calendar");
     const ExerciseCategory = require("../models/exercise-category");
     const ExerciseExplanation = require("../models/exercise-explanation");
     const Exercise = require("../models/exercise");
@@ -20,7 +19,6 @@ module.exports = () => {
     let models = {
         Recipe,
         Article,
-        Calendar,
         ExerciseCategory,
         ExerciseExplanation,
         Exercise,

@@ -27,7 +27,7 @@ block content
                                 if user.isTrainer || user.isAdmin
                                     a(id="my-articles").profile-link Моите Статии
                 div.section.workouts-holder
-                    h3 Тренировките на #{ calendar.calendarUser }
+                    h3 Тренировките на #{ user.username }
                     div.col-lg-6
                         div.workout-selector
                             div.datepicker-holder
@@ -56,7 +56,7 @@ block content
                             a(id="add-workout-button" class="btn btn-success") Добави Тренировка
                     div.col-lg-6.workout-list-holder
                         each val in calendar.workouts
-                            if moment() <= val.date
+                            if moment() <= moment(val.date)
                                 div.calendar-section.single-workout-holder
                                     div.calendar-date
                                         span #{moment(val.date).format('DD/MM/YYYY')}
@@ -65,7 +65,7 @@ block content
                                         br
                                     br
                 div.section.foods-holder
-                    h3 Хранителния режим на #{ calendar.calendarUser }
+                    h3 Хранителния режим на #{ user.username }
                     div.col-lg-6
                         div.foods-selector
                             div.datepicker-holder

@@ -145,7 +145,6 @@ module.exports = ({ userValidator, common, data }) => {
                     return loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common, data);
                 }
             }
-
             return loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize, data);
         },
         loadSingleArticlePage(req, res) {
