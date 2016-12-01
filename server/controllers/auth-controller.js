@@ -3,11 +3,13 @@
 const USER_LOGIN_VIEW = "user/login";
 const USER_REGIESTER_VIEW = "user/register";
 
-function createUserInDatabase(req, res, encryptionProvider, data) {
+function createUserInDatabase(req, res, encryptionProvider, data, htmlEscaper) {
     let salt = encryptionProvider.getSalt();
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
+    let username = htmlEscaper.escapeTags(req.body.username);
+
     let newUserData = {
-        username: req.body.username,
+        username,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         avatarName: req.file ? req.file.filename : null,
@@ -83,14 +85,14 @@ function googleAuthentication(req, res, next) {
     };
 }
 
-module.exports = ({ userValidator, passport, encryptionProvider, common, data }) => {
+module.exports = ({ userValidator, passport, encryptionProvider, common, data, htmlEscaper }) => {
     return {
         registerUser(req, res) {
             common.setIsAdminUser(req, userValidator);
             data.getUserByUsername(req.body.username)
                 .then(foundUser => {
                     if (!foundUser) {
-                        createUserInDatabase(req, res, encryptionProvider, data);
+                        createUserInDatabase(req, res, encryptionProvider, data, htmlEscaper);
                     } else {
                         res.json("{\"error\":\"Потребителя вече съществува\"}");
                         res.status(409);
