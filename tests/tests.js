@@ -1,5 +1,7 @@
 /*globals describe, it, require, before, global, $, jQuery, document*/
 
+"use strict";
+
 var expect = require("chai").expect;
 
 describe("Test expected to pass", () => {

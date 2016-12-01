@@ -1,12 +1,14 @@
 /* globals describe it */
 
+"use strict";
+
 const articlesController = require("../../server/controllers/articles-controller");
 
 const sinon = require("sinon");
 const expect = require("chai").expect;
 const assert = require("chai").assert;
 
-describe("loadCreateArticlePage tests", () => {
+describe("loadCreateArticlePage() tests", () => {
     it("common.setIsAdminUser() should be called once", () => {
         let commonMock = { setIsAdminUser() { } };
         let dataMock = {};
@@ -48,5 +50,25 @@ describe("loadCreateArticlePage tests", () => {
 
         controller.loadCreateArticlePage(req, res);
         sinon.assert.calledWith(resSpy, CREATE_ARTICLE_VIEW, { user: req.user });
+    });
+});
+
+describe("loadEditArticlePage() tests", () => {
+    it("common.setIsAdminUser() should be called once", () => {
+        let reqMock = { body: { articleId: 1 } };
+        let resMock = { render() { } };
+        let commonMock = { setIsAdminUser() { } };
+        let userValidatorMock = {};
+        let dataMock = {
+            getArticleById() {
+                return new Promise(resolve => resolve({}));
+            }
+        };
+
+        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+        let controller = articlesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+
+        controller.loadEditArticlePage(reqMock, resMock);
+        sinon.assert.calledWith(commonSpy, reqMock, userValidatorMock);
     });
 });
