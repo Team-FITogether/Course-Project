@@ -20,7 +20,7 @@ var app = app || {};
 // })
 
 $("#btn-register").on("click", event => {
-    var pattern = new RegExp(/^[a-zA-Z0-9\._]{3,20}$/, "g"),
+    var pattern = new RegExp(/^[a-zA-Z0-9._]{3,20}$/),        
         testUsername,
         testFirstName,
         testLastName,
@@ -44,6 +44,7 @@ $("#btn-register").on("click", event => {
         app.notificator.showNotification("Name can contain only letters, numbers and the symbols ._", "error");
         return;
     }
+
     if (!testLastName) {
         app.notificator.showNotification("Name can contain only letters, numbers and the symbols ._", "error");
         return;
