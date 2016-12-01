@@ -43,6 +43,5 @@ describe("loadCreateArticlePage tests", () => {
         let dataMock = {};
         let req = {};
         let res = { render() { } };
-        
     });
 });
