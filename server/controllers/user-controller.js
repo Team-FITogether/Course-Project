@@ -132,6 +132,24 @@ module.exports = ({ userValidator, common, data }) => {
                 .then((createdCategory) => {
                     res.render(ADMIN_PANEL_VIEW);
                 });
+        },
+        addNewRecipe(req, res) {
+            let title = req.body.title;
+            let content = req.body.content;
+
+            data.addNewRecipe(title, content)
+                .then((createdRecipe) => {
+                    res.render(ADMIN_PANEL_VIEW);
+                });
+        },
+        addNewDiet(req, res) {
+            let title = req.body.title;
+            let content = req.body.content;
+
+            data.addNewDiet(title, content)
+                .then((createdDiet) => {
+                    res.render(ADMIN_PANEL_VIEW);
+                });
         }
     };
 };

@@ -6,6 +6,7 @@
 
 module.exports = function(models) {
     let { Food, FoodDetails } = models;
+    
     return {
         getAllFoods(page, pageSize) {
             let skip = (page - 1) * pageSize;

@@ -80,6 +80,22 @@ module.exports = function(models) {
                         return resolve(recipe);
                     });
             });
+        },
+        addNewRecipe(title, content) {
+            return new Promise((resolve, reject) => {
+                let recipe = new Recipe({
+                    title,
+                    body: content
+                });
+
+                recipe.save((err, createdRecipe) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(createdRecipe);
+                });
+            });
         }
     };
 };

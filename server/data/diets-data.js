@@ -57,6 +57,22 @@ module.exports = function(models) {
                     return resolve(diet);
                 });
             });
+        },
+        addNewDiet(title, content) {
+            return new Promise((resolve, reject) => {
+                let diet = new Diet({
+                    title,
+                    body: content
+                });
+
+                diet.save((err, createdDiet) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(createdDiet);
+                });
+            });
         }
     };
 };
