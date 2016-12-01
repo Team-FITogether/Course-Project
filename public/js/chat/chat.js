@@ -1,20 +1,20 @@
 /* globals io window $ */
 
-(function () {
+(function() {
     "use strict";
 
-    let socket = io.connect();
-    let pathName = window.location.pathname;
-    let lastIndexOfForwardSlash = pathName.lastIndexOf("/");
-    let roomName = pathName.substr(lastIndexOfForwardSlash + 1);
+    var socket = io.connect();
+    var pathName = window.location.pathname;
+    var lastIndexOfForwardSlash = pathName.lastIndexOf("/");
+    var roomName = pathName.substr(lastIndexOfForwardSlash + 1);
 
-    let $form = $("form");
-    let $messageBox = $("#tb-message");
+    var $form = $("form");
+    var $messageBox = $("#tb-message");
 
     function attachSubmitFormEvent(username, avatarSrc) {
         $form.on("submit", () => {
-            let message = $messageBox.val();
-            let data = {
+            var message = $messageBox.val();
+            var data = {
                 sender: username,
                 room: roomName,
                 message,
@@ -27,11 +27,11 @@
         });
     }
 
-    let $li = $("<li />");
-    let $avatar = $("<img />");
-    let $message = $("<span />");
-    let $allMessages = $("#messages");
-    let $messageContainer = $("<div />");
+    var $li = $("<li />");
+    var $avatar = $("<img />");
+    var $message = $("<span />");
+    var $allMessages = $("#messages");
+    var $messageContainer = $("<div />");
     $avatar.addClass("chat-avatar");
     $message.addClass("chat-message");
     $messageContainer.addClass("message-container");
@@ -39,10 +39,10 @@
 
     function attachChatMessageEvent(username) {
         socket.on("chat message", data => {
-            let $currentLi = $li.clone(true);
-            let $currentMessage = $message.clone();
-            let $currentAvatar = $avatar.clone();
-            let $currentMessageContainer = $messageContainer.clone();
+            var $currentLi = $li.clone(true);
+            var $currentMessage = $message.clone();
+            var $currentAvatar = $avatar.clone();
+            var $currentMessageContainer = $messageContainer.clone();
 
             if (data.sender === username) {
                 $currentMessageContainer.addClass("right");
@@ -76,12 +76,12 @@
     function renderMessages(username) {
         $allMessages.hide().empty();
         socket.on("render messages", messages => {
-            let $messagesToAppend = [];
-            for (let message of messages) {
-                let $currentLi = $li.clone();
-                let $currentMessage = $message.clone();
-                let $currentAvatar = $avatar.clone();
-                let $currentMessageContainer = $messageContainer.clone();
+            var $messagesToAppend = [];
+            for (var message of messages) {
+                var $currentLi = $li.clone();
+                var $currentMessage = $message.clone();
+                var $currentAvatar = $avatar.clone();
+                var $currentMessageContainer = $messageContainer.clone();
 
                 if (message.author === username) {
                     $currentMessageContainer.addClass("right");
@@ -102,8 +102,8 @@
         });
     }
 
-    let $usernameHolder = $("#username-holder");
-    let $avatarSrcHolder = $("#avatarSrc-holder");
+    var $usernameHolder = $("#username-holder");
+    var $avatarSrcHolder = $("#avatarSrc-holder");
 
     socket.on("connect", () => {
         socket.emit("room", roomName);
@@ -117,4 +117,4 @@
         attachFullRoomEvent();
         updateScroll();
     });
-} ());
+}());
