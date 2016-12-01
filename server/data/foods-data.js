@@ -82,6 +82,21 @@ module.exports = function(models) {
                         return resolve(foods);
                     });
             });
+        },
+        addNewFoodCategory(title) {
+            return new Promise((resolve, reject) => {
+                let category = new Food({
+                    title
+                });
+
+                category.save((err, createdCategory) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(createdCategory);
+                });
+            });
         }
     };
 };
