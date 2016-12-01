@@ -80,8 +80,8 @@ module.exports = ({ userValidator, common, data }) => {
             common.setIsAdminUser(req, userValidator);
             common.setIsTrainerUser(req, userValidator);
 
-            let exercises = [req.body.exerciseOne, req.body.exerciseTwo, req.body.exerciseThree, req.body.exerciseFour];
-            let date = req.body.date;
+            let exercises = req.body.exercises;
+            let date = new Date(req.body.date);
 
             let newWorkout = { date, exercises };
 

@@ -64,11 +64,7 @@ $("#add-workout-button").on("click", () => {
     let exerciseThree = $("#exercise-3").val();
     let exerciseFour = $("#exercise-4").val();
 
-    let exercises = [];
-    exercises.push(exerciseOne);
-    exercises.push(exerciseTwo);
-    exercises.push(exerciseThree);
-    exercises.push(exerciseFour);
+    let exercises = [exerciseOne, exerciseTwo, exerciseThree, exerciseFour];
 
     if (date >= Date.now()) {
         let exercisesParams = {
@@ -82,10 +78,7 @@ $("#add-workout-button").on("click", () => {
 
         let data = {
             date,
-            exerciseOne,
-            exerciseTwo,
-            exerciseThree,
-            exerciseFour
+            exercises
         };
 
         app.requester.post("/users/profile/my-workout", data)
@@ -115,10 +108,6 @@ $("#add-menu-button").on("click", () => {
     let mealEight = generateMealInformation($("#meal-8").val(), $("#meal-8").html());
 
     let meals = [];
-    exercises.push(exerciseOne);
-    exercises.push(exerciseTwo);
-    exercises.push(exerciseThree);
-    exercises.push(exerciseFour);
 
     if (date >= Date.now()) {
         let $divSection = $("<div>").addClass("calendar-section");
