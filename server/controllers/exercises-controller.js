@@ -1,5 +1,9 @@
 "use strict";
 
+const ALL_EXERCISES_VIEW = "exercises/all-exercises";
+const EXERCISE_EXPLANATION_VIEW = "exercises/exercise-explanation";
+const EXERCISE_CATEGORY_VIEW = "exercises/exercise-by-category";
+
 function getExerciseComments(explanation) {
     let excersiseComments = explanation
         .comments
@@ -15,7 +19,7 @@ function getExerciseComments(explanation) {
 }
 
 function renderExerciseExplanation(explanation, excersiseComments, req, res) {
-    res.render("exercises/exercise-explanation", {
+    res.render(EXERCISE_EXPLANATION_VIEW, {
         title: explanation.title,
         content: explanation.content,
         category: explanation.category,
@@ -34,7 +38,7 @@ module.exports = ({ userValidator, common, data }) => {
 
             data.getAllExercisesByCategory(category)
                 .then(exercises => {
-                    res.render("exercises/exercise-by-category", { user: req.user, exercises });
+                    res.render(EXERCISE_CATEGORY_VIEW, { user: req.user, exercises });
                 });
         },
         getSingleExercise(req, res) {
@@ -67,7 +71,7 @@ module.exports = ({ userValidator, common, data }) => {
             common.setIsAdminUser(req, userValidator);
             data.getAllCategories()
                 .then(exercises => {
-                    res.render("exercises/all-exercises", { user: req.user, exercises });
+                    res.render(ALL_EXERCISES_VIEW, { user: req.user, exercises });
                 });
         }
     };

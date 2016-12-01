@@ -57,18 +57,6 @@ module.exports = function(models) {
                     return resolve(diet);
                 });
             });
-        },
-        updateDiet(id, update, options) {
-            return new Promise((resolve, reject) => {
-                Diet.findOneAndUpdate({ "_id": id }, update, options,
-                    (err, diet) => {
-                        if (err) {
-                            return reject(err);
-                        }
-
-                        return resolve(diet);
-                    });
-            });
         }
     };
 };

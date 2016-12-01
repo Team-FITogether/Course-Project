@@ -1,5 +1,8 @@
 "use strict";
 
+const USER_LOGIN_VIEW = "user/login";
+const USER_REGIESTER_VIEW = "user/register";
+
 function createUserInDatabase(req, res, encryptionProvider, data) {
     let salt = encryptionProvider.getSalt();
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
@@ -59,7 +62,7 @@ function facebookAuthentication(req, res, next) {
         }
 
         if (!userModel) {
-            return res.render("user/login", { user: req.user });
+            return res.render(USER_LOGIN_VIEW, { user: req.user });
         }
 
         loginUser(req, res, next, userModel);
@@ -73,7 +76,7 @@ function googleAuthentication(req, res, next) {
         }
 
         if (!userModel) {
-            return res.render("user/login", { user: req.user });
+            return res.render(USER_LOGIN_VIEW, { user: req.user });
         }
 
         loginUser(req, res, next, userModel);
@@ -112,10 +115,10 @@ module.exports = ({ userValidator, passport, encryptionProvider, common, data })
             res.redirect("/");
         },
         loadRegisterPage(req, res) {
-            res.render("user/register");
+            res.render(USER_REGIESTER_VIEW);
         },
         loadLoginPage(req, res) {
-            res.render("user/login");
+            res.render(USER_LOGIN_VIEW);
         }
     };
 };
