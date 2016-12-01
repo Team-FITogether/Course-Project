@@ -1,7 +1,5 @@
 "use strict";
 
-// const data = require("./../data/exercises-data");
-
 function getExerciseComments(explanation) {
     let excersiseComments = explanation
         .comments

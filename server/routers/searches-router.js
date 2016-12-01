@@ -1,4 +1,5 @@
-// const controllers = require("../controllers");
+/* globals module */
+"use strict";
 
 module.exports = ({ app, controllers }) => {
     const searchesController = controllers.searches;

@@ -1,7 +1,5 @@
 "use strict";
 
-// const controllers = require("../controllers");
-
 module.exports = ({ app, controllers }) => {
     const chatController = controllers.chat;
 

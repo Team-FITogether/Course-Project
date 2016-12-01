@@ -1,7 +1,5 @@
 "use strict";
 
-// const data = require("./../data/articles-data");
-
 const CREATE_ARTICLE_VIEW = "articles/create-article";
 const EDIT_ARTICLE_VIEW = "articles/edit-article";
 const ALL_ARTICLES_VIEW = "articles/all-articles";

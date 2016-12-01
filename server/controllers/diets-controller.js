@@ -1,7 +1,5 @@
 "use strict";
 
-// const data = require("./../data/diets-data");
-
 const ALL_DIETS_VIEW = "food/all-diets";
 const SINGLE_DIET_VIEW = "food/single-diet";
 

@@ -5,8 +5,6 @@
 module.exports = ({ app, userValidator, controllers }) => {
     const articlesController = controllers.articles;
 
-    console.log(userValidator);
-
     app.get("/articles", articlesController.loadArticlesByGenrePage);
     app.get("/articles/single-article", articlesController.loadSingleArticlePage);
     app.get("/articles/create", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, articlesController.loadCreateArticlePage);

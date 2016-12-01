@@ -1,7 +1,6 @@
 "use strict";
 
 const encryption = require("../utils/encryption");
-// const data = require("./../data/user-data");
 
 let connections = new Map();
 
