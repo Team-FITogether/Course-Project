@@ -141,10 +141,11 @@ module.exports = ({ userValidator, common, data }) => {
             let page = Number(req.query.page || 1);
             let pageSize = 5;
 
-            if (userValidator.isInRole(req.user, ADMIN_ROLE)) {
-                return loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common, data);
+            if (user) {
+                if (userValidator.isInRole(req.user, ADMIN_ROLE)) {
+                    return loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, userValidator, common, data);
+                }
             }
-
             return loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize, data);
         },
         loadSingleArticlePage(req, res) {
