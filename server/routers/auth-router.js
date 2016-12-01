@@ -1,9 +1,6 @@
 "use strict";
 
-// const controllers = require("../controllers");
 const multer = require("multer");
-// const passport = require("passport");
-// const encryption = require("../utils/encryption");
 
 const avatarUploader = multer({ dest: "./public/img/user-images" });
 

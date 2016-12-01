@@ -1,7 +1,5 @@
 /* globals Promise */
 
-// const User = require("../models/user").User;
-
 module.exports = function(models) {
     let { User } = models;
 

@@ -1,7 +1,5 @@
 "use strict";
 
-// const data = require("./../data/user-data");
-
 function createUserInDatabase(req, res, encryptionProvider, data) {
     let salt = encryptionProvider.getSalt();
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
