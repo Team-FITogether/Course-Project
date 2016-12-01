@@ -49,8 +49,7 @@ describe("loadCreateArticlePage() tests", () => {
         let controller = articlesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
 
         controller.loadCreateArticlePage(req, res);
-        sinon.assert.calledWith(resSpy, CREATE_ARTICLE_VIEW, { user: req.user });
-    });
+        sinon.assert.calledWith(resSpy, CREATE_ARTICLE_VIEW, { user: req.user });    });
 });
 
 describe("loadEditArticlePage() tests", () => {

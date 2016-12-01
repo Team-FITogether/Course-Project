@@ -36,17 +36,6 @@ userSchema.methods = {
 
 const User = mongoose.model("user", userSchema);
 
-let updateCalendar = {
-    workouts: [{
-        date: null,
-        exercises: []
-    }],
-    menus: [{
-        date: null,
-        meals: []
-    }]
-};
-
 function addAdminUser() {
     User.find({ username: "admin" })
         .then(user => {
