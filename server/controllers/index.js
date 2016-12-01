@@ -10,7 +10,7 @@ module.exports = ({ app, config, userValidator, passport, encryption, data }) =>
     fs.readdirSync(__dirname)
         .filter(file => file.includes("-controller"))
         .forEach(file => {
-            let controllerModule = require(path.join(__dirname, file))({ app, config, userValidator, passport, encryption, data, common });
+            let controllerModule = require(path.join(__dirname, file))({ app, config, userValidator, passport, encryptionProvider: encryption, data, common });
 
             let moduleName = file.substring(0, file.indexOf("-controller"));
             controllers[moduleName] = controllerModule;

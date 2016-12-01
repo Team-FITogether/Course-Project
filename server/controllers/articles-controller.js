@@ -126,12 +126,12 @@ module.exports = ({ userValidator, common, data }) => {
     return {
         loadCreateArticlePage(req, res) {
             common.setIsAdminUser(req, userValidator);
-            res.render(CREATE_ARTICLE_VIEW, { user: req.user });
+            return res.render(CREATE_ARTICLE_VIEW, { user: req.user });
         },
         loadEditArticlePage(req, res) {
             common.setIsAdminUser(req, userValidator);
             let _id = req.body.articleId;
-            data.getArticleById(_id)
+            return data.getArticleById(_id)
                 .then(article => res.render(EDIT_ARTICLE_VIEW, { user: req.user, article }));
         },
         loadArticlesByGenrePage(req, res) {
@@ -150,7 +150,7 @@ module.exports = ({ userValidator, common, data }) => {
         loadSingleArticlePage(req, res) {
             common.setIsAdminUser(req, userValidator);
             let title = req.query.title;
-            data.getArticleByTitle(title)
+            return data.getArticleByTitle(title)
                 .then(article => {
                     let articleComments = getArticleCommentsMapped(article);
                     res.render(SINGLE_ARTICLE_VIEW, getSingleArticleObject(article, articleComments, req.user));
@@ -162,7 +162,7 @@ module.exports = ({ userValidator, common, data }) => {
             let articleSubHeader = req.body.articleSubHeader;
             let articleGenre = req.body.articleGenre;
 
-            data.createArticle(articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, "")
+            return data.createArticle(articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, "")
                 .then(() => res.redirect(`/articles?genre=${articleGenre}`))
                 .catch(console.log);
         },
@@ -175,7 +175,7 @@ module.exports = ({ userValidator, common, data }) => {
             let update = { mainHeader: articleHeader, subHeader: articleSubHeader, body: articleBody };
             let options = { new: true };
 
-            data.updateArticle(_id, update, options)
+            return data.updateArticle(_id, update, options)
                 .then(() => res.redirect("/"))
                 .catch(console.log);
         },
@@ -187,7 +187,7 @@ module.exports = ({ userValidator, common, data }) => {
                 postDate: Date.now()
             };
 
-            data.getArticleById(body.entityId)
+            return data.getArticleById(body.entityId)
                 .then(article => {
                     article.comments.push(commentToAdd);
                     article.save();
@@ -197,7 +197,7 @@ module.exports = ({ userValidator, common, data }) => {
         },
         toggleLikeOnArticle(req, res) {
             let articleId = req.body.targetId;
-            data.getArticleById(articleId)
+            return data.getArticleById(articleId)
                 .then(article => {
                     for (let i = 0; i < article.usersLiked.length; i += 1) {
                         if (article.usersLiked[i].user === req.user.username) {
@@ -219,7 +219,7 @@ module.exports = ({ userValidator, common, data }) => {
             let update = { deletedOn: Date.now() };
             let options = { new: true };
 
-            data.updateArticle(_id, update, options)
+            return data.updateArticle(_id, update, options)
                 .then(() => res.redirect("back"))
                 .catch(console.log);
         },
@@ -228,7 +228,7 @@ module.exports = ({ userValidator, common, data }) => {
             let update = { deletedOn: null };
             let options = { new: true };
 
-            data.updateArticle(_id, update, options)
+            return data.updateArticle(_id, update, options)
                 .then(() => res.redirect("back"))
                 .catch((err) => console.log(err));
         }
