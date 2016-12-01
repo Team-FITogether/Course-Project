@@ -133,8 +133,8 @@ $("#add-menu-button").on("click", () => {
     let meals = [mealOne, mealTwo, mealThree, mealFour, mealFive, mealSix, mealSeven, mealEight];
 
     if (date >= Date.now()) {
-        let totalColories = 0;
-        appendMenuDiv(dateFormated, meals, totalColories);
+        let totalCalories = 0;
+        appendMenuDiv(dateFormated, meals, totalCalories);
 
         let data = {
             date,
