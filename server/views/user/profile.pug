@@ -10,7 +10,7 @@ block content
             div.container-fluid
                 div(class="content row" id="profile-container")
                     div.pull-left
-                        if user.isTrainer
+                        if user.isTrainer || user.isAdmin
                             h3.trainer-title #{user.username}
                         else 
                             h3 #{user.username}
