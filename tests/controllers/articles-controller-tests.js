@@ -292,3 +292,131 @@ describe("loadArticlesByGenrePage() tests", () => {
         });
     });
 });
+
+describe("loadSingleArticlePage() tests", () => {
+    it("common.setIsAdminUser() should be called", () => {
+        let userValidatorMock = {};
+        let dataMock = {
+            getArticleByTitle() {
+                return new Promise(resolve => resolve({ comments: [] }));
+            }
+        };
+        let commonMock = { setIsAdminUser() { } };
+        let reqMock = { query: { title: "" } };
+        let resMock = { render() { } };
+
+        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller.loadSingleArticlePage(reqMock, resMock);
+        expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
+    });
+
+    it("data.getArticleByTitle() should be called with the title from the query", () => {
+        let userValidatorMock = {};
+        let dataMock = {
+            getArticleByTitle() {
+                return new Promise(resolve => resolve({ comments: [] }));
+            }
+        };
+        let commonMock = { setIsAdminUser() { } };
+        let reqMock = { query: { title: "" } };
+        let resMock = { render() { } };
+
+        let dataSpy = sinon.spy(dataMock, "getArticleByTitle");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller.loadSingleArticlePage(reqMock, resMock);
+        expect(dataSpy.calledWith(reqMock.query.title)).to.be.true;
+    });
+
+    it("res.render() should be called with SINGLE_ARTICLE_VIEW and render object", done => {
+        let SINGLE_ARTICLE_VIEW = "articles/single-article";
+        let userValidatorMock = {};
+        let reqMock = { query: { title: "" }, user: {} };
+        let resMock = { render() { } };
+        let dataMock = {
+            getArticleByTitle() {
+                return new Promise(resolve => resolve({
+                    mainHeader: "main header",
+                    subHeader: "subheader",
+                    imgSrc: "imgsrc",
+                    author: "author",
+                    body: "body",
+                    _id: "1234",
+                    user: reqMock.user,
+                    comments: []
+                }));
+            }
+        };
+        let commonMock = { setIsAdminUser() { } };
+
+        let resSpy = sinon.spy(resMock, "render");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let expectedArticle = {
+            mainHeader: "main header",
+            subHeader: "subheader",
+            imgSrc: "imgsrc",
+            author: "author",
+            body: "body",
+            id: "1234",
+            user: reqMock.user,
+            comments: []
+        };
+
+        controller
+            .loadSingleArticlePage(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledWith(SINGLE_ARTICLE_VIEW, expectedArticle)).to.be.true;
+                done();
+            });
+    });
+});
+
+describe("createArticle() tests", () => {
+    let reqMock = {
+        body: {
+            articleBody: "",
+            articleHeader: "",
+            articleSubHeader: "",
+            articleGenre: ""
+        },
+        user: {
+            username: ""
+        }
+    };
+    let resMock = { redirect() { } };
+    let dataMock = {
+        createArticle() {
+            return new Promise(resolve => resolve({}));
+        }
+    };
+    let userValidatorMock = {};
+    let commonMock = {};
+
+    it("data.createArticle() should be called with articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, \"\"", () => {
+        let dataSpy = sinon.spy(dataMock, "createArticle");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let body = reqMock.body;
+
+        controller.createArticle(reqMock, resMock);
+        expect(dataSpy.calledWith(body.articleHeader,
+            body.articleSubHeader,
+            reqMock.user.username,
+            body.articleBody,
+            body.articleGenre,
+            ""));
+    });
+
+    it("res.redirect() should be called when everything is ok", done => {
+        let resSpy = sinon.spy(resMock, "redirect");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller
+            .createArticle(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.called).to.be.true;
+                done();
+            });
+    });
+});
