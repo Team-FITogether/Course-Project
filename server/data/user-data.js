@@ -74,6 +74,13 @@ module.exports = function(models) {
                         return resolve(users);
                     });
             });
+        },
+        updateWorkoutsCalendar(user, workout) {
+            return new Promise(resolve => {
+                user.calendar.workouts.push(workout);
+                user.save();
+                return resolve(user);
+            });
         }
     };
 };
