@@ -58,8 +58,13 @@ module.exports = ({ data }) => {
                 })
                 .catch(err => {
                     res.status(500);
-                    res.send(err)
+                    res.send(err);
                 });
+        },
+        getAllDietsRest(req, res) {
+            return data.getAllDietsRest()
+                .then(diets => res.json(diets))
+                .catch(console.log);
         }
     };
 };
