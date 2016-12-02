@@ -105,7 +105,6 @@ block content
                             input(type="text" class="form-control" name="fats" placeholder="Количество мазнини (на 100гр)")
                             
                             form(action="/select-category" method="get")
-                            div.input-group
                                 select(name="category" placeholder="Категория храна").form-control
                                     option(value="selectValue") Избери категория
                                     for food in foods
