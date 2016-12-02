@@ -15,6 +15,7 @@ module.exports = () => {
     const FoodDetails = require("../models/food-details");
     const User = require("../models/user").User;
     const Diet = require("../models/diet");
+    const Friendship = require("../models/friendship");
 
     let models = {
         Recipe,
@@ -25,7 +26,8 @@ module.exports = () => {
         Food,
         FoodDetails,
         User,
-        Diet
+        Diet,
+        Friendship
     };
 
     fs.readdirSync(__dirname)

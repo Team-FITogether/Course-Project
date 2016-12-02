@@ -66,6 +66,10 @@
     display: none;
 }
 
+.friendships-holder {
+    display: none;
+}
+
 .form-group {
     margin: 0px;
 }
@@ -80,4 +84,20 @@
     width: 130px;
     display: inline-block;
     margin: 0px;
+}
+
+.single-friendship {
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    cursor: pointer;
+}
+.friendships-section {
+    display: block;
+}
+.friendships-section h4 {
+    display: block;
+}
+#friendship-request {
+    width: 200px;
 }

@@ -78,6 +78,28 @@ function appendMenuDiv(dateFormated, meals, totalCalories) {
     $(".menus-list-holder").append($divSection);
 }
 
+function appendFriendshipLink(target){
+    let approvedUsername = $(target).text();
+    $(target).remove();
+
+    let $linkFriendship = $("<a>").addClass("friendship-link");
+    let $divFriendship = $("<div>");
+    $linkFriendship.html(approvedUsername);
+    $divFriendship.append($linkFriendship);
+    let $friendshipLinksDiv = $("#friendships-links");
+    $friendshipLinksDiv.append($divFriendship);
+};
+
+function appendFriendshipRequest(requestedUsername){
+    $("#friendship-request").val("");
+    let $divFriendship = $("<div>");
+    let $linkFriendship = $("<a>").addClass("approve-friendship-button");
+    $linkFriendship.html(requestedUsername);
+    $divFriendship.append($linkFriendship);
+    let $waitingFriendshipsDiv = $("#waiting-requests");
+    $waitingFriendshipsDiv.append($divFriendship);
+};
+
 $("#add-workout-button").on("click", () => {
     let dateString = $("#workout-datepicker").val();
     let parsedDate = parseDate(dateString);
@@ -93,8 +115,7 @@ $("#add-workout-button").on("click", () => {
     let exercises = [exerciseOne, exerciseTwo, exerciseThree, exerciseFour];
 
     if (date >= Date.now()) {
-        appendWorkoutDiv(dateFormated, exercises);
-
+        
         let data = {
             date,
             exercises
@@ -102,7 +123,7 @@ $("#add-workout-button").on("click", () => {
 
         app.requester.post("/users/profile/my-workout", data)
             .then(res => {
-                console.log(res);
+                appendWorkoutDiv(dateFormated, exercises);
                 app.notificator.showNotification("Упражнението е добавено успешно към вашия график!", "success");
             });
     } else {
@@ -136,8 +157,6 @@ $("#add-menu-button").on("click", () => {
             }
         }
         totalCalories /= 100;
-        appendMenuDiv(dateFormated, meals, totalCalories);
-
         let data = {
             date,
             meals,
@@ -145,10 +164,35 @@ $("#add-menu-button").on("click", () => {
         };
         app.requester.post("/users/profile/my-menu", data)
             .then(res => {
-                console.log(res);
+                appendMenuDiv(dateFormated, meals, totalCalories);
                 app.notificator.showNotification("Менюто е добавено успешно към вашия график!", "success");
             });
     } else {
         app.notificator.showNotification("Изберете валидна дата!", "error");
     }
+});
+
+$("#friendship-request-button").on("click", () => {
+    let requestedUsername = $("#friendship-request").val();
+    let data = {
+        requestedUsername
+    }
+    app.requester.post("/users/profile/friendship-request", data)
+        .then(res => {
+                appendFriendshipRequest(requestedUsername);
+                app.notificator.showNotification("Поканата е изпратена!", "success");
+            });
+});
+
+$(".approve-friendship-button").on("click", (ev) => {
+    let $target = $(ev.target);
+    let approvedUsername = $target.text();
+    let data = {
+        approvedUsername
+    }
+    app.requester.post("/users/profile/friendship-approved", data)
+        .then(res => {
+                appendFriendshipLink($target);
+                app.notificator.showNotification("Приятелството е одобрено!", "success");
+            });
 });

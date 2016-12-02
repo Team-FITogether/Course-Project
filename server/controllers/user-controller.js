@@ -8,6 +8,7 @@ function renderProfilePage(req, res, data) {
     let exercises;
     let articles;
     let foods;
+    let friendships;
 
     data.getAllExercises()
         .then(resultExercises => {
@@ -20,13 +21,27 @@ function renderProfilePage(req, res, data) {
         })
         .then(resultFoods => {
             foods = resultFoods;
+            return data.getAllFriendships(req.user.username);
+        })
+        .then(resultFriendships => {
+            let approvedFriendships = resultFriendships.filter(el => { return el.approved; });
+            let waitingForApproval = resultFriendships.filter(el => { return !el.approved && el.secondUser === req.user.username; });
+            let requestedFriendships = resultFriendships.filter(el => { return !el.approved && el.firstUser === req.user.username; });
+            friendships = {
+                approvedFriendships,
+                waitingForApproval,
+                requestedFriendships
+            };
+
             req.user.calendar.workouts.sort((a, b) => a.date > b.date ? 1 : b.date > a.date ? -1 : 0);
+            req.user.calendar.menus.sort((a, b) => a.date > b.date ? 1 : b.date > a.date ? -1 : 0);
             res.render(USER_PROFILE_VIEW, {
                 user: req.user,
                 calendar: req.user.calendar,
                 exercises,
                 articles,
-                foods
+                foods,
+                friendships
             });
         });
 }
@@ -89,7 +104,7 @@ module.exports = ({ userValidator, common, data }) => {
                 renderFoundUserById(id, req, res, data);
             }
         },
-        addWorkoutToUser(req, res) {
+                addWorkoutToUser(req, res) {
             common.setIsAdminUser(req, userValidator);
             common.setIsTrainerUser(req, userValidator);
 
@@ -215,6 +230,37 @@ module.exports = ({ userValidator, common, data }) => {
                         foods
                     });
                 });
+        },
+        requestFriendship(req, res) {
+            let firstUser = req.user.username;
+            let secondUser = req.body.requestedUsername;
+            let approved = false;
+
+            let friendship = {
+                firstUser,
+                secondUser,
+                approved
+            };
+
+            data.getSingleFriendship(firstUser, secondUser)
+                .then(resultFriendship => {
+                    if (!resultFriendship) {
+                        return data.addNewFriendships(friendship);
+                    }
+
+                    return res.sendStatus(400);
+                })
+                .then(() => res.sendStatus(200));
+        },
+        approveFriendship(req, res) {
+            let firstUser = req.body.approvedUsername;
+            let secondUser = req.user.username;
+
+            data.getSingleFriendship(firstUser, secondUser)
+                .then(resultFriendship => {
+                    return data.updateFriendship(resultFriendship);
+                })
+                .then(() => res.sendStatus(200));
         }
     };
 };
