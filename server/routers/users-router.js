@@ -6,6 +6,7 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.get("/users/profile", userValidator.isUserLoggedIn, userController.loadProfilePage);
     app.get("/users?", userController.loadFoundUserProfilePage);
     app.get("/admin-panel", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.loadAdminPanel);
+    app.get("/select-category", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewFood);
     app.get("/users/all", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, userController.getAllUsers);
 
     app.post("/users/set-role", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addRole);
@@ -15,4 +16,5 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.post("/foods/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewFoodCategory);
     app.post("/recipes/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewRecipe);
     app.post("/diets/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewDiet);
+    app.post("/fooddetails/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewFood);
 };

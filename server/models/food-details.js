@@ -9,7 +9,8 @@ let foodDetailsSchema = new Schema({
     calories: { type: String, required: true },
     proteins: { type: String, required: true },
     carbs: { type: String, required: true },
-    fats: { type: String, required: true }
+    fats: { type: String, required: true },
+    category: { type: String }
 });
 
 const FoodDetails = mongoose.model("foodDetails", foodDetailsSchema, "fooddetails");
