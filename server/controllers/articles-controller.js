@@ -154,7 +154,8 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
             return data.getArticleByTitle(title)
                 .then(article => {
                     let articleComments = getArticleCommentsMapped(article);
-                    res.render(SINGLE_ARTICLE_VIEW, getSingleArticleObject(article, articleComments, req.user));
+                    let articleObject = getSingleArticleObject(article, articleComments, req.user);
+                    res.render(SINGLE_ARTICLE_VIEW, articleObject);
                 });
         },
         createArticle(req, res) {
@@ -196,7 +197,10 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
                     article.save();
                     res.redirect("back");
                 })
-                .catch(err => res.status(500).send(err));
+                .catch(err => {
+                    res.status(500);
+                    res.send(err);
+                });
         },
         toggleLikeOnArticle(req, res) {
             let articleId = req.body.targetId;
@@ -207,6 +211,7 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
                             return i;
                         }
                     }
+
                     return -1;
                 })
                 .then(index => {

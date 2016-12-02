@@ -87,3 +87,27 @@ block content
                             input(type="text" class="form-control" name="title" placeholder="Име на режима")
                             textarea(name="content")#tinymce
                             input(type="submit" value="Добави хранителен режим" class="btn btn-success btn-sm")
+
+        div.section.section-basic
+            div.container-fluid
+                div(id="admin-panel-container")
+                    nav(class="navbar create-model")
+                        h4 Добавяне на група храна към дадена категория храна 
+                    form(action="/fooddetails/add-new" method="post")
+                        div.input-group
+                            span.input-group-addon
+                                i.fitness_center
+                            input(type="text" class="form-control" name="title" placeholder="Име на храната")
+                            input(type="text" class="form-control" name="details" placeholder="Кратко описание/особеност")
+                            input(type="text" class="form-control" name="calories" placeholder="Количество калории (на 100гр)")
+                            input(type="text" class="form-control" name="proteins" placeholder="Количество белтъчини (на 100гр)")
+                            input(type="text" class="form-control" name="carbs" placeholder="Количество въглехидрати (на 100гр)")
+                            input(type="text" class="form-control" name="fats" placeholder="Количество мазнини (на 100гр)")
+                            
+                            form(action="/select-category" method="get")
+                                select(name="category" placeholder="Категория храна").form-control
+                                    option(value="selectValue") Избери категория
+                                    for food in foods
+                                        for val in food
+                                            option(value="" + val.title) #{val.title}
+                                    input(type="submit" value="Добави храна" class="btn btn-success btn-sm")

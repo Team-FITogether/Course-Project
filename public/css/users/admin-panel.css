@@ -10,5 +10,10 @@
 }
 
 .create-model {
-	background-color: #232E23;
+    background-color: #232E23;
 }
+
+.create-model:hover {
+    background-color: #232E33;
+}
+
