@@ -3,7 +3,6 @@
     color: #fff;
 }
 
-
 .material-icons.like-icon {
     color: white;
     font-size: 12px;
@@ -145,4 +144,8 @@ select:focus {
 
 .modal-backdrop {
     z-index: 1 !important;
+}
+
+.custom-thumbnail-height {
+    height: 430px;
 }

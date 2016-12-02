@@ -2,6 +2,9 @@ extends ../base-master
 include ../mixins/sub-header-home
 
     link(rel="stylesheet" href="/css/articles/all-articles.css")
+    link(rel="stylesheet" href="/css/libs/bootstrap.min.css")
+    link(rel="stylesheet" href="/css/articles/users/admin-panel.css")    
+    link(rel="stylesheet" href="/css/articles/custom/common.css")    
     script(src="/js/landing-page.js")
 
 block content
@@ -9,9 +12,18 @@ block content
     div.main.main-raised
         div.section.section-basic
             div.container-fluid
-            h2 Най-харесвани статии
-            each val in articles
-                div.article-container
-                    a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader} (#{val.likes})
-                    br
-                    small.article-subheader #{val.subHeader}
+                h2 Най-харесвани статии
+                div.row
+                each val in articles    
+                        div.col-sm-6.col-md-4
+                            div.thumbnail.custom-thumbnail-height
+                                if val.imgSrc
+                                    img(src= val.imgSrc)
+                                else 
+                                    img(src= "/img/common/default-articles.jpg")
+                                div.caption
+                                    h4 #{val.mainHeader}
+                                    p #{val.subHeader}
+                                    a(href="/articles/single-article?title=" + val.mainHeader class="btn" role="button")  Прочети повече
+
+            
