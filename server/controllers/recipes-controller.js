@@ -5,7 +5,7 @@ const SINGLE_RECIPE_VIEW = "food/single-recipe";
 const PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
 
 function loadAllRecipes(user, req, res, page, pageSize, data) {
-    data.getAllRecipes(page, pageSize)
+    return data.getAllRecipes(page, pageSize)
         .then(result => {
             let recipes = result[0];
             let count = result[1];
@@ -68,8 +68,9 @@ module.exports = ({ data }) => {
         },
         getSingleRecipe(req, res) {
             let title = req.query.title;
-            data.getSingleRecipe(title)
-                .then(recipe => {
+
+            return data.getSingleRecipe(title)
+                .then((recipe) => {
                     res.render(SINGLE_RECIPE_VIEW, {
                         id: recipe[0]._id,
                         title: recipe[0].title,
@@ -94,7 +95,10 @@ module.exports = ({ data }) => {
                     recipe.save();
                     res.redirect("back");
                 })
-                .catch(err => res.status(500).send(err));
+                .catch(err => {
+                    res.status(500);
+                    res.send(err)
+                });
         },
         toggleLikeOnRecipe(req, res) {
             let recipeId = req.body.targetId;
