@@ -51,7 +51,20 @@ module.exports = function (models) {
                 });
             });
         },
-        createUser(user) {
+        createUser({username, firstname, lastname, passHash, salt, facebookId, facebookToken, googleId, googleToken, avatarName}) {
+            let user = new User({
+                username,
+                firstname,
+                lastname,
+                passHash,
+                salt,
+                facebookId,
+                facebookToken,
+                googleId,
+                googleToken,
+                avatarName
+            });
+
             return new Promise((resolve, reject) => {
                 User.create(user, (err, createdUser) => {
                     if (err) {

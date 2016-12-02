@@ -41,17 +41,15 @@ module.exports = ({app, data}) => {
                     if (user) {
                         return done(null, user);
                     } else {
-                        let newUser = {
-                            username: profile.displayName + configAuth.facebookAuth.usernameSuffix,
-                            firstname: profile.name.givenName || profile.displayName,
-                            lastname: profile.name.familyName || profile.displayName,
-                            passHash: profile.displayName,
-                            salt: profile.id,
-                            facebookId: profile.id,
-                            facebookToken: token
-                        };
+                        let username = profile.displayName + configAuth.facebookAuth.usernameSuffix,
+                            firstname = profile.name.givenName || profile.displayName,
+                            lastname = profile.name.familyName || profile.displayName,
+                            passHash = profile.displayName,
+                            salt = profile.id,
+                            facebookId = profile.id,
+                            facebookToken = token;
 
-                        data.createUser(newUser)
+                        data.createUser({ username, firstname, lastname, passHash, salt, facebookId, facebookToken })
                             .then(createdUser => {
                                 done(null, createdUser);
                             })
@@ -77,17 +75,16 @@ module.exports = ({app, data}) => {
                     if (user) {
                         return done(null, user);
                     } else {
-                        let newUser = {
-                            username: profile.displayName + configAuth.googleAuth.usernameSuffix,
-                            firstname: profile.name.givenName || profile.displayName,
-                            lastname: profile.name.familyName || profile.displayName,
-                            passHash: profile.displayName,
-                            salt: profile.id,
-                            googleId: profile.id,
-                            googleToken: token
-                        };
+                        let username = profile.displayName + configAuth.googleAuth.usernameSuffix,
+                            firstname = profile.name.givenName || profile.displayName,
+                            lastname = profile.name.familyName || profile.displayName,
+                            passHash = profile.displayName,
+                            salt = profile.id,
+                            googleId = profile.id,
+                            googleToken = token;
 
-                        data.createUser(newUser)
+
+                        data.createUser({ username, firstname, lastname, passHash, salt, googleId, googleToken })
                             .then(createdUser => {
                                 done(null, createdUser);
                             })

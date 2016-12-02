@@ -4,20 +4,14 @@ const USER_LOGIN_VIEW = "user/login";
 const USER_REGIESTER_VIEW = "user/register";
 
 function createUserInDatabase(req, res, encryptionProvider, data, htmlEscaper) {
+    let username = htmlEscaper.escapeTags(req.body.username);
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
     let salt = encryptionProvider.getSalt();
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
-    let username = htmlEscaper.escapeTags(req.body.username);
+    let avatarName = req.file ? req.file.filename : null;
 
-    let newUserData = {
-        username,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        avatarName: req.file ? req.file.filename : null,
-        passHash,
-        salt
-    };
-
-    data.createUser(newUserData)
+    data.createUser({ username, firstname, lastname, passHash, salt, avatarName })
         .then(() => res.json("{\"success\":\"Успешна регистрация!\"}"))
         .catch(() => {
             res.json("{\"error\":\"Регистрацията се провали.\"}");
