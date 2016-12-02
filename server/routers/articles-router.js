@@ -17,4 +17,5 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.post("/articles/restore", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, articlesController.restoreArticle);
 
     app.post("/api/articles/like", userValidator.isUserLoggedIn, articlesController.toggleLikeOnArticle);
+    app.get("/api/articles", articlesController.getAllArticles);
 };

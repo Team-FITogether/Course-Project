@@ -3,7 +3,7 @@
 
 // const Article = require("../models/article");
 
-module.exports = function(models) {
+module.exports = function (models) {
     let { Article } = models;
 
     return {
@@ -158,6 +158,19 @@ module.exports = function(models) {
                         }
 
                         return resolve(articles);
+                    });
+            });
+        },
+        getAllArticles() {
+            return new Promise((resolve, reject) => {
+                Article.find()
+                    .select("mainHeader subHeader imgSrc body genre")
+                    .exec((err, articles) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        resolve(articles);
                     });
             });
         }
