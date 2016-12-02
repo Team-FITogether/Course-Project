@@ -104,7 +104,7 @@ module.exports = ({ userValidator, common, data }) => {
                 renderFoundUserById(id, req, res, data);
             }
         },
-                addWorkoutToUser(req, res) {
+        addWorkoutToUser(req, res) {
             common.setIsAdminUser(req, userValidator);
             common.setIsTrainerUser(req, userValidator);
 
