@@ -12,6 +12,8 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.post("/users/set-role", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addRole);
     app.post("/users/profile/my-workout", userValidator.isUserLoggedIn, userController.addWorkoutToUser);
     app.post("/users/profile/my-menu", userValidator.isUserLoggedIn, userController.addMenuToUser);
+    app.post("/users/profile/friendship-request", userValidator.isUserLoggedIn, userController.requestFriendship);
+    app.post("/users/profile/friendship-approved", userValidator.isUserLoggedIn, userController.approveFriendship);
     app.post("/exercises/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewExerciseCategory);
     app.post("/foods/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewFoodCategory);
     app.post("/recipes/add-new", userValidator.isAdminUserMiddleware, userValidator.isUserLoggedIn, userController.addNewRecipe);

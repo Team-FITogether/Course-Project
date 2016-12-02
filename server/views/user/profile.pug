@@ -22,7 +22,7 @@ block content
                             li
                                 a(id="my-foods").profile-link Хранителен Режим
                             li
-                                a(id="my-friends").profile-link Приятели
+                                a(id="my-friendships").profile-link Приятели
                             li
                                 if user.isTrainer || user.isAdmin
                                     a(id="my-articles").profile-link Моите Статии
@@ -186,8 +186,30 @@ block content
                                     br
                                 span Общо калории за деня: #{val.totalCalories}
                                 br
+                div.section.friendships-holder
+                    h3 Приятелите на #{user.username}
+                    div(id="friendships-links").section.friendships-section
+                        h4 Приятели
+                        if friendships.approvedFriendships
+                            for val in friendships.approvedFriendships
+                                -var currentUser = user.username == val.firstUser ? val.secondUser : val.firstUser
+                                a.single-friendship.friendship-link #{currentUser}
+                    div(id="waiting-friendships").section.friendships-section 
+                        h4 Приятелства, изчакващи одобрение
+                        if friendships.waitingForApproval
+                            for val in friendships.waitingForApproval
+                                a.single-friendship.approve-friendship-button #{val.firstUser}
+                    div(id="waiting-requests").section.friendships-section 
+                        h4 Изпратени покани
+                        if friendships.requestedFriendships
+                            for val in friendships.requestedFriendships
+                                a.single-friendship #{val.secondUser}
+                    div.section
+                        h5 Намери приятел
+                        input.form-control(type="text" id="friendship-request" placeholder="Намери приятел" name="username")
+                        a(id="friendship-request-button").btn.btn-success Предложи приятелство 
                 div.section.articles-holder
-                    h3 Статии от #{ calendar.calendarUser }
+                    h3 Статии от #{user.username}
                         each val in articles
                             div.article-container
                                 a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
@@ -201,3 +223,4 @@ block content
     script(src="/js/profile/profile-ajax.js")
     script(src="/js/utils/requester.js")
     script(src="/js/utils/notificator.js")
+    script(src="/js/users-autocomplete.js")
