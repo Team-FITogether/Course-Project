@@ -15,12 +15,10 @@ const userSchema = mongoose.Schema({
     googleToken: { type: String },
     age: { type: Number },
     roles: [String],
-    avatarName: { type: String, default: "default.jpg" },
+    avatarName: { type: String, default: "default-profile.png" },
     calendar: {
-        workouts: [{
-        }],
-        menus: [{
-        }]
+        workouts: [{}],
+        menus: [{}]
     }
 });
 
