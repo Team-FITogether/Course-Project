@@ -420,3 +420,54 @@ describe("createArticle() tests", () => {
             });
     });
 });
+
+describe("saveEditedArticle() tests", () => {
+    let reqMock = {
+        body: {
+            articleBody: "body",
+            articleHeader: "header",
+            articleSubHeader: "subheader",
+            articleId: "1111"
+        },
+        user: {
+            username: "username"
+        }
+    };
+    let resMock = { redirect() { } };
+    let userValidatorMock = {};
+    let commonMock = {};
+    let dataMock = {
+        updateArticle() {
+            return new Promise(resolve => resolve({}));
+        }
+    };
+
+    it("data.saveEditedArticle() should be called with articleId(from the body), update object and options object", () => {
+        let dataSpy = sinon.spy(dataMock, "updateArticle");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller.saveEditedArticle(reqMock, resMock);
+
+        let expectedUpdate = {
+            mainHeader: reqMock.body.articleHeader,
+            subHeader: reqMock.body.articleSubHeader,
+            body: reqMock.body.articleBody
+        };
+        let expectedOptions = { new: true };
+        expect(dataSpy.calledWith(reqMock.body.articleId, expectedUpdate, expectedOptions)).to.be.true;
+        dataSpy.restore();
+    });
+
+    it("res.render() should be called when everything is ok", done => {
+        let resSpy = sinon.spy(resMock, "redirect");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller
+            .saveEditedArticle(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                resSpy.restore();
+                done();
+            });
+    });
+});
