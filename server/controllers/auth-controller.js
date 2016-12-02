@@ -9,7 +9,7 @@ function createUserInDatabase(req, res, encryptionProvider, data, htmlEscaper) {
     let lastname = req.body.lastname;
     let salt = encryptionProvider.getSalt();
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
-    let avatarName = req.file ? req.file.filename : null;
+    let avatarName = req.file ? req.file.filename : "default-profile.png";
 
     data.createUser({ username, firstname, lastname, passHash, salt, avatarName })
         .then(() => res.json("{\"success\":\"Успешна регистрация!\"}"))
