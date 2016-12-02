@@ -56,7 +56,7 @@
             var chatRoomUrl = parsedData.chatRoomUrl;
 
             if (chatRoomUrl) {
-                window.location.href = chatRoomUrl;
+                window.open(chatRoomUrl, "_blank");
             }
         }, false);
     }
