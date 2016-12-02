@@ -1,4 +1,4 @@
-/* globals describe it */
+/* globals describe it beforeEach */
 
 "use strict";
 
@@ -468,6 +468,117 @@ describe("saveEditedArticle() tests", () => {
                 expect(resSpy.calledOnce).to.be.true;
                 resSpy.restore();
                 done();
+            });
+    });
+});
+
+describe("addComment() tests", () => {
+    let reqMock;
+    let resMock;
+    let foundArticle;
+    let dataMock;
+    let commonMock;
+    let userValidatorMock;
+    let dataErrorMock;
+
+    beforeEach(() => {
+        reqMock = {
+            body: {
+                content: "content",
+                entityId: "111"
+            },
+            user: { username: "username" }
+        };
+
+        resMock = { status() { }, send() { }, redirect() { } };
+        foundArticle = {
+            comments: [],
+            save() { }
+        };
+        dataMock = {
+            getArticleById() {
+                return new Promise(resolve => resolve(foundArticle));
+            }
+        };
+        dataErrorMock = {
+            getArticleById() {
+                return new Promise((resolve, reject) => reject({}));
+            }
+        };
+        commonMock = {};
+        userValidatorMock = {};
+    });
+
+    it("data.getArticleById() should be called with body.entityId", () => {
+        let dataSpy = sinon.spy(dataMock, "getArticleById");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller.addComment(reqMock, resMock);
+        expect(dataSpy.calledWith(reqMock.body.entityId)).to.be.true;
+    });
+
+    it("when article is found, the comment should be pushed to the article's comments array", done => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller
+            .addComment(reqMock, resMock)
+            .then(() => {
+                expect(foundArticle.comments[0].content).to.equal(reqMock.body.content);
+                expect(foundArticle.comments[0].author).to.equal(reqMock.user.username);
+                expect(foundArticle.comments.length).to.equal(1);
+                done();
+            });
+    });
+
+    it("when article is found, article.save() should be called after the comment is added", done => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let articleSpy = sinon.spy(foundArticle, "save");
+
+        controller
+            .addComment(reqMock, resMock)
+            .then(() => {
+                expect(articleSpy.calledOnce).to.be.true;
+                done();
+                articleSpy.restore();
+            });
+    });
+
+    it("when article is found, res.redirect() should be called after article.save() is called", done => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let resSpy = sinon.spy(resMock, "redirect");
+
+        controller
+            .addComment(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                done();
+                resSpy.restore();
+            });
+    });
+
+    it("when error appears, it should be caught and res.status() should be called with 500", done => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataErrorMock, common: commonMock });
+        let resSpy = sinon.spy(resMock, "status");
+
+        controller
+            .addComment(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledWith(500)).to.be.true;
+                done();
+                resSpy.restore();
+            });
+    });
+
+    it("when error appears, it should be caught and res.send() should be called with err object", done => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataErrorMock, common: commonMock });
+        let resSpy = sinon.spy(resMock, "send");
+
+        controller
+            .addComment(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledWith({})).to.be.true;
+                done();
+                resSpy.restore();
             });
     });
 });
