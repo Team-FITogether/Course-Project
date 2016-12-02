@@ -28,6 +28,19 @@
     {
       "name": "Run Mocha",
       "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/index.js",
+      "cwd": "${workspaceRoot}"
+    },
+    {
+      "name": "Attach to Process",
+      "type": "node",
+      "request": "attach",
+      "port": 9229
+    },
+    {
+      "name": "Run Mocha",
+      "type": "node",
       "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
       "stopOnEntry": false,
       "args": [

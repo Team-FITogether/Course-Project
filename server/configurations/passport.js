@@ -4,26 +4,30 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
-const mongoose = require("mongoose");
-const configAuth = require("./auth");
-const User = mongoose.model("user");
 
-module.exports = () => {
+const configAuth = require("./auth");
+
+module.exports = ({app, data}) => {
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     passport.use(new LocalStrategy({
         usernameField: "username",
         passwordField: "password"
     }, (username, password, done) => {
-        User.findOne({ username }, (err, user) => {
-            if (err) {
+        data.getUserByUsername(username)
+            .then(user => {
+                if (!user) {
+                    done(null, false, { message: "Incorrect credentials." });
+                } else if (!user.isValidPassword(password)) {
+                    done(null, false, { message: "Incorrect credentials." });
+                } else {
+                    return done(null, user);
+                }
+            })
+            .catch(err => {
                 return done(err);
-            } else if (!user) {
-                done(null, false, { message: "Incorrect credentials." });
-            } else if (!user.isValidPassword(password)) {
-                done(null, false, { message: "Incorrect credentials." });
-            } else {
-                return done(null, user);
-            }
-        });
+            });
     }));
 
     passport.use(new FacebookStrategy({
@@ -32,30 +36,33 @@ module.exports = () => {
         callbackURL: configAuth.facebookAuth.callbackURL
     }, (token, refreshToken, profile, done) => {
         process.nextTick(() => {
-            User.findOne({ facebookId: profile.id }, (err, user) => {
-                if (err) {
-                    return done(err);
-                } else if (user) {
-                    return done(null, user);
-                } else {
-                    let newUser = new User({
-                        username: profile.displayName + configAuth.facebookAuth.usernameSuffix,
-                        firstname: profile.name.givenName || profile.displayName,
-                        lastname: profile.name.familyName || profile.displayName,
-                        passHash: profile.displayName,
-                        salt: profile.id,
-                        facebookId: profile.id,
-                        facebookToken: token
-                    });
+            data.findUserByQuery({ facebookId: profile.id })
+                .then(user => {
+                    if (user) {
+                        return done(null, user);
+                    } else {
+                        let newUser = {
+                            username: profile.displayName + configAuth.facebookAuth.usernameSuffix,
+                            firstname: profile.name.givenName || profile.displayName,
+                            lastname: profile.name.familyName || profile.displayName,
+                            passHash: profile.displayName,
+                            salt: profile.id,
+                            facebookId: profile.id,
+                            facebookToken: token
+                        };
 
-                    newUser.save((err) => {
-                        if (err) {
-                            return done(err);
-                        }
-                        return done(null, newUser);
-                    });
-                }
-            });
+                        data.createUser(newUser)
+                            .then(createdUser => {
+                                done(null, createdUser);
+                            })
+                            .catch(err => {
+                                return done(err);
+                            });
+                    }
+                })
+                .catch(err => {
+                    return done(err);
+                });
         });
     }));
 
@@ -65,30 +72,34 @@ module.exports = () => {
         callbackURL: configAuth.googleAuth.callbackURL
     }, (token, refreshToken, profile, done) => {
         process.nextTick(() => {
-            User.findOne({ googleId: profile.id }, (err, user) => {
-                if (err) {
-                    return done(err);
-                } else if (user) {
-                    return done(null, user);
-                } else {
-                    let newUser = new User({
-                        username: profile.displayName + configAuth.googleAuth.usernameSuffix,
-                        firstname: profile.name.givenName || profile.displayName,
-                        lastname: profile.name.familyName || profile.displayName,
-                        passHash: profile.displayName,
-                        salt: profile.id,
-                        googleId: profile.id,
-                        googleToken: token
-                    });
+            data.findUserByQuery({ googleId: profile.id })
+                .then(user => {
+                    if (user) {
+                        return done(null, user);
+                    } else {
+                        let newUser = {
+                            username: profile.displayName + configAuth.googleAuth.usernameSuffix,
+                            firstname: profile.name.givenName || profile.displayName,
+                            lastname: profile.name.familyName || profile.displayName,
+                            passHash: profile.displayName,
+                            salt: profile.id,
+                            googleId: profile.id,
+                            googleToken: token
+                        };
 
-                    newUser.save((err) => {
-                        if (err) {
-                            return done(err);
-                        }
-                        return done(null, newUser);
-                    });
-                }
-            });
+                        data.createUser(newUser)
+                            .then(createdUser => {
+                                done(null, createdUser);
+                            })
+                            .catch(err => {
+                                return done(err);
+                            });
+
+                    }
+                })
+                .catch(err => {
+                    return done(err);
+                });
         });
     }));
 
@@ -97,8 +108,13 @@ module.exports = () => {
     });
 
     passport.deserializeUser((id, done) => {
-        User.findById(id, (err, user) => {
-            done(err, user);
-        });
+        data.getUserById(id)
+            .then((user) => {
+                done(null, user);
+            })
+            .catch(err => {
+                done(err, null);
+            });
+
     });
 };
