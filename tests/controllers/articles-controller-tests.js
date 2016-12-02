@@ -776,4 +776,26 @@ describe("toggleLikeOnArticle() tests", () => {
                 articleSpy.restore();
             });
     });
+
+    it("when the article is not liked by the user, it should be liked", done => {
+        let reqMoqWithDifferentUser = {
+            body: {
+                targetId: 1
+            },
+            user: {
+                username: "other-username"
+            }
+        };
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let articleSpy = sinon.spy(foundArticle, "save");
+
+        controller
+            .toggleLikeOnArticle(reqMoqWithDifferentUser, resMock)
+            .then(() => {
+                expect(foundArticle.usersLiked.length).to.equal(2);
+                expect(articleSpy.calledOnce).to.be.true;
+                done();
+                articleSpy.restore();
+            });
+    });
 });
