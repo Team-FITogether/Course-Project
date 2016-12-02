@@ -49,9 +49,17 @@ describe("loadCreateArticlePage() tests", () => {
 });
 
 describe("loadEditArticlePage() tests", () => {
-    let reqMock = { body: { articleId: 1 }, user: {} };
-    let resMock = { render() { } };
-    let commonMock = { setIsAdminUser() { } };
+    let reqMock = {
+        body: { articleId: 1 },
+        user: {}
+    };
+    let resMock = {
+        render() { }
+    };
+    let commonMock = {
+        setIsAdminUser() { }
+    };
+
     let userValidatorMock = {};
     let articleMock = {};
     let dataMock = {
@@ -100,10 +108,23 @@ describe("loadArticlesByGenrePage() tests", () => {
     let ADMIN_ROLE = "admin";
 
     it("when req.user exists userValidator.isInRole() should be called to check if the user is admin with ADMIN_ROLE string and req.user", () => {
-        let userValidatorMock = { isInRole() { } };
-        let reqMock = { user: {}, query: { genre: "", page: 1 } };
-        let resMock = { render() { }, status() { } };
-        let commonMock = { setIsAdminUser() { } };
+        let userValidatorMock = {
+            isInRole() { }
+        };
+        let reqMock = {
+            user: {},
+            query: {
+                genre: "",
+                page: 1
+            }
+        };
+        let resMock = {
+            render() { },
+            status() { }
+        };
+        let commonMock = {
+            setIsAdminUser() { }
+        };
         let dataMock = {
             getArticlesByGenre() {
                 return new Promise(resolve => resolve([1, 1, 1]));
@@ -119,10 +140,25 @@ describe("loadArticlesByGenrePage() tests", () => {
 
     describe("when req.user exists and is Admin and", () => {
         it("common.setIsAdminUser() should be called in the private function loadArticlesByGenreForAdmin()", () => {
-            let userValidatorMock = { isInRole() { return true; } };
-            let reqMock = { user: {}, query: { genre: "", page: 1 } };
-            let resMock = { render() { }, status() { } };
-            let commonMock = { setIsAdminUser() { } };
+            let userValidatorMock = {
+                isInRole() {
+                    return true;
+                }
+            };
+            let reqMock = {
+                user: {},
+                query: {
+                    genre: "",
+                    page: 1
+                }
+            };
+            let resMock = {
+                render() { },
+                status() { }
+            };
+            let commonMock = {
+                setIsAdminUser() { }
+            };
             let dataMock = {
                 getArticlesByGenre() {
                     return new Promise(resolve => resolve([1, 1, 1]));
@@ -140,9 +176,22 @@ describe("loadArticlesByGenrePage() tests", () => {
         it("data.getArticlesByGenreAdminUser() return pages  that are less than page, res.render should be called with PAGE_NOW_FOUND_VIEW", done => {
             let PAGE_NOT_FOUND_VIEW = "error-pages/404-not-found";
             let userValidatorMock = { isInRole() { return true; } };
-            let reqMock = { user: { isAdmin: true }, query: { genre: "", page: 1000 } };
-            let resMock = { render() { }, status() { } };
-            let commonMock = { setIsAdminUser() { } };
+            let reqMock = {
+                user: {
+                    isAdmin: true
+                },
+                query: {
+                    genre: "",
+                    page: 1000
+                }
+            };
+            let resMock = {
+                render() { },
+                status() { }
+            };
+            let commonMock = {
+                setIsAdminUser() { }
+            };
             let dataMock = {
                 getArticlesByGenreAdminUser() {
                     return new Promise(resolve => resolve([1, 1]));
@@ -161,10 +210,26 @@ describe("loadArticlesByGenrePage() tests", () => {
         });
 
         it("data.getArticlesByGenreAdminUser() return pages  that are less than page, res.status should be called with 404", done => {
-            let userValidatorMock = { isInRole() { return true; } };
-            let reqMock = { user: { isAdmin: true }, query: { genre: "", page: 1000 } };
-            let resMock = { render() { }, status() { } };
-            let commonMock = { setIsAdminUser() { } };
+            let userValidatorMock = {
+                isInRole() {
+                    return true;
+                }
+            };
+            let reqMock = {
+                user: {
+                    isAdmin: true
+                }, query: {
+                    genre: "",
+                    page: 1000
+                }
+            };
+            let resMock = {
+                render() { },
+                status() { }
+            };
+            let commonMock = {
+                setIsAdminUser() { }
+            };
             let dataMock = {
                 getArticlesByGenreAdminUser() {
                     return new Promise(resolve => resolve([1, 1]));
@@ -185,9 +250,22 @@ describe("loadArticlesByGenrePage() tests", () => {
         it("everything is ok, res.render() should be called with ALL_ARTICLES_VIEW and object with render data.", done => {
             let ALL_ARTICLES_VIEW = "articles/all-articles";
             let userValidatorMock = { isInRole() { return true; } };
-            let reqMock = { user: { isAdmin: true }, query: { genre: "", page: 1 } };
-            let resMock = { render() { }, status() { } };
-            let commonMock = { setIsAdminUser() { } };
+            let reqMock = {
+                user: {
+                    isAdmin: true
+                },
+                query: {
+                    genre: "",
+                    page: 1
+                }
+            };
+            let resMock = {
+                render() { },
+                status() { }
+            };
+            let commonMock = {
+                setIsAdminUser() { }
+            };
             let dataMock = {
                 getArticlesByGenreAdminUser() {
                     return new Promise(resolve => resolve([[], 10]));
@@ -217,10 +295,23 @@ describe("loadArticlesByGenrePage() tests", () => {
     describe("when req.user exists and is not Admin user", () => {
         it("when the page number greater than pages count res.render() should be called with PAGES_NOT_FOUND_VIEW", done => {
             let PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
-            let reqMock = { user: {}, query: { genre: "", page: 1 } };
-            let resMock = { render() { }, status() { } };
-            let userValidatorMock = { isInRole() { } };
-            let commonMock = { setIsAdminUser() { } };
+            let reqMock = {
+                user: {},
+                query: {
+                    genre: "",
+                    page: 1
+                }
+            };
+            let resMock = {
+                render() { },
+                status() { }
+            };
+            let userValidatorMock = {
+                isInRole() { }
+            };
+            let commonMock = {
+                setIsAdminUser() { }
+            };
             let dataMock = {
                 getArticlesByGenre() {
                     return new Promise(resolve => resolve([1, 1, 1]));
@@ -239,10 +330,20 @@ describe("loadArticlesByGenrePage() tests", () => {
         });
 
         it("when the page number greater than pages count res.status() should be called with 404", done => {
-            let reqMock = { user: {}, query: { genre: "", page: 1 } };
-            let resMock = { render() { }, status() { } };
-            let userValidatorMock = { isInRole() { } };
-            let commonMock = { setIsAdminUser() { } };
+            let reqMock = {
+                user: {},
+                query: { genre: "", page: 1 }
+            };
+            let resMock = {
+                render() { },
+                status() { }
+            };
+            let userValidatorMock = {
+                isInRole() { }
+            };
+            let commonMock = {
+                setIsAdminUser() { }
+            };
             let dataMock = {
                 getArticlesByGenre() {
                     return new Promise(resolve => resolve([1, 1, 1]));
@@ -262,10 +363,22 @@ describe("loadArticlesByGenrePage() tests", () => {
 
         it("when everything is ok res.render() should be called with ALL_ARTICLES_VIEW and render object", done => {
             let ALL_ARTICLES_VIEW = "articles/all-articles";
-            let reqMock = { user: {}, query: { genre: "", page: 1 } };
-            let resMock = { render() { }, status() { } };
-            let userValidatorMock = { isInRole() { } };
-            let commonMock = { setIsAdminUser() { } };
+            let reqMock = {
+                user: {},
+                query: {
+                    genre: "",
+                    page: 1
+                }
+            };
+            let resMock = {
+                render() { }, status() { }
+            };
+            let userValidatorMock = {
+                isInRole() { }
+            };
+            let commonMock = {
+                setIsAdminUser() { }
+            };
             let dataMock = {
                 getArticlesByGenre() {
                     return new Promise(resolve => resolve([[], 10]));
@@ -302,8 +415,12 @@ describe("loadSingleArticlePage() tests", () => {
             }
         };
         let commonMock = { setIsAdminUser() { } };
-        let reqMock = { query: { title: "" } };
-        let resMock = { render() { } };
+        let reqMock = {
+            query: { title: "" }
+        };
+        let resMock = {
+            render() { }
+        };
 
         let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
         let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
@@ -319,9 +436,15 @@ describe("loadSingleArticlePage() tests", () => {
                 return new Promise(resolve => resolve({ comments: [] }));
             }
         };
-        let commonMock = { setIsAdminUser() { } };
-        let reqMock = { query: { title: "" } };
-        let resMock = { render() { } };
+        let commonMock = {
+            setIsAdminUser() { }
+        };
+        let reqMock = {
+            query: { title: "" }
+        };
+        let resMock = {
+            render() { }
+        };
 
         let dataSpy = sinon.spy(dataMock, "getArticleByTitle");
         let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
@@ -333,8 +456,13 @@ describe("loadSingleArticlePage() tests", () => {
     it("res.render() should be called with SINGLE_ARTICLE_VIEW and render object", done => {
         let SINGLE_ARTICLE_VIEW = "articles/single-article";
         let userValidatorMock = {};
-        let reqMock = { query: { title: "" }, user: {} };
-        let resMock = { render() { } };
+        let reqMock = {
+            query: { title: "" },
+            user: {}
+        };
+        let resMock = {
+            render() { }
+        };
         let dataMock = {
             getArticleByTitle() {
                 return new Promise(resolve => resolve({
@@ -385,7 +513,9 @@ describe("createArticle() tests", () => {
             username: ""
         }
     };
-    let resMock = { redirect() { } };
+    let resMock = {
+        redirect() { }
+    };
     let dataMock = {
         createArticle() {
             return new Promise(resolve => resolve({}));
@@ -433,7 +563,9 @@ describe("saveEditedArticle() tests", () => {
             username: "username"
         }
     };
-    let resMock = { redirect() { } };
+    let resMock = {
+        redirect() { }
+    };
     let userValidatorMock = {};
     let commonMock = {};
     let dataMock = {
@@ -579,6 +711,69 @@ describe("addComment() tests", () => {
                 expect(resSpy.calledWith({})).to.be.true;
                 done();
                 resSpy.restore();
+            });
+    });
+});
+
+describe("toggleLikeOnArticle() tests", () => {
+    let reqMock;
+    let resMock;
+    let foundArticle;
+    let dataMock;
+    let commonMock;
+    let userValidatorMock;
+
+    beforeEach(() => {
+        reqMock = {
+            body: {
+                targetId: 1
+            },
+            user: {
+                username: "username"
+            }
+        };
+        resMock = {
+            json() { }
+        };
+        foundArticle = {
+            usersLiked: [{
+                user: "username"
+            }],
+            save() { }
+        };
+        dataMock = {
+            getArticleById() {
+                return new Promise(resolve => resolve(foundArticle));
+            },
+            updateArticle() {
+                return new Promise(resolve => resolve(foundArticle));
+            }
+        };
+        commonMock = {};
+        userValidatorMock = {};
+    });
+
+    it("data.getArticleById() should be called with body.targetId", () => {
+        let dataSpy = sinon.spy(dataMock, "getArticleById");
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller.toggleLikeOnArticle(reqMock, resMock);
+        expect(dataSpy.calledWith(reqMock.body.targetId)).to.be.true;
+        dataSpy.restore();
+    });
+
+    it("when the article is liked by the user, it should be disliked", done => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let articleSpy = sinon.spy(foundArticle, "save");
+
+        controller
+            .toggleLikeOnArticle(reqMock, resMock)
+            .then(() => {
+                expect(foundArticle.usersLiked.length).to.equal(0);
+                expect(articleSpy.calledOnce).to.be.true;
+
+                done();
+                articleSpy.restore();
             });
     });
 });

@@ -211,6 +211,7 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
                             return i;
                         }
                     }
+
                     return -1;
                 })
                 .then(index => {
