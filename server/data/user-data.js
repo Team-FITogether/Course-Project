@@ -1,6 +1,6 @@
 /* globals Promise */
 
-module.exports = function(models) {
+module.exports = function (models) {
     let { User } = models;
 
     return {
@@ -60,6 +60,16 @@ module.exports = function(models) {
 
                     return resolve(createdUser);
                 });
+            });
+        },
+        findUserByQuery(query) {
+            return new Promise((resolve, reject) => {
+                User.findOne(query, (err, user) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(user);
+                })
             });
         },
         findUserByQueryWithSelectIdAndName(query) {

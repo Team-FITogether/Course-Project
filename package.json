@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "postinstall": "./node_modules/.bin/bower install",
-    "test": "node node_modules/mocha/bin/mocha ./tests/controllers"
+    "test": "./node_modules/.bin/mocha tests tests/**/*.js"
   },
   "repository": {
     "type": "git",

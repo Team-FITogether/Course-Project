@@ -16,6 +16,20 @@
       "type": "node",
       "request": "attach",
       "port": 9229
+    },
+    {
+      "name": "Run Mocha",
+      "type": "node",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "stopOnEntry": false,
+      "args": [
+        "tests/*.js",
+        "tests/**/*.js",
+        "--colors"
+      ],
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": null,
+      "env": {}
     }
   ]
 }
