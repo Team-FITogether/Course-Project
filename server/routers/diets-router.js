@@ -7,4 +7,6 @@ module.exports = ({ app, controllers }) => {
     app.get("/diets/single-diet", dietsController.getSingleDiet);
 
     app.post("/diets/comments/add", dietsController.addComment);
+
+    app.get("/api/diets", dietsController.getAllDietsRest);
 };

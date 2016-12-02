@@ -73,6 +73,19 @@ module.exports = function(models) {
                     return resolve(createdDiet);
                 });
             });
+        },
+        getAllDietsRest() {
+            return new Promise((resolve, reject) => {
+                Diet.find()
+                    .select("title body")
+                    .exec((err, diets) => {
+                        if (err) {
+                            reject(err);
+                        }
+
+                        resolve(diets);
+                    });
+            });
         }
     };
 };
