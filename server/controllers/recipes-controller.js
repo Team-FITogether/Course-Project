@@ -89,7 +89,7 @@ module.exports = ({ data }) => {
                 postDate: Date.now()
             };
 
-            data.getRecipeById(body.entityId)
+            return data.getRecipeById(body.entityId)
                 .then(recipe => {
                     recipe.comments.push(comment);
                     recipe.save();
@@ -102,7 +102,8 @@ module.exports = ({ data }) => {
         },
         toggleLikeOnRecipe(req, res) {
             let recipeId = req.body.targetId;
-            data.getRecipeById(recipeId)
+            
+            return data.getRecipeById(recipeId)
                 .then(recipe => {
                     for (let i = 0; i < recipe.usersLiked.length; i += 1) {
                         if (recipe.usersLiked[i].user === req.user.username) {

@@ -6,7 +6,7 @@ const rootPath = path.join(__dirname, "/../../");
 
 let connectionStrings = {
     production: process.env.CONNECTION_STRING,
-    development: "mongodb://localhost:27017/fitogether"
+    development: "mongodb://localhost:27017/FiTogether"
 };
 
 module.exports = {
