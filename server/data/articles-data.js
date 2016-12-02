@@ -146,6 +146,20 @@ module.exports = function(models) {
                         return resolve(articles);
                     });
             });
+        },
+        getTopLikedArticles() {
+            return new Promise((resolve, reject) => {
+                Article.find()
+                    .sort({ "likes": -1 })
+                    .limit(10)
+                    .exec((err, articles) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(articles);
+                    });
+            });
         }
     };
 };

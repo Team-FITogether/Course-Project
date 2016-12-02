@@ -1,6 +1,7 @@
 extends ../base-master
 include ../mixins/sub-header-home
 
+    link(rel="stylesheet" href="/css/articles/all-articles.css")
     script(src="/js/landing-page.js")
 
 block content
@@ -8,4 +9,9 @@ block content
     div.main.main-raised
         div.section.section-basic
             div.container-fluid
-            h1 #{model.content}
+            h2 Най-харесвани статии
+            each val in articles
+                div.article-container
+                    a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader} (#{val.likes})
+                    br
+                    small.article-subheader #{val.subHeader}

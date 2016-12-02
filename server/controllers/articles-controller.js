@@ -197,7 +197,10 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
                     article.save();
                     res.redirect("back");
                 })
-                .catch(err => res.status(500).send(err));
+                .catch(err => {
+                    res.status(500);
+                    res.send(err);
+                });
         },
         toggleLikeOnArticle(req, res) {
             let articleId = req.body.targetId;
@@ -208,6 +211,7 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
                             return i;
                         }
                     }
+
                     return -1;
                 })
                 .then(index => {

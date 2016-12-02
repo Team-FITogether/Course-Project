@@ -6,7 +6,7 @@
 
 module.exports = function(models) {
     let { Food, FoodDetails } = models;
-    
+
     return {
         getAllFoods(page, pageSize) {
             let skip = (page - 1) * pageSize;
@@ -96,6 +96,28 @@ module.exports = function(models) {
                     }
 
                     return resolve(createdCategory);
+                });
+            });
+        },
+        addNewFood(title, details, calories, proteins, carbs, fats, category) {
+            return new Promise((resolve, reject) => {
+                let food = new FoodDetails({
+                    title,
+                    details,
+                    calories,
+                    proteins,
+                    carbs,
+                    fats,
+                    category
+                });
+
+
+                food.save((err, createdFood) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(createdFood);
                 });
             });
         }

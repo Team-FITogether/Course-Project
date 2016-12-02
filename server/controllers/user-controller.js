@@ -56,9 +56,22 @@ function renderFoundUserById(id, req, res, data) {
 module.exports = ({ userValidator, common, data }) => {
     return {
         loadAdminPanel(req, res) {
+            let foods;
+
             common.setIsAdminUser(req, userValidator);
-            data.getUsernamesOfUsers()
-                .then(users => res.render(ADMIN_PANEL_VIEW, { user: req.user, mappedUsers: users }));
+
+            data.getAllFoods()
+                .then((resultFoods) => {
+                    foods = resultFoods;
+                    return data.getUsernamesOfUsers();
+                })
+                .then((users) => {
+                    res.render(ADMIN_PANEL_VIEW, {
+                        user: req.user,
+                        mappedUsers: users,
+                        foods
+                    });
+                });
         },
         loadProfilePage(req, res) {
             common.setIsAdminUser(req, userValidator);
@@ -106,49 +119,101 @@ module.exports = ({ userValidator, common, data }) => {
             common.setIsAdminUser(req, userValidator);
             let query = { username: req.body.username };
             let updateObject = { $push: { "roles": req.body.role } };
+            let foods;
 
-            data.findUserAndUpdate(query, updateObject)
+            data.getAllFoods()
+                .then((resultFoods) => {
+                    foods = resultFoods;
+                    return data.findUserAndUpdate(query, updateObject);
+                })
                 .then((foundUser) => {
-                    // Handle the case where there isn't found user
-                    res.render(ADMIN_PANEL_VIEW, { user: req.user });
-                }, error => {
-                    // Handle error
-                    res.render(ADMIN_PANEL_VIEW, { user: req.user });
+                    res.render(ADMIN_PANEL_VIEW, {
+                        user: req.user,
+                        foods
+                    });
                 });
         },
         addNewExerciseCategory(req, res) {
             let category = req.body.category;
+            let foods;
 
-            data.addNewCategory(category)
+            data.getAllFoods()
+                .then((resultFoods) => {
+                    foods = resultFoods;
+                    return data.addNewCategory(category);
+                })
                 .then((createdCategory) => {
-                    //console.log(`Created ${createdCategory}`);
-                    res.render(ADMIN_PANEL_VIEW);
+                    res.render(ADMIN_PANEL_VIEW, {
+                        foods
+                    });
                 });
         },
         addNewFoodCategory(req, res) {
             let category = req.body.category;
+            let foods;
 
-            data.addNewFoodCategory(category)
+            data.getAllFoods()
+                .then((resultFoods) => {
+                    foods = resultFoods;
+                    return data.addNewFoodCategory(category);
+                })
                 .then((createdCategory) => {
-                    res.render(ADMIN_PANEL_VIEW);
+                    res.render(ADMIN_PANEL_VIEW, {
+                        foods
+                    });
                 });
         },
         addNewRecipe(req, res) {
             let title = req.body.title;
             let content = req.body.content;
+            let foods;
 
-            data.addNewRecipe(title, content)
+            data.getAllFoods()
+                .then((resultFoods) => {
+                    foods = resultFoods;
+                    return data.addNewRecipe(title, content);
+                })
                 .then((createdRecipe) => {
-                    res.render(ADMIN_PANEL_VIEW);
+                    res.render(ADMIN_PANEL_VIEW, {
+                        foods
+                    });
                 });
         },
         addNewDiet(req, res) {
             let title = req.body.title;
             let content = req.body.content;
+            let foods;
 
-            data.addNewDiet(title, content)
+            data.getAllFoods()
+                .then((resultFoods) => {
+                    foods = resultFoods;
+                    return data.addNewDiet(title, content);
+                })
                 .then((createdDiet) => {
-                    res.render(ADMIN_PANEL_VIEW);
+                    res.render(ADMIN_PANEL_VIEW, {
+                        foods
+                    });
+                });
+        },
+        addNewFood(req, res) {
+            let title = req.body.title;
+            let details = req.body.details;
+            let calories = req.body.calories;
+            let proteins = req.body.proteins;
+            let carbs = req.body.carbs;
+            let fats = req.body.fats;
+            let category = req.query.selectValue;
+            let foods;
+
+            data.getAllFoods()
+                .then((resultFoods) => {
+                    foods = resultFoods;
+                    return data.addNewFood(title, details, calories, proteins, carbs, fats, category);
+                })
+                .then((createdFood) => {
+                    res.render(ADMIN_PANEL_VIEW, {
+                        foods
+                    });
                 });
         }
     };
