@@ -217,7 +217,7 @@ module.exports = ({ userValidator, common, data }) => {
             let proteins = req.body.proteins;
             let carbs = req.body.carbs;
             let fats = req.body.fats;
-            let category = req.query.selectValue;
+            let category = req.body.category;
             let foods;
 
             data.getAllFoods()
