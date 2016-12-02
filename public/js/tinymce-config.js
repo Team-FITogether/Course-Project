@@ -1,6 +1,6 @@
 ﻿/* globals tinyMCE  document tinymce */
 
-tinyMCE.baseURL = "/tinymce";
+tinyMCE.baseURL = "/bower_components/tinymce";
 
 $(document).ready(function () {
     tinymce.init({

@@ -3,6 +3,10 @@
     color: #fff;
 }
 
+.thumbnail>img{
+    max-height: 60%;
+}
+
 .material-icons.like-icon {
     color: white;
     font-size: 12px;
@@ -147,5 +151,12 @@ select:focus {
 }
 
 .custom-thumbnail-height {
-    height: 430px;
+    height: 400px;
+}
+
+.btn-thumbnail {
+    text-transform: none;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
 }

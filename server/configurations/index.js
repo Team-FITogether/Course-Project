@@ -9,7 +9,7 @@ const rootPath = path.join(__dirname, "/../../");
 
 module.exports = {
     connectionString: {
-        dev: "mongodb://localhost:27017/FiTogether",
+        dev: "mongodb://localhost:27017/fitogether",
         prod: `mongodb://${remoteDbUsername}:${remoteDbPassword}@ds050539.mlab.com:50539/fitogether`
     },
     port: process.env.PORT || 8080,
