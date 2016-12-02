@@ -8,9 +8,15 @@ const sinon = require("sinon");
 const expect = require("chai").expect;
 
 describe("loadCreateArticlePage() tests", () => {
-    let req = { user: {} };
-    let res = { render() { } };
-    let commonMock = { setIsAdminUser() { } };
+    let req = {
+        user: {}
+    };
+    let res = {
+        render() { }
+    };
+    let commonMock = {
+        setIsAdminUser() { }
+    };
     let userValidatorMock = {};
 
     it("common.setIsAdminUser() should be called once", () => {
@@ -796,6 +802,100 @@ describe("toggleLikeOnArticle() tests", () => {
                 expect(articleSpy.calledOnce).to.be.true;
                 done();
                 articleSpy.restore();
+            });
+    });
+});
+
+describe("deleteArticle() tests", () => {
+    let reqMock;
+    let resMock;
+    let dataMock;
+    let userValidatorMock;
+    let commonMock;
+
+    beforeEach(() => {
+        reqMock = {
+            body: {
+                articleId: 1
+            }
+        };
+        resMock = {
+            redirect() { }
+        };
+        dataMock = {
+            updateArticle() {
+                return new Promise(resolve => resolve({}));
+            }
+        };
+        userValidatorMock = {};
+        commonMock = {};
+    });
+
+    it("data.updateArticle() should be called", () => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let dataSpy = sinon.spy(dataMock, "updateArticle");
+
+        controller.deleteArticle(reqMock, resMock);
+        expect(dataSpy.calledOnce).to.be.true;
+        dataSpy.restore();
+    });
+
+    it("res.redirect() should be called when everything is ok", done => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let resSpy = sinon.spy(resMock, "redirect");
+
+        controller
+            .deleteArticle(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                done();
+            });
+    });
+});
+
+describe("restoreArticle() tests", () => {
+    let reqMock;
+    let resMock;
+    let dataMock;
+    let userValidatorMock;
+    let commonMock;
+
+    beforeEach(() => {
+        reqMock = {
+            body: {
+                articleId: 1
+            }
+        };
+        resMock = {
+            redirect() { }
+        };
+        dataMock = {
+            updateArticle() {
+                return new Promise(resolve => resolve({}));
+            }
+        };
+        userValidatorMock = {};
+        commonMock = {};
+    });
+
+    it("data.updateArticle() should be called", () => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let dataSpy = sinon.spy(dataMock, "updateArticle");
+
+        controller.restoreArticle(reqMock, resMock);
+        expect(dataSpy.calledOnce).to.be.true;
+        dataSpy.restore();
+    });
+
+    it("res.redirect() should be called when everything is ok", done => {
+        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        let resSpy = sinon.spy(resMock, "redirect");
+
+        controller
+            .deleteArticle(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                done();
             });
     });
 });
