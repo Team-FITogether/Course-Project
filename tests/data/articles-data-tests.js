@@ -38,7 +38,6 @@ describe("articles-data tests", () => {
 
     const articles = require("./../samples/sample-articles");
 
-
     describe("getArticleById(id)", () => {
         beforeEach(() => {
             sinon.stub(Article, "findOne", (query, callback) => {

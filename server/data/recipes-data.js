@@ -41,7 +41,7 @@ module.exports = function(models) {
                         return reject(err);
                     }
 
-                    return resolve(recipe);
+                    return resolve(recipe || null);
                 });
             });
         },
@@ -52,7 +52,7 @@ module.exports = function(models) {
                         return reject(err);
                     }
 
-                    return resolve(recipe);
+                    return resolve(recipe || null);
                 });
             });
         },
@@ -77,7 +77,7 @@ module.exports = function(models) {
                             return reject(err);
                         }
 
-                        return resolve(recipe);
+                        return resolve(recipe || null);
                     });
             });
         },
