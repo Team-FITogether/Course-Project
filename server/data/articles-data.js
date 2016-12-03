@@ -14,7 +14,7 @@ module.exports = function (models) {
                         return reject(err);
                     }
 
-                    return resolve(article);
+                    return resolve(article || null);
                 });
             });
         },
@@ -86,7 +86,7 @@ module.exports = function (models) {
                         return reject(err);
                     }
 
-                    return resolve(article);
+                    return resolve(article || null);
                 });
             });
         },
@@ -102,23 +102,22 @@ module.exports = function (models) {
             });
         },
         createArticle(header, subheader, author, body, genre, img) {
-            return new Promise((resolve, reject) => {
-                let article = new Article({
-                    mainHeader: header,
-                    subHeader: subheader,
-                    author,
-                    imgSrc: img,
-                    genre,
-                    body
-                });
+            let article = new Article({
+                mainHeader: header,
+                subHeader: subheader,
+                author,
+                imgSrc: img,
+                genre,
+                body
+            });
 
-                article.save((err, createdArticle) => {
+            return new Promise((resolve, reject) => {
+                article.save(err => {
                     if (err) {
                         return reject(err);
-                        // req.redirect("/");
                     }
 
-                    return resolve(createdArticle);
+                    return resolve(article);
                 });
             });
         },
@@ -130,7 +129,7 @@ module.exports = function (models) {
                             return reject(err);
                         }
 
-                        return resolve(article);
+                        return resolve(article || null);
                     });
             });
         },

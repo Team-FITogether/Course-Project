@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const ADMIN_PANEL_VIEW = "admin-area/admin-panel";
 
@@ -8,7 +8,7 @@ module.exports = ({ userValidator, common, data }) => {
             let foods;
 
             common.setIsAdminUser(req, userValidator);
-            data.getAllFoods()
+            return data.getAllFoods()
                 .then((resultFoods) => {
                     foods = resultFoods;
                     return data.getUsernamesOfUsers();
@@ -27,7 +27,7 @@ module.exports = ({ userValidator, common, data }) => {
             let updateObject = { $push: { "roles": req.body.role } };
             let foods;
 
-            data.getAllFoods()
+            return data.getAllFoods()
                 .then((resultFoods) => {
                     foods = resultFoods;
                     return data.findUserAndUpdate(query, updateObject);
@@ -43,7 +43,7 @@ module.exports = ({ userValidator, common, data }) => {
             let category = req.body.category;
             let foods;
 
-            data.getAllFoods()
+            return data.getAllFoods()
                 .then((resultFoods) => {
                     foods = resultFoods;
                     return data.addNewCategory(category);

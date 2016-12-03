@@ -191,16 +191,18 @@ block content
                     div(id="friendships-links").section.friendships-section
                         h4 Приятели
                         if friendships.approvedFriendships
-                            for val in friendships.approvedFriendships
-                                -var currentUser = user.username == val.firstUser.username ? val.secondUser : val.firstUser
-                                a(href="/users?id=" + currentUser._id class="single-friendship friendship-link") #{currentUser.username}
+                            ul.friendship-list-approved
+                                for val in friendships.approvedFriendships
+                                    li.single-friendship-item
+                                        -var currentUser = user.username == val.firstUser.username ? val.secondUser : val.firstUser
+                                        a(href="/users?id=" + currentUser._id class="single-friendship friendship-link") #{currentUser.username}
                     div(id="waiting-friendships").section.friendships-section 
                         h4 Приятелства, изчакващи одобрение
                         if friendships.waitingForApproval
                             ul.friendship-list
                                 for val in friendships.waitingForApproval
-                                    li.single-friendship-item
-                                        a.single-friendship.approve-friendship-button #{val.firstUser.username}
+                                    li(class="single-friendship-item" data-id=val.firstUser._id)
+                                        a(href="/users?id=" + val.firstUser._id class="single-friendship approve-friendship-button") #{val.firstUser.username}
                                         button(class="btn btn-success btn-sm accept-friendship") Приеми
                                         button(class="btn btn-danger btn-sm rejected-friendship") Откажи
                     div(id="waiting-requests").section.friendships-section 

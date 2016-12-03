@@ -88,7 +88,7 @@ module.exports = function(models) {
         findUserByQueryWithSelectIdAndName(query) {
             return new Promise((resolve, reject) => {
                 User.find(query)
-                    .select("_id username")
+                    .select("_id username avatarName")
                     .exec((err, users) => {
                         if (err) {
                             return reject(err);
