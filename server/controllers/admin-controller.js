@@ -32,7 +32,7 @@ module.exports = ({ userValidator, common, data }) => {
                     foods = resultFoods;
                     return data.findUserAndUpdate(query, updateObject);
                 })
-                .then((foundUser) => {
+                .then(() => {
                     res.render(ADMIN_PANEL_VIEW, {
                         user: req.user,
                         foods
@@ -48,11 +48,7 @@ module.exports = ({ userValidator, common, data }) => {
                     foods = resultFoods;
                     return data.addNewCategory(category);
                 })
-                .then((createdCategory) => {
-                    res.render(ADMIN_PANEL_VIEW, {
-                        foods
-                    });
-                });
+                .then(() => res.render(ADMIN_PANEL_VIEW, { foods }));
         },
         addNewFoodCategory(req, res) {
             let category = req.body.category;
@@ -63,11 +59,7 @@ module.exports = ({ userValidator, common, data }) => {
                     foods = resultFoods;
                     return data.addNewFoodCategory(category);
                 })
-                .then((createdCategory) => {
-                    res.render(ADMIN_PANEL_VIEW, {
-                        foods
-                    });
-                });
+                .then(() => res.render(ADMIN_PANEL_VIEW, { foods }));
         },
         addNewRecipe(req, res) {
             let title = req.body.title;
@@ -79,11 +71,7 @@ module.exports = ({ userValidator, common, data }) => {
                     foods = resultFoods;
                     return data.addNewRecipe(title, content);
                 })
-                .then((createdRecipe) => {
-                    res.render(ADMIN_PANEL_VIEW, {
-                        foods
-                    });
-                });
+                .then(() => res.render(ADMIN_PANEL_VIEW, { foods }));
         },
         addNewDiet(req, res) {
             let title = req.body.title;
@@ -95,11 +83,7 @@ module.exports = ({ userValidator, common, data }) => {
                     foods = resultFoods;
                     return data.addNewDiet(title, content);
                 })
-                .then((createdDiet) => {
-                    res.render(ADMIN_PANEL_VIEW, {
-                        foods
-                    });
-                });
+                .then(() => res.render(ADMIN_PANEL_VIEW, { foods }));
         },
         addNewFood(req, res) {
             let title = req.body.title;
@@ -116,11 +100,7 @@ module.exports = ({ userValidator, common, data }) => {
                     foods = resultFoods;
                     return data.addNewFood(title, details, calories, proteins, carbs, fats, category);
                 })
-                .then((createdFood) => {
-                    res.render(ADMIN_PANEL_VIEW, {
-                        foods
-                    });
-                });
+                .then(() => res.render(ADMIN_PANEL_VIEW, { foods }));
         }
     };
 };

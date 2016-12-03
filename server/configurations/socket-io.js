@@ -31,10 +31,10 @@ module.exports = io => {
         });
 
         socket.on("chat message to room", data => {
-            Chat
-                .findOneAndUpdate({
-                    name: data.room
-                }, {
+            Chat.findOneAndUpdate({
+                name: data.room
+            },
+                {
                     $push: {
                         messages: {
                             author: data.sender,

@@ -41,9 +41,7 @@ function likeRecipe(recipeId, req, res, data) {
             recipe.save();
             return recipe;
         })
-        .then((recipe) => {
-            res.json(JSON.stringify(recipe.likes + 1));
-        });
+        .then((recipe) => res.json(JSON.stringify(recipe.likes + 1)));
 }
 
 function dislikeRecipe(recipeId, index, res, data) {
@@ -102,7 +100,7 @@ module.exports = ({ data }) => {
         },
         toggleLikeOnRecipe(req, res) {
             let recipeId = req.body.targetId;
-            
+
             return data.getRecipeById(recipeId)
                 .then(recipe => {
                     for (let i = 0; i < recipe.usersLiked.length; i += 1) {

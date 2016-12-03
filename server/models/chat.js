@@ -1,3 +1,5 @@
+"use strict";
+
 const mongoose = require("mongoose");
 const findOrCreate = require("mongoose-findorcreate");
 
@@ -12,5 +14,4 @@ const chatSchema = mongoose.Schema({
 
 chatSchema.plugin(findOrCreate);
 const Chat = mongoose.model("chat", chatSchema);
-
 module.exports = Chat;

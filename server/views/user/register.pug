@@ -1,45 +1,45 @@
 extends ../base-master
 
 block content
-    .section.section-full-screen.section-signup(style="background-image: url('/img/common/fitness-woman-4.jpg'); background-size: cover; background-position: top center; ")
-        .container
-            .row
-                .col-md-8.col-md-offset-2
-                    .card.card-signup
-                        div#register-form
-                            .header.header-success.text-center
-                                h4 Регистрация
-                            .content.row
-                                .col-md-6
-                                    .input-group
-                                        span.input-group-addon
-                                            i.material-icons face
-                                        input.form-control(type="text" id="tb-username" placeholder="Потребителско име" name="username" class="form-control")
-                                    .input-group
-                                        span.input-group-addon
-                                            i.material-icons face
-                                        input.form-control(type="text" id="tb-first-name" placeholder="Име" name="firstname" class="form-control")
-                                    .input-group
-                                        span.input-group-addon
-                                            i.material-icons face
-                                        input.form-control(type="text" id="tb-last-name" placeholder="Фамилия" name="lastname" class="form-control")
-                                .col-md-6
-                                    .input-group
-                                        span.input-group-addon
-                                            i.material-icons lock_outline
-                                        input.form-control(type="password" id="tb-password" placeholder="Парола" name="password" class="form-control")
-                                    .input-group
-                                        span.input-group-addon
-                                            i.material-icons lock_outline
-                                        input.form-control(type="password" id="tb-confirm-password" placeholder="Потвърди парола" name="confirmPassword" class="form-control")
-                                    .input-group
-                                        span.input-group-addon
-                                            i.material-icons attach_file
-                                        input.form-control(type="file" id="avatar-input" name="avatar")
-                                        label(for="avatar-input") Профилна снимка
-                            .footer.text-center
-                                a#btn-register.btn.btn-info Регистрирай се
+  .section.section-full-screen.section-signup(style="background-image: url('/img/common/fitness-woman-4.jpg'); background-size: cover; background-position: top center; ")
+    .container
+      .row
+        .col-md-8.col-md-offset-2
+          .card.card-signup
+            div#register-form
+              .header.header-success.text-center
+                h4 Регистрация
+              .content.row
+                .col-md-6
+                  .input-group
+                    span.input-group-addon
+                      i.material-icons face
+                    input.form-control(type="text" id="tb-username" placeholder="Потребителско име" name="username" class="form-control")
+                  .input-group
+                    span.input-group-addon
+                      i.material-icons face
+                    input.form-control(type="text" id="tb-first-name" placeholder="Име" name="firstname" class="form-control")
+                  .input-group
+                    span.input-group-addon
+                      i.material-icons face
+                    input.form-control(type="text" id="tb-last-name" placeholder="Фамилия" name="lastname" class="form-control")
+                .col-md-6
+                  .input-group
+                    span.input-group-addon
+                      i.material-icons lock_outline
+                    input.form-control(type="password" id="tb-password" placeholder="Парола" name="password" class="form-control")
+                  .input-group
+                    span.input-group-addon
+                      i.material-icons lock_outline
+                    input.form-control(type="password" id="tb-confirm-password" placeholder="Потвърди парола" name="confirmPassword" class="form-control")
+                  .input-group
+                    span.input-group-addon
+                      i.material-icons attach_file
+                    input.form-control(type="file" id="avatar-input" name="avatar")
+                    label(for="avatar-input") Профилна снимка
+              .footer.text-center
+                a#btn-register.btn.btn-info Регистрирай се
 
-    script(src="/js/utils/requester.js")
-    script(src="/js/utils/notificator.js")
-    script(src="/js/profile/register-ajax.js")
+  script(src="/js/utils/requester.js")
+  script(src="/js/utils/notificator.js")
+  script(src="/js/profile/register-ajax.js")

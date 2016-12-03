@@ -7,298 +7,300 @@ const searchesController = require("../../server/controllers/searches-controller
 const sinon = require("sinon");
 const expect = require("chai").expect;
 
-let resMock = {
-    render() { }
-};
-
-let commonMock = {
-    setIsAdminUser() { }
-};
-
-let userValidatorMock = {};
-
-describe("findEntities() tests with entities Users", () => {
-    let reqMock = {
-        user: {
-            username: "testUsername"
-        },
-        query: {
-            entityName: "users",
-            searchValue: "testUser"
-        }
-    };
-    let usersMock = [];
-    let dataMock = {
-        findUserByQueryWithSelectIdAndName() {
-            return new Promise(resolve => resolve(usersMock));
-        }
+describe("searches-controller-tests", () => {
+    let resMock = {
+        render() { }
     };
 
-    it("common.setIsAdminUser() should be called once", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
-
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledOnce).to.be.true;
-        commonSpy.restore();
-    });
-
-    it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
-
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
-        commonSpy.restore();
-    });
-
-    it("data.findUserByQueryWithSelectIdAndName() should be called once", () => {
-        let dataSpy = sinon.spy(dataMock, "findUserByQueryWithSelectIdAndName");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
-
-        controller.findEntities(reqMock, resMock);
-        expect(dataSpy.calledOnce).to.be.true;
-        dataSpy.restore();
-    });
-
-    it("res.render() should be called once", done => {
-        let resSpy = sinon.spy(resMock, "render");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
-
-        controller
-            .findEntities(reqMock, resMock)
-            .then(() => {
-                expect(resSpy.calledOnce).to.be.true;
-                resSpy.restore();
-                done();
-            });
-    });
-});
-
-describe("findEntities() tests with entities Exercises", () => {
-    let reqMock = {
-        user: {
-            username: "testUsername"
-        },
-        query: {
-            entityName: "exercises"
-        }
-    };
-    let exercisesMock = [];
-    let dataMock = {
-        findExerciseByQueryWithSelectIdAndName() {
-            return new Promise(resolve => resolve(exercisesMock));
-        }
+    let commonMock = {
+        setIsAdminUser() { }
     };
 
-    it("common.setIsAdminUser() should be called once", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+    let userValidatorMock = {};
 
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledOnce).to.be.true;
-        commonSpy.restore();
+    describe("findEntities() tests with entities Users", () => {
+        let reqMock = {
+            user: {
+                username: "testUsername"
+            },
+            query: {
+                entityName: "users",
+                searchValue: "testUser"
+            }
+        };
+        let usersMock = [];
+        let dataMock = {
+            findUserByQueryWithSelectIdAndName() {
+                return new Promise(resolve => resolve(usersMock));
+            }
+        };
+
+        it("common.setIsAdminUser() should be called once", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledOnce).to.be.true;
+            commonSpy.restore();
+        });
+
+        it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
+            commonSpy.restore();
+        });
+
+        it("data.findUserByQueryWithSelectIdAndName() should be called once", () => {
+            let dataSpy = sinon.spy(dataMock, "findUserByQueryWithSelectIdAndName");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+            controller.findEntities(reqMock, resMock);
+            expect(dataSpy.calledOnce).to.be.true;
+            dataSpy.restore();
+        });
+
+        it("res.render() should be called once", done => {
+            let resSpy = sinon.spy(resMock, "render");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+            controller
+                .findEntities(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
     });
 
-    it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+    describe("findEntities() tests with entities Exercises", () => {
+        let reqMock = {
+            user: {
+                username: "testUsername"
+            },
+            query: {
+                entityName: "exercises"
+            }
+        };
+        let exercisesMock = [];
+        let dataMock = {
+            findExerciseByQueryWithSelectIdAndName() {
+                return new Promise(resolve => resolve(exercisesMock));
+            }
+        };
 
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
-        commonSpy.restore();
+        it("common.setIsAdminUser() should be called once", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledOnce).to.be.true;
+            commonSpy.restore();
+        });
+
+        it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
+            commonSpy.restore();
+        });
+
+        it("data.findExerciseByQueryWithSelectIdAndName() should be called once", () => {
+            let dataSpy = sinon.spy(dataMock, "findExerciseByQueryWithSelectIdAndName");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+            controller.findEntities(reqMock, resMock);
+            expect(dataSpy.calledOnce).to.be.true;
+            dataSpy.restore();
+        });
+
+        it("res.render() should be called once", done => {
+            let resSpy = sinon.spy(resMock, "render");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+            controller
+                .findEntities(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
     });
 
-    it("data.findExerciseByQueryWithSelectIdAndName() should be called once", () => {
-        let dataSpy = sinon.spy(dataMock, "findExerciseByQueryWithSelectIdAndName");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+    describe("findEntities() tests with entities Foods", () => {
+        let reqMock = {
+            user: {
+                username: "testUsername"
+            },
+            query: {
+                entityName: "foods"
+            }
+        };
+        let foodsMock = [];
+        let dataMock = {
+            findFoodByQueryWithSelectIdAndTitle() {
+                return new Promise(resolve => resolve(foodsMock));
+            }
+        };
 
-        controller.findEntities(reqMock, resMock);
-        expect(dataSpy.calledOnce).to.be.true;
-        dataSpy.restore();
+        it("common.setIsAdminUser() should be called once", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledOnce).to.be.true;
+            commonSpy.restore();
+        });
+
+        it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
+            commonSpy.restore();
+        });
+
+        it("data.findFoodByQueryWithSelectIdAndTitle() should be called once", () => {
+            let dataSpy = sinon.spy(dataMock, "findFoodByQueryWithSelectIdAndTitle");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+            controller.findEntities(reqMock, resMock);
+            expect(dataSpy.calledOnce).to.be.true;
+            dataSpy.restore();
+        });
+
+        it("res.render() should be called once", done => {
+            let resSpy = sinon.spy(resMock, "render");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+            controller
+                .findEntities(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
     });
 
-    it("res.render() should be called once", done => {
-        let resSpy = sinon.spy(resMock, "render");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+    describe("findEntities() tests with entities Recipes", () => {
+        let reqMock = {
+            user: {
+                username: "testUsername"
+            },
+            query: {
+                entityName: "recipes"
+            }
+        };
+        let recipesMock = [];
+        let dataMock = {
+            findRecipeByQueryWithSelectIdAndTitle() {
+                return new Promise(resolve => resolve(recipesMock));
+            }
+        };
 
-        controller
-            .findEntities(reqMock, resMock)
-            .then(() => {
-                expect(resSpy.calledOnce).to.be.true;
-                resSpy.restore();
-                done();
-            });
-    });
-});
+        it("common.setIsAdminUser() should be called once", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
 
-describe("findEntities() tests with entities Foods", () => {
-    let reqMock = {
-        user: {
-            username: "testUsername"
-        },
-        query: {
-            entityName: "foods"
-        }
-    };
-    let foodsMock = [];
-    let dataMock = {
-        findFoodByQueryWithSelectIdAndTitle() {
-            return new Promise(resolve => resolve(foodsMock));
-        }
-    };
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledOnce).to.be.true;
+            commonSpy.restore();
+        });
 
-    it("common.setIsAdminUser() should be called once", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+        it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
 
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledOnce).to.be.true;
-        commonSpy.restore();
-    });
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
+            commonSpy.restore();
+        });
 
-    it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+        it("data.findRecipeByQueryWithSelectIdAndTitle() should be called once", () => {
+            let dataSpy = sinon.spy(dataMock, "findRecipeByQueryWithSelectIdAndTitle");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
 
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
-        commonSpy.restore();
-    });
+            controller.findEntities(reqMock, resMock);
+            expect(dataSpy.calledOnce).to.be.true;
+            dataSpy.restore();
+        });
 
-    it("data.findFoodByQueryWithSelectIdAndTitle() should be called once", () => {
-        let dataSpy = sinon.spy(dataMock, "findFoodByQueryWithSelectIdAndTitle");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+        it("res.render() should be called once", done => {
+            let resSpy = sinon.spy(resMock, "render");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
 
-        controller.findEntities(reqMock, resMock);
-        expect(dataSpy.calledOnce).to.be.true;
-        dataSpy.restore();
-    });
-
-    it("res.render() should be called once", done => {
-        let resSpy = sinon.spy(resMock, "render");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
-
-        controller
-            .findEntities(reqMock, resMock)
-            .then(() => {
-                expect(resSpy.calledOnce).to.be.true;
-                resSpy.restore();
-                done();
-            });
-    });
-});
-
-describe("findEntities() tests with entities Recipes", () => {
-    let reqMock = {
-        user: {
-            username: "testUsername"
-        },
-        query: {
-            entityName: "recipes"
-        }
-    };
-    let recipesMock = [];
-    let dataMock = {
-        findRecipeByQueryWithSelectIdAndTitle() {
-            return new Promise(resolve => resolve(recipesMock));
-        }
-    };
-
-    it("common.setIsAdminUser() should be called once", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
-
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledOnce).to.be.true;
-        commonSpy.restore();
+            controller
+                .findEntities(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
     });
 
-    it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+    describe("findEntities() tests with entities Articles", () => {
+        let reqMock = {
+            user: {
+                username: "testUsername"
+            },
+            query: {
+                entityName: "articles"
+            }
+        };
+        let articlesMock = [];
+        let dataMock = {
+            findArticleByQueryWithSelectIdAndHeader() {
+                return new Promise(resolve => resolve(articlesMock));
+            }
+        };
 
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
-        commonSpy.restore();
-    });
+        it("common.setIsAdminUser() should be called once", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
 
-    it("data.findRecipeByQueryWithSelectIdAndTitle() should be called once", () => {
-        let dataSpy = sinon.spy(dataMock, "findRecipeByQueryWithSelectIdAndTitle");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledOnce).to.be.true;
+            commonSpy.restore();
+        });
 
-        controller.findEntities(reqMock, resMock);
-        expect(dataSpy.calledOnce).to.be.true;
-        dataSpy.restore();
-    });
+        it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
+            let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
+            let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
 
-    it("res.render() should be called once", done => {
-        let resSpy = sinon.spy(resMock, "render");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+            controller.findEntities(reqMock, resMock);
+            expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
+            commonSpy.restore();
+        });
 
-        controller
-            .findEntities(reqMock, resMock)
-            .then(() => {
-                expect(resSpy.calledOnce).to.be.true;
-                resSpy.restore();
-                done();
-            });
-    });
-});
+        it("data.findUserByQueryWithSelectIdAndName() should be called once", () => {
+            let dataSpy = sinon.spy(dataMock, "findArticleByQueryWithSelectIdAndHeader");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
 
-describe("findEntities() tests with entities Articles", () => {
-    let reqMock = {
-        user: {
-            username: "testUsername"
-        },
-        query: {
-            entityName: "articles"
-        }
-    };
-    let articlesMock = [];
-    let dataMock = {
-        findArticleByQueryWithSelectIdAndHeader() {
-            return new Promise(resolve => resolve(articlesMock));
-        }
-    };
+            controller.findEntities(reqMock, resMock);
+            expect(dataSpy.calledOnce).to.be.true;
+            dataSpy.restore();
+        });
 
-    it("common.setIsAdminUser() should be called once", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+        it("res.render() should be called once", done => {
+            let resSpy = sinon.spy(resMock, "render");
+            let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
 
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledOnce).to.be.true;
-        commonSpy.restore();
-    });
-
-    it("common.setIsAdminUser() should be called with req and userValidator objects", () => {
-        let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
-        let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
-
-        controller.findEntities(reqMock, resMock);
-        expect(commonSpy.calledWith(reqMock, userValidatorMock)).to.be.true;
-        commonSpy.restore();
-    });
-
-    it("data.findUserByQueryWithSelectIdAndName() should be called once", () => {
-        let dataSpy = sinon.spy(dataMock, "findArticleByQueryWithSelectIdAndHeader");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
-
-        controller.findEntities(reqMock, resMock);
-        expect(dataSpy.calledOnce).to.be.true;
-        dataSpy.restore();
-    });
-
-    it("res.render() should be called once", done => {
-        let resSpy = sinon.spy(resMock, "render");
-        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
-
-        controller
-            .findEntities(reqMock, resMock)
-            .then(() => {
-                expect(resSpy.calledOnce).to.be.true;
-                resSpy.restore();
-                done();
-            });
+            controller
+                .findEntities(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
     });
 });

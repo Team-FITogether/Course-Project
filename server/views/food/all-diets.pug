@@ -2,17 +2,17 @@ extends ../base-master
 include ../mixins/diets-pagination
 
 block content
-    link(rel="stylesheet" href="/css/articles/all-articles.css")
+  link(rel="stylesheet" href="/css/articles/all-articles.css")
 
-    div.header.header-default
-    div.main.main-raised
-        div.section.section-basic
-            div.container-fluid
-                each val in diets
-                    div.article-container
-                        a(href="/diets/single-diet?title=" + val.title).article-link #{val.title}
-                        br
+  div.header.header-default
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+        each val in diets
+          div.article-container
+            a(href="/diets/single-diet?title=" + val.title).article-link #{val.title}
+            br
 
-        div.divider
+    div.divider
 
-    +dietsPagination(page, pages)
+  +dietsPagination(page, pages)

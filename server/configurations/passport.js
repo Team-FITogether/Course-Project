@@ -74,25 +74,24 @@ module.exports = ({app, data}) => {
                 .then(user => {
                     if (user) {
                         return done(null, user);
-                    } else {
-                        let username = profile.displayName + configAuth.googleAuth.usernameSuffix,
-                            firstname = profile.name.givenName || profile.displayName,
-                            lastname = profile.name.familyName || profile.displayName,
-                            passHash = profile.displayName,
-                            salt = profile.id,
-                            googleId = profile.id,
-                            googleToken = token;
-
-
-                        data.createUser({ username, firstname, lastname, passHash, salt, googleId, googleToken })
-                            .then(createdUser => {
-                                done(null, createdUser);
-                            })
-                            .catch(err => {
-                                return done(err);
-                            });
-
                     }
+
+                    let username = profile.displayName + configAuth.googleAuth.usernameSuffix,
+                        firstname = profile.name.givenName || profile.displayName,
+                        lastname = profile.name.familyName || profile.displayName,
+                        passHash = profile.displayName,
+                        salt = profile.id,
+                        googleId = profile.id,
+                        googleToken = token;
+
+
+                    data.createUser({ username, firstname, lastname, passHash, salt, googleId, googleToken })
+                        .then(createdUser => {
+                            done(null, createdUser);
+                        })
+                        .catch(err => {
+                            return done(err);
+                        });
                 })
                 .catch(err => {
                     return done(err);
@@ -112,6 +111,5 @@ module.exports = ({app, data}) => {
             .catch(err => {
                 done(err, null);
             });
-
     });
 };

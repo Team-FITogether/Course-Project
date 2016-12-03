@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 module.exports = ({ app, userValidator, controllers }) => {
     const adminController = controllers.admin;

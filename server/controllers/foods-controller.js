@@ -35,10 +35,7 @@ module.exports = ({ userValidator, common, data }) => {
             let details = req.query.details;
 
             return data.getSingleFood(title, details)
-                .then((food) => res.render(SINGLE_FOOD_VIEW, { 
-                    user: req.user, 
-                    food 
-                }));
+                .then((food) => res.render(SINGLE_FOOD_VIEW, { user: req.user, food }));
         },
         getFoodByCategory(req, res) {
             common.setIsAdminUser(req, userValidator);

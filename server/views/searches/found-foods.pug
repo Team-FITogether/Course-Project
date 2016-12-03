@@ -1,13 +1,13 @@
 extends ../base-master
 
 block content
-    link(rel="stylesheet" href="/css/articles/all-articles.css")
-    div.header.header-default
-    div.main.main-raised
-        div.section.section-basic
-            div.container-fluid
-            ul
-                each val in foods
-                    li
-                        a(href="/foods/single-food?title=" + val.title + "&details=" + val.details) #{val.title} #{val.details}
-                        div.divider
+  link(rel="stylesheet" href="/css/articles/all-articles.css")
+  div.header.header-default
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+      ul
+        each val in foods
+          li
+            a(href="/foods/single-food?title=" + val.title + "&details=" + val.details) #{val.title} #{val.details}
+            div.divider
