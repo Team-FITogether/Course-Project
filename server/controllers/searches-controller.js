@@ -25,7 +25,7 @@ function findExercises(exerciseName, isLoggedIn, req, res, userValidator, common
     let query = { name: new RegExp(exerciseName, "i") };
     return data.findExerciseByQueryWithSelectIdAndName(query)
         .then(exercises => {
-            return res.render(FOUND_EXERCISES_VIEW, { exercises, viewBag: { isLoggedIn }});
+            return res.render(FOUND_EXERCISES_VIEW, { exercises, viewBag: { isLoggedIn } });
         });
 }
 
@@ -33,7 +33,7 @@ function findFoods(foodTitle, isLoggedIn, req, res, userValidator, common, data)
     common.setIsAdminUser(req, userValidator);
 
     let query = { title: new RegExp(foodTitle, "i") };
-    data.findFoodByQueryWithSelectIdAndTitle(query)
+    return data.findFoodByQueryWithSelectIdAndTitle(query)
         .then(foods => res.render(FOUND_FOODS_VIEW, { foods, viewBag: { isLoggedIn } }), console.log);
 }
 
@@ -41,7 +41,7 @@ function findRecipes(recipeTitle, isLoggedIn, req, res, userValidator, common, d
     common.setIsAdminUser(req, userValidator);
 
     let query = { title: new RegExp(recipeTitle, "i") };
-    data.findRecipeByQueryWithSelectIdAndTitle(query)
+    return data.findRecipeByQueryWithSelectIdAndTitle(query)
         .then(recipes => res.render(FOUND_RECIPES_VIEW, { recipes, viewBag: { isLoggedIn } }), console.log);
 }
 
@@ -49,7 +49,7 @@ function findArticles(articleName, isLoggedIn, req, res, userValidator, common, 
     common.setIsAdminUser(req, userValidator);
 
     let query = { mainHeader: new RegExp(articleName, "i") };
-    data.findArticleByQueryWithSelectIdAndHeader(query)
+    return data.findArticleByQueryWithSelectIdAndHeader(query)
         .then(articles => res.render(FOUND_ARTICLES_VIEW, { articles, viewBag: { isLoggedIn } }), console.log);
 }
 
@@ -61,18 +61,18 @@ module.exports = ({ userValidator, common, data }) => {
             let isLoggedIn = !!req.user;
 
             if (entityName === constants.users) {
-                findUsers(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
+                return findUsers(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
             } else if (entityName === constants.exercises) {
-                findExercises(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
+                return findExercises(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
             } else if (entityName === constants.foods) {
-                findFoods(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
+                return findFoods(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
             } else if (entityName === constants.recipes) {
-                findRecipes(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
+                return findRecipes(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
             } else if (entityName === constants.articles) {
-                findArticles(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
-            } else {
-                res.render(PAGES_NOT_FOUND_VIEW);
+                return findArticles(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
             }
+        
+            return res.render(PAGES_NOT_FOUND_VIEW);
         }
     };
 };

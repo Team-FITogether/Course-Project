@@ -61,14 +61,18 @@ describe("findEntities() tests with entities Users", () => {
         dataSpy.restore();
     });
 
-    // it("res.render() should be called once", () => {
-    //     let resSpy = sinon.spy(resMock, "render");
-    //     let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+    it("res.render() should be called once", done => {
+        let resSpy = sinon.spy(resMock, "render");
+        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
 
-    //     controller.findEntities(reqMock, resMock);
-    //     expect(resSpy.calledOnce).to.be.true;
-    //     resSpy.restore();
-    // });
+        controller
+            .findEntities(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                resSpy.restore();
+                done();
+            });
+    });
 });
 
 describe("findEntities() tests with entities Exercises", () => {
