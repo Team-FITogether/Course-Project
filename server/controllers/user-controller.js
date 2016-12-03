@@ -113,18 +113,34 @@ module.exports = ({ userValidator, common, data }) => {
             data.getUsernamesOfUsers().then(users => res.json(JSON.stringify(users)));
         },
         requestFriendship(req, res) {
-            let firstUser = req.user.username;
-            let secondUser = req.body.requestedUsername;
-            let approved = false;
+            let firstUsername = req.user.username,
+                secondUsername = req.body.requestedUsername,
+                approved = false,
+                userSendingInvitation,
+                userReceivingInvitation;
 
-            let friendship = {
-                firstUser,
-                secondUser,
-                approved
-            };
-
-            data.getSingleFriendship(firstUser, secondUser)
+            data.findUserByQuery({ username: firstUsername })
+                .then(foundFirstUser => {
+                    userSendingInvitation = foundFirstUser;
+                    return data.findUserByQuery({ username: secondUsername });
+                })
+                .then(secondFoundUser => {
+                    userReceivingInvitation = secondFoundUser;
+                    return data.getSingleFriendship(userSendingInvitation, userReceivingInvitation);
+                })
                 .then(resultFriendship => {
+                    let friendship = {
+                        firstUser: {
+                            username: userSendingInvitation.username,
+                            _id: userSendingInvitation._id
+                        },
+                        secondUser: {
+                            username: userReceivingInvitation.username,
+                            _id: userReceivingInvitation._id
+                        },
+                        approved
+                    };
+
                     if (!resultFriendship) {
                         return data.addNewFriendships(friendship);
                     }
