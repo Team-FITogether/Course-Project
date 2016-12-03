@@ -239,6 +239,11 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
             return data.updateArticle(_id, update, options)
                 .then(() => res.redirect("back"))
                 .catch((err) => console.log(err));
+        },
+        getAllArticles(req, res) {
+            return data.getAllArticles()
+                .then(articles => res.json(articles))
+                .catch(console.log);
         }
     };
 };

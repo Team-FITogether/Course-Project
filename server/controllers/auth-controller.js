@@ -13,7 +13,7 @@ function createUserInDatabase(req, res, encryptionProvider, data, htmlEscaper) {
 
     data.createUser({ username, firstname, lastname, passHash, salt, avatarName })
         .then(() => res.json("{\"success\":\"Успешна регистрация!\"}"))
-        .catch(() => {
+        .catch((err) => {
             res.json("{\"error\":\"Регистрацията се провали.\"}");
             res.status(500);
             res.end();

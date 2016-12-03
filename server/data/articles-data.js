@@ -3,7 +3,7 @@
 
 // const Article = require("../models/article");
 
-module.exports = function(models) {
+module.exports = function (models) {
     let { Article } = models;
 
     return {
@@ -153,6 +153,19 @@ module.exports = function(models) {
                     .sort({ "likes": -1 })
                     .limit(10)
                     .exec((err, articles) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(articles);
+                    });
+            });
+        },
+        getAllArticles() {
+            return new Promise((resolve, reject) => {
+                Article.find()
+                    .select("mainHeader subHeader imgSrc genre body")
+                    .then((err, articles) => {
                         if (err) {
                             return reject(err);
                         }
