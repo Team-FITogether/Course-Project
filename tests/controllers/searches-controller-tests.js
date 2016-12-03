@@ -117,6 +117,19 @@ describe("findEntities() tests with entities Exercises", () => {
         expect(dataSpy.calledOnce).to.be.true;
         dataSpy.restore();
     });
+
+    it("res.render() should be called once", done => {
+        let resSpy = sinon.spy(resMock, "render");
+        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller
+            .findEntities(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                resSpy.restore();
+                done();
+            });
+    });
 });
 
 describe("findEntities() tests with entities Foods", () => {
@@ -160,6 +173,19 @@ describe("findEntities() tests with entities Foods", () => {
         controller.findEntities(reqMock, resMock);
         expect(dataSpy.calledOnce).to.be.true;
         dataSpy.restore();
+    });
+
+    it("res.render() should be called once", done => {
+        let resSpy = sinon.spy(resMock, "render");
+        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller
+            .findEntities(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                resSpy.restore();
+                done();
+            });
     });
 });
 
@@ -205,6 +231,19 @@ describe("findEntities() tests with entities Recipes", () => {
         expect(dataSpy.calledOnce).to.be.true;
         dataSpy.restore();
     });
+
+    it("res.render() should be called once", done => {
+        let resSpy = sinon.spy(resMock, "render");
+        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller
+            .findEntities(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                resSpy.restore();
+                done();
+            });
+    });
 });
 
 describe("findEntities() tests with entities Articles", () => {
@@ -248,5 +287,18 @@ describe("findEntities() tests with entities Articles", () => {
         controller.findEntities(reqMock, resMock);
         expect(dataSpy.calledOnce).to.be.true;
         dataSpy.restore();
+    });
+
+    it("res.render() should be called once", done => {
+        let resSpy = sinon.spy(resMock, "render");
+        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
+
+        controller
+            .findEntities(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                resSpy.restore();
+                done();
+            });
     });
 });
