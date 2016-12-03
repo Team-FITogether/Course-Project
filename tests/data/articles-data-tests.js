@@ -5,7 +5,7 @@ const expect = chai.expect;
 const sinon = require("sinon");
 
 
-describe("articles-data tests", () => {
+describe("ARTICLES-DATA-TESTS", () => {
     class Article {
         constructor(properties) {
             this.mainHeader = properties.mainHeader;

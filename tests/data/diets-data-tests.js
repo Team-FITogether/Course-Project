@@ -4,7 +4,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
 
-describe("diets-data tests", () => {
+describe("DIETS-DATA-TESTS", () => {
     class Diet {
         constructor(properties) {
             this.title = properties.title;
@@ -145,4 +145,47 @@ describe("diets-data tests", () => {
         });
     });
 
+    describe("addNewDiet(title, content)", () => {
+        beforeEach(() => {
+            sinon.stub(Diet.prototype, "save", callback => {
+                callback(null);
+            });
+        });
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it("Expect addNewDiet(title, content) to save diet with correct properties", done => {
+            let newTitle = "new title";
+            let newBody = "new body";
+
+            data.addNewDiet(newTitle, newBody)
+                .then(newDiet => {
+                    expect(newDiet.title).to.equal(newTitle);
+                    expect(newDiet.body).to.equal(newBody);
+                    done();
+                });
+        });
+    });
+
+    describe("getAllDietsRest()", () => {
+        it("Expect all chained methods to be called - find().select().exec()", done => {
+            let findSpy = sinon.spy(Diet, "find");
+            let selectSpy = sinon.spy(Diet, "select");
+            let execSpy = sinon.spy(Diet, "exec");
+
+            data.getAllDietsRest();
+
+            expect(findSpy.calledOnce).to.be.true;
+            expect(selectSpy.calledOnce).to.be.true;
+            expect(execSpy.calledOnce).to.be.true;
+
+            done();
+
+            findSpy.restore();
+            selectSpy.restore();
+            execSpy.restore();
+        });
+    });
 });
