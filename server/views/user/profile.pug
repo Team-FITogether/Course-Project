@@ -197,13 +197,17 @@ block content
                     div(id="waiting-friendships").section.friendships-section 
                         h4 Приятелства, изчакващи одобрение
                         if friendships.waitingForApproval
-                            for val in friendships.waitingForApproval
-                                a.single-friendship.approve-friendship-button #{val.firstUser.username}
+                            ul.friendship-list
+                                for val in friendships.waitingForApproval
+                                    li.single-friendship-item
+                                        a.single-friendship.approve-friendship-button #{val.firstUser.username}
+                                        button(class="btn btn-success btn-sm accept-friendship") Приеми
+                                        button(class="btn btn-danger btn-sm rejected-friendship") Откажи
                     div(id="waiting-requests").section.friendships-section 
                         h4 Изпратени покани
                         if friendships.requestedFriendships
                             for val in friendships.requestedFriendships
-                                 a.single-friendship(href="/users?id=" + val.secondUser._id class="single-friendship friendship-link") #{val.secondUser.username}
+                                 a.single-friendship(href="/users?id=" + val.secondUser._id class="single-friendship friendship-link") #{val.secondUser.username}                                 
                 div.section.articles-holder
                     h3 Статии от #{user.username}
                         each val in articles
