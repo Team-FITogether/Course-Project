@@ -19,8 +19,8 @@ block content
                                     a(id="my-articles").profile-link Статии на #{foundUser.username}
                     if user
                         if friendship
-                            if !friendship.approved
-                                | Покана изпратена
+                            if !friendship.approved                                
+                                button(class="btn btn-info btn-round" disabled) Покана изпратена
                             else if friendship.approved
                                 form(action="/chat/invitation" method="get")
                                     input(type="hidden" name="initiator" value=user.username)
@@ -28,7 +28,8 @@ block content
                                     input(type="submit" class="btn btn-info btn-round" value="Започни чат")
                         else
                             input(type="hidden" name="receiver" id="invitation-receiver" value=foundUser.username)
-                            input(type="submit" class="btn btn-info btn-round" id="friendship-request-button" value="Изпрати покана")
+                            button(class="btn btn-info btn-round" id="friendship-request-button") Изпрати покана
+                            //- input(type="submit" class="btn btn-info btn-round" id="friendship-request-button" value="Изпрати покана")
 
                 //- div.section.friendships-holder
                 //-     h3 Приятелите на #{foundUser.username}
