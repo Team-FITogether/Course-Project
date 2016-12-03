@@ -203,11 +203,7 @@ block content
                         h4 Изпратени покани
                         if friendships.requestedFriendships
                             for val in friendships.requestedFriendships
-                                a.single-friendship #{val.secondUser}
-                    div.section
-                        h5 Намери приятел
-                        input.form-control(type="text" id="friendship-request" placeholder="Намери приятел" name="username")
-                        a(id="friendship-request-button").btn.btn-success Предложи приятелство 
+                                 a.single-friendship(href="/users?id=" + val.secondUser._id class="single-friendship friendship-link") #{val.secondUser.username}
                 div.section.articles-holder
                     h3 Статии от #{user.username}
                         each val in articles
