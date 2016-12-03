@@ -36,7 +36,7 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
             common.setIsAdminUser(req, userValidator);
             let category = req.query.category;
 
-            data.getAllExercisesByCategory(category)
+            return data.getAllExercisesByCategory(category)
                 .then(exercises => {
                     res.render(EXERCISE_CATEGORY_VIEW, { user: req.user, exercises });
                 });
@@ -45,7 +45,7 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
             let title = req.query.title;
             common.setIsAdminUser(req, userValidator);
 
-            data.getSingleExercise(title)
+            return data.getSingleExercise(title)
                 .then((explanation) => {
                     let excersiseComments = getExerciseComments(explanation);
                     renderExerciseExplanation(explanation, excersiseComments, req, res);
@@ -61,17 +61,20 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
                 postDate: Date.now()
             };
 
-            data.getExerciseExplanationById(body.entityId)
+            return data.getExerciseExplanationById(body.entityId)
                 .then(ex => {
                     ex.comments.push(comment);
                     ex.save();
                     res.redirect("back");
                 })
-                .catch(err => res.status(500).send(err));
+                .catch(err => {
+                    res.status(500);
+                    res.send(err);
+                });
         },
         getAllCategoriesOfExercise(req, res) {
             common.setIsAdminUser(req, userValidator);
-            data.getAllCategories()
+            return data.getAllCategories()
                 .then(exercises => {
                     res.render(ALL_EXERCISES_VIEW, { user: req.user, exercises });
                 });

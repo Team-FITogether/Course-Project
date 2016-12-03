@@ -141,7 +141,7 @@ describe("addComment() tests", () => {
         expect(dataSpy.calledWith(reqMock.body.entityId)).to.be.true;
     });
 
-    it("when recipe is found, the comment should be pushed to the recipe's comments array", done => {
+    it("when a recipe is found, the comment should be pushed to the recipe's comments array", done => {
         let controller = recipesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
 
         controller
@@ -154,7 +154,7 @@ describe("addComment() tests", () => {
             });
     });
 
-    it("when recipe is found, recipe.save() should be called after the comment is added", done => {
+    it("when a recipe is found, recipe.save() should be called after the comment is added", done => {
         let controller = recipesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
         let recipeSpy = sinon.spy(foundRecipe, "save");
 
@@ -167,7 +167,7 @@ describe("addComment() tests", () => {
             });
     });
 
-    it("when recipe is found, res.redirect() should be called after recipe.save() is called", done => {
+    it("when a recipe is found, res.redirect() should be called after recipe.save() is called", done => {
         let controller = recipesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
         let resSpy = sinon.spy(resMock, "redirect");
 
@@ -180,7 +180,7 @@ describe("addComment() tests", () => {
             });
     });
 
-    it("when error appears, it should be caught and res.status() should be called with 500", done => {
+    it("when an error appears, it should be caught and res.status() should be called with 500", done => {
         let controller = recipesController({ userValidator: userValidatorMock, data: dataErrorMock, common: commonMock });
         let resSpy = sinon.spy(resMock, "status");
 
@@ -193,7 +193,7 @@ describe("addComment() tests", () => {
             });
     });
 
-    it("when error appears, it should be caught and res.send() should be called with err object", done => {
+    it("when an error appears, it should be caught and res.send() should be called with err object", done => {
         let controller = recipesController({ userValidator: userValidatorMock, data: dataErrorMock, common: commonMock });
         let resSpy = sinon.spy(resMock, "send");
 

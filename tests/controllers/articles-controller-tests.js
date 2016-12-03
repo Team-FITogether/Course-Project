@@ -668,7 +668,7 @@ describe("addComment() tests", () => {
             });
     });
 
-    it("when article is found, article.save() should be called after the comment is added", done => {
+    it("when an article is found, article.save() should be called after the comment is added", done => {
         let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
         let articleSpy = sinon.spy(foundArticle, "save");
 
@@ -681,7 +681,7 @@ describe("addComment() tests", () => {
             });
     });
 
-    it("when article is found, res.redirect() should be called after article.save() is called", done => {
+    it("when an article is found, res.redirect() should be called after article.save() is called", done => {
         let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
         let resSpy = sinon.spy(resMock, "redirect");
 
@@ -694,7 +694,7 @@ describe("addComment() tests", () => {
             });
     });
 
-    it("when error appears, it should be caught and res.status() should be called with 500", done => {
+    it("when an error appears, it should be caught and res.status() should be called with 500", done => {
         let controller = articlesController({ userValidator: userValidatorMock, data: dataErrorMock, common: commonMock });
         let resSpy = sinon.spy(resMock, "status");
 
@@ -707,7 +707,7 @@ describe("addComment() tests", () => {
             });
     });
 
-    it("when error appears, it should be caught and res.send() should be called with err object", done => {
+    it("when an error appears, it should be caught and res.send() should be called with err object", done => {
         let controller = articlesController({ userValidator: userValidatorMock, data: dataErrorMock, common: commonMock });
         let resSpy = sinon.spy(resMock, "send");
 

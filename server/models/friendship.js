@@ -27,6 +27,10 @@ let friendshipSchema = new Schema({
     approved: {
         type: Boolean,
         required: true
+    },
+    isRejected: {
+        type: Boolean,
+        required: true
     }
 });
 

@@ -202,3 +202,6 @@ FakesAssemblies/
 *.sln
 .vscode/
 typings/
+
+# OAuth clientID, clientSecret and callbackURL
+auth.js

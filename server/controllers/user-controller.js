@@ -25,7 +25,9 @@ function renderProfilePage(req, res, data) {
         })
         .then(resultFriendships => {
             let approvedFriendships = resultFriendships.filter(el => { return el.approved; });
-            let waitingForApproval = resultFriendships.filter(el => { return !el.approved && el.secondUser.username === req.user.username; });
+            let waitingForApproval = resultFriendships.filter(el => {
+                return !el.approved && el.secondUser.username === req.user.username && !el.isRejected;
+            });
             let requestedFriendships = resultFriendships.filter(el => { return !el.approved && el.firstUser.username === req.user.username; });
 
             friendships = {
@@ -156,7 +158,8 @@ module.exports = ({ userValidator, common, data }) => {
                             username: userReceivingInvitation.username,
                             _id: userReceivingInvitation._id
                         },
-                        approved
+                        approved,
+                        isRejected: false
                     };
 
                     if (!resultFriendship) {
@@ -174,6 +177,16 @@ module.exports = ({ userValidator, common, data }) => {
             data.getSingleFriendship(firstUserUsername, secondUserUsername)
                 .then(resultFriendship => {
                     return data.updateFriendship(resultFriendship);
+                })
+                .then(() => res.sendStatus(200));
+        },
+        rejectFriendship(req, res) {
+            let firstUserUsername = req.body.disapprovedUsername;
+            let secondUserUsername = req.user.username;
+
+            data.getSingleFriendship(firstUserUsername, secondUserUsername)
+                .then(resultFriendship => {
+                    return data.rejectFriendship(resultFriendship);
                 })
                 .then(() => res.sendStatus(200));
         }

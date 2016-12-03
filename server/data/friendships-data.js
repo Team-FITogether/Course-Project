@@ -41,6 +41,18 @@ module.exports = function(models) {
                 });
             });
         },
+        rejectFriendship(friendship) {
+            return new Promise((resolve, reject) => {
+                friendship.isRejected = true;
+                friendship.save((err, updatedFriednship) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(updatedFriednship);
+                });
+            });
+        },
         addNewFriendships(friendship) {
             return new Promise((resolve, reject) => {
                 Friendship.create(friendship, (err, createdFriendship) => {
