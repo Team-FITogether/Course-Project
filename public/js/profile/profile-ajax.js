@@ -78,9 +78,9 @@ function appendMenuDiv(dateFormated, meals, totalCalories) {
     $(".menus-list-holder").append($divSection);
 }
 
-function appendFriendshipLink(target) {
-    let approvedUsername = $(target).text();
-    $(target).remove();
+function appendFriendshipLink(parentLi, username) {
+    let approvedUsername = username;
+    $(parentLi).remove();
 
     let $linkFriendship = $("<a>").addClass("friendship-link");
     let $divFriendship = $("<div>");
@@ -98,6 +98,9 @@ function appendFriendshipRequest(requestedUsername) {
     $divFriendship.append($linkFriendship);
     let $waitingFriendshipsDiv = $("#waiting-requests");
     $waitingFriendshipsDiv.append($divFriendship);
+
+    $("#friendship-request-button").html("Приятелство, изчакващо одобрение");
+    $("#friendship-request-button").prop("disabled", true);
 };
 
 $("#add-workout-button").on("click", () => {
@@ -187,18 +190,28 @@ $("#friendship-request-button").on("click", () => {
         });
 });
 
-$(".approve-friendship-button").on("click", (ev) => {
-    let $target = $(ev.target);
-    let approvedUsername = $target.text();
-    let data = {
-        approvedUsername
-    }
-
-
+$(".accept-friendship").on("click", (ev) => {
+    var $target = $(ev.target),
+        $parentLi = $($target).parent(),
+        approvedUsername = $target.parent().find("a").text(),
+        data = { approvedUsername };
 
     app.requester.post("/users/profile/friendship-approved", data)
         .then(res => {
-            appendFriendshipLink($target);
+            appendFriendshipLink($parentLi, approvedUsername);
             app.notificator.showNotification("Приятелството е одобрено!", "success");
+        });
+});
+
+$(".rejected-friendship").on("click", (ev) => {
+    var $target = $(ev.target),
+        $parentLi = $($target).parent(),
+        disapprovedUsername = $target.parent().find("a").text(),
+        data = { disapprovedUsername };
+    $($parentLi).remove();
+
+    app.requester.post("/users/profile/friendship-rejected", data)
+        .then(res => {
+            app.notificator.showNotification("Приятелството на " + disapprovedUsername + " е отказано!", "error");
         });
 });

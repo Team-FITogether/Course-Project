@@ -3,6 +3,7 @@
 
 Database/
 .vscode/
+user-images/
 
 # User-specific files
 *.suo
@@ -202,3 +203,6 @@ FakesAssemblies/
 *.sln
 .vscode/
 typings/
+
+# OAuth clientID, clientSecret and callbackURL
+auth.js

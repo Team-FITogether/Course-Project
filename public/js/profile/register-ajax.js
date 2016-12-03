@@ -20,7 +20,7 @@ var app = app || {};
 // })
 
 $("#btn-register").on("click", event => {
-    var pattern = new RegExp(/^[a-zA-Z0-9._]{3,20}$/),        
+    var pattern = new RegExp(/^[a-zA-Z0-9._]{3,20}$/),
         testUsername,
         testFirstName,
         testLastName,
@@ -30,23 +30,23 @@ $("#btn-register").on("click", event => {
         lastname = $("#tb-last-name").val(),
         password = $("#tb-password").val(),
         confirmPassword = $("tb-confirm-password").val();
-    
+
     testUsername = pattern.test(username);
     testFirstName = pattern.test(firstname);
     testLastName = pattern.test(lastname);
 
     if (!testUsername) {
-        app.notificator.showNotification("Username can contain only letters, numbers and the symbols ._", "error");
+        app.notificator.showNotification("Потребителско име трябва да е между 3-20 символа, да съдържа само букви на латиница, цифри и символите ._", "error");
         return;
     }
 
     if (!testFirstName) {
-        app.notificator.showNotification("Name can contain only letters, numbers and the symbols ._", "error");
+        app.notificator.showNotification("Името трябва да е между 3-20 символа, да съдържа само букви на латиница, цифри и символите ._", "error");
         return;
     }
 
     if (!testLastName) {
-        app.notificator.showNotification("Name can contain only letters, numbers and the symbols ._", "error");
+        app.notificator.showNotification("Фамилията трябва да е между 3-20 символа, да съдържа само букви на латиница, цифри и символите ._", "error");
         return;
     }
 

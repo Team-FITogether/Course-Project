@@ -11,4 +11,5 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.post("/users/profile/my-menu", userValidator.isUserLoggedIn, userController.addMenuToUser);
     app.post("/users/profile/friendship-request", userValidator.isUserLoggedIn, userController.requestFriendship);
     app.post("/users/profile/friendship-approved", userValidator.isUserLoggedIn, userController.approveFriendship);
+    app.post("/users/profile/friendship-rejected", userValidator.isUserLoggedIn, userController.rejectFriendship);
 };

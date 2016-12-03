@@ -19,7 +19,11 @@ module.exports = function(models) {
         },
         getSingleFriendship(firstUserUsername, secondUserUsername) {
             return new Promise((resolve, reject) => {
-                Friendship.findOne({ "firstUser.username": firstUserUsername, "secondUser.username": secondUserUsername }, (err, friendship) => {
+                Friendship.findOne({
+                    $or: [{ "firstUser.username": firstUserUsername, "secondUser.username": secondUserUsername },
+                        { "firstUser.username": secondUserUsername, "secondUser.username": firstUserUsername }
+                    ]
+                }, (err, friendship) => {
 
                     if (err) {
                         return reject(err);
@@ -32,6 +36,18 @@ module.exports = function(models) {
         updateFriendship(friendship) {
             return new Promise((resolve, reject) => {
                 friendship.approved = true;
+                friendship.save((err, updatedFriednship) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(updatedFriednship);
+                });
+            });
+        },
+        rejectFriendship(friendship) {
+            return new Promise((resolve, reject) => {
+                friendship.isRejected = true;
                 friendship.save((err, updatedFriednship) => {
                     if (err) {
                         return reject(err);
