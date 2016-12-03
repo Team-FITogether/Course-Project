@@ -78,16 +78,25 @@ function appendMenuDiv(dateFormated, meals, totalCalories) {
     $(".menus-list-holder").append($divSection);
 }
 
-function appendFriendshipLink(parentLi, username) {
+function appendFriendshipLink(parentLi, username, userId) {
     let approvedUsername = username;
     $(parentLi).remove();
 
-    let $linkFriendship = $("<a>").addClass("friendship-link");
-    let $divFriendship = $("<div>");
-    $linkFriendship.html(approvedUsername);
-    $divFriendship.append($linkFriendship);
-    let $friendshipLinksDiv = $("#friendships-links");
-    $friendshipLinksDiv.append($divFriendship);
+    var userLink = "/users?id=" + userId;
+
+    var $li = $("<li />").addClass(".single-friendship-item"),
+        $ul = $(".friendship-list-approved"),
+        $a = $("<a />").attr("href", userLink).html(approvedUsername);
+
+        $li.append($a);
+        $ul.append($li);
+
+  //  let $linkFriendship = $("<a>").addClass("friendship-link");
+  //  let $divFriendship = $("<div>");
+ //   $linkFriendship.html(approvedUsername);
+  //  $divFriendship.append($linkFriendship);
+  //  let $friendshipLinksDiv = $("#friendships-links");
+   // $friendshipLinksDiv.append($divFriendship);
 };
 
 function appendFriendshipRequest(requestedUsername) {
@@ -193,12 +202,13 @@ $("#friendship-request-button").on("click", () => {
 $(".accept-friendship").on("click", (ev) => {
     var $target = $(ev.target),
         $parentLi = $($target).parent(),
+        userId = $($parentLi).data("id"),
         approvedUsername = $target.parent().find("a").text(),
         data = { approvedUsername };
 
     app.requester.post("/users/profile/friendship-approved", data)
         .then(res => {
-            appendFriendshipLink($parentLi, approvedUsername);
+            appendFriendshipLink($parentLi, approvedUsername, userId);
             app.notificator.showNotification("Приятелството е одобрено!", "success");
         });
 });
