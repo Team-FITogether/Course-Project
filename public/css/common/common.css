@@ -160,3 +160,18 @@ select:focus {
     bottom: 30px;
     left: 30px;
 }
+
+.found-user-link {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    overflow: auto;
+}
+/*
+.found-user-link span {
+    display: block;
+}*/
+
+.found-user-img {
+    width: 50px;
+}
