@@ -130,4 +130,26 @@ describe("recipes-data tests", () => {
                 });
         });
     });
+
+    describe("addNewRecipe(title, content)", () => {
+        beforeEach(() => {
+            sinon.stub(Recipe.prototype, "save", callback => {
+                callback(null);
+            });
+        });
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it("Expect addNewRecipe(title, content) to save recipe with correct title", done => {
+            let newTitle = "New Recipe";
+            let newBody = "New Content";
+            data.addNewRecipe(newTitle, newBody)
+                .then(newRecipe => {
+                    expect(newRecipe.title).to.equal(newTitle);
+                    done();
+                });
+        });
+    });
 });
