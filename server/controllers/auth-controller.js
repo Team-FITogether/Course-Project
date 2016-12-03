@@ -11,7 +11,7 @@ function createUserInDatabase(req, res, encryptionProvider, data, htmlEscaper) {
     let passHash = encryptionProvider.getPassHash(salt, req.body.password);
     let avatarName = req.file ? req.file.filename : "default-profile.png";
 
-    data.createUser({ username, firstname, lastname, passHash, salt, avatarName })
+    return data.createUser({ username, firstname, lastname, passHash, salt, avatarName })
         .then(() => res.json("{\"success\":\"Успешна регистрация!\"}"))
         .catch(() => {
             res.json("{\"error\":\"Регистрацията се провали.\"}");
@@ -83,10 +83,10 @@ module.exports = ({ userValidator, passport, encryptionProvider, common, data, h
     return {
         registerUser(req, res) {
             common.setIsAdminUser(req, userValidator);
-            data.getUserByUsername(req.body.username)
+            return data.getUserByUsername(req.body.username)
                 .then(foundUser => {
                     if (!foundUser) {
-                        createUserInDatabase(req, res, encryptionProvider, data, htmlEscaper);
+                        return createUserInDatabase(req, res, encryptionProvider, data, htmlEscaper);
                     } else {
                         res.json("{\"error\":\"Потребителя вече съществува\"}");
                         res.status(409);
