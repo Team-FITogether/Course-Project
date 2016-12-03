@@ -12,6 +12,8 @@ describe("admin-controller tests", () => {
     const ADMIN_PANEL_VIEW = "admin-area/admin-panel";
 
     let foods = [];
+    let diets = [];
+    let recipes = [];
     let usernames = [];
     let users = [];
     let category = "";
@@ -23,7 +25,14 @@ describe("admin-controller tests", () => {
         body: {
             username: "",
             role: "",
-            category: ""
+            category: "",
+            title: "",
+            content: "",
+            details: "",
+            calories: "",
+            proteins: "",
+            carbs: "",
+            fats: ""
         }
     };
     let resMock = {
@@ -41,6 +50,18 @@ describe("admin-controller tests", () => {
         },
         addNewCategory() {
             return new Promise(resolve => resolve(category));
+        },
+        addNewFoodCategory() {
+            return new Promise(resolve => resolve(category));
+        },
+        addNewRecipe() {
+            return new Promise(resolve => resolve(recipes));
+        },
+        addNewDiet() {
+            return new Promise(resolve => resolve(diets));
+        },
+        addNewFood() {
+            return new Promise(resolve => resolve(foods));
         }
     };
     let commonMock = {
@@ -251,6 +272,241 @@ describe("admin-controller tests", () => {
             };
 
             controller.addNewExerciseCategory(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledWith(ADMIN_PANEL_VIEW, renderModel)).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
+    });
+
+    describe("addNewFoodCategory(req, res)", () => {
+        it("Expect data.getAllFoods() to be called", done => {
+            let getAllFoodsSpy = spy(dataMock, "getAllFoods");
+            controller.addNewFoodCategory(reqMock, resMock)
+                .then(() => {
+                    expect(getAllFoodsSpy.calledOnce).to.be.true;
+                    getAllFoodsSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect data.addNewFoodCategory() to be called", done => {
+            let addNewFoodCategorySpy = spy(dataMock, "addNewFoodCategory");
+            controller.addNewFoodCategory(reqMock, resMock)
+                .then(() => {
+                    expect(addNewFoodCategorySpy.calledOnce).to.be.true;
+                    addNewFoodCategorySpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect data.addNewFoodCategory() to be called, with correct category", done => {
+            let addNewFoodCategorySpy = spy(dataMock, "addNewFoodCategory");
+            controller.addNewFoodCategory(reqMock, resMock)
+                .then(() => {
+                    expect(addNewFoodCategorySpy.calledWith(category)).to.be.true;
+                    addNewFoodCategorySpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect res.render() to be called", done => {
+            let resSpy = spy(resMock, "render");
+            controller.addNewFoodCategory(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect res.render() to be called with ADMIN_PANEL_VIEW string and correct render model", done => {
+            let resSpy = spy(resMock, "render");
+            let renderModel = {
+                foods
+            };
+
+            controller.addNewFoodCategory(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledWith(ADMIN_PANEL_VIEW, renderModel)).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
+    });
+
+    describe("addNewRecipe(req, res)", () => {
+        it("Expect data.getAllFoods() to be called", done => {
+            let getAllFoodsSpy = spy(dataMock, "getAllFoods");
+            controller.addNewRecipe(reqMock, resMock)
+                .then(() => {
+                    expect(getAllFoodsSpy.calledOnce).to.be.true;
+                    getAllFoodsSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect data.addNewRecipe() to be called", done => {
+            let addNewRecipeSpy = spy(dataMock, "addNewRecipe");
+            controller.addNewRecipe(reqMock, resMock)
+                .then(() => {
+                    expect(addNewRecipeSpy.calledOnce).to.be.true;
+                    addNewRecipeSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect data.addNewRecipe() to be called, with correct category", done => {
+            let addNewRecipeSpy = spy(dataMock, "addNewRecipe");
+            controller.addNewRecipe(reqMock, resMock)
+                .then(() => {
+                    expect(addNewRecipeSpy.calledWith(reqMock.body.title, reqMock.body.content)).to.be.true;
+                    addNewRecipeSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect res.render() to be called", done => {
+            let resSpy = spy(resMock, "render");
+            controller.addNewRecipe(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect res.render() to be called with ADMIN_PANEL_VIEW string and correct render model", done => {
+            let resSpy = spy(resMock, "render");
+            let renderModel = {
+                foods
+            };
+
+            controller.addNewRecipe(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledWith(ADMIN_PANEL_VIEW, renderModel)).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
+    });
+
+    describe("addNewDiet(req, res)", () => {
+        it("Expect data.getAllFoods() to be called", done => {
+            let getAllFoodsSpy = spy(dataMock, "getAllFoods");
+            controller.addNewDiet(reqMock, resMock)
+                .then(() => {
+                    expect(getAllFoodsSpy.calledOnce).to.be.true;
+                    getAllFoodsSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect data.addNewRecipe() to be called", done => {
+            let addNewDietSpy = spy(dataMock, "addNewDiet");
+            controller.addNewDiet(reqMock, resMock)
+                .then(() => {
+                    expect(addNewDietSpy.calledOnce).to.be.true;
+                    addNewDietSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect data.addNewRecipe() to be called, with correct title and content", done => {
+            let addNewDietSpy = spy(dataMock, "addNewDiet");
+            let title = reqMock.body.title;
+            let content = reqMock.body.content;
+
+            controller.addNewDiet(reqMock, resMock)
+                .then(() => {
+                    expect(addNewDietSpy.calledWith(title, content)).to.be.true;
+                    addNewDietSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect res.render() to be called", done => {
+            let resSpy = spy(resMock, "render");
+            controller.addNewDiet(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect res.render() to be called with ADMIN_PANEL_VIEW string and correct render model", done => {
+            let resSpy = spy(resMock, "render");
+            let renderModel = {
+                foods
+            };
+
+            controller.addNewDiet(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledWith(ADMIN_PANEL_VIEW, renderModel)).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
+    });
+
+    describe("addNewFood(req, res)", () => {
+        it("Expect data.getAllFoods() to be called", done => {
+            let getAllFoodsSpy = spy(dataMock, "getAllFoods");
+            controller.addNewFood(reqMock, resMock)
+                .then(() => {
+                    expect(getAllFoodsSpy.calledOnce).to.be.true;
+                    getAllFoodsSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect data.addNewFood() to be called", done => {
+            let addNewFoodSpy = spy(dataMock, "addNewFood");
+            controller.addNewFood(reqMock, resMock)
+                .then(() => {
+                    expect(addNewFoodSpy.calledOnce).to.be.true;
+                    addNewFoodSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect data.addNewFood() to be called, with correct title and content", done => {
+            let addNewFoodSpy = spy(dataMock, "addNewFood");
+            let title = reqMock.body.title;
+            let details = reqMock.body.details;
+            let calories = reqMock.body.calories;
+            let proteins = reqMock.body.proteins;
+            let carbs = reqMock.body.carbs;
+            let fats = reqMock.body.fats;
+            let categor = reqMock.body.category;
+
+            controller.addNewFood(reqMock, resMock)
+                .then(() => {
+                    expect(addNewFoodSpy.calledWith(title, details, calories, proteins, carbs, fats, categor)).to.be.true;
+                    addNewFoodSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect res.render() to be called", done => {
+            let resSpy = spy(resMock, "render");
+            controller.addNewFood(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
+
+        it("Expect res.render() to be called with ADMIN_PANEL_VIEW string and correct render model", done => {
+            let resSpy = spy(resMock, "render");
+            let renderModel = {
+                foods
+            };
+
+            controller.addNewFood(reqMock, resMock)
                 .then(() => {
                     expect(resSpy.calledWith(ADMIN_PANEL_VIEW, renderModel)).to.be.true;
                     resSpy.restore();

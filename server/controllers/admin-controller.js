@@ -58,7 +58,7 @@ module.exports = ({ userValidator, common, data }) => {
             let category = req.body.category;
             let foods;
 
-            data.getAllFoods()
+            return data.getAllFoods()
                 .then((resultFoods) => {
                     foods = resultFoods;
                     return data.addNewFoodCategory(category);
@@ -74,7 +74,7 @@ module.exports = ({ userValidator, common, data }) => {
             let content = req.body.content;
             let foods;
 
-            data.getAllFoods()
+            return data.getAllFoods()
                 .then((resultFoods) => {
                     foods = resultFoods;
                     return data.addNewRecipe(title, content);
@@ -90,7 +90,7 @@ module.exports = ({ userValidator, common, data }) => {
             let content = req.body.content;
             let foods;
 
-            data.getAllFoods()
+            return data.getAllFoods()
                 .then((resultFoods) => {
                     foods = resultFoods;
                     return data.addNewDiet(title, content);
@@ -111,7 +111,7 @@ module.exports = ({ userValidator, common, data }) => {
             let category = req.body.category;
             let foods;
 
-            data.getAllFoods()
+            return data.getAllFoods()
                 .then((resultFoods) => {
                     foods = resultFoods;
                     return data.addNewFood(title, details, calories, proteins, carbs, fats, category);
