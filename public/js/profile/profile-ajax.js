@@ -98,6 +98,9 @@ function appendFriendshipRequest(requestedUsername) {
     $divFriendship.append($linkFriendship);
     let $waitingFriendshipsDiv = $("#waiting-requests");
     $waitingFriendshipsDiv.append($divFriendship);
+
+    $("#friendship-request-button").html("Покана изпратена");
+    $("#friendship-request-button").prop("disabled", true);
 };
 
 $("#add-workout-button").on("click", () => {

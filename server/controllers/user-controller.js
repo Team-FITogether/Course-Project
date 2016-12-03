@@ -26,7 +26,7 @@ function renderProfilePage(req, res, data) {
         .then(resultFriendships => {
             let approvedFriendships = resultFriendships.filter(el => { return el.approved; });
             let waitingForApproval = resultFriendships.filter(el => { return !el.approved && el.secondUser.username === req.user.username; });
-            let requestedFriendships = resultFriendships.filter(el => { return !el.approved && el.firstUser === req.user.username; });
+            let requestedFriendships = resultFriendships.filter(el => { return !el.approved && el.firstUser.username === req.user.username; });
 
             friendships = {
                 approvedFriendships,
