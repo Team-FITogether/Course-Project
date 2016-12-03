@@ -59,14 +59,31 @@ function renderFoundUserByUsername(username, res, req, data) {
 }
 
 function renderFoundUserById(id, req, res, data) {
-    data.getUserById(id)
-        .then(foundUser => {
-            res.render(FOUND_USER_PROFILE_VIEW, {
-                foundUser,
-                user: req.user
+    let loggedUser = req.user,
+        otherUser;
+
+    if (loggedUser) {
+        data.getUserById(id)
+            .then(foundUser => {
+                otherUser = foundUser;
+                return data.getSingleFriendship(loggedUser.username, otherUser.username);
+            })
+            .then(friendship => {
+                res.render(FOUND_USER_PROFILE_VIEW, {
+                    user: loggedUser,
+                    foundUser: otherUser,
+                    friendship
+                });
+            })
+            .catch(console.log);
+    } else {
+        data.getUserById(id)
+            .then(foundUser => {
+                res.render(FOUND_USER_PROFILE_VIEW, {
+                    foundUser
+                });
             });
-        })
-        .catch(console.log);
+    }
 }
 
 module.exports = ({ userValidator, common, data }) => {
@@ -127,7 +144,7 @@ module.exports = ({ userValidator, common, data }) => {
                 })
                 .then(secondFoundUser => {
                     userReceivingInvitation = secondFoundUser;
-                    return data.getSingleFriendship(userSendingInvitation, userReceivingInvitation);
+                    return data.getSingleFriendship(userSendingInvitation.username, userReceivingInvitation.username);
                 })
                 .then(resultFriendship => {
                     let friendship = {

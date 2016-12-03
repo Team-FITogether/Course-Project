@@ -173,7 +173,10 @@ $("#add-menu-button").on("click", () => {
 });
 
 $("#friendship-request-button").on("click", () => {
-    let requestedUsername = $("#friendship-request").val();
+    let requestedUsername = $("#invitation-receiver").val();
+    //$("#friendship-request").val();
+    console.log(requestedUsername);
+
     let data = {
         requestedUsername
     }

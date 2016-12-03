@@ -17,9 +17,10 @@ module.exports = function(models) {
                     });
             });
         },
-        getSingleFriendship(firstUser, secondUser) {
+        getSingleFriendship(firstUserUsername, secondUserUsername) {
             return new Promise((resolve, reject) => {
-                Friendship.findOne({ "firstUser.username": firstUser, "secondUser.username": secondUser }, (err, friendship) => {
+                Friendship.findOne({ "firstUser.username": firstUserUsername, "secondUser.username": secondUserUsername }, (err, friendship) => {
+
                     if (err) {
                         return reject(err);
                     }

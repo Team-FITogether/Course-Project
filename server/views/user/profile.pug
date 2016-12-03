@@ -192,7 +192,7 @@ block content
                         h4 Приятели
                         if friendships.approvedFriendships
                             for val in friendships.approvedFriendships
-                                -var currentUser = user.username == val.firstUser ? val.secondUser : val.firstUser
+                                -var currentUser = user.username == val.firstUser.username ? val.secondUser : val.firstUser
                                 a(href="/users?id=" + currentUser._id class="single-friendship friendship-link") #{currentUser.username}
                     div(id="waiting-friendships").section.friendships-section 
                         h4 Приятелства, изчакващи одобрение
