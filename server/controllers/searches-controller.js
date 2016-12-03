@@ -12,20 +12,21 @@ function findUsers(username, isLoggedIn, req, res, userValidator, common, data) 
     common.setIsAdminUser(req, userValidator);
 
     let query = { username: new RegExp(username, "i") };
-    data.findUserByQueryWithSelectIdAndName(query)
+    return data.findUserByQueryWithSelectIdAndName(query)
         .then(users => {
             users.forEach(u => u.avatarName = u.avatarName || "default_profile.png");
-            res.render(FOUND_USERS_VIEW, { users, user: req.user });
-        },
-        console.log);
+            return res.render(FOUND_USERS_VIEW, { users, user: req.user });
+        });
 }
 
 function findExercises(exerciseName, isLoggedIn, req, res, userValidator, common, data) {
     common.setIsAdminUser(req, userValidator);
 
     let query = { name: new RegExp(exerciseName, "i") };
-    data.findExerciseByQueryWithSelectIdAndName(query)
-        .then(exercises => res.render(FOUND_EXERCISES_VIEW, { exercises, viewBag: { isLoggedIn } }), console.log);
+    return data.findExerciseByQueryWithSelectIdAndName(query)
+        .then(exercises => {
+            return res.render(FOUND_EXERCISES_VIEW, { exercises, viewBag: { isLoggedIn }});
+        });
 }
 
 function findFoods(foodTitle, isLoggedIn, req, res, userValidator, common, data) {

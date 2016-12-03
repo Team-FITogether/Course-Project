@@ -23,7 +23,8 @@ describe("findEntities() tests with entities Users", () => {
             username: "testUsername"
         },
         query: {
-            entityName: "users"
+            entityName: "users",
+            searchValue: "testUser"
         }
     };
     let usersMock = [];
@@ -60,14 +61,14 @@ describe("findEntities() tests with entities Users", () => {
         dataSpy.restore();
     });
 
-    // it("res.render() should be called once", () => {
-    //     let resSpy = sinon.spy(resMock, "render");
-    //     let controller = searchesController({ common: commonMock, userValidator: userValidatorMock, data: dataMock });
+    it("res.render() should be called once", () => {
+        let resSpy = sinon.spy(resMock, "render");
+        let controller = searchesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
 
-    //     controller.findEntities(reqMock, resMock);
-    //     expect(resSpy.calledOnce).to.be.true;
-    //     resSpy.restore();
-    // });
+        controller.findEntities(reqMock, resMock);
+        expect(resSpy.calledOnce).to.be.true;
+        resSpy.restore();
+    });
 });
 
 describe("findEntities() tests with entities Exercises", () => {
