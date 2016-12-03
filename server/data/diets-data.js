@@ -1,8 +1,6 @@
 /* globals require module Promise*/
 "use strict";
 
-// const Diet = require("../models/diet");
-
 module.exports = function(models) {
     let { Diet } = models;
 

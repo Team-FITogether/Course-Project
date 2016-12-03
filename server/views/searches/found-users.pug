@@ -1,15 +1,15 @@
 extends ../base-master
 
 block content
-    div.header.header-default
-    div.main.main-raised
-        div.section.section-basic
-            div.container-fluid
-            ul
-                each user in users
-                    li
-                        .article-container
-                            a(href="/users?id=" + user._id class="article-link" class="found-user-link") 
-                                img(src="/img/user-images/" + user.avatarName class="img-circle img-responsive found-user-img")
-                                span #{user.username}
-                                .divider
+  div.header.header-default
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+      ul
+        each user in users
+          li
+            .article-container
+              a(href="/users?id=" + user._id class="article-link" class="found-user-link") 
+                img(src="/img/user-images/" + user.avatarName class="img-circle img-responsive found-user-img")
+                span #{user.username}
+                .divider

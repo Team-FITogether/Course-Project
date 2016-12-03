@@ -24,9 +24,7 @@ function findExercises(exerciseName, isLoggedIn, req, res, userValidator, common
 
     let query = { name: new RegExp(exerciseName, "i") };
     return data.findExerciseByQueryWithSelectIdAndName(query)
-        .then(exercises => {
-            return res.render(FOUND_EXERCISES_VIEW, { exercises, viewBag: { isLoggedIn } });
-        });
+        .then(exercises => res.render(FOUND_EXERCISES_VIEW, { exercises, viewBag: { isLoggedIn } }));
 }
 
 function findFoods(foodTitle, isLoggedIn, req, res, userValidator, common, data) {
@@ -71,7 +69,7 @@ module.exports = ({ userValidator, common, data }) => {
             } else if (entityName === constants.articles) {
                 return findArticles(query.searchValue, isLoggedIn, req, res, userValidator, common, data);
             }
-        
+
             return res.render(PAGES_NOT_FOUND_VIEW);
         }
     };

@@ -1,18 +1,18 @@
 doctype
 html
-    head
-        link(rel="stylesheet" href="/css/libs/bootstrap.min.css")
-        link(rel="stylesheet" href="/css/libs/material-kit.css")
-        link(rel="stylesheet" href="/css/chat/chat-room.css")
-    body
-        input(type="hidden" username=user.username id="username-holder")
-        input(type="hidden" avatar-src=user.avatarSrc id="avatarSrc-holder")
+  head
+    link(rel="stylesheet" href="/css/libs/bootstrap.min.css")
+    link(rel="stylesheet" href="/css/libs/material-kit.css")
+    link(rel="stylesheet" href="/css/chat/chat-room.css")
+  body
+    input(type="hidden" username=user.username id="username-holder")
+    input(type="hidden" avatar-src=user.avatarSrc id="avatarSrc-holder")
 
-        ul(id="messages")
-        form(action="" id="message-form")
-            textarea(id="tb-message" class="form-control"  autocomplete="off" placeholder="Write something...")
-            button(class="btn btn-info") Изпрати
+    ul(id="messages")
+    form(action="" id="message-form")
+      textarea(id="tb-message" class="form-control"  autocomplete="off" placeholder="Write something...")
+      button(class="btn btn-info") Изпрати
 
-        script(src="/js/chat/socket-io.min.js")
-        script(src="/bower_components/jquery/dist/jquery.min.js")
-        script(src="/js/chat/chat.js")
+    script(src="/js/chat/socket-io.min.js")
+    script(src="/bower_components/jquery/dist/jquery.min.js")
+    script(src="/js/chat/chat.js")

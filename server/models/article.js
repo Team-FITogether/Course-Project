@@ -24,12 +24,4 @@ let articleSchema = new Schema({
 });
 
 const Article = mongoose.model("article", articleSchema, "articles");
-
-// Article.update({}, { createdOn: Date.now() }, { multi: true }, (err, affected) => {
-//     if (err) {
-//         console.log(err);
-//     }
-//     console.log(affected);
-// });
-
 module.exports = Article;

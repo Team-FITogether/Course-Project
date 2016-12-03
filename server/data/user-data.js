@@ -41,7 +41,6 @@ module.exports = function(models) {
         },
         findUserAndUpdate(options, userToUpdate) {
             return new Promise((resolve, reject) => {
-
                 User.findOneAndUpdate(options, userToUpdate, (err, foundUser) => {
                     if (err) {
                         return reject(err);

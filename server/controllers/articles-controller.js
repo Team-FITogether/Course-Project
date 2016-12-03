@@ -21,8 +21,6 @@ function loadArticlesByGenreForAdmin(user, req, res, genre, page, pageSize, user
                     return res.status(404);
                 }
 
-                // Check if current user has liked the article, if true - set bool
-                // so view can render an unlike button
                 if (user) {
                     for (let i = 0; i < articles.length; i += 1) {
                         for (let j = 0; j < articles[i].usersLiked.length; j += 1) {
@@ -52,8 +50,6 @@ function loadArticlesByGenreForNormalUser(user, req, res, genre, page, pageSize,
                 return res.status(404);
             }
 
-            // Check if current user has liked the article, if true - set bool
-            // so view can render an unlike button
             if (user) {
                 for (let i = 0; i < articles.length; i += 1) {
                     for (let j = 0; j < articles[i].usersLiked.length; j += 1) {
@@ -122,7 +118,7 @@ function getSingleArticleObject(article, articleComments, user) {
     };
 }
 
-module.exports = ({ userValidator, common, data, htmlEscaper }) => {
+module.exports = ({ userValidator, common, data }) => {
     return {
         loadCreateArticlePage(req, res) {
             common.setIsAdminUser(req, userValidator);
@@ -183,8 +179,6 @@ module.exports = ({ userValidator, common, data, htmlEscaper }) => {
         },
         addComment(req, res) {
             let body = req.body;
-            // let content = htmlEscaper.escapeTags(body.content);
-
             let commentToAdd = {
                 content: body.content,
                 author: req.user.username,

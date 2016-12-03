@@ -2,33 +2,33 @@ extends ../base-master
 
 
 block content
-    .section.section-full-screen.section-signup(style="background-image: url('/img/common/fitness-woman-4.jpg'); background-size: cover; background-position: top center; ")
-        .container
-            .row
-                .col-md-4.col-md-offset-4
-                    .card.card-signup
-                        div.form
-                            .header.header-success.text-center
-                                h4 Вход
-                                .social-line
-                                    a.btn.btn-simple.btn-just-icon(href="/auth/facebook")
-                                        i.fa.fa-facebook-square
-                                        .ripple-container
-                                    a.btn.btn-simple.btn-just-icon(href="/auth/google")
-                                        i.fa.fa-google-plus
-                            .content
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons face
-                                    input#login-username.form-control(type="text" placeholder="Потребителско име")
-                                .input-group
-                                    span.input-group-addon
-                                        i.material-icons lock_outline
-                                    input#login-password.form-control(type="password" placeholder="Парола")
-                            .footer.text-center
-                                a#btn-login.btn.btn-success Влез
+  .section.section-full-screen.section-signup(style="background-image: url('/img/common/fitness-woman-4.jpg'); background-size: cover; background-position: top center; ")
+    .container
+      .row
+        .col-md-4.col-md-offset-4
+          .card.card-signup
+            div.form
+              .header.header-success.text-center
+                h4 Вход
+                .social-line
+                  a.btn.btn-simple.btn-just-icon(href="/auth/facebook")
+                    i.fa.fa-facebook-square
+                    .ripple-container
+                  a.btn.btn-simple.btn-just-icon(href="/auth/google")
+                    i.fa.fa-google-plus
+              .content
+                .input-group
+                  span.input-group-addon
+                    i.material-icons face
+                  input#login-username.form-control(type="text" placeholder="Потребителско име")
+                .input-group
+                  span.input-group-addon
+                    i.material-icons lock_outline
+                  input#login-password.form-control(type="password" placeholder="Парола")
+              .footer.text-center
+                a#btn-login.btn.btn-success Влез
 
 
-    script(src="/js/utils/requester.js")
-    script(src="/js/utils/notificator.js")
-    script(src="/js/profile/login-ajax.js")
+  script(src="/js/utils/requester.js")
+  script(src="/js/utils/notificator.js")
+  script(src="/js/profile/login-ajax.js")
