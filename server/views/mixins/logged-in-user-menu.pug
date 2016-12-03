@@ -1,14 +1,14 @@
 mixin loggedInUserMenu(user)
-    li.dropdown
-        a.dropdown-toggle(href='#', data-toggle='dropdown') 
-            span#username #{user.username}
-            i.material-icons account_circle
-            b.caret
-        ul.dropdown-menu
-            li
-                a(href='/users/profile/') Профил
-            if user.isAdmin
-                li
-                    a(href="/admin-pannel") Админ
-            li
-                a(href="/auth/logout") Изход
+  li.dropdown
+    a.dropdown-toggle(href='#', data-toggle='dropdown') 
+      span#username #{user.username}
+      i.material-icons account_circle
+      b.caret
+    ul.dropdown-menu
+      li
+        a(href='/users/profile/') Профил
+      if user.isAdmin
+        li
+          a(href="/admin-pannel") Админ
+      li
+        a(href="/auth/logout") Изход

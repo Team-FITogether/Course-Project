@@ -1,8 +1,6 @@
 /* globals require module Promise*/
 "use strict";
 
-// const Article = require("../models/article");
-
 module.exports = function (models) {
     let { Article } = models;
 
@@ -50,7 +48,6 @@ module.exports = function (models) {
             ]);
         },
         getArticlesByGenreAdminUser(genre, page, pageSize) {
-            // returns all Articles INCLUDING deleted ones
             let skip = (page - 1) * pageSize;
             let limit = pageSize;
 

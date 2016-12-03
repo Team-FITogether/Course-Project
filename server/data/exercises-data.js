@@ -1,10 +1,6 @@
 /* globals require module Promise*/
 "use strict";
 
-// const ExerciseCategory = require("../models/exercise-category");
-// const ExerciseExplanation = require("../models/exercise-explanation");
-// const Exercise = require("../models/exercise");
-
 module.exports = function(models) {
     let {
         ExerciseCategory,

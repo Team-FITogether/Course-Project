@@ -1,27 +1,26 @@
 extends ../base-master
 include ../mixins/sub-header-home
 
-    link(rel="stylesheet" href="/css/articles/all-articles.css")
-    link(rel="stylesheet" href="/css/common/common.css")    
-    script(src="/js/landing-page.js")
+  link(rel="stylesheet" href="/css/articles/all-articles.css")
+  link(rel="stylesheet" href="/css/common/common.css")    
+  script(src="/js/landing-page.js")
 
 block content
-    +homeSubheaderMixin
-    div.main.main-raised
-        div.section.section-basic
-            div.container-fluid
-                h2.title Най-харесвани статии
-                div.row
-                each val in articles    
-                        div.col-sm-6.col-md-4
-                            div.thumbnail.custom-thumbnail-height
-                                if val.imgSrc
-                                    img(src= val.imgSrc)
-                                else 
-                                    img(src= "/img/common/default-articles.jpg")
-                                div.caption
-                                    h4 #{val.mainHeader}
-                                    p #{val.subHeader}
-                                a(href="/articles/single-article?title=" + val.mainHeader class="btn btn-success btn-thumbnail" role="button")  Прочети повече
+  +homeSubheaderMixin
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+        h2.title Най-харесвани статии
+        div.row
+        each val in articles    
+          div.col-sm-6.col-md-4
+            div.thumbnail.custom-thumbnail-height
+              if val.imgSrc
+                img(src= val.imgSrc)
+              else 
+                img(src= "/img/common/default-articles.jpg")
+              div.caption
+                h4 #{val.mainHeader}
+                p #{val.subHeader}
+              a(href="/articles/single-article?title=" + val.mainHeader class="btn btn-success btn-thumbnail" role="button")  Прочети повече
 
-            

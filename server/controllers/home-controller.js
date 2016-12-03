@@ -7,9 +7,7 @@ module.exports = function ({ userValidator, common, data }) {
         loadHomePage(req, res) {
             common.setIsAdminUser(req, userValidator);
             return data.getTopLikedArticles()
-                .then(articles => {
-                    res.render(HOME_VIEW, { user: req.user, articles });
-                });
+                .then(articles => res.render(HOME_VIEW, { user: req.user, articles }));
         }
     };
 };

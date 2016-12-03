@@ -2,7 +2,6 @@
 
 const USER_PROFILE_VIEW = "user/profile";
 const FOUND_USER_PROFILE_VIEW = "user/found-user-profile";
-//const ADMIN_PANEL_VIEW = "admin-area/admin-panel";
 
 function renderProfilePage(req, res, data) {
     let exercises;
@@ -80,11 +79,7 @@ function renderFoundUserById(id, req, res, data) {
             .catch(console.log);
     } else {
         data.getUserById(id)
-            .then(foundUser => {
-                res.render(FOUND_USER_PROFILE_VIEW, {
-                    foundUser
-                });
-            });
+            .then(foundUser => res.render(FOUND_USER_PROFILE_VIEW, { foundUser }));
     }
 }
 

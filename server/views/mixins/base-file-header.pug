@@ -1,95 +1,95 @@
 mixin header(user)
-    link(rel="stylesheet" href="/css/common/common.css")
-    //.navbar-color-on-scroll
-    nav.navbar.navbar-fixed-top.navbar-success 
-        .container-fluid
-            .navbar-header
-                button.navbar-toggle(type="button", data-toggle="collapse", data-target="#navbar")
-                    span.sr-only Toggle navigation
-                    span.icon-bar
-                    span.icon-bar
-                    span.icon-bar
-                a.navbar-brand(href="/")
-                    | FITogether
-                    .ripple-container
-            #navbar.collapse.navbar-collapse
-                form(action="/search" method="get").navbar-form.navbar-left
-                    div.input-group
-                        div.input-group
-                            input(type="text" name="searchValue" placeholder="Търси").form-control
-                        div.input-group
-                            select(name="entityName")
-                                option(value="users" style="color:black;") Потребители
-                                option(value="articles" style="color:black;") Статии
-                                option(value="exercises" style="color:black;") Тренировки
-                                option(value="foods" style="color:black;") Храни
-                                option(value="recipes" style="color:black;") Рецепти
-                        div.input-group-btn
-                            button(type="submit").btn.btn-white.btn-fab.btn-fab-mini.btn-just-icon.btn-search
-                                i.material-icons search
-                ul.nav.navbar-nav.navbar-right
-                    li.dropdown
-                        a.dropdown-toggle(href="#", data-toggle="dropdown")
-                            | Тренировки 
-                            b.caret
-                        ul.dropdown-menu
-                            li 
-                                a(href="/articles?genre=fitness-programs") Фитнес програми
-                            li
-                                a(href="/exercises?all") Всички упражнения
-                            li
-                                a(href="/articles?genre=exercises-article") Статии за тренировки
-                    li.dropdown
-                        a.dropdown-toggle(href="#", data-toggle="dropdown")
-                            | Храни 
-                            b.caret
-                        ul.dropdown-menu
-                            li 
-                                a(href="/foods?all") Състав на храни
-                            li
-                                a(href="/diets?all") Хранителни режими
-                            li
-                                a(href="/recipes?all") Рецепти
-                            li
-                                a(href="/articles?genre=food-article") Статии за хранене
-                    li.dropdown
-                        a.dropdown-toggle(href="#", data-toggle="dropdown")
-                            | Здраве 
-                            b.caret
-                        ul.dropdown-menu
-                            li 
-                                a(href="/articles?genre=healthy-day-article") Здравословен ден
-                            li
-                                a(href="/articles?genre=body-article") Статии за тялото
-                            li
-                                a(href="/articles?genre=injuries-article") Травми и контузии                         
-                    li.dropdown
-                        a.dropdown-toggle(href="#", data-toggle="dropdown")
-                            | Хранителни добавки 
-                            b.caret
-                        ul.dropdown-menu
-                            li 
-                                a(href="/articles?genre=herbs-article") Билки
-                            li
-                                a(href="/articles?genre=suplements-article") Добавки
-                            li
-                                a(href="/articles?genre=vitamins-and-minerals-article") Витамини и минерали
-                    li.dropdown
-                        if user
-                            a.dropdown-toggle(href='#', data-toggle='dropdown') 
-                                span#username #{user.username}
-                                i.material-icons account_circle
-                                b.caret
-                            ul.dropdown-menu
-                                li
-                                    a(href='/users/profile/') Профил
-                                if user.isAdmin
-                                    li
-                                        a(href="/admin-panel") Админ
-                                li
-                                    a(href="/auth/logout") Изход
-                        else
-                            li
-                                a(href="/auth/login").btn.btn-auth.btn-success Вход
-                            li
-                                a(href="/auth/register" style="color:#4caf50;").btn.btn-auth.btn-white Регистрация
+  link(rel="stylesheet" href="/css/common/common.css")
+  //.navbar-color-on-scroll
+  nav.navbar.navbar-fixed-top.navbar-success 
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle(type="button", data-toggle="collapse", data-target="#navbar")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="/")
+          | FITogether
+          .ripple-container
+      #navbar.collapse.navbar-collapse
+        form(action="/search" method="get").navbar-form.navbar-left
+          div.input-group
+            div.input-group
+              input(type="text" name="searchValue" placeholder="Търси").form-control
+            div.input-group
+              select(name="entityName")
+                option(value="users" style="color:black;") Потребители
+                option(value="articles" style="color:black;") Статии
+                option(value="exercises" style="color:black;") Тренировки
+                option(value="foods" style="color:black;") Храни
+                option(value="recipes" style="color:black;") Рецепти
+            div.input-group-btn
+              button(type="submit").btn.btn-white.btn-fab.btn-fab-mini.btn-just-icon.btn-search
+                i.material-icons search
+        ul.nav.navbar-nav.navbar-right
+          li.dropdown
+            a.dropdown-toggle(href="#", data-toggle="dropdown")
+              | Тренировки 
+              b.caret
+            ul.dropdown-menu
+              li 
+                a(href="/articles?genre=fitness-programs") Фитнес програми
+              li
+                a(href="/exercises?all") Всички упражнения
+              li
+                a(href="/articles?genre=exercises-article") Статии за тренировки
+          li.dropdown
+            a.dropdown-toggle(href="#", data-toggle="dropdown")
+              | Храни 
+              b.caret
+            ul.dropdown-menu
+              li 
+                a(href="/foods?all") Състав на храни
+              li
+                a(href="/diets?all") Хранителни режими
+              li
+                a(href="/recipes?all") Рецепти
+              li
+                a(href="/articles?genre=food-article") Статии за хранене
+          li.dropdown
+            a.dropdown-toggle(href="#", data-toggle="dropdown")
+              | Здраве 
+              b.caret
+            ul.dropdown-menu
+              li 
+                a(href="/articles?genre=healthy-day-article") Здравословен ден
+              li
+                a(href="/articles?genre=body-article") Статии за тялото
+              li
+                a(href="/articles?genre=injuries-article") Травми и контузии                         
+          li.dropdown
+            a.dropdown-toggle(href="#", data-toggle="dropdown")
+              | Хранителни добавки 
+              b.caret
+            ul.dropdown-menu
+              li 
+                a(href="/articles?genre=herbs-article") Билки
+              li
+                a(href="/articles?genre=suplements-article") Добавки
+              li
+                a(href="/articles?genre=vitamins-and-minerals-article") Витамини и минерали
+          li.dropdown
+            if user
+              a.dropdown-toggle(href='#', data-toggle='dropdown') 
+                span#username #{user.username}
+                i.material-icons account_circle
+                b.caret
+              ul.dropdown-menu
+                li
+                  a(href='/users/profile/') Профил
+                if user.isAdmin
+                  li
+                    a(href="/admin-panel") Админ
+                li
+                  a(href="/auth/logout") Изход
+            else
+              li
+                a(href="/auth/login").btn.btn-auth.btn-success Вход
+              li
+                a(href="/auth/register" style="color:#4caf50;").btn.btn-auth.btn-white Регистрация
