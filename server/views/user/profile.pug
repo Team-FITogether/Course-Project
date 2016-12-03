@@ -191,7 +191,7 @@ block content
                     div(id="friendships-links").section.friendships-section
                         h4 Приятели
                         if friendships.approvedFriendships
-                            ul.friendship-list
+                            ul.friendship-list-approved
                                 for val in friendships.approvedFriendships
                                     li.single-friendship-item
                                         -var currentUser = user.username == val.firstUser.username ? val.secondUser : val.firstUser
@@ -201,7 +201,7 @@ block content
                         if friendships.waitingForApproval
                             ul.friendship-list
                                 for val in friendships.waitingForApproval
-                                    li.single-friendship-item
+                                    li(class="single-friendship-item" data-id=val.firstUser._id)
                                         a(href="/users?id=" + val.firstUser._id class="single-friendship approve-friendship-button") #{val.firstUser.username}
                                         button(class="btn btn-success btn-sm accept-friendship") Приеми
                                         button(class="btn btn-danger btn-sm rejected-friendship") Откажи
