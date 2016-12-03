@@ -47,7 +47,7 @@ module.exports = function(models) {
         },
         getSingleRecipe(title) {
             return new Promise((resolve, reject) => {
-                Recipe.find({ title }, (err, recipe) => {
+                Recipe.findOne({ title }, (err, recipe) => {
                     if (err) {
                         return reject(err);
                     }

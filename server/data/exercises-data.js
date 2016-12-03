@@ -48,12 +48,12 @@ module.exports = function(models) {
         },
         getAllExercises() {
             return new Promise((resolve, reject) => {
-                Exercise.find({}, (err, exercises) => {
+                Exercise.find({}, (err, explanation) => {
                     if (err) {
                         return reject(err);
                     }
 
-                    return resolve(exercises);
+                    return resolve(explanation);
                 });
             });
         },

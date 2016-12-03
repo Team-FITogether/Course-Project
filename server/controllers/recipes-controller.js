@@ -72,11 +72,11 @@ module.exports = ({ data }) => {
             return data.getSingleRecipe(title)
                 .then((recipe) => {
                     res.render(SINGLE_RECIPE_VIEW, {
-                        id: recipe[0]._id,
-                        title: recipe[0].title,
-                        body: recipe[0].body,
-                        imgSrc: recipe[0].imgSrc,
-                        comments: recipe[0].comments,
+                        id: recipe._id,
+                        title: recipe.title,
+                        body: recipe.body,
+                        imgSrc: recipe.imgSrc,
+                        comments: recipe.comments,
                         user: req.user
                     });
                 });
@@ -97,7 +97,7 @@ module.exports = ({ data }) => {
                 })
                 .catch(err => {
                     res.status(500);
-                    res.send(err)
+                    res.send(err);
                 });
         },
         toggleLikeOnRecipe(req, res) {

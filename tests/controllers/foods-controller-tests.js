@@ -2,9 +2,10 @@
 
 "use strict";
 
+const foodsController = require("../../server/controllers/foods-controller");
+
 const expect = require("chai").expect;
 const spy = require("sinon").spy;
-const foodsController = require("../../server/controllers/foods-controller");
 
 describe("getAllFoods() tests", () => {
     let reqMock = {
