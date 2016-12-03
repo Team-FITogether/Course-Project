@@ -1,4 +1,5 @@
 /* globals describe it beforeEach afterEach */
+
 const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
@@ -128,7 +129,7 @@ describe("articles-data tests", () => {
         });
     });
 
-    describe("getArticlesBTitle(title)", () => {
+    describe("getArticlesByTitle(title)", () => {
         beforeEach(() => {
             sinon.stub(Article, "findOne", (query, callback) => {
                 let foundArticle = articles.find(a => a.mainHeader === query.mainHeader);
@@ -140,7 +141,7 @@ describe("articles-data tests", () => {
             Article.findOne.restore();
         });
 
-        it("Expect getArticlesBTitle(title) to return correct article, when existing tittle is passed", done => {
+        it("Expect getArticlesByTitle(title) to return correct article, when existing title is passed", done => {
             data.getArticleByTitle("title")
                 .then(foundArticle => {
                     expect(foundArticle).to.eql(articles[0]);
@@ -148,7 +149,7 @@ describe("articles-data tests", () => {
                 });
         });
 
-        it("Expect getArticlesBTitle(title) to return null if article is not found", done => {
+        it("Expect getArticlesByTitle(title) to return null if article is not found", done => {
             data.getArticleByTitle("not existing title")
                 .then(foundArticle => {
                     expect(foundArticle).to.be.null;
@@ -289,7 +290,7 @@ describe("articles-data tests", () => {
     });
 
     describe("getAllArticles()", () => {
-        it("Expect all chaned methods to be called - find().select().exec()", done => {
+        it("Expect all chained methods to be called - find().select().exec()", done => {
             let findSpy = sinon.spy(Article, "find");
             let selectSpy = sinon.spy(Article, "select");
             let execSpy = sinon.spy(Article, "exec");

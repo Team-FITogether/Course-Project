@@ -3,7 +3,6 @@
 
 Database/
 .vscode/
-user-images/
 
 # User-specific files
 *.suo
