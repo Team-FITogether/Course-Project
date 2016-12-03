@@ -1,28 +1,100 @@
 extends ../base-master
 
 block content
-    link(rel="stylesheet" href="/css/users/found-user-profile.css")
+    link(rel="stylesheet" href="/css/users/profile.css")
+    link(rel="stylesheet" href="/css/articles/all-articles.css")
     div.header.header-default
     div.main.main-raised
         div.section.section-basic
             div.container-fluid
-                div(class="card card-nav-tabs" id="found-user-container")
-                    div(class="header header-info")
+                div(class="content row" id="profile-container")
+                    div.pull-left
                         h3 #{foundUser.username}
-                    div(class="content")
-                        img(class="img-circle img-responsive" src="/img/user-images/" + foundUser.avatarName)
-                        if user
-                            if isOffline
-                                .alert.alert-danger
-                                    .container-fluid
-                                        .alert-icon
-                                            i.material-icons error_outline
-                                        button.close(type='button', data-dismiss='alert', aria-label='Close')
-                                            span(aria-hidden='true')
-                                                i.material-icons clear
-                                        b Потребителят не е на линия.
+                        img(class="img-circle img-responsive" src="/img/user-images/" + foundUser.avatarName id="avatar-image")
+                    
+                    if foundUser.isTrainer || foundUser.isAdmin                    
+                        div(class="collapse navbar-collapse pull-left" id="bs-example-navbar-collapse-1")
+                            ul(class="nav navbar-nav")
+                                li
+                                    a(id="my-articles").profile-link Статии на #{foundUser.username}
+                    if user
+                        if friendship
+                            if !friendship.approved
+                                | Покана изпратена
+                            else if friendship.approved
+                                form(action="/chat/invitation" method="get")
+                                    input(type="hidden" name="initiator" value=user.username)
+                                    input(type="hidden" name="receiver" value=foundUser.username)
+                                    input(type="submit" class="btn btn-info btn-round" value="Започни чат")
+                        else
+                            input(type="hidden" name="receiver" id="invitation-receiver" value=foundUser.username)
+                            input(type="submit" class="btn btn-info btn-round" id="friendship-request-button" value="Изпрати покана")
 
-                            form(action="/chat/invitation" method="get")
-                                input(type="hidden" name="initiator" value=user.username)
-                                input(type="hidden" name="receiver" value=foundUser.username)
-                                input(type="submit" class="btn btn-info btn-round" value="Започни чат")
+                //- div.section.friendships-holder
+                //-     h3 Приятелите на #{foundUser.username}
+                //-     div(id="friendships-links").section.friendships-section
+                //-         h4 Приятели
+                //-         if friendships.approvedFriendships
+                //-             for val in friendships.approvedFriendships
+                //-                 -var currentUser = user.username == val.firstUser ? val.secondUser : val.firstUser
+                //-                 a(href="/users?id=" + currentUser._id class="single-friendship friendship-link") #{currentUser.username}
+                //-     div(id="waiting-friendships").section.friendships-section 
+                //-         h4 Приятелства, изчакващи одобрение
+                //-         if friendships.waitingForApproval
+                //-             for val in friendships.waitingForApproval
+                //-                 a.single-friendship.approve-friendship-button #{val.firstUser.username}
+                //-     div(id="waiting-requests").section.friendships-section 
+                //-         h4 Изпратени покани
+                //-         if friendships.requestedFriendships
+                //-             for val in friendships.requestedFriendships
+                //-                 a.single-friendship #{val.secondUser}
+                //-     div.section
+                //-         h5 Намери приятел
+                //-         input.form-control(type="text" id="friendship-request" placeholder="Намери приятел" name="username")
+                //-         a(id="friendship-request-button").btn.btn-success Предложи приятелство 
+                //- div.section.articles-holder
+                //-     h3 Статии от #{user.username}
+                //-         each val in articles
+                //-             div.article-container
+                //-                 a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
+                //-                 br
+                //-                 small.article-subheader #{val.subHeader}
+                //-         if user.isTrainer || user.isAdmin
+                //-             br
+                //-             a(href="/articles/create", title="create article").btn.btn-success Създай Статия                      
+                        
+    script(src="/js/profile/profile-manager.js")
+    script(src="/js/profile/profile-ajax.js")
+    script(src="/js/utils/requester.js")
+    script(src="/js/utils/notificator.js")
+    script(src="/js/users-autocomplete.js")
+
+    //- link(rel="stylesheet" href="/css/users/found-user-profile.css")
+    //- div.header.header-default
+    //- div.main.main-raised
+    //-     div.section.section-basic
+    //-         div.container-fluid
+    //-             div(class="card card-nav-tabs" id="found-user-container")
+    //-                 div(class="header header-info")
+    //-                     h3 #{foundUser.username}
+    //-                 div(class="content")
+    //-                     img(class="img-circle img-responsive" src="/img/user-images/" + foundUser.avatarName)
+    //-                     if user
+    //-                         if isOffline
+    //-                             .alert.alert-danger
+    //-                                 .container-fluid
+    //-                                     .alert-icon
+    //-                                         i.material-icons error_outline
+    //-                                     button.close(type='button', data-dismiss='alert', aria-label='Close')
+    //-                                         span(aria-hidden='true')
+    //-                                             i.material-icons clear
+    //-                                     b Потребителят не е на линия.
+
+    //-                         form(action="/chat/invitation" method="get")
+    //-                             input(type="hidden" name="initiator" value=user.username)
+    //-                             input(type="hidden" name="receiver" value=foundUser.username)
+    //-                             input(type="submit" class="btn btn-info btn-round" value="Започни чат")
+    //-                         form(action="/chat/invitation" method="get")
+    //-                             input(type="hidden" name="initiator" value=user.username)
+    //-                             input(type="hidden" name="receiver" value=foundUser.username)
+    //-                             input(type="submit" class="btn btn-info btn-round" value="Започни чат")

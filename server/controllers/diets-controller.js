@@ -5,7 +5,7 @@ const SINGLE_DIET_VIEW = "food/single-diet";
 const PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
 
 function loadAllDiets(req, res, page, pageSize, data) {
-    data.getAllDiets(page, pageSize)
+    return data.getAllDiets(page, pageSize)
         .then(result => {
             let diets = result[0];
             let count = result[1];
@@ -30,7 +30,7 @@ module.exports = ({ data }) => {
         },
         getSingleDiet(req, res) {
             let title = req.query.title;
-            data.getSingleDiet(title)
+            return data.getSingleDiet(title)
                 .then((diet) => {
                     res.render(SINGLE_DIET_VIEW, {
                         id: diet._id,
@@ -50,13 +50,21 @@ module.exports = ({ data }) => {
                 postDate: Date.now()
             };
 
-            data.getDietById(body.entityId)
+            return data.getDietById(body.entityId)
                 .then(diet => {
                     diet.comments.push(comment);
                     diet.save();
                     res.redirect("back");
                 })
-                .catch(err => res.status(500).send(err));
+                .catch(err => {
+                    res.status(500);
+                    res.send(err);
+                });
+        },
+        getAllDietsRest(req, res) {
+            return data.getAllDietsRest()
+                .then(diets => res.json(diets))
+                .catch(console.log);
         }
     };
 };

@@ -13,7 +13,11 @@ function findUsers(username, isLoggedIn, req, res, userValidator, common, data) 
 
     let query = { username: new RegExp(username, "i") };
     data.findUserByQueryWithSelectIdAndName(query)
-        .then(users => res.render(FOUND_USERS_VIEW, { users, user: req.user }), console.log);
+        .then(users => {
+            users.forEach(u => u.avatarName = u.avatarName || "default_profile.png");
+            res.render(FOUND_USERS_VIEW, { users, user: req.user });
+        },
+        console.log);
 }
 
 function findExercises(exerciseName, isLoggedIn, req, res, userValidator, common, data) {

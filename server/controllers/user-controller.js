@@ -25,8 +25,9 @@ function renderProfilePage(req, res, data) {
         })
         .then(resultFriendships => {
             let approvedFriendships = resultFriendships.filter(el => { return el.approved; });
-            let waitingForApproval = resultFriendships.filter(el => { return !el.approved && el.secondUser === req.user.username; });
+            let waitingForApproval = resultFriendships.filter(el => { return !el.approved && el.secondUser.username === req.user.username; });
             let requestedFriendships = resultFriendships.filter(el => { return !el.approved && el.firstUser === req.user.username; });
+
             friendships = {
                 approvedFriendships,
                 waitingForApproval,
@@ -58,14 +59,31 @@ function renderFoundUserByUsername(username, res, req, data) {
 }
 
 function renderFoundUserById(id, req, res, data) {
-    data.getUserById(id)
-        .then(foundUser => {
-            res.render(FOUND_USER_PROFILE_VIEW, {
-                foundUser,
-                user: req.user
+    let loggedUser = req.user,
+        otherUser;
+
+    if (loggedUser) {
+        data.getUserById(id)
+            .then(foundUser => {
+                otherUser = foundUser;
+                return data.getSingleFriendship(loggedUser.username, otherUser.username);
+            })
+            .then(friendship => {
+                res.render(FOUND_USER_PROFILE_VIEW, {
+                    user: loggedUser,
+                    foundUser: otherUser,
+                    friendship
+                });
+            })
+            .catch(console.log);
+    } else {
+        data.getUserById(id)
+            .then(foundUser => {
+                res.render(FOUND_USER_PROFILE_VIEW, {
+                    foundUser
+                });
             });
-        })
-        .catch(console.log);
+    }
 }
 
 module.exports = ({ userValidator, common, data }) => {
@@ -113,18 +131,34 @@ module.exports = ({ userValidator, common, data }) => {
             data.getUsernamesOfUsers().then(users => res.json(JSON.stringify(users)));
         },
         requestFriendship(req, res) {
-            let firstUser = req.user.username;
-            let secondUser = req.body.requestedUsername;
-            let approved = false;
+            let firstUsername = req.user.username,
+                secondUsername = req.body.requestedUsername,
+                approved = false,
+                userSendingInvitation,
+                userReceivingInvitation;
 
-            let friendship = {
-                firstUser,
-                secondUser,
-                approved
-            };
-
-            data.getSingleFriendship(firstUser, secondUser)
+            data.findUserByQuery({ username: firstUsername })
+                .then(foundFirstUser => {
+                    userSendingInvitation = foundFirstUser;
+                    return data.findUserByQuery({ username: secondUsername });
+                })
+                .then(secondFoundUser => {
+                    userReceivingInvitation = secondFoundUser;
+                    return data.getSingleFriendship(userSendingInvitation.username, userReceivingInvitation.username);
+                })
                 .then(resultFriendship => {
+                    let friendship = {
+                        firstUser: {
+                            username: userSendingInvitation.username,
+                            _id: userSendingInvitation._id
+                        },
+                        secondUser: {
+                            username: userReceivingInvitation.username,
+                            _id: userReceivingInvitation._id
+                        },
+                        approved
+                    };
+
                     if (!resultFriendship) {
                         return data.addNewFriendships(friendship);
                     }
@@ -134,10 +168,10 @@ module.exports = ({ userValidator, common, data }) => {
                 .then(() => res.sendStatus(200));
         },
         approveFriendship(req, res) {
-            let firstUser = req.body.approvedUsername;
-            let secondUser = req.user.username;
+            let firstUserUsername = req.body.approvedUsername;
+            let secondUserUsername = req.user.username;
 
-            data.getSingleFriendship(firstUser, secondUser)
+            data.getSingleFriendship(firstUserUsername, secondUserUsername)
                 .then(resultFriendship => {
                     return data.updateFriendship(resultFriendship);
                 })

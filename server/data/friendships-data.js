@@ -7,7 +7,7 @@ module.exports = function(models) {
     return {
         getAllFriendships(username) {
             return new Promise((resolve, reject) => {
-                Friendship.find({ $or: [{"firstUser": username }, { "secondUser": username}]})
+                Friendship.find({ $or: [{ "firstUser.username": username }, { "secondUser.username": username }] })
                     .exec((err, friendships) => {
                         if (err) {
                             return reject(err);
@@ -17,9 +17,10 @@ module.exports = function(models) {
                     });
             });
         },
-        getSingleFriendship(firstUser, secondUser) {
+        getSingleFriendship(firstUserUsername, secondUserUsername) {
             return new Promise((resolve, reject) => {
-                Friendship.findOne({ firstUser, secondUser }, (err, friendship) => {
+                Friendship.findOne({ "firstUser.username": firstUserUsername, "secondUser.username": secondUserUsername }, (err, friendship) => {
+
                     if (err) {
                         return reject(err);
                     }

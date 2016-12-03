@@ -1,6 +1,6 @@
 /* globals Promise */
 
-module.exports = function (models) {
+module.exports = function(models) {
     let { User } = models;
 
     return {
@@ -51,7 +51,7 @@ module.exports = function (models) {
                 });
             });
         },
-        createUser({username, firstname, lastname, passHash, salt, facebookId, facebookToken, googleId, googleToken, avatarName}) {
+        createUser({ username, firstname, lastname, passHash, salt, facebookId, facebookToken, googleId, googleToken, avatarName }) {
             let user = new User({
                 username,
                 firstname,
@@ -82,7 +82,7 @@ module.exports = function (models) {
                         reject(err);
                     }
                     resolve(user);
-                })
+                });
             });
         },
         findUserByQueryWithSelectIdAndName(query) {

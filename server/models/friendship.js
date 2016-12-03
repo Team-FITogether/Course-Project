@@ -5,12 +5,24 @@ const Schema = mongoose.Schema;
 
 let friendshipSchema = new Schema({
     firstUser: {
-        type: String,
-        required: true
+        username: {
+            type: String,
+            required: true
+        },
+        _id: {
+            type: String,
+            required: true
+        }
     },
     secondUser: {
-        type: String,
-        required: true
+        username: {
+            type: String,
+            required: true
+        },
+        _id: {
+            type: String,
+            required: true
+        }
     },
     approved: {
         type: Boolean,

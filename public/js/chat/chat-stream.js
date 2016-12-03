@@ -1,6 +1,6 @@
 /* globals EventSource window $ */
 
-(function() {
+(function () {
     "use strict";
 
     function hideParent(targetElement) {
@@ -14,7 +14,7 @@
         $chatRoomLink.text("Приеми");
         $chatRoomLink.attr("href", chatRoomUrl);
         $chatRoomLink.attr("target", "_blank");
-        $chatRoomLink.on("click", function() {
+        $chatRoomLink.on("click", function () {
             hideParent(this);
         });
 
@@ -25,7 +25,7 @@
         var $declineLink = $("<a />");
         $declineLink.text("Откажи");
         $declineLink.attr("href", "#");
-        $declineLink.on("click", function() {
+        $declineLink.on("click", function () {
             hideParent(this);
         });
 
@@ -50,28 +50,13 @@
         return $invitationWindow;
     }
 
-    function getMainInvitationWindow() {
-        var $mainInvitationWindow = $("<div />");
-        $mainInvitationWindow.attr("id", "main-invitation-window");
-        $mainInvitationWindow.addClass("row");
-        $("body").append($mainInvitationWindow);
-
-        return $mainInvitationWindow;
-    }
-
-    function attachMessageEvent(source) {
-        var $mainInvitationWindow = getMainInvitationWindow();
-
+    function attachStartChatEvent(source) {
         source.addEventListener("message", event => {
             var parsedData = JSON.parse(JSON.parse(event.data));
             var chatRoomUrl = parsedData.chatRoomUrl;
 
             if (chatRoomUrl) {
-                var $heading = getHeading(parsedData.senderUsername);
-                var $chatRoomLink = getChatroomLink(chatRoomUrl);
-                var $declineLink = getDeclineLink();
-                var $invitationWindow = getInvitationWindow($heading, $chatRoomLink, $declineLink);
-                $mainInvitationWindow.append($invitationWindow);
+                window.open(chatRoomUrl, "_blank");
             }
         }, false);
     }
@@ -96,7 +81,7 @@
         if (window.EventSource) {
             var source = new EventSource("/stream");
 
-            attachMessageEvent(source);
+            attachStartChatEvent(source);
             attachOpenEvent(source);
             attachErrorEvent(source);
         } else {
@@ -105,4 +90,4 @@
     }
 
     setupSource();
-}());
+} ());

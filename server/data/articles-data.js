@@ -164,8 +164,8 @@ module.exports = function (models) {
         getAllArticles() {
             return new Promise((resolve, reject) => {
                 Article.find()
-                    .select("mainHeader subHeader imgSrc genre body")
-                    .then((err, articles) => {
+                    .select("mainHeader subHeader imgSrc body genre")
+                    .exec((err, articles) => {
                         if (err) {
                             return reject(err);
                         }
