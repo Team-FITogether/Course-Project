@@ -36,7 +36,6 @@ module.exports = function(models) {
                         });
                 })
             ]);
-
         },
         getAllFoodDetails() {
             return new Promise((resolve, reject) => {
