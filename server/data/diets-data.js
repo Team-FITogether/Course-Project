@@ -5,6 +5,17 @@ module.exports = function(models) {
     let { Diet } = models;
 
     return {
+        getDietById(id) {
+            return new Promise((resolve, reject) => {
+                Diet.findOne({ _id: id }, (err, diet) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(diet || null);
+                });
+            });
+        },
         getAllDiets(page, pageSize) {
             let skip = (page - 1) * pageSize;
             let limit = pageSize;
@@ -41,18 +52,7 @@ module.exports = function(models) {
                         return reject(err);
                     }
 
-                    return resolve(diet);
-                });
-            });
-        },
-        getDietById(id) {
-            return new Promise((resolve, reject) => {
-                Diet.findOne({ "_id": id }, (err, diet) => {
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    return resolve(diet);
+                    return resolve(diet || null);
                 });
             });
         },
