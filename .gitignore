@@ -202,4 +202,3 @@ FakesAssemblies/
 *.sln
 .vscode/
 typings/
-/public/img/user-images
