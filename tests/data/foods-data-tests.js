@@ -7,18 +7,23 @@ const spy = require("sinon").spy;
 const foodsData = require("../../server/data/foods-data");
 
 describe("FOODS-DATA-TESTS", () => {
-    describe("getAllFoods() tests", () => {
-        let models = {
-            Food: {
-                find() { return this; },
-                skip() { return this; },
-                limit() { return this; },
-                count() { return this; },
-                exec() { return new Promise(resolve => resolve({})); }
-            }
-        };
-        let data = foodsData(models);
+    let models = {
+        Food: {
+            find() { return this; },
+            skip() { return this; },
+            limit() { return this; },
+            count() { return this; },
+            save() { },
+            exec() { return new Promise(resolve => resolve({})); }
+        },
+        FoodDetails: {
+            findOne() { return this; },
+            find() { return this; }
+        }
+    };
+    let data = foodsData(models);
 
+    describe("getAllFoods() tests", () => {
         it("find() should be called", () => {
             let findSpy = spy(models.Food, "find");
 
@@ -58,13 +63,45 @@ describe("FOODS-DATA-TESTS", () => {
             expect(execSpy.calledTwice).to.be.true;
             execSpy.restore();
         });
+    });
 
-        // it("should return [] with two resolved objects", done => {
-        //     data.getAllFoods()
-        //         .then(result => {
-        //             expect(result.length).to.equal(2);
-        //             done();
-        //         });
-        // });
+    describe("getAllFoodDetails() tests", () => {
+        it("Food.find() should be called", () => {
+            let findSpy = spy(models.Food, "find");
+
+            data.getAllFoods();
+            expect(findSpy.calledOnce).to.be.true;
+            findSpy.restore();
+        });
+    });
+
+    describe("getSingleFood() tests", () => {
+        it("FootDetails.findOne() should be called", () => {
+            let findOneSpy = spy(models.FoodDetails, "findOne");
+
+            data.getSingleFood();
+            expect(findOneSpy.calledOnce).to.be.true;
+            findOneSpy.restore();
+        });
+    });
+
+    describe("getFoodByCategory() tests", () => {
+        it("FootDetails.find() should be called", () => {
+            let findSpy = spy(models.FoodDetails, "find");
+
+            data.getFoodByCategory();
+            expect(findSpy.calledOnce).to.be.true;
+            findSpy.restore();
+        });
+    });
+
+    describe("getFoodByCategory() tests", () => {
+        it("FootDetails.find() should be called", () => {
+            let findSpy = spy(models.FoodDetails, "find");
+
+            data.getFoodByCategory();
+            expect(findSpy.calledOnce).to.be.true;
+            findSpy.restore();
+        });
     });
 });
