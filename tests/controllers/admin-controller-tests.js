@@ -4,7 +4,6 @@
 
 const adminController = require("../../server/controllers/admin-controller");
 
-const sinon = require("sinon");
 const expect = require("chai").expect;
 const spy = require("sinon").spy;
 
