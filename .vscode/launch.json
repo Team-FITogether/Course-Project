@@ -1,3 +1,34 @@
+// {
+//   // Use IntelliSense to find out which attributes exist for node debugging
+//   // Use hover for the description of the existing attributes
+//   // For further information visit https://go.microsoft.com/fwlink/?linkid=830387
+//   "version": "0.2.0",
+//   "configurations": [
+//     {
+//       "name": "Launch Program",
+//       "type": "node",
+//       "request": "launch",
+//       "program": "${workspaceRoot}/index.js",
+//       "cwd": "${workspaceRoot}"
+//     },
+//     {
+//       "name": "Run Mocha",
+//       "type": "node",
+//       "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+//       "stopOnEntry": false,
+//       "args": [
+//         "tests/*.js",
+//         "tests/**/*.js",
+//         "--colors"
+//       ],
+//       "cwd": "${workspaceRoot}",
+//       "runtimeExecutable": null,
+//       "env": {}
+//     }
+//   ]
+// }
+//}
+
 {
   // Use IntelliSense to find out which attributes exist for node debugging
   // Use hover for the description of the existing attributes
@@ -5,46 +36,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Program",
+      "name": "Run Mocha",
       "type": "node",
       "request": "launch",
       "program": "${workspaceRoot}/index.js",
       "cwd": "${workspaceRoot}"
     },
     {
-      "name": "Run Mocha",
+      "name": "Attach to Process",
       "type": "node",
-      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-      "stopOnEntry": false,
-      "args": [
-        "tests/*.js",
-        "tests/**/*.js",
-        "--colors"
-      ],
-      "cwd": "${workspaceRoot}",
-      "runtimeExecutable": null,
-      "env": {}
+      "request": "attach",
+      "port": 9229
     }
   ]
 }
-// }{
-//   // Use IntelliSense to find out which attributes exist for node debugging
-//   // Use hover for the description of the existing attributes
-//   // For further information visit https://go.microsoft.com/fwlink/?linkid=830387
-//   "version": "0.2.0",
-//   "configurations": [
-//     {
-//       "name": "Run Mocha",
-//       "type": "node",
-//       "request": "launch",
-//       "program": "${workspaceRoot}/index.js",
-//       "cwd": "${workspaceRoot}"
-//     },
-//     {
-//       "name": "Attach to Process",
-//       "type": "node",
-//       "request": "attach",
-//       "port": 9229
-//     }
-//   ]
-// }
