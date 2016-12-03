@@ -65,12 +65,12 @@ module.exports = function(models) {
                     body: content
                 });
 
-                diet.save((err, createdDiet) => {
+                diet.save((err) => {
                     if (err) {
                         return reject(err);
                     }
 
-                    return resolve(createdDiet);
+                    return resolve(diet);
                 });
             });
         },
