@@ -99,7 +99,7 @@ function appendFriendshipRequest(requestedUsername) {
     let $waitingFriendshipsDiv = $("#waiting-requests");
     $waitingFriendshipsDiv.append($divFriendship);
 
-    $("#friendship-request-button").html("Покана изпратена");
+    $("#friendship-request-button").html("Приятелство, изчакващо одобрение");
     $("#friendship-request-button").prop("disabled", true);
 };
 
