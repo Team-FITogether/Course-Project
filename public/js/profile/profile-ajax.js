@@ -32,7 +32,7 @@ function appendWorkoutDiv(dateFormated, exercises) {
     let $spanDate = $("<span>").html(dateFormated);
     $divDate.append($spanDate);
     $divSection.append($divDate);
-    for(let i = 0; i < exercises.length; i += 1){
+    for (let i = 0; i < exercises.length; i += 1) {
         let $spanExercise = $("<span>").html(exercises[i]);
         $divSection.append($spanExercise);
         $divSection.append("<br>");
@@ -78,7 +78,7 @@ function appendMenuDiv(dateFormated, meals, totalCalories) {
     $(".menus-list-holder").append($divSection);
 }
 
-function appendFriendshipLink(target){
+function appendFriendshipLink(target) {
     let approvedUsername = $(target).text();
     $(target).remove();
 
@@ -90,7 +90,7 @@ function appendFriendshipLink(target){
     $friendshipLinksDiv.append($divFriendship);
 };
 
-function appendFriendshipRequest(requestedUsername){
+function appendFriendshipRequest(requestedUsername) {
     $("#friendship-request").val("");
     let $divFriendship = $("<div>");
     let $linkFriendship = $("<a>").addClass("approve-friendship-button");
@@ -115,7 +115,7 @@ $("#add-workout-button").on("click", () => {
     let exercises = [exerciseOne, exerciseTwo, exerciseThree, exerciseFour];
 
     if (date >= Date.now()) {
-        
+
         let data = {
             date,
             exercises
@@ -151,8 +151,8 @@ $("#add-menu-button").on("click", () => {
 
     if (date >= Date.now()) {
         let totalCalories = 0;
-        for(let i = 0; i < meals.length; i += 1){
-            if(meals[i].title){
+        for (let i = 0; i < meals.length; i += 1) {
+            if (meals[i].title) {
                 totalCalories += +meals[i].calories * meals[i].quantity;
             }
         }
@@ -179,9 +179,9 @@ $("#friendship-request-button").on("click", () => {
     }
     app.requester.post("/users/profile/friendship-request", data)
         .then(res => {
-                appendFriendshipRequest(requestedUsername);
-                app.notificator.showNotification("Поканата е изпратена!", "success");
-            });
+            appendFriendshipRequest(requestedUsername);
+            app.notificator.showNotification("Поканата е изпратена!", "success");
+        });
 });
 
 $(".approve-friendship-button").on("click", (ev) => {
@@ -190,9 +190,12 @@ $(".approve-friendship-button").on("click", (ev) => {
     let data = {
         approvedUsername
     }
+
+
+
     app.requester.post("/users/profile/friendship-approved", data)
         .then(res => {
-                appendFriendshipLink($target);
-                app.notificator.showNotification("Приятелството е одобрено!", "success");
-            });
+            appendFriendshipLink($target);
+            app.notificator.showNotification("Приятелството е одобрено!", "success");
+        });
 });

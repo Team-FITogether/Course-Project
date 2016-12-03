@@ -25,8 +25,9 @@ function renderProfilePage(req, res, data) {
         })
         .then(resultFriendships => {
             let approvedFriendships = resultFriendships.filter(el => { return el.approved; });
-            let waitingForApproval = resultFriendships.filter(el => { return !el.approved && el.secondUser === req.user.username; });
+            let waitingForApproval = resultFriendships.filter(el => { return !el.approved && el.secondUser.username === req.user.username; });
             let requestedFriendships = resultFriendships.filter(el => { return !el.approved && el.firstUser === req.user.username; });
+
             friendships = {
                 approvedFriendships,
                 waitingForApproval,
@@ -150,10 +151,10 @@ module.exports = ({ userValidator, common, data }) => {
                 .then(() => res.sendStatus(200));
         },
         approveFriendship(req, res) {
-            let firstUser = req.body.approvedUsername;
-            let secondUser = req.user.username;
+            let firstUserUsername = req.body.approvedUsername;
+            let secondUserUsername = req.user.username;
 
-            data.getSingleFriendship(firstUser, secondUser)
+            data.getSingleFriendship(firstUserUsername, secondUserUsername)
                 .then(resultFriendship => {
                     return data.updateFriendship(resultFriendship);
                 })
