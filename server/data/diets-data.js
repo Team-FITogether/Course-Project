@@ -81,7 +81,7 @@ module.exports = function(models) {
                             reject(err);
                         }
 
-                        resolve(diets);
+                        return resolve(diets);
                     });
             });
         }

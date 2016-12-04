@@ -1,9 +1,11 @@
 /* globals describe it beforeEach afterEach */
+"use strict";
+
 const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
 
-describe("recipes-data tests", () => {
+describe("RECIPES-DATA-TESTS", () => {
     class Recipe {
         constructor(properties) {
             this.title = properties.title;

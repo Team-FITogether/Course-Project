@@ -9,17 +9,6 @@ module.exports = function(models) {
     } = models;
 
     return {
-        getAllCategories() {
-            return new Promise((resolve, reject) => {
-                ExerciseCategory.find((err, categories) => {
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    return resolve(categories);
-                });
-            });
-        },
         getSingleExercise(title) {
             return new Promise((resolve, reject) => {
                 ExerciseExplanation.findOne({ title }, (err, explanation) => {
@@ -27,7 +16,18 @@ module.exports = function(models) {
                         return reject(err);
                     }
 
-                    return resolve(explanation);
+                    return resolve(explanation || null);
+                });
+            });
+        },
+        getAllCategories() {
+            return new Promise((resolve, reject) => {
+                ExerciseCategory.find((err, categories) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(categories || null);
                 });
             });
         },
@@ -55,12 +55,12 @@ module.exports = function(models) {
         },
         getExerciseExplanationById(id) {
             return new Promise((resolve, reject) => {
-                ExerciseExplanation.findById(id, (err, exercises) => {
+                ExerciseExplanation.findById(id, (err, exercise) => {
                     if (err) {
                         return reject(err);
                     }
 
-                    return resolve(exercises);
+                    return resolve(exercise || null);
                 });
             });
         },
