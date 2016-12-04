@@ -10,9 +10,9 @@ function parseDate(dateString) {
     year = +dateArr[2],
 
     parsedMonth = month + 1,
-
+    parseDayForHeroku = day + 1,
     dateFormated = `${day  }/${  parsedMonth  }/${  year}`,
-    date = new Date(year, month, day),
+    date = new Date(year, month, parseDayForHeroku),
 
     exerciseOne = $("#exercise-1").val(),
     exerciseTwo = $("#exercise-2").val(),
