@@ -44,6 +44,12 @@ describe("EXERCISES-DATA-TESTS", () => {
         static find() {
             return this;
         }
+        static select() {
+            return this;
+        }
+        static exec() {
+            return this;
+        }
     }
 
     const data = require("./../../server/data/exercises-data")({ ExerciseCategory, ExerciseExplanation, Exercise });
@@ -148,6 +154,48 @@ describe("EXERCISES-DATA-TESTS", () => {
             data.getExerciseExplanationById("1")
                 .then(foundExerciseExplanation => {
                     expect(foundExerciseExplanation).to.be.null;
+                    done();
+                });
+        });
+    });
+
+    describe("findExerciseByQueryWithSelectIdAndName(query)", () => {
+        it("Expect all chained methods to be called - find().select().exec()", done => {
+            let findSpy = sinon.spy(Exercise, "find");
+            let selectSpy = sinon.spy(Exercise, "select");
+            let execSpy = sinon.spy(Exercise, "exec");
+
+            data.findExerciseByQueryWithSelectIdAndName(1, "name");
+
+            expect(findSpy.calledOnce).to.be.true;
+            expect(selectSpy.calledOnce).to.be.true;
+            expect(execSpy.calledOnce).to.be.true;
+
+            done();
+
+            findSpy.restore();
+            selectSpy.restore();
+            execSpy.restore();
+        });
+    });
+
+    describe("addNewCategory(name)", () => {
+        beforeEach(() => {
+            sinon.stub(ExerciseCategory.prototype, "save", callback => {
+                callback(null);
+            });
+        });
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
+        it("Expect addNewCategory(name)) to save exercise-category with the correct property", done => {
+            let newName = "new name";
+
+            data.addNewCategory(newName)
+                .then(newCategory => {
+                    expect(newCategory.name).to.equal(newName);
                     done();
                 });
         });

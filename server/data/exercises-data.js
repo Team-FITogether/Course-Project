@@ -83,12 +83,12 @@ module.exports = function(models) {
                     name
                 });
 
-                category.save((err, createdCategory) => {
+                category.save((err) => {
                     if (err) {
                         return reject(err);
                     }
 
-                    return resolve(createdCategory);
+                    return resolve(category);
                 });
             });
         }
