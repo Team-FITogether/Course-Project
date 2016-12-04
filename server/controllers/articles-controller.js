@@ -105,7 +105,7 @@ function likeArticle(articleId, req, res, data) {
         });
 }
 
-function getSingleArticleObject(article, articleComments, user) {
+function getSingleArticleObject(article, articleComments) {
     return {
         mainHeader: article.mainHeader,
         subHeader: article.subHeader,
@@ -113,8 +113,10 @@ function getSingleArticleObject(article, articleComments, user) {
         author: article.author,
         body: article.body,
         id: article._id,
+        deletedOn: article.deletedOn,
         comments: articleComments,
-        user
+        likes: article.likes,
+        currentUserHasLiked: article.currentUserHasLiked
     };
 }
 
@@ -146,6 +148,7 @@ module.exports = ({ userValidator, common, data }) => {
         },
         loadSingleArticlePage(req, res) {
             common.setIsAdminUser(req, userValidator);
+            let user = req.user;
             let title = req.query.title;
             return data.getArticleByTitle(title)
                 .then(article => {
@@ -154,9 +157,19 @@ module.exports = ({ userValidator, common, data }) => {
                         return res.status(404);
                     }
 
+                    if (user) {
+                        for (let i = 0; i < article.usersLiked.length; i += 1) {
+                            if (article.usersLiked[i].user === user.username) {
+                                article.currentUserHasLiked = true;
+                            } else {
+                                article.currentUserHasLiked = false;
+                            }
+                        }
+                    }
+
                     let articleComments = getArticleCommentsMapped(article);
-                    let articleObject = getSingleArticleObject(article, articleComments, req.user);
-                    res.render(SINGLE_ARTICLE_VIEW, articleObject);
+                    let articleObject = getSingleArticleObject(article, articleComments);
+                    res.render(SINGLE_ARTICLE_VIEW, { articleObject, user });
                 });
         },
         createArticle(req, res) {
