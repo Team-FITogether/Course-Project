@@ -3,9 +3,9 @@
 module.exports = ({ app, userValidator, controllers }) => {
     const foodsController = controllers.foods;
 
-    app.get("/foods", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, foodsController.getAllFoods);
-    app.get("/foods/single-food", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, foodsController.getSingleFood);
-    app.get("/foods/single-food-category", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, foodsController.getFoodByCategory);
+    app.get("/foods", foodsController.getAllFoods);
+    app.get("/foods/single-food", foodsController.getSingleFood);
+    app.get("/foods/single-food-category", foodsController.getFoodByCategory);
 
     app.post("/foods/edit", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, foodsController.loadEditFoodPage);
     app.post("/foods/create/update", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, foodsController.saveEditedFood);
