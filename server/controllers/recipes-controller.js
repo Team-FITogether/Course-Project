@@ -2,9 +2,12 @@
 
 const ALL_RECIPES_VIEW = "food/all-recipes";
 const SINGLE_RECIPE_VIEW = "food/single-recipe";
+const EDIT_RECIPE_VIEW = "food/edit-recipe";
 const PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
+const ADMIN_ROLE = "admin";
 
-function loadAllRecipes(user, req, res, page, pageSize, data) {
+function loadAllRecipes(user, req, res, page, pageSize, userValidator, common, data) {
+    common.setIsAdminUser(req, userValidator);
     return data.getAllRecipes(page, pageSize)
         .then(result => {
             let recipes = result[0];
@@ -48,6 +51,7 @@ function dislikeRecipe(recipeId, index, res, data) {
     let update = { $inc: { likes: -1 } };
     data.updateRecipe(recipeId, update, null)
         .then((recipe) => {
+            let user = { user: req.user.username };
             recipe.usersLiked.splice(index, 1);
             recipe.save();
             return recipe;
@@ -55,14 +59,20 @@ function dislikeRecipe(recipeId, index, res, data) {
         .then(recipe => res.json(JSON.stringify(recipe.likes - 1)));
 }
 
-module.exports = ({ data }) => {
+module.exports = ({ userValidator, common, data }) => {
     return {
+        loadEditRecipePage(req, res) {
+            common.setIsAdminUser(req, userValidator);
+            let recipeId = req.body.id;
+            return data.getRecipeById(recipeId)
+                .then(recipe => res.render(EDIT_RECIPE_VIEW, { user: req.user, recipe }));
+        },
         getAllRecipes(req, res) {
             let user = req.user;
             let page = Number(req.query.page || 1);
             let pageSize = 10;
 
-            return loadAllRecipes(user, req, res, page, pageSize, data);
+            return loadAllRecipes(user, req, res, page, pageSize, userValidator, common, data);
         },
         getSingleRecipe(req, res) {
             let title = req.query.title;
@@ -117,6 +127,44 @@ module.exports = ({ data }) => {
                         likeRecipe(recipeId, req, res, data);
                     }
                 });
+        },
+        createRecipe(req, res) {
+            let recipeTitle = req.body.recipeTitle;
+            let recipeBody = req.body.recipeBody;
+
+            return data.addNewRecipe(recipeTitle, recipeBody)
+                .then(() => res.redirect(`/recipes/single-recipe?title=${recipeTitle}`))
+                .catch(console.log);
+        },
+        saveEditedRecipe(req, res) {
+            let recipeId = req.body.recipeId;
+            let recipeTitle = req.body.recipeTitle;
+            let recipeBody = req.body.recipeBody;
+
+            let update = { title: recipeTitle, body: recipeBody };
+            let options = { new: true };
+
+            return data.updateRecipe(recipeId, update, options)
+                .then(() => res.redirect("/"))
+                .catch(console.log);
+        },
+        deleteRecipe(req, res) {
+            let recipeId = req.body.recipeId;
+            let update = { deletedOn: Date.now() };
+            let options = { new: true };
+
+            return data.updateRecipe(recipeId, update, options)
+                .then(() => res.redirect("back"))
+                .catch(console.log);
+        },
+        restoreRecipe(req, res) {
+            let recipeId = req.body.recipeId;
+            let update = { deletedOn: null };
+            let options = { new: true };
+
+            return data.updateRecipe(recipeId, update, options)
+                .then(() => res.redirect("back"))
+                .catch((err) => console.log(err));
         }
     };
 };
