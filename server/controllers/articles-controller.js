@@ -149,6 +149,11 @@ module.exports = ({ userValidator, common, data }) => {
             let title = req.query.title;
             return data.getArticleByTitle(title)
                 .then(article => {
+                    if (!article) {
+                        res.render(PAGES_NOT_FOUND_VIEW);
+                        return res.status(404);
+                    }
+
                     let articleComments = getArticleCommentsMapped(article);
                     let articleObject = getSingleArticleObject(article, articleComments, req.user);
                     res.render(SINGLE_ARTICLE_VIEW, articleObject);
