@@ -27,6 +27,7 @@ module.exports = function (models) {
                         .equals(null)
                         .skip(skip)
                         .limit(limit)
+                        .sort({ createdOn: -1 })
                         .exec((err, articles) => {
                             if (err) {
                                 return reject(err);
@@ -56,6 +57,7 @@ module.exports = function (models) {
                     Article.find({ genre })
                         .skip(skip)
                         .limit(limit)
+                        .sort({ createdOn: -1 })
                         .exec((err, articles) => {
                             if (err) {
                                 return reject(err);
@@ -88,6 +90,20 @@ module.exports = function (models) {
             });
         },
         getArticlesByAuthor(author) {
+            return new Promise((resolve, reject) => {
+                Article.find({ author })
+                    .where("deletedOn")
+                    .equals(null)
+                    .exec((err, article) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(article);
+                    });
+            });
+        },
+        getArticlesByAuthorAdminUser(author) {
             return new Promise((resolve, reject) => {
                 Article.find({ author }, (err, article) => {
                     if (err) {

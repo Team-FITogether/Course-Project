@@ -11,7 +11,7 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.post("/articles/edit", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, articlesController.loadEditArticlePage);
     app.post("/articles/create/save", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, articlesController.createArticle);
     app.post("/articles/comments/add", userValidator.isUserLoggedIn, articlesController.addComment);
-    app.post("/articles/delete", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, articlesController.deleteArticle);
+    app.post("/articles/delete", userValidator.isUserLoggedIn, userValidator.isTrainerUserMiddleware, articlesController.deleteArticle);
     app.post("/articles/restore", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, articlesController.restoreArticle);
     app.post("/api/articles/like", userValidator.isUserLoggedIn, articlesController.toggleLikeOnArticle);
 

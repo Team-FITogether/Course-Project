@@ -8,10 +8,17 @@ function renderProfilePage(req, res, data) {
     let articles;
     let foods;
     let friendships;
+    let isAdmin = false;
+    if (req.user.isAdmin) {
+        isAdmin = true;
+    }
 
     data.getAllExercises()
         .then(resultExercises => {
             exercises = resultExercises;
+            if (isAdmin) {
+                return data.getArticlesByAuthorAdminUser(req.user.username);
+            }
             return data.getArticlesByAuthor(req.user.username);
         })
         .then(resultAricles => {

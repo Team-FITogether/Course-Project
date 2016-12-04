@@ -17,7 +17,22 @@ describe("loadProfilePage() tests", () => {
             return new Promise(resolve => resolve({}));
         }
     };
-    let reqMock = {};
+    let reqMock = {
+        user: {
+            "_id": "1",
+            "username": "teod_st",
+            "firstname": "Teodora",
+            "lastname": "Stoyanova",
+            "avatarName": "1",
+            "passHash": "1",
+            "salt": "1",
+            "roles": [
+                "trainer",
+                "admin"
+            ],
+            "__v": 0
+        }
+    };
     let resMock = {};
 
     it("commonMock.setIsAdminUser() should be called", () => {
@@ -29,7 +44,7 @@ describe("loadProfilePage() tests", () => {
         commonSpy.restore();
     });
 
-     it("commonMock.setIsTrainerUser() should be called", () => {
+    it("commonMock.setIsTrainerUser() should be called", () => {
         let commonSpy = spy(commonMock, "setIsTrainerUser");
         let controller = userController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
 
