@@ -132,7 +132,7 @@ module.exports = ({ userValidator, common, data }) => {
             let recipeTitle = req.body.recipeTitle;
             let recipeBody = req.body.recipeBody;
 
-            return data.createRecipe(recipeTitle, recipeBody)
+            return data.addNewRecipe(recipeTitle, recipeBody)
                 .then(() => res.redirect(`/recipes/single-recipe?title=${recipeTitle}`))
                 .catch(console.log);
         },
@@ -164,7 +164,7 @@ module.exports = ({ userValidator, common, data }) => {
 
             return data.updateRecipe(recipeId, update, options)
                 .then(() => res.redirect("back"))
-                .catch((err) => consoe.log(err));
+                .catch((err) => console.log(err));
         }
     };
 };

@@ -81,7 +81,7 @@ module.exports = function(models) {
                     });
             });
         },
-        createRecipe(title, body) {
+        addNewRecipe(title, body) {
             let recipe = new Recipe({
                 title,
                 body
