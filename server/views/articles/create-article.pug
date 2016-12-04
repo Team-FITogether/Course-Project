@@ -6,8 +6,7 @@ block content
   script(src="/js/tinymce-config.js")
 
   div.header.header-default
-  -var exists = error ? error.exists : null
-  if exists
+  if error.exists
     .alert.alert-danger
       .container-fluid
         .alert-icon
