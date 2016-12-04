@@ -57,9 +57,9 @@ function renderProfilePage(req, res, data) {
 }
 
 function renderFoundUserByUsername(username, res, req, data) {
-    data.getUserByUsername(username)
+    return data.getUserByUsername(username)
         .then(foundUser => {
-            res.render(FOUND_USER_PROFILE_VIEW, {
+            return res.render(FOUND_USER_PROFILE_VIEW, {
                 foundUser,
                 user: req.user
             });
@@ -72,13 +72,13 @@ function renderFoundUserById(id, req, res, data) {
         otherUser;
 
     if (loggedUser) {
-        data.getUserById(id)
+        return data.getUserById(id)
             .then(foundUser => {
                 otherUser = foundUser;
                 return data.getSingleFriendship(loggedUser.username, otherUser.username);
             })
             .then(friendship => {
-                res.render(FOUND_USER_PROFILE_VIEW, {
+                return res.render(FOUND_USER_PROFILE_VIEW, {
                     user: loggedUser,
                     foundUser: otherUser,
                     friendship
@@ -86,7 +86,7 @@ function renderFoundUserById(id, req, res, data) {
             })
             .catch(console.log);
     } else {
-        data.getUserById(id)
+        return data.getUserById(id)
             .then(foundUser => res.render(FOUND_USER_PROFILE_VIEW, { foundUser }));
     }
 }
@@ -112,9 +112,9 @@ module.exports = ({ userValidator, common, data }) => {
             }
 
             if (username) {
-                renderFoundUserByUsername(username, req, res, data);
+                return renderFoundUserByUsername(username, res, req, data);
             } else if (id) {
-                renderFoundUserById(id, req, res, data);
+                return renderFoundUserById(id, req, res, data);
             }
         },
         addWorkoutToUser(req, res) {
@@ -126,7 +126,7 @@ module.exports = ({ userValidator, common, data }) => {
 
             let newWorkout = { date, exercises };
 
-            data.updateWorkoutsCalendar(req.user, newWorkout)
+            return data.updateWorkoutsCalendar(req.user, newWorkout)
                 .then(() => res.sendStatus(200));
         },
         addMenuToUser(req, res) {
@@ -137,7 +137,7 @@ module.exports = ({ userValidator, common, data }) => {
             let date = new Date(req.body.date);
             let totalCalories = req.body.totalCalories;
             let newMenu = { date, meals, totalCalories };
-            data.updateMenusCalendar(req.user, newMenu)
+            return data.updateMenusCalendar(req.user, newMenu)
                 .then(() => res.sendStatus(200));
         },
         getAllUsers(req, res) {
@@ -150,7 +150,7 @@ module.exports = ({ userValidator, common, data }) => {
                 userSendingInvitation,
                 userReceivingInvitation;
 
-            data.findUserByQuery({ username: firstUsername })
+            return data.findUserByQuery({ username: firstUsername })
                 .then(foundFirstUser => {
                     userSendingInvitation = foundFirstUser;
                     return data.findUserByQuery({ username: secondUsername });
@@ -185,7 +185,7 @@ module.exports = ({ userValidator, common, data }) => {
             let firstUserUsername = req.body.approvedUsername;
             let secondUserUsername = req.user.username;
 
-            data.getSingleFriendship(firstUserUsername, secondUserUsername)
+            return data.getSingleFriendship(firstUserUsername, secondUserUsername)
                 .then(resultFriendship => {
                     return data.updateFriendship(resultFriendship);
                 })
@@ -195,7 +195,7 @@ module.exports = ({ userValidator, common, data }) => {
             let firstUserUsername = req.body.disapprovedUsername;
             let secondUserUsername = req.user.username;
 
-            data.getSingleFriendship(firstUserUsername, secondUserUsername)
+            return data.getSingleFriendship(firstUserUsername, secondUserUsername)
                 .then(resultFriendship => {
                     return data.rejectFriendship(resultFriendship);
                 })
