@@ -13,6 +13,39 @@ block content
             a(href="/diets/single-diet?title=" + val.title).article-link #{val.title}
             br
 
-    div.divider
+            if user 
+              if user.isTrainer
+                form(method="post", action="/diets/edit")
+                  input(type="hidden" name="id" value=val._id)
+                  button.btn.btn-warning.btn-edit Редактирай
+              else if user.isAdmin
+                div.editorial-menu 
+                  form(method="post", action="/diets/edit")
+                    input(type="hidden" name="id" value=val._id)
+                    button.btn.btn-warning.btn-edit Редактирай      
+                  if  val.deletedOn
+                    form(method="post", action="/diets/restore")
+                      input(type="hidden" name="dietId" value=val._id)
+                      button.btn.btn-success.btn-edit Възстанови    
+                      span.label.label-danger Маркирано като изтрито - на дата:  #{val.deletedOn}
+                  else 
+                    a.btn.btn-danger.btn-delete(data-toggle='modal', data-target= "#modal-"+ val._id)
+                      | Изтрий
+
+                div(id="modal-" + val._id).modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+                  .modal-dialog                       
+                    .modal-content
+                      .modal-header
+                        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                        h4.modal-title Потвърждение за изтриване.
+                      .modal-body
+                        | Сигурен ли сте искате да изтриете предмет #{val.title} с id:#{val._id}?
+                      .modal-footer
+                        form(method="post", action="/diets/delete")
+                          input(type="hidden" name="dietId" value=val._id)             
+                          a.btn.btn-default.btn-simple(type='button', data-dismiss='modal') Откажи
+                          button.btn.btn-danger Изтрий
+
+              div.divider
 
   +dietsPagination(page, pages)

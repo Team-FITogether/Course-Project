@@ -1,0 +1,19 @@
+extends ../base-master
+block content
+
+  script(src="/bower_components/tinymce/tinymce.min.js")
+  script(src="/bower_components/tinymce/jquery.tinymce.min.js")
+  script(src="/js/tinymce-config.js")
+
+  div.header.header-default
+  div.main.main-raised
+    div.section.section-basic
+      div.container-fluid
+        form(method="post" action="/diets/create/update")
+          div.row.container
+            div.col-md-4
+              div.form-group 
+                input(type="hidden" name="dietId" value="" + diet._id)
+                input(type="text", name="dietTitle", placeholder="title", value="" + diet.title).form-control
+            div.col-md-4
+          textarea(name="dietBody")#tinymce !{diet.body}

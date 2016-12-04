@@ -56,6 +56,18 @@ module.exports = function(models) {
                 });
             });
         },
+        updateDiet(id, update, options) {
+            return new Promise((resolve, reject) => {
+                Diet.findOneAndUpdate({ "_id": id }, update, options,
+                    (err, diet) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(diet || null);
+                    });
+            });
+        },
         addNewDiet(title, content) {
             return new Promise((resolve, reject) => {
                 let diet = new Diet({

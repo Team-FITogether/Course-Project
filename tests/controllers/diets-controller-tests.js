@@ -19,6 +19,8 @@ describe("getAllDiets() tests", () => {
     let resMock = {
         render() {}
     };
+    let commonMock = { setIsAdminUser() {} };
+    let userValidatorMock = {};
     let dataMock = {
         getAllDiets() {
             return new Promise(resolve => resolve(allDiets));
@@ -26,7 +28,7 @@ describe("getAllDiets() tests", () => {
     };
 
     it("data.getAllDiets() should be called", () => {
-        let controller = dietsController({ data: dataMock });
+        let controller = dietsController({ userValidator: userValidatorMock, common: commonMock, data: dataMock });
         let dataSpy = spy(dataMock, "getAllDiets");
 
         controller.getAllDiets(reqMock, resMock);
@@ -35,7 +37,7 @@ describe("getAllDiets() tests", () => {
     });
 
     it("res.render() should be called", done => {
-        let controller = dietsController({ data: dataMock });
+        let controller = dietsController({ userValidator: userValidatorMock, common: commonMock, data: dataMock });
         let resSpy = spy(resMock, "render");
 
         controller
