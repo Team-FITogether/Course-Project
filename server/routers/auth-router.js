@@ -11,9 +11,9 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.get("/auth/login", userValidator.LimitLoggedInUserMiddleware, authController.loadLoginPage);
     app.get("/auth/logout", userValidator.isUserLoggedIn, authController.logoutUser);
 
-    app.get("/auth/facebook", authController.loginUserFacebook);
+    app.get("/auth/facebook", userValidator.LimitLoggedInUserMiddleware, authController.loginUserFacebook);
     app.get("/auth/facebook/callback", authController.loginUserFacebook);
-    app.get("/auth/google", authController.loginUserGoogle);
+    app.get("/auth/google", userValidator.LimitLoggedInUserMiddleware, authController.loginUserGoogle);
     app.get("/auth/google/callback", authController.loginUserGoogle);
 
     app.post("/auth/register", avatarUploader.single("avatar"), authController.registerUser);
