@@ -6,6 +6,16 @@ block content
   script(src="/js/tinymce-config.js")
 
   div.header.header-default
+  if error.exists
+    .alert.alert-danger
+      .container-fluid
+        .alert-icon
+          i.material-icons error_outline
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true')
+            i.material-icons clear
+        b error.message
+
   div.main.main-raised
     div.section.section-basic
       div.container-fluid
