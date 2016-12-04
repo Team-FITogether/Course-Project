@@ -207,3 +207,173 @@ describe("addComment() tests", () => {
             });
     });
 });
+
+describe("createDiet() tests", () => {
+    let reqMock = {
+        body: {
+            dietTitle: "test title",
+            dietBody: "test body"
+        }
+    };
+    let resMock = {
+        redirect() {}
+    };
+    let dataMock = {
+        addNewDiet() {
+            return new Promise(resolve => resolve({}));
+        }
+    };
+
+    it("data.createDiet() should be called with with dietTitle and dietBody", () => {
+        let dataSpy = sinon.spy(dataMock, "addNewDiet");
+        let controller = dietsController({ data: dataMock });
+        let body = reqMock.body;
+
+        controller.createDiet(reqMock, resMock);
+        expect(dataSpy.calledWith(body.dietTitle, body.dietBody));
+    });
+
+    it("res.redirect() should be called when everything is ok", done => {
+        let resSpy = sinon.spy(resMock, "redirect");
+        let controller = dietsController({ data: dataMock });
+
+        controller
+            .createDiet(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.called).to.be.true;
+                done();
+            });
+    });
+});
+
+describe("saveEditedDiet() tests", () => {
+    let reqMock = {
+        body: {
+            dietId: "test id",
+            dietTitle: "test title",
+            dietBody: "test body"
+        }
+    };
+    let resMock = {
+        redirect() {}
+    };
+    let dataMock = {
+        updateDiet() {
+            return new Promise(resolve => resolve({}));
+        }
+    };
+
+    it("data.saveEditedDiet() should be called with dietId (from the body), update object and options object", () => {
+        let dataSpy = sinon.spy(dataMock, "updateDiet");
+        let controller = dietsController({ data: dataMock });
+
+        controller.saveEditedDiet(reqMock, resMock);
+
+        let expectedUpdate = {
+            title: reqMock.body.dietTitle,
+            body: reqMock.body.dietBody
+        };
+        let expectedOptions = { new: true };
+        expect(dataSpy.calledWith(reqMock.body.dietId, expectedUpdate, expectedOptions)).to.be.true;
+        dataSpy.restore();
+    });
+
+    it("res.render() should be called when everything is ok", done => {
+        let resSpy = sinon.spy(resMock, "redirect");
+        let controller = dietsController({ data: dataMock });
+
+        controller
+            .saveEditedDiet(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                resSpy.restore();
+                done();
+            });
+    });
+});
+
+describe("deleteDiet() tests", () => {
+    let reqMock;
+    let resMock;
+    let dataMock;
+
+    beforeEach(() => {
+        reqMock = {
+            body: {
+                dietId: 1
+            }
+        };
+        resMock = {
+            redirect() {}
+        };
+        dataMock = {
+            updateDiet() {
+                return new Promise(resolve => resolve({}));
+            }
+        };
+    });
+
+    it("data.updateDiet() should be called", () => {
+        let controller = dietsController({ data: dataMock });
+        let dataSpy = sinon.spy(dataMock, "updateDiet");
+
+        controller.deleteDiet(reqMock, resMock);
+        expect(dataSpy.calledOnce).to.be.true;
+        dataSpy.restore();
+    });
+
+    it("res.redirect() should be called when everything is ok", done => {
+        let controller = dietsController({ data: dataMock });
+        let resSpy = sinon.spy(resMock, "redirect");
+
+        controller
+            .deleteDiet(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                done();
+            });
+    });
+});
+
+describe("restoreDiet() tests", () => {
+    let reqMock;
+    let resMock;
+    let dataMock;
+
+    beforeEach(() => {
+        reqMock = {
+            body: {
+                dietId: 1
+            }
+        };
+        resMock = {
+            redirect() {}
+        };
+        dataMock = {
+            updateDiet() {
+                return new Promise(resolve => resolve({}));
+            }
+        };
+    });
+
+    it("data.updateDiet() should be called", () => {
+        let controller = dietsController({ data: dataMock });
+        let dataSpy = sinon.spy(dataMock, "updateDiet");
+
+        controller.restoreDiet(reqMock, resMock);
+        expect(dataSpy.calledOnce).to.be.true;
+        dataSpy.restore();
+    });
+
+    it("res.redirect() should be called when everything is ok", done => {
+        let controller = dietsController({ data: dataMock });
+        let resSpy = sinon.spy(resMock, "redirect");
+
+        controller
+            .deleteDiet(reqMock, resMock)
+            .then(() => {
+                expect(resSpy.calledOnce).to.be.true;
+                done();
+            });
+    });
+});
