@@ -7,8 +7,8 @@ const avatarUploader = multer({ dest: "./public/img/user-images" });
 module.exports = ({ app, userValidator, controllers }) => {
     const authController = controllers.auth;
 
-    app.get("/auth/register", authController.loadRegisterPage);
-    app.get("/auth/login", authController.loadLoginPage);
+    app.get("/auth/register", userValidator.LimitLoggedInUserMiddleware, authController.loadRegisterPage);
+    app.get("/auth/login", userValidator.LimitLoggedInUserMiddleware, authController.loadLoginPage);
     app.get("/auth/logout", userValidator.isUserLoggedIn, authController.logoutUser);
 
     app.get("/auth/facebook", authController.loginUserFacebook);

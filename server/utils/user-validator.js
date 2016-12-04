@@ -36,9 +36,18 @@ function isUserLoggedIn(req, res, next) {
     }
 }
 
+function LimitLoggedInUserMiddleware(req, res, next) {
+    if (req.user) {
+        res.redirect("/");
+    } else {
+        next();
+    }
+}
+
 module.exports = {
     isTrainerUserMiddleware,
     isAdminUserMiddleware,
     isUserLoggedIn,
-    isInRole
+    isInRole,
+    LimitLoggedInUserMiddleware
 };
