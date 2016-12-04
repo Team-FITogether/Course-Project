@@ -13,10 +13,10 @@ mixin header(user)
           | FITogether
           .ripple-container
       #navbar.collapse.navbar-collapse
-        form(action="/search" method="get").navbar-form.navbar-left
+        form(action="/search" method="get" id="search-form").navbar-form.navbar-left
           div.input-group
             div.input-group
-              input(type="text" name="searchValue" placeholder="Търси").form-control
+              input(type="text" name="searchValue" placeholder="Търси" id="tb-search").form-control
             div.input-group
               select(name="entityName")
                 option(value="users" style="color:black;") Потребители
@@ -25,7 +25,7 @@ mixin header(user)
                 option(value="foods" style="color:black;") Храни
                 option(value="recipes" style="color:black;") Рецепти
             div.input-group-btn
-              button(type="submit").btn.btn-white.btn-fab.btn-fab-mini.btn-just-icon.btn-search
+              button(type="submit" id="btn-search").btn.btn-white.btn-fab.btn-fab-mini.btn-just-icon.btn-search
                 i.material-icons search
         ul.nav.navbar-nav.navbar-right
           li.dropdown
