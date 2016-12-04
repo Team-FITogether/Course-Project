@@ -2,20 +2,21 @@
 
 const mongoose = require("mongoose");
 const encryption = require("../utils/encryption");
+const validationConstants = require("../utils/validation-constants");
 
 const userSchema = mongoose.Schema({
-    username: { type: String, unique: true, required: true },
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
+    username: { type: String, unique: true, required: true, minlength: validationConstants.MIN_LENGTH, maxlength: validationConstants.MAX_USER_NAME_LENGTH },
+    firstname: { type: String, required: true, minlength: validationConstants.MIN_LENGTH, maxlength: validationConstants.MAX_USER_NAME_LENGTH },
+    lastname: { type: String, required: true, minlength: validationConstants.MIN_LENGTH, maxlength: validationConstants.MAX_USER_NAME_LENGTH },
     passHash: { type: String, required: true },
     salt: { type: String, required: true },
     facebookId: { type: String },
     facebookToken: { type: String },
     googleId: { type: String },
     googleToken: { type: String },
-    age: { type: Number },
+    age: { type: Number, min: validationConstants.MIN_NUMBER },
     roles: [String],
-    avatarName: { type: String, default: "default-profile.png" },
+    avatarName: { type: String, default: "default-profile.png", minlength: validationConstants.MIN_LENGTH },
     calendar: {
         workouts: [{}],
         menus: [{}]
