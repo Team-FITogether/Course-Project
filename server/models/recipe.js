@@ -8,6 +8,8 @@ let recipeSchema = new Schema({
     body: { type: String, required: true },
     imgSrc: { type: String },
     likes: { type: Number, default: 0 },
+    deletedOn: { type: Date, default: null },
+    createdOn: { type: Date, default: Date.now },
     usersLiked: [{
         user: String
     }],
