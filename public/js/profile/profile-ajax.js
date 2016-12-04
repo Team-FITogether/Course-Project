@@ -111,7 +111,8 @@ function appendFriendshipRequest(requestedUsername) {
     $("#friendship-request-button").prop("disabled", true);
 };
 
-$("#add-workout-button").on("click", () => {
+$("#add-workout-button").on("click", ev => {
+    ev.preventDefault();
     var dateString = $("#workout-datepicker").val(),
     parsedDate = parseDate(dateString);
 
@@ -140,9 +141,12 @@ $("#add-workout-button").on("click", () => {
     } else {
         app.notificator.showNotification("Изберете валидна дата!", "error");
     }
+
+    return false;
 });
 
-$("#add-menu-button").on("click", () => {
+$("#add-menu-button").on("click", ev => {
+    ev.preventDefault();
     var dateString = $("#foods-datepicker").val(),
     parsedDate = parseDate(dateString),
 
@@ -181,6 +185,8 @@ $("#add-menu-button").on("click", () => {
     } else {
         app.notificator.showNotification("Изберете валидна дата!", "error");
     }
+
+    return false;
 });
 
 $("#friendship-request-button").on("click", () => {

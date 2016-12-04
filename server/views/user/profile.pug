@@ -1,7 +1,6 @@
 extends ../base-master
 
 block content
-<<<<<<< HEAD
     link(rel="stylesheet" href="/css/users/profile.css")
     link(rel="stylesheet" href="/css/articles/all-articles.css")   
     div.header.header-filter(style="background-image: url('/img/common/fitness-woman-5.jpg');")    
@@ -26,7 +25,7 @@ block content
                                     li
                                         a(role="tab" data-toggle="tab" id="my-workouts" class="profile-link")
                                             i.material-icons fitness_center
-                                            | Тренировъчен Режим
+                                            | Тренировъчен График
                                     li
                                         a(role="tab" data-toggle="tab" id="my-foods" class="profile-link")
                                             i.material-icons restaurant_menu
@@ -42,7 +41,7 @@ block content
                                                 | Моите Статии                       
                     div.section.workouts-holder
                         h3 Тренировките на #{ user.username }
-                        div.workout-selector
+                        form(method="post" action="/users/profile/my-workout").workout-selector
                             div.datepicker-holder
                                 label Избери дата:
                                 input(name="date" id="workout-datepicker" class="datepicker form-control" type="text" value=moment().format("DD/MM/YYYY"))
@@ -66,7 +65,7 @@ block content
                                     option(value="") Избери упражнение 4
                                     for val in exercises
                                         option(value="" + val.name) #{val.name}
-                            a(id="add-workout-button" class="btn btn-success") Добави Тренировка
+                            input(type="submit" id="add-workout-button" class="btn btn-success" value="Добави Тренировка")
                         div.workout-list-holder
                             each val in calendar.workouts
                                 if moment() <= moment(val.date)
@@ -79,7 +78,7 @@ block content
                                         br
                     div.section.foods-holder
                         h3 Хранителния режим на #{ user.username }
-                        div.foods-selector
+                        form(method="post" action="/users/profile/my-menu").foods-selector
                                 div.datepicker-holder
                                     label Избери дата:
                                     input(name="date" id="foods-datepicker" class="datepicker form-control" type="text" value=moment().format("DD/MM/YYYY"))
@@ -187,7 +186,7 @@ block content
                                         option(value="400") 400
                                         option(value="500") 500
                                         option(value="1000") 1000
-                                a(id="add-menu-button" class="btn btn-success") Добави Хранене
+                                input(type="submit" id="add-menu-button" class="btn btn-success" value="Добави Хранене")
                         div.menus-list-holder
                             each val in calendar.menus
                                 div.calendar-section
@@ -222,283 +221,9 @@ block content
                             if friendships.requestedFriendships
                                 for val in friendships.requestedFriendships
                                     a.single-friendship(href="/users?id=" + val.secondUser._id class="single-friendship friendship-link") #{val.secondUser.username}    
-=======
-  link(rel="stylesheet" href="/css/users/profile.css")
-  link(rel="stylesheet" href="/css/articles/all-articles.css")   
-  div.header.header-filter(style="background-image: url('/img/common/fitness-woman-5.jpg');")    
-  div.profile-page
-    div.main.main-raised
-      div.profile-content
-        div.container
-          div.row
-            div.profile
-              div.avatar
-                img(src="/img/user-images/" + user.avatarName alt="Circle Image" class="img-circle img-responsive img-raised")          
-              div.name
-                h3.title #{user.username}
-                h6 #{user.firstname} #{user.lastname}
-                if user.isTrainer || user.isAdmin
-                  h6.trainer-title FiTogether Trainer
-          div.row
-            div.col-md-6.col-md-offset-3
-              div.profile-tabs
-                div.nav-aling-center
-                ul(class="nav nav-pills nav-pills-success" role="tablist")
-                  li
-                    a(role="tab" data-toggle="tab" id="my-workouts")
-                      i.material-icons fitness_center
-                      | Тренировъчен Режим
-                  li
-                    a(role="tab" data-toggle="tab" id="my-foods" class="profile-link")
-                      i.material-icons restaurant_menu
-                      | Хранителен Режим
-                  li
-                    a(role="tab" data-toggle="tab" id="my-friendships" class="profile-link")
-                      i.material-icons group
-                      | Приятели
-                  li
-                    if user.isTrainer || user.isAdmin
-                      a(role="tab" data-toggle="tab" id="my-articles" class="profile-link")
-                        i.material-icons border_color
-                        | Моите Статии                       
-          div.section.workouts-holder
-            h3 Тренировките на #{ user.username }
-            div.col-lg-6
-              div.workout-selector
-                div.datepicker-holder
-                  label Избери дата:
-                  input(name="date" id="workout-datepicker" class="datepicker form-control" type="text" value=moment().format("DD/MM/YYYY"))
-                div.form-group
-                  select(name="exerciseOne" id="exercise-1" placeholder="Първо упражнение").form-control
-                    option(value="") Избери упражнение 1
-                    for val in exercises
-                      option(value="" + val.name) #{val.name}
-                div.form-group
-                  select(name="exerciseTwo" id="exercise-2" placeholder="Второ упражнение").form-control
-                    option(value="") Избери упражнение 2
-                    for val in exercises
-                      option(value="" + val.name) #{val.name}
-                div.form-group
-                  select(name="exerciseThree" id="exercise-3" placeholder="Трето упражнение").form-control
-                    option(value="") Избери упражнение 3
-                    for val in exercises
-                      option(value="" + val.name) #{val.name}
-                div.form-group
-                  select(name="exerciseFour" id="exercise-4" placeholder="Четвърто упражнение").form-control
-                    option(value="") Избери упражнение 4
-                    for val in exercises
-                      option(value="" + val.name) #{val.name}
-                a(id="add-workout-button" class="btn btn-success") Добави Тренировка
-              div.col-lg-6.workout-list-holder
-                each val in calendar.workouts
-                  if moment() <= moment(val.date)
-                    div.calendar-section.single-workout-holder
-                      div.calendar-date
-                        span #{moment(val.date).format('DD/MM/YYYY')}
-                      each exercise in val.exercises
-                        span #{exercise}
-                        br
-                      br
-          div.section.foods-holder
-            h3 Хранителния режим на #{ user.username }
-            div.col-lg-8
-              div.foods-selector
-                div.datepicker-holder
-                  label Избери дата:
-                  input(name="date" id="foods-datepicker" class="datepicker form-control" type="text" value=moment().format("DD/MM/YYYY"))
-                div.form-group
-                  select(name="mealOne" id="meal-1" placeholder="Първо хранене").form-control.meal-form
-                    option(value="") Избери първо хранене
-                    for val in foods
-                      option(value="" + val.title + "|" + val.details + "|" + val.calories) #{val.title} #{val.details}
-                  select(name="quantityOne" id="quantity-1" placeholder="Количество").form-control.quantity-form
-                    option(value="") Избери грамаж
-                    option(value="100") 100
-                    option(value="200") 200
-                    option(value="300") 300
-                    option(value="400") 400
-                    option(value="500") 500
-                    option(value="1000") 1000
-                div.form-group
-                  select(name="mealTwo" id="meal-2" placeholder="Второ хранене").form-control.meal-form
-                    option(value="") Избери второ хранене
-                    for val in foods
-                      option(value="" + val.title + "|" + val.details + "|" + val.calories) #{val.title} #{val.details}
-                  select(name="quantityTwo" id="quantity-2" placeholder="Количество").form-control.quantity-form
-                    option(value="") Избери грамаж
-                    option(value="100") 100
-                    option(value="200") 200
-                    option(value="300") 300
-                    option(value="400") 400
-                    option(value="500") 500
-                    option(value="1000") 1000
-                div.form-group
-                  select(name="mealThree" id="meal-3" placeholder="Трето хранене").form-control.meal-form
-                    option(value="") Избери трето хранене
-                    for val in foods
-                      option(value="" + val.title + "|" + val.details + "|" + val.calories) #{val.title} #{val.details}
-                  select(name="quantityThree" id="quantity-3" placeholder="Количество").form-control.quantity-form
-                    option(value="") Избери грамаж
-                    option(value="100") 100
-                    option(value="200") 200
-                    option(value="300") 300
-                    option(value="400") 400
-                    option(value="500") 500
-                    option(value="1000") 1000
-                div.form-group
-                  select(name="mealFour" id="meal-4" placeholder="Четвърто хранене").form-control.meal-form
-                    option(value="") Избери четвърто хранене
-                    for val in foods
-                      option(value="" + val.title + "|" + val.details + "|" + val.calories) #{val.title} #{val.details}
-                  select(name="quantityFour" id="quantity-4" placeholder="Количество").form-control.quantity-form
-                    option(value="") Избери грамаж
-                    option(value="100") 100
-                    option(value="200") 200
-                    option(value="300") 300
-                    option(value="400") 400
-                    option(value="500") 500
-                    option(value="1000") 1000
-                div.form-group
-                  select(name="mealFive" id="meal-5" placeholder="Пето хранене").form-control.meal-form
-                    option(value="") Избери пето хранене
-                    for val in foods
-                      option(value="" + val.title + "|" + val.details + "|" + val.calories) #{val.title} #{val.details}
-                  select(name="quantityFive" id="quantity-5" placeholder="Количество").form-control.quantity-form
-                    option(value="") Избери грамаж
-                    option(value="100") 100
-                    option(value="200") 200
-                    option(value="300") 300
-                    option(value="400") 400
-                    option(value="500") 500
-                    option(value="1000") 1000
-                div.form-group
-                  select(name="mealSix" id="meal-6" placeholder="Шесто хранене").form-control.meal-form
-                    option(value="") Избери шесто хранене
-                    for val in foods
-                      option(value="" + val.title + "|" + val.details + "|" + val.calories) #{val.title} #{val.details}
-                  select(name="quantitySix" id="quantity-6" placeholder="Количество").form-control.quantity-form
-                    option(value="") Избери грамаж
-                    option(value="100") 100
-                    option(value="200") 200
-                    option(value="300") 300
-                    option(value="400") 400
-                    option(value="500") 500
-                    option(value="1000") 1000
-                div.form-group
-                  select(name="mealSeven" id="meal-7" placeholder="Седмо хранене").form-control.meal-form
-                    option(value="") Избери седмо хранене
-                    for val in foods
-                      option(value="" + val.title + "|" + val.details + "|" + val.calories) #{val.title} #{val.details}
-                  select(name="quantitySeven" id="quantity-7" placeholder="Количество").form-control.quantity-form
-                    option(value="") Избери грамаж
-                    option(value="100") 100
-                    option(value="200") 200
-                    option(value="300") 300
-                    option(value="400") 400
-                    option(value="500") 500
-                    option(value="1000") 1000
-                div.form-group
-                  select(name="mealEight" id="meal-8" placeholder="Седмо хранене").form-control.meal-form
-                    option(value="") Избери осмо хранене
-                    for val in foods
-                      option(value="" + val.title + "|" + val.details + "|" + val.calories) #{val.title} #{val.details}
-                  select(name="quantityEight" id="quantity-8" placeholder="Количество").form-control.quantity-form
-                    option(value="") Избери грамаж
-                    option(value="100") 100
-                    option(value="200") 200
-                    option(value="300") 300
-                    option(value="400") 400
-                    option(value="500") 500
-                    option(value="1000") 1000
-                a(id="add-menu-button" class="btn btn-success") Добави Хранене
-            div.col-lg-6.menus-list-holder
-              each val in calendar.menus
-                div.calendar-section.single-menu-holder
-                  div.calendar-date
-                    span #{moment(val.date).format('DD/MM/YYYY')}
-                  each meal in val.meals
-                    span #{meal.title} #{meal.details} - #{meal.calories} кал.
-                    br
-                  span Общо калории за деня: #{val.totalCalories}
-                  br
-          div.section.friendships-holder
-            h3 Приятелите на #{user.username}
-            div(id="friendships-links").section.friendships-section
-              h4 Приятели
-              if friendships.approvedFriendships
-                ul.friendship-list-approved
-                  for val in friendships.approvedFriendships
-                    li.single-friendship-item
-                      -var currentUser = user.username == val.firstUser.username ? val.secondUser : val.firstUser
-                      a(href="/users?id=" + currentUser._id class="single-friendship friendship-link") #{currentUser.username}
-            div(id="waiting-friendships").section.friendships-section 
-              h4 Приятелства, изчакващи одобрение
-              if friendships.waitingForApproval
-                ul.friendship-list
-                  for val in friendships.waitingForApproval
-                    li(class="single-friendship-item" data-id=val.firstUser._id)
-                      a(href="/users?id=" + val.firstUser._id class="single-friendship approve-friendship-button") #{val.firstUser.username}
-                      button(class="btn btn-success btn-sm accept-friendship") Приеми
-                      button(class="btn btn-danger btn-sm rejected-friendship") Откажи
-            div(id="waiting-requests").section.friendships-section 
-              h4 Изпратени покани
-              if friendships.requestedFriendships
-                for val in friendships.requestedFriendships
-                  a.single-friendship(href="/users?id=" + val.secondUser._id class="single-friendship friendship-link") #{val.secondUser.username}    
->>>>>>> ae0932a8607e520c1f797826dde15cab48dfd7c8
 
-
-          div.section.articles-holder
-            h3 Статии от #{user.username}
-              each val in articles
-                div.article-container
-                  a(href="/articles/single-article?title=" + val.mainHeader).article-link #{val.mainHeader}
-                  br
-                  small.article-subheader #{val.subHeader}
-                if user 
-                  if user.isTrainer && user.isAdmin
-                    div.editorial-menu 
-                      form(method="post", action="/articles/edit")
-                        input(type="hidden" name="articleId" value=val._id)
-                        button.btn.btn-warning.btn-edit Редактирай      
-                      if  val.deletedOn
-                        form(method="post", action="/articles/restore")
-                          input(type="hidden" name="articleId" value=val._id)
-                          button.btn.btn-success.btn-edit Възстанови    
-                          span.label.label-danger Маркирано като изтрито - на дата:  #{val.deletedOn}
-                      else 
-                        a.btn.btn-danger.btn-delete(data-toggle='modal', data-target= "#modal-"+ val._id)
-                          | Изтрий
-                  else if user.isTrainer
-                    div.editorial-menu 
-                      form(method="post", action="/articles/edit")
-                        input(type="hidden" name="articleId" value=val._id)
-                        button.btn.btn-warning.btn-edit Редактирай
-                        a.btn.btn-danger.btn-delete(data-toggle='modal', data-target= "#modal-"+ val._id)
-                          | Изтрий
-
-
-                div(id="modal-" + val._id).modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-                  .modal-dialog                       
-                    .modal-content
-                      .modal-header
-                        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-                        h4.modal-title Потвърждение за изтриване.
-                      .modal-body
-                        | Сигурен ли сте искате да изтриете предмет #{val.mainHeader} с  #{val._id}?
-                      .modal-footer
-                        form(method="post", action="/articles/delete")
-                          input(type="hidden" name="articleId" value=val._id)             
-                          a.btn.btn-default.btn-simple(type='button', data-dismiss='modal') Откажи
-                          button.btn.btn-danger Изтрий 
-
-              if user.isTrainer || user.isAdmin
-                br
-                a(href="/articles/create", title="create article").btn.btn-success Създай Статия                      
-
-
-  script(src="/js/profile/profile-manager.js")
-  script(src="/js/profile/profile-ajax.js")
-  script(src="/js/utils/requester.js")
-  script(src="/js/utils/notificator.js")
-  script(src="/js/users-autocomplete.js")
+    script(src="/js/profile/profile-manager.js")
+    script(src="/js/profile/profile-ajax.js")
+    script(src="/js/utils/requester.js")
+    script(src="/js/utils/notificator.js")
+    script(src="/js/users-autocomplete.js")
