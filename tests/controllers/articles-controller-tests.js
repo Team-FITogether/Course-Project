@@ -463,13 +463,13 @@ describe("loadSingleArticlePage() tests", () => {
 describe("createArticle() tests", () => {
     let reqMock = {
         body: {
-            articleBody: "",
-            articleHeader: "",
-            articleSubHeader: "",
-            articleGenre: ""
+            articleBody: "Normal body",
+            articleHeader: "Normal header",
+            articleSubHeader: "normal subheader",
+            articleGenre: "normal genre"
         },
         user: {
-            username: ""
+            username: "username"
         }
     };
     let resMock = {
