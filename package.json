@@ -37,7 +37,8 @@
     "passport-local": "1.0.0",
     "pug": "2.0.0-beta6",
     "sinon": "^1.17.6",
-    "socket.io": "1.6.0"
+    "socket.io": "1.6.0",
+    "winston": "^2.3.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
