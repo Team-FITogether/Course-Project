@@ -14,8 +14,8 @@ block content
                               img(src="/img/user-images/" + foundUser.avatarName alt="Circle Image" class="img-circle img-responsive img-raised")          
                           div.name
                               h3.title #{foundUser.username}
-                              h6 #{foundUser.firstname} #{foundUser.lastname}
-                              if user.isTrainer || user.isAdmin
+                              h6 #{foundUser.firstname} #{foundUser.lastname}                              
+                              if foundUser.isTrainer || foundUser.isAdmin
                                   h6.trainer-title FiTogether Trainer
                   div.row
                       div.col-md-6.col-md-offset-3

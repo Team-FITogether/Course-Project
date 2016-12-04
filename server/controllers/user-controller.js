@@ -95,6 +95,14 @@ module.exports = ({ userValidator, common, data }) => {
             let id = req.query.id;
             common.setIsAdminUser(req, userValidator);
 
+            let loggedInUser = req.user;
+
+            if (loggedInUser) {
+                if (loggedInUser._id.toString() === id.toString()) {
+                    return res.redirect("/users/profile");
+                }
+            }
+
             if (username) {
                 renderFoundUserByUsername(username, req, res, data);
             } else if (id) {
