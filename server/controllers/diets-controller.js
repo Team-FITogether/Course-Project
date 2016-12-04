@@ -4,7 +4,6 @@ const ALL_DIETS_VIEW = "food/all-diets";
 const SINGLE_DIET_VIEW = "food/single-diet";
 const EDIT_DIET_VIEW = "food/edit-diet";
 const PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
-const ADMIN_ROLE = "admin";
 
 function loadAllDiets(user, req, res, page, pageSize, userValidator, common, data) {
     common.setIsAdminUser(req, userValidator);

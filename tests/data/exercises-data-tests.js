@@ -4,7 +4,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
-const exercisesData = require("../../server/data/foods-data");
+// const exercisesData = require("../../server/data/foods-data");
 
 describe("EXERCISES-DATA-TESTS", () => {
     class ExerciseCategory {

@@ -4,7 +4,6 @@ const ALL_RECIPES_VIEW = "food/all-recipes";
 const SINGLE_RECIPE_VIEW = "food/single-recipe";
 const EDIT_RECIPE_VIEW = "food/edit-recipe";
 const PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
-const ADMIN_ROLE = "admin";
 
 function loadAllRecipes(user, req, res, page, pageSize, userValidator, common, data) {
     common.setIsAdminUser(req, userValidator);

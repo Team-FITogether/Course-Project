@@ -107,16 +107,19 @@
     display: block;
     cursor: pointer;
 }
+
 .friendships-section {
     display: block;
 }
+
 .friendships-section h4 {
     display: block;
 }
+
 #friendship-request {
     width: 200px;
 }
 
-.not-online-button{
+.not-online-button {
     float: initial;
 }

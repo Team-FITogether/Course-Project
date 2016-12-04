@@ -1,4 +1,4 @@
-/* globals describe it */
+/* globals describe it beforeEach */
 
 "use strict";
 
@@ -71,7 +71,7 @@ describe("RECIPES-CONTROLLER-TESTS", () => {
             getSingleRecipe() {
                 return new Promise(resolve => resolve([recipe]));
             }
-        }
+        };
 
         it("data.getSingleRecipe() should be called", () => {
             let controller = recipesController({ data: dataMock });

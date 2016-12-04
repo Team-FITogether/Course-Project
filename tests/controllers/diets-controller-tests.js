@@ -1,4 +1,4 @@
-/* globals describe it */
+/* globals describe it beforeEach */
 
 "use strict";
 
@@ -70,7 +70,7 @@ describe("DIETS-CONTROLLER-TESTS", () => {
             getSingleDiet() {
                 return new Promise(resolve => resolve([diet]));
             }
-        }
+        };
 
         it("data.getSingleDiet() should be called", () => {
             let controller = dietsController({ data: dataMock });
@@ -100,8 +100,6 @@ describe("DIETS-CONTROLLER-TESTS", () => {
         let resMock;
         let foundDiet;
         let dataMock;
-        let commonMock;
-        let userValidatorMock;
         let dataErrorMock;
 
         beforeEach(() => {

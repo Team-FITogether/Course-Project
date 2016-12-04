@@ -182,8 +182,7 @@ describe("ARTICLES-CONTROLLER-TESTS", () => {
 
             it("data.getArticlesByGenreAdminUser() return pages  that are less than page, res.render should be called with PAGE_NOW_FOUND_VIEW", done => {
                 let PAGE_NOT_FOUND_VIEW = "error-pages/404-not-found";
-                let userValidatorMock = { isInRole() {
-                        return true; } };
+                let userValidatorMock = { isInRole() { return true; } };
                 let reqMock = {
                     user: {
                         isAdmin: true
@@ -258,8 +257,11 @@ describe("ARTICLES-CONTROLLER-TESTS", () => {
 
             it("everything is ok, res.render() should be called with ALL_ARTICLES_VIEW and object with render data.", done => {
                 let ALL_ARTICLES_VIEW = "articles/all-articles";
-                let userValidatorMock = { isInRole() {
-                        return true; } };
+                let userValidatorMock = {
+                    isInRole() {
+                        return true;
+                    }
+                };
                 let reqMock = {
                     user: {
                         isAdmin: true

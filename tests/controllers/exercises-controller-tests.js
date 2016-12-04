@@ -1,4 +1,4 @@
-/* globals describe it */
+/* globals describe it beforeEach */
 
 "use strict";
 
@@ -135,8 +135,8 @@ describe("EXERCISES-CONTROLLER-TESTS", () => {
                 getExerciseExplanationById() {
                     return new Promise((resolve, reject) => reject({}));
                 }
-            }
-        })
+            };
+        });
 
         it("data.getExerciseExplanationById() should be called with body.entityId", () => {
             let controller = exercisesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });

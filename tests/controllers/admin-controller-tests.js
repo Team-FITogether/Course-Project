@@ -1,5 +1,4 @@
 /* globals describe it */
-
 "use strict";
 
 const adminController = require("../../server/controllers/admin-controller");
@@ -35,7 +34,7 @@ describe("ADMIN-CONTROLLER-TESTS", () => {
         }
     };
     let resMock = {
-        render() { }
+        render() {}
     };
     let dataMock = {
         getUsernamesOfUsers() {
@@ -70,7 +69,7 @@ describe("ADMIN-CONTROLLER-TESTS", () => {
         }
     };
     let commonMock = {
-        setIsAdminUser() { }
+        setIsAdminUser() {}
     };
     let userValidatorMock = {};
 

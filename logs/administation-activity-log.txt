@@ -4,3 +4,35 @@
 2016-12-04T22:14:33.459Z - info: Admin user - Sparx92, invoked addNewDiet with result title=rejim , content=<p>rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;rejim&nbsp;</p>
 2016-12-04T22:45:53.202Z - info: Admin user - supermegarandom, invoked addNewFoodCategory with result category=hranichka
 2016-12-04T22:45:59.567Z - info: Admin user - supermegarandom, invoked addNewExerciseCategory with result category=upr
+2016-12-04T23:58:05.068Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-04T23:58:05.079Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-04T23:58:05.081Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-04T23:58:05.083Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-04T23:58:05.086Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-04T23:58:05.089Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-04T23:58:05.092Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-04T23:58:05.097Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-04T23:58:05.099Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-04T23:58:05.104Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-04T23:58:05.106Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-04T23:58:05.109Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-04T23:58:05.117Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-04T23:58:05.120Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-04T23:58:05.125Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-04T23:58:05.127Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-04T23:58:05.129Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-04T23:58:05.134Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-04T23:58:05.136Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-04T23:58:05.139Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-04T23:58:05.141Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-04T23:58:05.143Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-04T23:58:05.147Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-04T23:58:05.150Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-04T23:58:05.152Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-04T23:58:05.154Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-04T23:58:05.156Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-04T23:58:05.162Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-04T23:58:05.166Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-04T23:58:05.168Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-04T23:58:05.171Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-04T23:58:05.174Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=

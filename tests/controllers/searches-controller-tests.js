@@ -9,11 +9,11 @@ const expect = require("chai").expect;
 
 describe("SEARCHES-CONTROLLER-TESTS", () => {
     let resMock = {
-        render() { }
+        render() {}
     };
 
     let commonMock = {
-        setIsAdminUser() { }
+        setIsAdminUser() {}
     };
 
     let userValidatorMock = {};

@@ -1,4 +1,4 @@
-/* globals beforeEach it describe */
+/* globals it describe */
 
 "use strict";
 

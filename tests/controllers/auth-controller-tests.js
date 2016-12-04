@@ -9,22 +9,22 @@ const expect = require("chai").expect;
 
 describe("AUTH-CONTROLLER-TESTS", () => {
     let resMock = {
-        render() { },
-        end() { },
-        json() { },
-        status() { },
-        redirect() { }
+        render() {},
+        end() {},
+        json() {},
+        status() {},
+        redirect() {}
     };
 
     let reqMock = {
         body: {
             username: "testUsername"
         },
-        logout() { }
+        logout() {}
     };
 
     let commonMock = {
-        setIsAdminUser() { }
+        setIsAdminUser() {}
     };
 
     let userValidatorMock = {};
@@ -45,7 +45,7 @@ describe("AUTH-CONTROLLER-TESTS", () => {
     };
 
     let passportMock = {
-        authenticate () {
+        authenticate() {
             return function() {};
         }
     };
@@ -150,8 +150,8 @@ describe("AUTH-CONTROLLER-TESTS", () => {
     });
 
     describe("loginUser() tests", () => {
-        let nextMock = { };
-        let dataMock = { };
+        let nextMock = {};
+        let dataMock = {};
 
         it("common.setIsAdminUser() should be called once", () => {
             let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
@@ -182,8 +182,8 @@ describe("AUTH-CONTROLLER-TESTS", () => {
     });
 
     describe("loginUserFacebook() tests", () => {
-        let nextMock = { };
-        let dataMock = { };
+        let nextMock = {};
+        let dataMock = {};
 
         it("common.setIsAdminUser() should be called once", () => {
             let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
@@ -214,8 +214,8 @@ describe("AUTH-CONTROLLER-TESTS", () => {
     });
 
     describe("loginUserGoogle() tests", () => {
-        let nextMock = { };
-        let dataMock = { };
+        let nextMock = {};
+        let dataMock = {};
 
         it("common.setIsAdminUser() should be called once", () => {
             let commonSpy = sinon.spy(commonMock, "setIsAdminUser");
@@ -246,7 +246,7 @@ describe("AUTH-CONTROLLER-TESTS", () => {
     });
 
     describe("logoutUser() tests", () => {
-        let dataMock = { };
+        let dataMock = {};
         it("req.logout() should be called once", () => {
             let reqSpy = sinon.spy(reqMock, "logout");
             let controller = authController({ userValidator: userValidatorMock, passport: passportMock, encryptionProvider: encryptionProviderMock, common: commonMock, data: dataMock, htmlEscaper: htmlEscaperMock });
@@ -266,7 +266,7 @@ describe("AUTH-CONTROLLER-TESTS", () => {
     });
 
     describe("loadLoginPage() tests", () => {
-        let dataMock = { };
+        let dataMock = {};
 
         it("res.render() should be called once", () => {
             let resSpy = sinon.spy(resMock, "render");
@@ -288,7 +288,7 @@ describe("AUTH-CONTROLLER-TESTS", () => {
     });
 
     describe("loadRegisterPage() tests", () => {
-        let dataMock = { };
+        let dataMock = {};
 
         it("res.render() should be called once", () => {
             let resSpy = sinon.spy(resMock, "render");
