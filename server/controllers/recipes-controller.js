@@ -165,6 +165,15 @@ module.exports = ({ userValidator, common, data }) => {
             return data.updateRecipe(recipeId, update, options)
                 .then(() => res.redirect("back"))
                 .catch((err) => console.log(err));
+        },
+        getAllRecipesAsJson(req, res) {
+            return data.getAllRecipesUnfiltered()
+                .then(recipes => {
+                    res.json(recipes);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     };
 };
