@@ -13,4 +13,6 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.post("/recipes/delete", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, recipesController.deleteRecipe);
     app.post("/recipes/restore", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, recipesController.restoreRecipe);
     app.post("/api/recipes/like", userValidator.isUserLoggedIn, recipesController.toggleLikeOnRecipe);
+
+    app.get("/api/recipes", recipesController.getAllRecipesRest);
 };
