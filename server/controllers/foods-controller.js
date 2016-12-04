@@ -89,11 +89,6 @@ module.exports = ({ userValidator, common, data }) => {
             return data.updateFood(foodId, update, options)
                 .then(() => res.redirect("back"))
                 .catch((err) => console.log(err));
-        },
-        getAllFoodDetailsRest(req, res) {
-            return data.getAllFoodDetailsRest()
-                .then(foodDetails => res.json(foodDetails))
-                .catch(console.log);
         }
     };
 };

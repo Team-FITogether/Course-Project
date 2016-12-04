@@ -72,11 +72,6 @@ module.exports = ({ userValidator, common, data }) => {
             common.setIsAdminUser(req, userValidator);
             return data.getAllCategories()
                 .then(exercises => res.render(ALL_EXERCISES_VIEW, { user: req.user, exercises }));
-        },
-        getAllExercisesRest(req, res) {
-            return data.getAllExercisesRest()
-                .then(exercises => res.json(exercises))
-                .catch(console.log);
         }
     };
 };

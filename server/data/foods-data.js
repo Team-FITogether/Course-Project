@@ -139,19 +139,6 @@ module.exports = function(models) {
                     return resolve(category);
                 });
             });
-        },
-        getAllFoodDetailsRest() {
-            return new Promise((resolve, reject) => {
-                FoodDetails.find()
-                    .select("title details calories")
-                    .exec((err, foodDetails) => {
-                        if (err) {
-                            reject(err);
-                        }
-
-                        return resolve(foodDetails);
-                    });
-            });
         }
     };
 };

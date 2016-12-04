@@ -12,6 +12,4 @@ module.exports = ({ app, userValidator, controllers }) => {
     app.post("/foods/create/save", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, foodsController.createFood);
     app.post("/foods/delete", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, foodsController.deleteFood);
     app.post("/foods/restore", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, foodsController.restoreFood);
-
-    app.get("/api/foods", foodsController.getAllFoodDetailsRest);
 };
