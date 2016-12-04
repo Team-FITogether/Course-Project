@@ -3,8 +3,8 @@
 module.exports = ({ app, userValidator, controllers }) => {
     const dietsController = controllers.diets;
 
-    app.get("/diets", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, dietsController.getAllDiets);
-    app.get("/diets/single-diet", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, dietsController.getSingleDiet);
+    app.get("/diets", dietsController.getAllDiets);
+    app.get("/diets/single-diet", dietsController.getSingleDiet);
 
     app.post("/diets/edit", userValidator.isUserLoggedIn, userValidator.isAdminUserMiddleware, dietsController.loadEditDietPage);
     app.post("/diets/create/update", userValidator.isTrainerUserMiddleware, userValidator.isUserLoggedIn, dietsController.saveEditedDiet);
