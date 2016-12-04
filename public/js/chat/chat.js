@@ -1,6 +1,6 @@
 /* globals io window $ */
 
-(function() {
+(function () {
     "use strict";
 
     var socket = io.connect();
@@ -102,6 +102,14 @@
         });
     }
 
+    function submitFormOnEnterPress() {
+        $form.keypress(function (event) {
+            if (event.which === 13) {
+                this.form.submit();
+            }
+        });
+    }
+
     var $usernameHolder = $("#username-holder");
     var $avatarSrcHolder = $("#avatarSrc-holder");
 
@@ -111,10 +119,11 @@
         const username = $usernameHolder.attr("username");
         const avatarSrc = $avatarSrcHolder.attr("avatar-src");
 
+        submitFormOnEnterPress();
         renderMessages(username);
         attachSubmitFormEvent(username, avatarSrc);
         attachChatMessageEvent(username);
         attachFullRoomEvent();
         updateScroll();
     });
-}());
+} ());

@@ -4,13 +4,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let dietSchema = new Schema({
-    title: { type: String, required: true },
-    body: { type: String, required: true },
+    title: { type: String, required: true, minlength: 3, maxlength: 200 },
+    body: { type: String, required: true, minlength: 3 },
     deletedOn: { type: Date, default: null },
     createdOn: { type: Date, default: Date.now },
     comments: [{
-        content: String,
-        author: String,
+        content: { type: String, minlength: 3 },
+        author: { type: String, minlength: 3, maxlength: 30 },
         postDate: Date
     }]
 });

@@ -51,9 +51,11 @@ var app = app || {};
         post(url, data) {
             return makeRequest("POST", url, data);
         }
+
         postWithFile(url, data) {
             return makeRequestWithFile("POST", url, data);
         }
+        
         put(url, data) {
             return makeRequest("PUT", url, data);
         }

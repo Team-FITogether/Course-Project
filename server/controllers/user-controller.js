@@ -9,6 +9,7 @@ function renderProfilePage(req, res, data) {
     let foods;
     let friendships;
     let isAdmin = false;
+    
     if (req.user.isAdmin) {
         isAdmin = true;
     }
