@@ -187,7 +187,7 @@ module.exports = ({ userValidator, common, data }) => {
 
                 return res.render("articles/create-article", { error });
             }
-            
+
             return data.createArticle(articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, "")
                 .then(() => res.redirect(`/articles?genre=${articleGenre}`))
                 .catch(console.log);

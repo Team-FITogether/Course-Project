@@ -91,6 +91,19 @@ module.exports = function(models) {
                     return resolve(category);
                 });
             });
+        },
+        getAllExercisesRest() {
+            return new Promise((resolve, reject) => {
+                ExerciseExplanation.find()
+                    .select("title content")
+                    .exec((err, exercises) => {
+                        if (err) {
+                            reject(err);
+                        }
+
+                        return resolve(exercises);
+                    });
+            });
         }
     };
 };
