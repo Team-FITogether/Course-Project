@@ -233,7 +233,7 @@ block content
                   br
                   small.article-subheader #{val.subHeader}
                 if user 
-                  if user.isTrainer && user.isAdmin
+                  if user.isTrainer || user.isAdmin
                     div.editorial-menu 
                       form(method="post", action="/articles/edit")
                         input(type="hidden" name="articleId" value=val._id)
