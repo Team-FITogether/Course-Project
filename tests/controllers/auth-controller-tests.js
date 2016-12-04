@@ -7,7 +7,7 @@ const authController = require("../../server/controllers/auth-controller");
 const sinon = require("sinon");
 const expect = require("chai").expect;
 
-describe("auth-controller-tests", () => {
+describe("AUTH-CONTROLLER-TESTS", () => {
     let resMock = {
         render() { },
         end() { },

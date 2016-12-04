@@ -7,7 +7,7 @@ const searchesController = require("../../server/controllers/searches-controller
 const sinon = require("sinon");
 const expect = require("chai").expect;
 
-describe("searches-controller-tests", () => {
+describe("SEARCHES-CONTROLLER-TESTS", () => {
     let resMock = {
         render() { }
     };

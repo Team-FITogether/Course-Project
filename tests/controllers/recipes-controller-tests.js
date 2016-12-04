@@ -21,8 +21,8 @@ describe("RECIPES-CONTROLLER-TESTS", () => {
         let resMock = {
             render() {}
         };
-        let commonMock = { setIsAdminUser() { } };
-        let userValidatorMock = { };
+        let commonMock = { setIsAdminUser() {} };
+        let userValidatorMock = {};
         let dataMock = {
             getAllRecipes() {
                 return new Promise(resolve => resolve(allRecipes));
@@ -246,15 +246,6 @@ describe("RECIPES-CONTROLLER-TESTS", () => {
             };
         });
 
-        it("data.getRecipeById() should be called with body.targetId", () => {
-            let dataSpy = sinon.spy(dataMock, "getRecipeById");
-            let controller = recipesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
-
-            controller.toggleLikeOnRecipe(reqMock, resMock);
-            expect(dataSpy.calledWith(reqMock.body.targetId)).to.be.true;
-            dataSpy.restore();
-        });
-
         it("when the recipe is not liked by the user, it should be liked", done => {
             let reqMoqWithDifferentUser = {
                 body: {
@@ -277,5 +268,175 @@ describe("RECIPES-CONTROLLER-TESTS", () => {
                 });
         });
     });
-})
 
+
+    describe("createRecipe() tests", () => {
+        let reqMock = {
+            body: {
+                recipeTitle: "test title",
+                recipeBody: "test body"
+            }
+        };
+        let resMock = {
+            redirect() {}
+        };
+        let dataMock = {
+            addNewRecipe() {
+                return new Promise(resolve => resolve({}));
+            }
+        };
+
+        it("data.createRecipe() should be called with with recipeTitle and recipeBody", () => {
+            let dataSpy = sinon.spy(dataMock, "addNewRecipe");
+            let controller = recipesController({ data: dataMock });
+            let body = reqMock.body;
+
+            controller.createRecipe(reqMock, resMock);
+            expect(dataSpy.calledWith(body.recipeTitle, body.recipeBody));
+        });
+
+        it("res.redirect() should be called when everything is ok", done => {
+            let resSpy = sinon.spy(resMock, "redirect");
+            let controller = recipesController({ data: dataMock });
+
+            controller
+                .createRecipe(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.called).to.be.true;
+                    done();
+                });
+        });
+    });
+
+    describe("saveEditedRecipe() tests", () => {
+        let reqMock = {
+            body: {
+                recipeId: "test id",
+                recipeTitle: "test title",
+                recipeBody: "test body"
+            }
+        };
+        let resMock = {
+            redirect() {}
+        };
+        let dataMock = {
+            updateRecipe() {
+                return new Promise(resolve => resolve({}));
+            }
+        };
+
+        it("data.saveEditedRecipe() should be called with recipeId (from the body), update object and options object", () => {
+            let dataSpy = sinon.spy(dataMock, "updateRecipe");
+            let controller = recipesController({ data: dataMock });
+
+            controller.saveEditedRecipe(reqMock, resMock);
+
+            let expectedUpdate = {
+                title: reqMock.body.recipeTitle,
+                body: reqMock.body.recipeBody
+            };
+            let expectedOptions = { new: true };
+            expect(dataSpy.calledWith(reqMock.body.recipeId, expectedUpdate, expectedOptions)).to.be.true;
+            dataSpy.restore();
+        });
+
+        it("res.render() should be called when everything is ok", done => {
+            let resSpy = sinon.spy(resMock, "redirect");
+            let controller = recipesController({ data: dataMock });
+
+            controller
+                .saveEditedRecipe(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    resSpy.restore();
+                    done();
+                });
+        });
+    });
+
+    describe("deleteRecipe() tests", () => {
+        let reqMock;
+        let resMock;
+        let dataMock;
+
+        beforeEach(() => {
+            reqMock = {
+                body: {
+                    recipeId: 1
+                }
+            };
+            resMock = {
+                redirect() {}
+            };
+            dataMock = {
+                updateRecipe() {
+                    return new Promise(resolve => resolve({}));
+                }
+            };
+        });
+
+        it("data.updateRecipe() should be called", () => {
+            let controller = recipesController({ data: dataMock });
+            let dataSpy = sinon.spy(dataMock, "updateRecipe");
+
+            controller.deleteRecipe(reqMock, resMock);
+            expect(dataSpy.calledOnce).to.be.true;
+            dataSpy.restore();
+        });
+
+        it("res.redirect() should be called when everything is ok", done => {
+            let controller = recipesController({ data: dataMock });
+            let resSpy = sinon.spy(resMock, "redirect");
+
+            controller
+                .deleteRecipe(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    done();
+                });
+        });
+    });
+
+    describe("restoreRecipe() tests", () => {
+        let reqMock;
+        let resMock;
+        let dataMock;
+
+        beforeEach(() => {
+            reqMock = {
+                body: {
+                    recipeId: 1
+                }
+            };
+            resMock = {
+                redirect() {}
+            };
+            dataMock = {
+                updateRecipe() {
+                    return new Promise(resolve => resolve({}));
+                }
+            };
+        });
+
+        it("data.updateRecipe() should be called", () => {
+            let controller = recipesController({ data: dataMock });
+            let dataSpy = sinon.spy(dataMock, "updateRecipe");
+
+            controller.restoreRecipe(reqMock, resMock);
+            expect(dataSpy.calledOnce).to.be.true;
+            dataSpy.restore();
+        });
+
+        it("res.redirect() should be called when everything is ok", done => {
+            let controller = recipesController({ data: dataMock });
+            let resSpy = sinon.spy(resMock, "redirect");
+
+            controller
+                .deleteRecipe(reqMock, resMock)
+                .then(() => {
+                    expect(resSpy.calledOnce).to.be.true;
+                    done();
+                });
+        });
+    });
+});

@@ -7,7 +7,7 @@ const adminController = require("../../server/controllers/admin-controller");
 const expect = require("chai").expect;
 const spy = require("sinon").spy;
 
-describe("admin-controller tests", () => {
+describe("ADMIN-CONTROLLER-TESTS", () => {
     const ADMIN_PANEL_VIEW = "admin-area/admin-panel";
 
     let foods = [];

@@ -4,7 +4,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
 
-describe("chat-controller tests", () => {
+describe("CHAT-CONTROLLER-TESTS", () => {
     let commonMock = {
         setIsAdminUser() { }
     };

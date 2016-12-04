@@ -7,7 +7,7 @@ const homeController = require("../../server/controllers/home-controller");
 const expect = require("chai").expect;
 const spy = require("sinon").spy;
 
-describe("home-controller tests", () => {
+describe("HOME-CONTROLLER-TESTS", () => {
     const HOME_VIEW = "home/home";
 
     let articles = [];
