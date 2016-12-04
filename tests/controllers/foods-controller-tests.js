@@ -16,13 +16,13 @@ describe("getAllFoods() tests", () => {
     let resMock = {
         render() { }
     };
+    let commonMock = { setIsAdminUser() {} };
     let userValidatorMock = {};
     let dataMock = {
         getAllFoods() {
             return new Promise(resolve => resolve({}));
         }
     };
-    let commonMock = {};
 
     it("data.getAllFoods() should be called", () => {
         let controller = foodsController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });

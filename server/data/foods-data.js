@@ -1,13 +1,21 @@
 /* globals require module Promise*/
 "use strict";
 
-// const Food = require("../models/food");
-// const FoodDetails = require("../models/food-details");
-
 module.exports = function(models) {
     let { Food, FoodDetails } = models;
 
     return {
+        getFoodById(id) {
+            return new Promise((resolve, reject) => {
+                Food.findOne({ _id: id }, (err, food) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(food || null);
+                });
+            });
+        },
         getAllFoods(page, pageSize) {
             let skip = (page - 1) * pageSize;
             let limit = pageSize;
@@ -83,19 +91,16 @@ module.exports = function(models) {
                     });
             });
         },
-        addNewFoodCategory(title) {
+        updateFood(id, update, options) {
             return new Promise((resolve, reject) => {
-                let category = new Food({
-                    title
-                });
+                Food.findOneAndUpdate({ "_id": id }, update, options,
+                    (err, food) => {
+                        if (err) {
+                            return reject(err);
+                        }
 
-                category.save((err, createdCategory) => {
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    return resolve(createdCategory);
-                });
+                        return resolve(food || null);
+                    });
             });
         },
         addNewFood(title, details, calories, proteins, carbs, fats, category) {
@@ -117,6 +122,21 @@ module.exports = function(models) {
                     }
 
                     return resolve(createdFood);
+                });
+            });
+        },
+        addNewFoodCategory(title) {
+            return new Promise((resolve, reject) => {
+                let category = new Food({
+                    title
+                });
+
+                category.save((err) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(category);
                 });
             });
         }
