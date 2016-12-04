@@ -16,3 +16,11 @@
 .create-model:hover {
     background-color: #232E33;
 }
+
+.add-excercise-panel,
+.add-food-category,
+.add-new-recipe,
+.add-food-diet,
+.add-food {
+    display: none;
+}

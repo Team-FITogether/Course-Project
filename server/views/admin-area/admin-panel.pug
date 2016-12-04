@@ -3,111 +3,127 @@
 block content
   link(rel="stylesheet" href="/css/users/admin-panel.css")
   link(rel="stylesheet" href="/css/libs/jquery-ui.css")
+  link(href="/bower_components/material-kit/assets/css/bootstrap.min.css", rel="stylesheet")
   script(src="/bower_components/jquery-ui/jquery-ui.js")
   script(src="/js/users-autocomplete.js")
   script(src="/bower_components/tinymce/tinymce.min.js")
   script(src="/bower_components/tinymce/jquery.tinymce.min.js")
   script(src="/js/tinymce-config.js")
+  
+  div.header.header-default  
+  div.main.main-raised 
+    div.container-fluid.container        
+      div.section.section-basic.row
+          ul.nav.nav-pills.nav-pills-success(role='tablist')
+            li(id="add-role-to-user" class="active") 
+              a(role='tab', data-toggle='tab')
+                i.material-icons &#xE813
+                | Роля на потребител
+            li(id="add-exercise-category")
+              a(role='tab', data-toggle='tab')
+                i.material-icons &#xEB43;
+                | Категория за упражнения
+            li(id="add-food-category")
+              a(role='tab', data-toggle='tab')
+                i.material-icons &#xE56C;
+                | Категория храна 
+            li(id="add-recipe")
+              a(role='tab', data-toggle='tab')
+                i.material-icons description
+                | Нова рецепта
+            li(id="add-food-diet")
+              a(role='tab', data-toggle='tab')
+                i.material-icons restaurant_menu
+                | Хранителен режим
+            li(id="add-food")
+              a(role='tab', data-toggle='tab')
+                i.material-icons dashboard
+                | Група храна към
+                br
+                | дадена категория храна
+          div(id="admin-panel-container" class="col-md-9")
+            div.add-role-panel
+              nav(class="navbar create-model")
+                  h4 Добавяне на роля на потребител
+              form(action="/users/set-role" method="post")
+                div(class="input-group")
+                  span(class="input-group-addon")
+                    i(class="material-icons") face
+                  div(class="form-group is-empty")
+                    input(type="text" id="users" name="username" class="form-control" placeholder="Username")
+                    span(class="material-input")
+                div(class="radio")
+                  label &nbsp; Треньор
+                    input(type="radio" name="role" value="trainer")
+                    span(class="circle")
+                    span(class="check")
+                div(class="radio")
+                  label &nbsp; Администратор
+                    input(type="radio" name="role" value="admin")
+                    span(class="circle")
+                    span(class="check")
+                input(type="submit" value="Добави Роля" class="btn btn-success btn-sm")         
+            div.add-excercise-panel
+              nav(class="navbar create-model")
+                h4 Добавяне на нова категория за упражнения
+              form(action="/exercises/add-new" method="post")
+                div.input-group
+                  span.input-group-addon
+                    i.fitness_center
+                  input(type="text" class="form-control" name="category" placeholder="Част на тяло")
+                input(type="submit" value="Добави Категория" class="btn btn-success btn-sm")  
+            div.add-food-category
+              nav(class="navbar create-model")
+                h4 Добавяне на нова категория храна
+              form(action="/foods/add-new" method="post")
+                div.input-group
+                  span.input-group-addon
+                    i.fitness_center
+                  input(type="text" class="form-control" name="category" placeholder="Тип на храната")
+                input(type="submit" value="Добави Категория" class="btn btn-success btn-sm")  
+            div.add-new-recipe
+              div(id="admin-panel-container")
+                nav(class="navbar create-model")
+                  h4 Добавяне на нова рецепта
+                form(action="/recipes/add-new" method="post")
+                  div.input-group
+                    span.input-group-addon
+                      i.fitness_center
+                    input(type="text" class="form-control" name="title" placeholder="Име на рецептата")
+                    textarea(name="content")#tinymce
+                    input(type="submit" value="Добави рецепта" class="btn btn-success btn-sm")
 
-  div.header.header-default
-  div.main.main-raised
-    div.section.section-basic
-      div.container-fluid
-        div(id="admin-panel-container")
-          nav(class="navbar create-model")
-            h4 Добавяне на роля на потребител
-          form(action="/users/set-role" method="post")
-            div(class="input-group")
-              span(class="input-group-addon")
-                i(class="material-icons") face
-              div(class="form-group is-empty")
-                input(type="text" id="users" name="username" class="form-control" placeholder="Username")
-                span(class="material-input")
+            div.add-food-diet
+              div(id="admin-panel-container")
+                nav(class="navbar create-model")
+                  h4 Добавяне на нов хранителен режим 
+                form(action="/diets/add-new" method="post")
+                  div.input-group
+                    span.input-group-addon
+                      i.fitness_center
+                    input(type="text" class="form-control" name="title" placeholder="Име на режима")
+                    textarea(name="content")#tinymce
+                    input(type="submit" value="Добави хранителен режим" class="btn btn-success btn-sm")
+            div.add-food
+              div(id="admin-panel-container")
+                nav(class="navbar create-model")
+                  h4 Добавяне на група храна към дадена категория храна 
+                form(action="/fooddetails/add-new" method="post")
+                  div.input-group
+                    span.input-group-addon
+                      i.fitness_center
+                    input(type="text" class="form-control" name="title" placeholder="Име на храната")
+                    input(type="text" class="form-control" name="details" placeholder="Кратко описание/особеност")
+                    input(type="text" class="form-control" name="calories" placeholder="Количество калории (на 100гр)")
+                    input(type="text" class="form-control" name="proteins" placeholder="Количество белтъчини (на 100гр)")
+                    input(type="text" class="form-control" name="carbs" placeholder="Количество въглехидрати (на 100гр)")
+                    input(type="text" class="form-control" name="fats" placeholder="Количество мазнини (на 100гр)")
 
-            div(class="radio")
-              label Треньор
-                input(type="radio" name="role" value="trainer")
-                span(class="circle")
-                span(class="check")
-
-            div(class="radio")
-              label Администратор
-                input(type="radio" name="role" value="admin")
-                span(class="circle")
-                span(class="check")
-
-            input(type="submit" value="Добави Роля" class="btn btn-success btn-sm")  
-
-    div.section.section-basic
-      div.container-fluid
-        div(id="admin-panel-container")
-          nav(class="navbar create-model")
-            h4 Добавяне на нова категория за упражнения
-          form(action="/exercises/add-new" method="post")
-            div.input-group
-              span.input-group-addon
-                i.fitness_center
-              input(type="text" class="form-control" name="category" placeholder="Част на тяло")
-            input(type="submit" value="Добави Категория" class="btn btn-success btn-sm")  
-
-    div.section.section-basic
-      div.container-fluid
-        div(id="admin-panel-container")
-          nav(class="navbar create-model")
-            h4 Добавяне на нова категория храна
-          form(action="/foods/add-new" method="post")
-            div.input-group
-              span.input-group-addon
-                i.fitness_center
-              input(type="text" class="form-control" name="category" placeholder="Тип на храната")
-            input(type="submit" value="Добави Категория" class="btn btn-success btn-sm")  
-
-    div.section.section-basic
-      div.container-fluid
-        div(id="admin-panel-container")
-          nav(class="navbar create-model")
-            h4 Добавяне на нова рецепта
-          form(action="/recipes/add-new" method="post")
-            div.input-group
-              span.input-group-addon
-                i.fitness_center
-              input(type="text" class="form-control" name="title" placeholder="Име на рецептата")
-              textarea(name="content")#tinymce
-              input(type="submit" value="Добави рецепта" class="btn btn-success btn-sm")
-
-    div.section.section-basic
-      div.container-fluid
-        div(id="admin-panel-container")
-          nav(class="navbar create-model")
-            h4 Добавяне на нов хранителен режим 
-          form(action="/diets/add-new" method="post")
-            div.input-group
-              span.input-group-addon
-                i.fitness_center
-              input(type="text" class="form-control" name="title" placeholder="Име на режима")
-              textarea(name="content")#tinymce
-              input(type="submit" value="Добави хранителен режим" class="btn btn-success btn-sm")
-
-    div.section.section-basic
-      div.container-fluid
-        div(id="admin-panel-container")
-          nav(class="navbar create-model")
-            h4 Добавяне на група храна към дадена категория храна 
-          form(action="/fooddetails/add-new" method="post")
-            div.input-group
-              span.input-group-addon
-                i.fitness_center
-              input(type="text" class="form-control" name="title" placeholder="Име на храната")
-              input(type="text" class="form-control" name="details" placeholder="Кратко описание/особеност")
-              input(type="text" class="form-control" name="calories" placeholder="Количество калории (на 100гр)")
-              input(type="text" class="form-control" name="proteins" placeholder="Количество белтъчини (на 100гр)")
-              input(type="text" class="form-control" name="carbs" placeholder="Количество въглехидрати (на 100гр)")
-              input(type="text" class="form-control" name="fats" placeholder="Количество мазнини (на 100гр)")
-
-              form(action="/select-category" method="get")
-                select(name="category" placeholder="Категория храна").form-control
-                  option(value="selectValue") Избери категория
-                  for food in foods
-                    for val in food
-                      option(value="" + val.title) #{val.title}
-                  input(type="submit" value="Добави храна" class="btn btn-success btn-sm")
+                    form(action="/select-category" method="get")
+                      select(name="category" placeholder="Категория храна").form-control
+                        option(value="selectValue") Избери категория
+                        for food in foods
+                          for val in food
+                            option(value="" + val.title) #{val.title}
+                        input(type="submit" value="Добави храна" class="btn btn-success btn-sm")
+    script(src="/js/profile/admin-manager.js")
