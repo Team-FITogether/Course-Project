@@ -44,6 +44,12 @@ describe("admin-controller tests", () => {
         getAllFoods() {
             return new Promise(resolve => resolve(foods));
         },
+        getAllDiets() {
+            return new Promise(resolve => resolve(foods));
+        },
+        getAllRecipes() {
+            return new Promise(resolve => resolve(foods));
+        },
         findUserAndUpdate() {
             return new Promise(resolve => resolve(users));
         },
@@ -336,12 +342,12 @@ describe("admin-controller tests", () => {
     });
 
     describe("addNewRecipe(req, res)", () => {
-        it("Expect data.getAllFoods() to be called", done => {
-            let getAllFoodsSpy = spy(dataMock, "getAllFoods");
+        it("Expect data.getAllRecipes() to be called", done => {
+            let getAllRecipesSpy = spy(dataMock, "getAllRecipes");
             controller.addNewRecipe(reqMock, resMock)
                 .then(() => {
-                    expect(getAllFoodsSpy.calledOnce).to.be.true;
-                    getAllFoodsSpy.restore();
+                    expect(getAllRecipesSpy.calledOnce).to.be.true;
+                    getAllRecipesSpy.restore();
                     done();
                 });
         });
@@ -379,7 +385,7 @@ describe("admin-controller tests", () => {
         it("Expect res.render() to be called with ADMIN_PANEL_VIEW string and correct render model", done => {
             let resSpy = spy(resMock, "render");
             let renderModel = {
-                foods
+                recipes
             };
 
             controller.addNewRecipe(reqMock, resMock)
@@ -392,17 +398,17 @@ describe("admin-controller tests", () => {
     });
 
     describe("addNewDiet(req, res)", () => {
-        it("Expect data.getAllFoods() to be called", done => {
-            let getAllFoodsSpy = spy(dataMock, "getAllFoods");
+        it("Expect data.getAllDiets() to be called", done => {
+            let getAllDietsSpy = spy(dataMock, "getAllDiets");
             controller.addNewDiet(reqMock, resMock)
                 .then(() => {
-                    expect(getAllFoodsSpy.calledOnce).to.be.true;
-                    getAllFoodsSpy.restore();
+                    expect(getAllDietsSpy.calledOnce).to.be.true;
+                    getAllDietsSpy.restore();
                     done();
                 });
         });
 
-        it("Expect data.addNewRecipe() to be called", done => {
+        it("Expect data.addDietRecipe() to be called", done => {
             let addNewDietSpy = spy(dataMock, "addNewDiet");
             controller.addNewDiet(reqMock, resMock)
                 .then(() => {
@@ -412,7 +418,7 @@ describe("admin-controller tests", () => {
                 });
         });
 
-        it("Expect data.addNewRecipe() to be called, with correct title and content", done => {
+        it("Expect data.addNewDiet() to be called, with correct title and content", done => {
             let addNewDietSpy = spy(dataMock, "addNewDiet");
             let title = reqMock.body.title;
             let content = reqMock.body.content;
@@ -438,7 +444,7 @@ describe("admin-controller tests", () => {
         it("Expect res.render() to be called with ADMIN_PANEL_VIEW string and correct render model", done => {
             let resSpy = spy(resMock, "render");
             let renderModel = {
-                foods
+                diets
             };
 
             controller.addNewDiet(reqMock, resMock)

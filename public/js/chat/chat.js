@@ -32,7 +32,7 @@
     var $message = $("<span />");
     var $allMessages = $("#messages");
     var $messageContainer = $("<div />");
-    $avatar.addClass("chat-avatar");
+    $avatar.addClass("chat-avatar img-responsive img-circle");
     $message.addClass("chat-message");
     $messageContainer.addClass("message-container");
     $allMessages.attr("id", "all-messages-container");

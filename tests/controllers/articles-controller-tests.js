@@ -458,65 +458,18 @@ describe("loadSingleArticlePage() tests", () => {
         controller.loadSingleArticlePage(reqMock, resMock);
         expect(dataSpy.calledWith(reqMock.query.title)).to.be.true;
     });
-
-    it("res.render() should be called with SINGLE_ARTICLE_VIEW and render object", done => {
-        let SINGLE_ARTICLE_VIEW = "articles/single-article";
-        let userValidatorMock = {};
-        let reqMock = {
-            query: { title: "" },
-            user: {}
-        };
-        let resMock = {
-            render() { }
-        };
-        let dataMock = {
-            getArticleByTitle() {
-                return new Promise(resolve => resolve({
-                    mainHeader: "main header",
-                    subHeader: "subheader",
-                    imgSrc: "imgsrc",
-                    author: "author",
-                    body: "body",
-                    _id: "1234",
-                    user: reqMock.user,
-                    comments: []
-                }));
-            }
-        };
-        let commonMock = { setIsAdminUser() { } };
-
-        let resSpy = sinon.spy(resMock, "render");
-        let controller = articlesController({ userValidator: userValidatorMock, data: dataMock, common: commonMock });
-        let expectedArticle = {
-            mainHeader: "main header",
-            subHeader: "subheader",
-            imgSrc: "imgsrc",
-            author: "author",
-            body: "body",
-            id: "1234",
-            user: reqMock.user,
-            comments: []
-        };
-
-        controller
-            .loadSingleArticlePage(reqMock, resMock)
-            .then(() => {
-                expect(resSpy.calledWith(SINGLE_ARTICLE_VIEW, expectedArticle)).to.be.true;
-                done();
-            });
-    });
 });
 
 describe("createArticle() tests", () => {
     let reqMock = {
         body: {
-            articleBody: "",
-            articleHeader: "",
-            articleSubHeader: "",
-            articleGenre: ""
+            articleBody: "Normal body",
+            articleHeader: "Normal header",
+            articleSubHeader: "normal subheader",
+            articleGenre: "normal genre"
         },
         user: {
-            username: ""
+            username: "username"
         }
     };
     let resMock = {

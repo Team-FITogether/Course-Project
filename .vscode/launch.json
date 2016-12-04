@@ -35,6 +35,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch Program",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/index.js",
+      "cwd": "${workspaceRoot}"
+    },
+    {
       "name": "Run Mocha",
       "type": "node",
       "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",

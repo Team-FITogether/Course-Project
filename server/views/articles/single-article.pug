@@ -2,32 +2,81 @@ extends ../base-master
 
 block content
   link(rel="stylesheet" href="/css/articles/comments.css")
+  script(src="/js/likes.js")
+  
 
   div.header.header-default
   div.main.main-raised
     div.section.section-basic
       div.container-fluid
-        h1 #{mainHeader}
-        if user
-          if user.isTrainer
-            form(method="post", action="/articles/edit")
-              input(type="hidden" name="articleId" value=id)
-              button.btn.btn-warning.btn-edit Редактирай
-          else if user.isAdmin
-            form(method="post", action="/articles/edit")
-              input(type="hidden" name="articleId" value=id)
-              button.btn.btn-warning.btn-edit Редактирай
-        h3 #{subHeader}
+        h1 #{articleObject.mainHeader}
+          if user
+            if articleObject.currentUserHasLiked
+              div(data-id=articleObject.id)
+                span.label.label-success
+                  i.material-icons.like-icon thumb_up &nbsp
+                  span.like-value #{articleObject.likes}
+                a.btn.btn-primary.btn-sm.like-button Не ми харесва
+            else 
+              div(data-id=articleObject.id)
+                span.label.label-success
+                  i.material-icons.like-icon thumb_up &nbsp
+                  span.like-value #{articleObject.likes}
+                a.btn.btn-success.btn-sm.like-button Харесва ми
+          else
+            div(data-id=articleObject.id)
+              span.label.label-success
+                i.material-icons.like-icon thumb_up &nbsp
+                span.like-value #{articleObject.likes}
+
+          if user 
+            if user.isTrainer
+              form(method="post", action="/articles/edit")
+                input(type="hidden" name="articleId" value=id)
+                button.btn.btn-warning.btn-edit Редактирай
+
+                a.btn.btn-danger.btn-delete(data-toggle='modal', data-target= "#modal-"+ articleObject.id)
+                   | Изтрий
+            else if user.isAdmin
+              div.editorial-menu 
+                form(method="post", action="/articles/edit")
+                  input(type="hidden" name="articleId" value=articleObject.id)
+                  button.btn.btn-warning.btn-edit Редактирай      
+
+                if articleObject.deletedOn
+                  form(method="post", action="/articles/restore")
+                    input(type="hidden" name="articleId" value=articleObject.id)
+                    button.btn.btn-success.btn-edit Възстанови    
+                    span.label.label-danger Маркирано като изтрито - на дата:  #{articleObject.deletedOn}
+                else 
+                  a.btn.btn-danger.btn-delete(data-toggle='modal', data-target= "#modal-"+ articleObject.id)
+                    | Изтрий
+
+            div(id="modal-" + articleObject.id).modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+              .modal-dialog                       
+                .modal-content
+                  .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                    h4.modal-title Потвърждение за изтриване.
+                  .modal-body
+                    | Сигурен ли сте искате да изтриете предмет #{mainHeader} с  #{articleObject.id}?
+                  .modal-footer
+                    form(method="post", action="/articles/delete")
+                      input(type="hidden" name="articleId" value=articleObject.id)             
+                      a.btn.btn-default.btn-simple(type='button', data-dismiss='modal') Откажи
+                      button.btn.btn-danger Изтрий
+
+        h3 #{articleObject.subHeader}
         h5 by 
-          a(href="/users?username=" + author) #{author}
+          a(href="/users?username=" + articleObject.author) #{articleObject.author}
         div !{body}
           div(class="card card-nav-tabs")
             div(class="header header-info" id="comments-header") 
-              h3 Коментари: #{comments.length}
+              h3 Коментари: #{articleObject.comments.length}
             div(class="content")
               ul(class="comments-container section")
-                if comments
-                  each comment in comments
+                if articleObject.comments
+                  each comment in articleObject.comments
                     li
                       blockquote
                         p #{comment.content}
@@ -38,5 +87,5 @@ block content
               form(action="/articles/comments/add" method="post")
                 div.container(style="margin-top: 50px")
                   textarea(name="content" class="form-control" rows="3" placeholder="Comment")
-                  input(type="hidden" name="entityId" value=id)
+                  input(type="hidden" name="entityId" value=articleObject.id)
                   input(type="submit" value="Коментирай" class="btn btn-info")

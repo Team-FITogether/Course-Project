@@ -81,14 +81,14 @@ module.exports = function(models) {
                     });
             });
         },
-        addNewRecipe(title, content) {
-            return new Promise((resolve, reject) => {
-                let recipe = new Recipe({
-                    title,
-                    body: content
-                });
+        addNewRecipe(title, body) {
+            let recipe = new Recipe({
+                title,
+                body
+            });
 
-                recipe.save((err) => {
+            return new Promise((resolve, reject) => {
+                recipe.save(err => {
                     if (err) {
                         return reject(err);
                     }
