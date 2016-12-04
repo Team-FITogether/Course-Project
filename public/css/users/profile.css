@@ -116,3 +116,7 @@
 #friendship-request {
     width: 200px;
 }
+
+.not-online-button{
+    float: initial;
+}

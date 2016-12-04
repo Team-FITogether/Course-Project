@@ -18,13 +18,19 @@ function getRoomName(firstUsername, secondUsername) {
     return hashedName;
 }
 
-function renderUserOffline(req, res, userValidator, common, data) {
+function renderUserOffline(req, res, userValidator, common, data, loggedUser) {
+    let foundUser;
     common.setIsAdminUser(req, userValidator);
     data.getUserByUsername(req.query.receiver)
-        .then(foundUser => {
-            res.render(FOUND_USER_PROFILE_VIEW, {
+        .then(offlineUser => {
+            foundUser = offlineUser;
+            return data.getSingleFriendship(loggedUser, offlineUser.username);
+        })
+        .then(friendship => {
+            return res.render(FOUND_USER_PROFILE_VIEW, {
+                user: loggedUser,
                 foundUser,
-                user: req.user,
+                friendship,
                 isOffline: true
             });
         })
@@ -41,12 +47,13 @@ module.exports = ({ userValidator, common, data }) => {
         },
         handleInvitation(req, res) {
             let receiver = connections.get(req.query.receiver);
-            let roomName = getRoomName(req.user.username, req.query.receiver);
+            let initiator = req.user.username;
+            let roomName = getRoomName(initiator, req.query.receiver);
             let chatRoomUrl = `/chat-room/${roomName}`;
             let jsonData = JSON.stringify({ chatRoomUrl, senderUsername: req.user.username });
 
             if (!receiver) {
-                renderUserOffline(req, res, userValidator, common, data);
+                renderUserOffline(req, res, userValidator, common, data, initiator);
             } else {
                 receiver.sseSend(jsonData);
                 res.redirect(chatRoomUrl);
