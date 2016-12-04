@@ -123,7 +123,7 @@ module.exports = function (models) {
                 genre,
                 body
             });
-
+            
             return new Promise((resolve, reject) => {
                 article.save(err => {
                     if (err) {

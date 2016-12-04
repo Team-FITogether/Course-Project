@@ -164,7 +164,7 @@ module.exports = ({ userValidator, common, data }) => {
             let articleHeader = req.body.articleHeader;
             let articleSubHeader = req.body.articleSubHeader;
             let articleGenre = req.body.articleGenre;
-
+            
             return data.createArticle(articleHeader, articleSubHeader, req.user.username, articleBody, articleGenre, "")
                 .then(() => res.redirect(`/articles?genre=${articleGenre}`))
                 .catch(console.log);
