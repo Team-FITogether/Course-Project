@@ -69,7 +69,7 @@ block content
         h3 #{articleObject.subHeader}
         h5 by 
           a(href="/users?username=" + articleObject.author) #{articleObject.author}
-        div !{body}
+        div !{articleObject.body}
           div(class="card card-nav-tabs")
             div(class="header header-info" id="comments-header") 
               h3 Коментари: #{articleObject.comments.length}
