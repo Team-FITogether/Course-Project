@@ -166,14 +166,10 @@ module.exports = ({ userValidator, common, data }) => {
                 .then(() => res.redirect("back"))
                 .catch((err) => console.log(err));
         },
-        getAllRecipesAsJson(req, res) {
-            return data.getAllRecipesUnfiltered()
-                .then(recipes => {
-                    res.json(recipes);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+        getAllRecipesRest(req, res) {
+            return data.getAllRecipesRest()
+                .then(recipes => res.json(recipes))
+                .catch(console.log);
         }
     };
 };

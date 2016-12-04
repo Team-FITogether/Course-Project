@@ -1,7 +1,7 @@
 /* globals require module Promise*/
 "use strict";
 
-module.exports = function (models) {
+module.exports = function(models) {
     let { Recipe } = models;
 
     return {
@@ -97,16 +97,18 @@ module.exports = function (models) {
                 });
             });
         },
-        getAllRecipesUnfiltered() {
+        getAllRecipesRest() {
             return new Promise((resolve, reject) => {
-                Recipe.find({}, (err, recipes) => {
-                    if (err) {
-                        reject(err);
-                    }
+                Recipe.find()
+                    .select("title body")
+                    .exec((err, recipes) => {
+                        if (err) {
+                            reject(err);
+                        }
 
-                    resolve(recipes);
-                });
-            })
+                        return resolve(recipes);
+                    });
+            });
         }
     };
 };
