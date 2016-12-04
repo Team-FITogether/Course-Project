@@ -65,7 +65,7 @@ function appendMenuDiv(dateFormated, meals, totalCalories) {
 
     for (var i = 0; i < meals.length; i += 1) {
         if (meals[i].title) {
-            var $spanMeal = $("<span>").html(`${meals[i].title} - ${meals[i].calories} кал.`);
+            var $spanMeal = $("<span>").html(`${meals[i].title} - ${(meals[i].calories * meals[i].quantity) / 100} кал. ${meals[i].quantity} гр.`);
             $divSection.append($spanMeal);
             $divSection.append("<br>");
         }
@@ -152,7 +152,7 @@ $("#add-menu-button").on("click", ev => {
 
     date = parsedDate.date,
     dateFormated = parsedDate.dateFormated,
-
+    
     mealOne = generateMealInformation($("#meal-1").val(), $("#quantity-1").val()),
     mealTwo = generateMealInformation($("#meal-2").val(), $("#quantity-2").val()),
     mealThree = generateMealInformation($("#meal-3").val(), $("#quantity-3").val()),
@@ -163,7 +163,7 @@ $("#add-menu-button").on("click", ev => {
     mealEight = generateMealInformation($("#meal-8").val(), $("#quantity-8").val());
 
     var meals = [mealOne, mealTwo, mealThree, mealFour, mealFive, mealSix, mealSeven, mealEight];
-
+    console.log($("#quantity-1").val());
     if (date >= Date.now()) {
         var totalCalories = 0;
         for (var i = 0; i < meals.length; i += 1) {

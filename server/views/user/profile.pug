@@ -193,7 +193,8 @@ block content
                             div.calendar-date
                                 span #{moment(val.date).format('DD/MM/YYYY')}
                             each meal in val.meals
-                                span #{meal.title} #{meal.details} - #{meal.calories} кал.
+                                -var currentCalories = (meal.calories * meal.quantity) / 100;
+                                span #{meal.title} #{meal.details} - #{currentCalories} кал. за #{meal.quantity} гр.
                                 br
                             span Общо калории за деня: #{val.totalCalories}
                             br
