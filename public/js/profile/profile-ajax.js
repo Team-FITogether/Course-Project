@@ -4,22 +4,20 @@
 var app = app || {};
 
 function parseDate(dateString) {
-    let dateArr = dateString.split("/");
-    let day = dateArr[0];
-    let month = dateArr[1] - 1;
-    let year = dateArr[2];
-    let date = new Date(year, month, day);
+    var dateArr = dateString.split("/"),
+    day = +dateArr[0],
+    month = +dateArr[1] - 1,
+    year = +dateArr[2],
 
-    let parsedMonth = month + 1;
-    month = parsedMonth;
+    parsedMonth = month + 1,
+    parseDayForHeroku = day + 1,
+    dateFormated = `${day  }/${  parsedMonth  }/${  year}`,
+    date = new Date(year, month, parseDayForHeroku),
 
-    let dateFormat = day + "/" + parsedMonth + "/" + year;
-    let dateFormated = `${day  }/${  parsedMonth  }/${  year}`;
-
-    let exerciseOne = $("#exercise-1").val();
-    let exerciseTwo = $("#exercise-2").val();
-    let exerciseThree = $("#exercise-3").val();
-    let exerciseFour = $("#exercise-4").val();
+    exerciseOne = $("#exercise-1").val(),
+    exerciseTwo = $("#exercise-2").val(),
+    exerciseThree = $("#exercise-3").val(),
+    exerciseFour = $("#exercise-4").val();
     return {
         date,
         dateFormated
@@ -27,9 +25,10 @@ function parseDate(dateString) {
 }
 
 function appendWorkoutDiv(dateFormated, exercises) {
-    let $divSection = $("<div>").addClass("calendar-section");
-    let $divDate = $("<div>").addClass("calendar-date");
-    let $spanDate = $("<span>").html(dateFormated);
+    var $divSection = $("<div>").addClass("calendar-section"),
+    $divDate = $("<div>").addClass("calendar-date"),
+    $spanDate = $("<span>").html(dateFormated);
+
     $divDate.append($spanDate);
     $divSection.append($divDate);
     for (let i = 0; i < exercises.length; i += 1) {
@@ -44,10 +43,10 @@ function generateMealInformation(val, quantity) {
     if (!val) {
         return {};
     }
-    let valArgs = val.split("|");
-    let title = valArgs[0];
-    let details = valArgs[1];
-    let calories = valArgs[2];
+    var valArgs = val.split("|"),
+    title = valArgs[0],
+    details = valArgs[1],
+    calories = valArgs[2];
 
     return {
         title: `${title} ${details}`,
@@ -57,29 +56,29 @@ function generateMealInformation(val, quantity) {
 }
 
 function appendMenuDiv(dateFormated, meals, totalCalories) {
-    let $divSection = $("<div>").addClass("calendar-section");
-    let $divDate = $("<div>").addClass("calendar-date");
-    let $spanDate = $("<span>").html(dateFormated);
+    var $divSection = $("<div>").addClass("calendar-section"),
+    $divDate = $("<div>").addClass("calendar-date"),
+    $spanDate = $("<span>").html(dateFormated);
 
     $divDate.append($spanDate);
     $divSection.append($divDate);
 
-    for (let i = 0; i < meals.length; i += 1) {
+    for (var i = 0; i < meals.length; i += 1) {
         if (meals[i].title) {
-            let $spanMeal = $("<span>").html(`${meals[i].title} - ${meals[i].calories} кал.`);
+            var $spanMeal = $("<span>").html(`${meals[i].title} - ${meals[i].calories} кал.`);
             $divSection.append($spanMeal);
             $divSection.append("<br>");
         }
     }
 
-    let $spanTotalCalories = $("<span>").html(`Общо калории за деня: ${totalCalories}`);
+    var $spanTotalCalories = $("<span>").html(`Общо калории за деня: ${totalCalories}`);
     $divSection.append($spanTotalCalories);
 
     $(".menus-list-holder").append($divSection);
 }
 
 function appendFriendshipLink(parentLi, username, userId) {
-    let approvedUsername = username;
+    var approvedUsername = username;
     $(parentLi).remove();
 
     var userLink = "/users?id=" + userId;
@@ -101,30 +100,31 @@ function appendFriendshipLink(parentLi, username, userId) {
 
 function appendFriendshipRequest(requestedUsername) {
     $("#friendship-request").val("");
-    let $divFriendship = $("<div>");
-    let $linkFriendship = $("<a>").addClass("approve-friendship-button");
+    var $divFriendship = $("<div>"),
+    $linkFriendship = $("<a>").addClass("approve-friendship-button");
     $linkFriendship.html(requestedUsername);
     $divFriendship.append($linkFriendship);
-    let $waitingFriendshipsDiv = $("#waiting-requests");
+    var $waitingFriendshipsDiv = $("#waiting-requests");
     $waitingFriendshipsDiv.append($divFriendship);
 
     $("#friendship-request-button").html("Приятелство, изчакващо одобрение");
     $("#friendship-request-button").prop("disabled", true);
 };
 
-$("#add-workout-button").on("click", () => {
-    let dateString = $("#workout-datepicker").val();
-    let parsedDate = parseDate(dateString);
+$("#add-workout-button").on("click", ev => {
+    ev.preventDefault();
+    var dateString = $("#workout-datepicker").val(),
+    parsedDate = parseDate(dateString);
 
-    let date = parsedDate.date;
-    let dateFormated = parsedDate.dateFormated;
+    var date = parsedDate.date,
+    dateFormated = parsedDate.dateFormated,
 
-    let exerciseOne = $("#exercise-1").val();
-    let exerciseTwo = $("#exercise-2").val();
-    let exerciseThree = $("#exercise-3").val();
-    let exerciseFour = $("#exercise-4").val();
+    exerciseOne = $("#exercise-1").val(),
+    exerciseTwo = $("#exercise-2").val(),
+    exerciseThree = $("#exercise-3").val(),
+    exerciseFour = $("#exercise-4").val();
 
-    let exercises = [exerciseOne, exerciseTwo, exerciseThree, exerciseFour];
+    var exercises = [exerciseOne, exerciseTwo, exerciseThree, exerciseFour];
 
     if (date >= Date.now()) {
 
@@ -141,35 +141,38 @@ $("#add-workout-button").on("click", () => {
     } else {
         app.notificator.showNotification("Изберете валидна дата!", "error");
     }
+
+    return false;
 });
 
-$("#add-menu-button").on("click", () => {
-    let dateString = $("#foods-datepicker").val();
-    let parsedDate = parseDate(dateString);
+$("#add-menu-button").on("click", ev => {
+    ev.preventDefault();
+    var dateString = $("#foods-datepicker").val(),
+    parsedDate = parseDate(dateString),
 
-    let date = parsedDate.date;
-    let dateFormated = parsedDate.dateFormated;
+    date = parsedDate.date,
+    dateFormated = parsedDate.dateFormated,
 
-    let mealOne = generateMealInformation($("#meal-1").val(), $("#quantity-1").val());
-    let mealTwo = generateMealInformation($("#meal-2").val(), $("#quantity-2").val());
-    let mealThree = generateMealInformation($("#meal-3").val(), $("#quantity-3").val());
-    let mealFour = generateMealInformation($("#meal-4").val(), $("#quantity-4").val());
-    let mealFive = generateMealInformation($("#meal-5").val(), $("#quantity-5").val());
-    let mealSix = generateMealInformation($("#meal-6").val(), $("#quantity-6").val());
-    let mealSeven = generateMealInformation($("#meal-7").val(), $("#quantity-7").val());
-    let mealEight = generateMealInformation($("#meal-8").val(), $("#quantity-8").val());
+    mealOne = generateMealInformation($("#meal-1").val(), $("#quantity-1").val()),
+    mealTwo = generateMealInformation($("#meal-2").val(), $("#quantity-2").val()),
+    mealThree = generateMealInformation($("#meal-3").val(), $("#quantity-3").val()),
+    mealFour = generateMealInformation($("#meal-4").val(), $("#quantity-4").val()),
+    mealFive = generateMealInformation($("#meal-5").val(), $("#quantity-5").val()),
+    mealSix = generateMealInformation($("#meal-6").val(), $("#quantity-6").val()),
+    mealSeven = generateMealInformation($("#meal-7").val(), $("#quantity-7").val()),
+    mealEight = generateMealInformation($("#meal-8").val(), $("#quantity-8").val());
 
-    let meals = [mealOne, mealTwo, mealThree, mealFour, mealFive, mealSix, mealSeven, mealEight];
+    var meals = [mealOne, mealTwo, mealThree, mealFour, mealFive, mealSix, mealSeven, mealEight];
 
     if (date >= Date.now()) {
-        let totalCalories = 0;
-        for (let i = 0; i < meals.length; i += 1) {
+        var totalCalories = 0;
+        for (var i = 0; i < meals.length; i += 1) {
             if (meals[i].title) {
                 totalCalories += +meals[i].calories * meals[i].quantity;
             }
         }
         totalCalories /= 100;
-        let data = {
+        var data = {
             date,
             meals,
             totalCalories
@@ -182,16 +185,18 @@ $("#add-menu-button").on("click", () => {
     } else {
         app.notificator.showNotification("Изберете валидна дата!", "error");
     }
+
+    return false;
 });
 
 $("#friendship-request-button").on("click", () => {
-    let requestedUsername = $("#invitation-receiver").val();
+    var requestedUsername = $("#invitation-receiver").val();
     //$("#friendship-request").val();
     console.log(requestedUsername);
 
-    let data = {
+    var data = {
         requestedUsername
-    }
+    };
     app.requester.post("/users/profile/friendship-request", data)
         .then(res => {
             appendFriendshipRequest(requestedUsername);
