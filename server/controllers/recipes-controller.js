@@ -51,7 +51,6 @@ function dislikeRecipe(recipeId, index, res, data) {
     let update = { $inc: { likes: -1 } };
     data.updateRecipe(recipeId, update, null)
         .then((recipe) => {
-            let user = { user: req.user.username };
             recipe.usersLiked.splice(index, 1);
             recipe.save();
             return recipe;
