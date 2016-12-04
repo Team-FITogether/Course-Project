@@ -159,6 +159,30 @@ describe("ARTICLES-DATA-TESTS", () => {
     });
 
     describe("getArticlesByAuthor(author)", () => {
+
+        it("Expect getArticlesByAuthor(author) to call all chined methods, find().where().equals().exec()", done => {
+            let findSpy = sinon.spy(Article, "find");
+            let whereSpy = sinon.spy(Article, "where");
+            let equalsSpy = sinon.spy(Article, "equals");
+            let execSpy = sinon.spy(Article, "exec");
+
+            data.getArticlesByAuthor("FITogether");
+
+            expect(findSpy.calledOnce).to.be.true;
+            expect(whereSpy.calledOnce).to.be.true;
+            expect(equalsSpy.calledOnce).to.be.true;
+            expect(execSpy.calledOnce).to.be.true;
+
+            findSpy.restore();
+            whereSpy.restore();
+            equalsSpy.restore();
+            execSpy.restore();
+
+            done();
+        });
+    });
+
+    describe("getArticlesByAuthorAdminUser(author)", () => {
         beforeEach(() => {
             sinon.stub(Article, "find", (query, callback) => {
                 let foundArticles = articles.filter(a => a.author === query.author);
@@ -170,15 +194,15 @@ describe("ARTICLES-DATA-TESTS", () => {
             Article.find.restore();
         });
 
-        it("Expect getArticlesByAuthor(author) to return correct articles, when an existing author is passed", done => {
-            data.getArticlesByAuthor("FITogether")
+        it("Expect getArticlesByAuthorAdminUser(author) to return correct articles, when an existing author is passed", done => {
+            data.getArticlesByAuthorAdminUser("FITogether")
                 .then(foundArticles => {
                     expect(foundArticles.length).to.equal(2);
                     done();
                 });
         });
-        it("Expect getArticlesByAuthor(author) to return an empty array, when a non existing author is passed", done => {
-            data.getArticlesByAuthor("non existing author")
+        it("Expect getArticlesByAuthorAdminUser(author) to return an empty array, when a non existing author is passed", done => {
+            data.getArticlesByAuthorAdminUser("non existing author")
                 .then(foundArticles => {
                     expect(foundArticles.length).to.equal(0);
                     done();

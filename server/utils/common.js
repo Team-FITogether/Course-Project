@@ -11,7 +11,7 @@ module.exports = {
     },
     setIsTrainerUser(req, userValidator) {
         if (req.user) {
-            req.user.isAdmin = userValidator.isInRole(req.user, TRAINER);
+            req.user.isTrainer = userValidator.isInRole(req.user, TRAINER);
         }
     }
 };

@@ -8,10 +8,17 @@ function renderProfilePage(req, res, data) {
     let articles;
     let foods;
     let friendships;
+    let isAdmin = false;
+    if (req.user.isAdmin) {
+        isAdmin = true;
+    }
 
     data.getAllExercises()
         .then(resultExercises => {
             exercises = resultExercises;
+            if (isAdmin) {
+                return data.getArticlesByAuthorAdminUser(req.user.username);
+            }
             return data.getArticlesByAuthor(req.user.username);
         })
         .then(resultAricles => {
@@ -94,6 +101,14 @@ module.exports = ({ userValidator, common, data }) => {
             let username = req.query.username;
             let id = req.query.id;
             common.setIsAdminUser(req, userValidator);
+
+            let loggedInUser = req.user;
+
+            if (loggedInUser) {
+                if (loggedInUser._id.toString() === id.toString()) {
+                    return res.redirect("/users/profile");
+                }
+            }
 
             if (username) {
                 renderFoundUserByUsername(username, req, res, data);

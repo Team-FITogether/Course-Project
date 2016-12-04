@@ -31,7 +31,8 @@
     margin: 10px;
     border: 1px solid green;
     border-radius: 5px;
-    width: 400px;
+    width: 550px;
+    display: inline-block;
 }
 
 .calendar-date {
@@ -68,6 +69,20 @@
 
 .friendships-holder {
     display: none;
+}
+
+.datepicker-holder {
+    display: inline-block;
+}
+
+.menus-selector {
+    width: 600px;
+    display: inline-block;
+}
+
+.workout-selector {
+    width: 600px;
+    display: inline-block;
 }
 
 .form-group {
