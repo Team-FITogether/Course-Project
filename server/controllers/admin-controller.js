@@ -64,26 +64,26 @@ module.exports = ({ userValidator, common, data }) => {
         addNewRecipe(req, res) {
             let title = req.body.title;
             let content = req.body.content;
-            let recipes;
+            let foods;
 
-            return data.getAllRecipes()
-                .then((resultRecipes) => {
-                    recipes = resultRecipes;
+            return data.getAllFoods()
+                .then((resultFoods) => {
+                    foods = resultFoods;
                     return data.addNewRecipe(title, content);
                 })
-                .then(() => res.render(ADMIN_PANEL_VIEW, { recipes }));
+                .then(() => res.render(ADMIN_PANEL_VIEW, { foods }));
         },
         addNewDiet(req, res) {
             let title = req.body.title;
             let content = req.body.content;
-            let diets;
+            let foods;
 
-            return data.getAllDiets()
-                .then((resultDiets) => {
-                    diets = resultDiets;
+            return data.getAllFoods()
+                .then((resultFoods) => {
+                    foods = resultFoods;
                     return data.addNewDiet(title, content);
                 })
-                .then(() => res.render(ADMIN_PANEL_VIEW, { diets }));
+                .then(() => res.render(ADMIN_PANEL_VIEW, { foods }));
         },
         addNewFood(req, res) {
             let title = req.body.title;
