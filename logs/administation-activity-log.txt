@@ -36,3 +36,163 @@
 2016-12-04T23:58:05.168Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
 2016-12-04T23:58:05.171Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
 2016-12-04T23:58:05.174Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:22:13.819Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:22:13.829Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:22:13.833Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:22:13.835Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:22:13.837Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:22:13.839Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:22:13.841Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:22:13.846Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:22:13.848Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:22:13.852Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:22:13.854Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:22:13.856Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:22:13.863Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:22:13.867Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:22:13.873Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:22:13.875Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:22:13.877Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:22:13.881Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:22:13.884Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:22:13.886Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:22:13.887Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:22:13.889Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:22:13.893Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:22:13.895Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:22:13.896Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:22:13.899Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:22:13.901Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:22:13.906Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:22:13.908Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:22:13.910Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:22:13.912Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:22:13.914Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:23:58.222Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:23:58.234Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:23:58.237Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:23:58.239Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:23:58.241Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:23:58.243Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:23:58.246Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:23:58.250Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:23:58.252Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:23:58.254Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:23:58.256Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:23:58.258Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:23:58.267Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:23:58.270Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:23:58.274Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:23:58.276Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:23:58.278Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:23:58.281Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:23:58.283Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:23:58.285Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:23:58.286Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:23:58.288Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:23:58.291Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:23:58.292Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:23:58.294Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:23:58.296Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:23:58.297Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:23:58.302Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:23:58.304Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:23:58.306Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:23:58.308Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:23:58.310Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:24:14.039Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:24:14.049Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:24:14.052Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:24:14.054Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:24:14.055Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:24:14.057Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:24:14.059Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:24:14.063Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:24:14.065Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:24:14.066Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:24:14.068Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:24:14.069Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:24:14.075Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:24:14.078Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:24:14.081Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:24:14.084Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:24:14.086Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:24:14.090Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:24:14.092Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:24:14.094Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:24:14.096Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:24:14.098Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:24:14.101Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:24:14.103Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:24:14.105Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:24:14.106Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:24:14.109Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:24:14.113Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:24:14.116Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:24:14.122Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:24:14.124Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:24:14.126Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:26:32.082Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:26:32.092Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:26:32.095Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:26:32.098Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:26:32.100Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:26:32.102Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:26:32.104Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:26:32.108Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:26:32.110Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:26:32.112Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:26:32.114Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:26:32.122Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:26:32.129Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:26:32.132Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:26:32.136Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:26:32.138Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:26:32.141Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:26:32.144Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:26:32.146Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:26:32.148Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:26:32.150Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:26:32.152Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:26:32.155Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:26:32.157Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:26:32.158Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:26:32.160Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:26:32.161Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:26:32.166Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:26:32.168Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:26:32.170Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:26:32.171Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:26:32.173Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:28:14.453Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:28:14.464Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:28:14.467Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:28:14.469Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:28:14.472Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:28:14.473Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:28:14.475Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T00:28:14.479Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:28:14.481Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:28:14.483Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:28:14.484Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:28:14.486Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T00:28:14.493Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:28:14.496Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:28:14.500Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:28:14.502Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:28:14.504Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T00:28:14.508Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:28:14.511Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:28:14.513Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:28:14.515Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:28:14.517Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T00:28:14.522Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:28:14.523Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:28:14.525Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:28:14.527Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:28:14.529Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T00:28:14.533Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:28:14.535Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:28:14.537Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:28:14.539Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T00:28:14.541Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=

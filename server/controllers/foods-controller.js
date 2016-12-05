@@ -5,7 +5,6 @@ const SINGLE_FOOD_VIEW = "food/single-food";
 const EDIT_FOOD_VIEW = "food/edit-foods";
 const SINGLE_FOOD_CATEGORY_VIEW = "food/single-food-category";
 const PAGES_NOT_FOUND_VIEW = "error-pages/404-not-found";
-const ADMIN_ROLE = "admin";
 
 function loadAllFoods(user, req, res, page, pageSize, userValidator, common, data) {
     common.setIsAdminUser(req, userValidator);

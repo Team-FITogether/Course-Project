@@ -1,4 +1,4 @@
-/* globals describe it */
+/* globals describe it beforeEach */
 
 "use strict";
 
@@ -141,7 +141,7 @@ describe("FOODS-CONTROLLER-TESTS", () => {
     describe("createFood() tests", () => {
         let reqMock = {
             body: {
-                title: "test title",
+                title: "test title"
             }
         };
         let resMock = {
@@ -152,8 +152,6 @@ describe("FOODS-CONTROLLER-TESTS", () => {
                 return new Promise(resolve => resolve({}));
             }
         };
-        let userValidatorMock = {};
-        let commonMock = {};
 
         it("data.createFood() should be called", () => {
             let dataSpy = sinon.spy(dataMock, "addNewFoodCategory");
