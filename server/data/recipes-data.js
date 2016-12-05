@@ -96,6 +96,19 @@ module.exports = function(models) {
                     return resolve(recipe);
                 });
             });
+        },
+        getAllRecipesRest() {
+            return new Promise((resolve, reject) => {
+                Recipe.find()
+                    .select("title body")
+                    .exec((err, recipes) => {
+                        if (err) {
+                            reject(err);
+                        }
+
+                        return resolve(recipes);
+                    });
+            });
         }
     };
 };

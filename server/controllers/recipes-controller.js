@@ -163,6 +163,11 @@ module.exports = ({ userValidator, common, data }) => {
             return data.updateRecipe(recipeId, update, options)
                 .then(() => res.redirect("back"))
                 .catch((err) => console.log(err));
+        },
+        getAllRecipesRest(req, res) {
+            return data.getAllRecipesRest()
+                .then(recipes => res.json(recipes))
+                .catch(console.log);
         }
     };
 };

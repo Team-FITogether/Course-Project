@@ -8,4 +8,6 @@ module.exports = ({ app, controllers }) => {
     app.get("/exercises/single-exercise", exercisesController.getAllExercisesByCategory);
 
     app.post("/excercises/comments/add", exercisesController.addComment);
+
+    app.get("/api/exercises", exercisesController.getAllExercisesRest);
 };

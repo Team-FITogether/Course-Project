@@ -196,3 +196,35 @@
 2016-12-05T00:28:14.537Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
 2016-12-05T00:28:14.539Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
 2016-12-05T00:28:14.541Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T01:04:44.446Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T01:04:44.461Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T01:04:44.478Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T01:04:44.481Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T01:04:44.484Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T01:04:44.486Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T01:04:44.488Z - info: Admin user - undefined, added role , to user -  username=, roles=
+2016-12-05T01:04:44.494Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T01:04:44.496Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T01:04:44.498Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T01:04:44.500Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T01:04:44.501Z - info: Admin user - undefined, invoked addNewExerciseCategory with result category=
+2016-12-05T01:04:44.510Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T01:04:44.516Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T01:04:44.522Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T01:04:44.526Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T01:04:44.530Z - info: Admin user - undefined, invoked addNewFoodCategory with result category=
+2016-12-05T01:04:44.534Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T01:04:44.536Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T01:04:44.538Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T01:04:44.541Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T01:04:44.543Z - info: Admin user - undefined, invoked addNewRecipe with result title=, content=
+2016-12-05T01:04:44.547Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T01:04:44.549Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T01:04:44.551Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T01:04:44.555Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T01:04:44.557Z - info: Admin user - undefined, invoked addNewDiet with result title=, content=
+2016-12-05T01:04:44.562Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T01:04:44.564Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T01:04:44.566Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T01:04:44.568Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
+2016-12-05T01:04:44.576Z - info: Admin user - undefined, invoked addNewDiet with result title=, details=, calories=, proteins=, carbs=, fats=, category=
